@@ -1,0 +1,123 @@
+import { createFileRoute, notFound } from "@tanstack/react-router";
+import { content } from "@/content/repository";
+import type { Delegacia } from "@/content/types";
+import { Container, Hairline, Section } from "@/components/site/primitives";
+import { CtaReservado, PageHero } from "@/components/site/blocks";
+import { canonical, delegaciaJsonLd, faqSchema, pageMeta } from "@/lib/seo";
+
+interface Data {
+  dp: Delegacia;
+}
+
+export const Route = createFileRoute("/delegacias/$slug")({
+  loader: async ({ params }): Promise<Data> => {
+    const dp = await content.getDelegacia(params.slug);
+    if (!dp) throw notFound();
+    return { dp };
+  },
+  head: ({ loaderData }) => {
+    if (!loaderData) {
+      return { meta: [{ title: "Página indisponível" }, { name: "robots", content: "noindex" }] };
+    }
+    const { dp } = loaderData as Data;
+    return {
+      meta: pageMeta({
+        title: dp.seo.title,
+        description: dp.seo.description,
+        path: dp.seo.canonicalPath,
+      }),
+      links: [{ rel: "canonical", href: canonical(dp.seo.canonicalPath) }],
+      scripts: [
+        { type: "application/ld+json", children: JSON.stringify(delegaciaJsonLd(dp)) },
+        ...(dp.faq.length
+          ? [{ type: "application/ld+json", children: JSON.stringify(faqSchema(dp.faq)) }]
+          : []),
+      ],
+    };
+  },
+  component: DelegaciaPage,
+});
+
+function DelegaciaPage() {
+  const { dp } = Route.useLoaderData() as Data;
+  const u = dp.unidade;
+  const dados = [
+    ["Unidade", u.nomeOficial],
+    ["Endereço", u.endereco],
+    ["Telefone", u.telefone],
+    ["Horário", u.horario],
+    ["Competência", u.competencia],
+  ].filter(([, v]) => Boolean(v)) as [string, string][];
+
+  return (
+    <>
+      <PageHero
+        eyebrow="Guia informativo"
+        title={dp.h1}
+        lead={dp.introducao}
+        crumbs={[
+          { name: "Início", path: "/" },
+          { name: "Delegacias", path: "/delegacias" },
+          { name: dp.h1, path: dp.seo.canonicalPath },
+        ]}
+      />
+      <Section>
+        <Container>
+          <div className="grid gap-14 lg:grid-cols-[1.4fr_0.9fr]">
+            <div className="space-y-12">
+              <article>
+                <h2 className="text-2xl text-ivory md:text-3xl">Contexto territorial</h2>
+                <Hairline className="my-6 max-w-16" />
+                <p className="text-base leading-relaxed text-muted-foreground">
+                  {dp.contextoTerritorial}
+                </p>
+                {dp.bairros.length > 0 && (
+                  <p className="mt-5 text-sm text-muted-foreground">
+                    Bairros de referência: {dp.bairros.join(", ")}.
+                  </p>
+                )}
+              </article>
+              {dp.faq.length > 0 && (
+                <article>
+                  <h2 className="text-2xl text-ivory md:text-3xl">Perguntas frequentes</h2>
+                  <Hairline className="my-6 max-w-16" />
+                  <dl className="space-y-6">
+                    {dp.faq.map((item) => (
+                      <div key={item.id}>
+                        <dt className="text-base text-ivory">{item.pergunta}</dt>
+                        <dd className="mt-2 text-sm leading-relaxed text-muted-foreground">
+                          {item.resposta}
+                        </dd>
+                      </div>
+                    ))}
+                  </dl>
+                </article>
+              )}
+            </div>
+            <aside className="surface-panel h-fit rounded-xs p-8">
+              <h2 className="text-lg text-ivory">Dados da unidade</h2>
+              <Hairline className="my-5 max-w-12" />
+              <dl className="space-y-4 text-sm">
+                {dados.map(([label, value]) => (
+                  <div key={label}>
+                    <dt className="text-xs uppercase tracking-[0.16em] text-muted-foreground">
+                      {label}
+                    </dt>
+                    <dd className="mt-1 text-ivory/80">{value}</dd>
+                  </div>
+                ))}
+              </dl>
+              {u.dadosDeDesenvolvimento && (
+                <p className="mt-6 text-xs leading-relaxed text-muted-foreground">
+                  Informações institucionais em processo de verificação. Confirme os dados junto aos
+                  canais oficiais antes de se deslocar.
+                </p>
+              )}
+            </aside>
+          </div>
+        </Container>
+      </Section>
+      <CtaReservado />
+    </>
+  );
+}

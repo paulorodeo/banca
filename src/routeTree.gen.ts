@@ -10,33 +10,167 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AreasDeAtuacaoRouteImport } from './routes/areas-de-atuacao'
+import { Route as AtendimentoReservadoRouteImport } from './routes/atendimento-reservado'
+import { Route as ContatoRouteImport } from './routes/contato'
+import { Route as OEscritorioRouteImport } from './routes/o-escritorio'
+import { Route as PauloSinigaliaRouteImport } from './routes/paulo-sinigalia'
+import { Route as ConteudosIndexRouteImport } from './routes/conteudos.index'
+import { Route as ConteudosSlugRouteImport } from './routes/conteudos.$slug'
+import { Route as DelegaciasIndexRouteImport } from './routes/delegacias.index'
+import { Route as DelegaciasSlugRouteImport } from './routes/delegacias.$slug'
+import { Route as ApiPublicTriagemRouteImport } from './routes/api/public/triagem'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AreasDeAtuacaoRoute = AreasDeAtuacaoRouteImport.update({
+  id: '/areas-de-atuacao',
+  path: '/areas-de-atuacao',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AtendimentoReservadoRoute = AtendimentoReservadoRouteImport.update({
+  id: '/atendimento-reservado',
+  path: '/atendimento-reservado',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContatoRoute = ContatoRouteImport.update({
+  id: '/contato',
+  path: '/contato',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OEscritorioRoute = OEscritorioRouteImport.update({
+  id: '/o-escritorio',
+  path: '/o-escritorio',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PauloSinigaliaRoute = PauloSinigaliaRouteImport.update({
+  id: '/paulo-sinigalia',
+  path: '/paulo-sinigalia',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConteudosIndexRoute = ConteudosIndexRouteImport.update({
+  id: '/conteudos/',
+  path: '/conteudos/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConteudosSlugRoute = ConteudosSlugRouteImport.update({
+  id: '/conteudos/$slug',
+  path: '/conteudos/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DelegaciasIndexRoute = DelegaciasIndexRouteImport.update({
+  id: '/delegacias/',
+  path: '/delegacias/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DelegaciasSlugRoute = DelegaciasSlugRouteImport.update({
+  id: '/delegacias/$slug',
+  path: '/delegacias/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicTriagemRoute = ApiPublicTriagemRouteImport.update({
+  id: '/api/public/triagem',
+  path: '/api/public/triagem',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/areas-de-atuacao': typeof AreasDeAtuacaoRoute
+  '/atendimento-reservado': typeof AtendimentoReservadoRoute
+  '/contato': typeof ContatoRoute
+  '/o-escritorio': typeof OEscritorioRoute
+  '/paulo-sinigalia': typeof PauloSinigaliaRoute
+  '/conteudos/$slug': typeof ConteudosSlugRoute
+  '/delegacias/$slug': typeof DelegaciasSlugRoute
+  '/conteudos/': typeof ConteudosIndexRoute
+  '/delegacias/': typeof DelegaciasIndexRoute
+  '/api/public/triagem': typeof ApiPublicTriagemRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/areas-de-atuacao': typeof AreasDeAtuacaoRoute
+  '/atendimento-reservado': typeof AtendimentoReservadoRoute
+  '/contato': typeof ContatoRoute
+  '/o-escritorio': typeof OEscritorioRoute
+  '/paulo-sinigalia': typeof PauloSinigaliaRoute
+  '/conteudos/$slug': typeof ConteudosSlugRoute
+  '/delegacias/$slug': typeof DelegaciasSlugRoute
+  '/conteudos': typeof ConteudosIndexRoute
+  '/delegacias': typeof DelegaciasIndexRoute
+  '/api/public/triagem': typeof ApiPublicTriagemRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/areas-de-atuacao': typeof AreasDeAtuacaoRoute
+  '/atendimento-reservado': typeof AtendimentoReservadoRoute
+  '/contato': typeof ContatoRoute
+  '/o-escritorio': typeof OEscritorioRoute
+  '/paulo-sinigalia': typeof PauloSinigaliaRoute
+  '/conteudos/$slug': typeof ConteudosSlugRoute
+  '/delegacias/$slug': typeof DelegaciasSlugRoute
+  '/conteudos/': typeof ConteudosIndexRoute
+  '/delegacias/': typeof DelegaciasIndexRoute
+  '/api/public/triagem': typeof ApiPublicTriagemRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/areas-de-atuacao'
+    | '/atendimento-reservado'
+    | '/contato'
+    | '/o-escritorio'
+    | '/paulo-sinigalia'
+    | '/conteudos/$slug'
+    | '/delegacias/$slug'
+    | '/conteudos/'
+    | '/delegacias/'
+    | '/api/public/triagem'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/areas-de-atuacao'
+    | '/atendimento-reservado'
+    | '/contato'
+    | '/o-escritorio'
+    | '/paulo-sinigalia'
+    | '/conteudos/$slug'
+    | '/delegacias/$slug'
+    | '/conteudos'
+    | '/delegacias'
+    | '/api/public/triagem'
+  id:
+    | '__root__'
+    | '/'
+    | '/areas-de-atuacao'
+    | '/atendimento-reservado'
+    | '/contato'
+    | '/o-escritorio'
+    | '/paulo-sinigalia'
+    | '/conteudos/$slug'
+    | '/delegacias/$slug'
+    | '/conteudos/'
+    | '/delegacias/'
+    | '/api/public/triagem'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AreasDeAtuacaoRoute: typeof AreasDeAtuacaoRoute
+  AtendimentoReservadoRoute: typeof AtendimentoReservadoRoute
+  ContatoRoute: typeof ContatoRoute
+  OEscritorioRoute: typeof OEscritorioRoute
+  PauloSinigaliaRoute: typeof PauloSinigaliaRoute
+  ConteudosSlugRoute: typeof ConteudosSlugRoute
+  DelegaciasSlugRoute: typeof DelegaciasSlugRoute
+  ConteudosIndexRoute: typeof ConteudosIndexRoute
+  DelegaciasIndexRoute: typeof DelegaciasIndexRoute
+  ApiPublicTriagemRoute: typeof ApiPublicTriagemRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,22 +182,92 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/areas-de-atuacao': {
+      id: '/areas-de-atuacao'
+      path: '/areas-de-atuacao'
+      fullPath: '/areas-de-atuacao'
+      preLoaderRoute: typeof AreasDeAtuacaoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/atendimento-reservado': {
+      id: '/atendimento-reservado'
+      path: '/atendimento-reservado'
+      fullPath: '/atendimento-reservado'
+      preLoaderRoute: typeof AtendimentoReservadoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contato': {
+      id: '/contato'
+      path: '/contato'
+      fullPath: '/contato'
+      preLoaderRoute: typeof ContatoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/o-escritorio': {
+      id: '/o-escritorio'
+      path: '/o-escritorio'
+      fullPath: '/o-escritorio'
+      preLoaderRoute: typeof OEscritorioRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/paulo-sinigalia': {
+      id: '/paulo-sinigalia'
+      path: '/paulo-sinigalia'
+      fullPath: '/paulo-sinigalia'
+      preLoaderRoute: typeof PauloSinigaliaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/conteudos/': {
+      id: '/conteudos/'
+      path: '/conteudos'
+      fullPath: '/conteudos/'
+      preLoaderRoute: typeof ConteudosIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/conteudos/$slug': {
+      id: '/conteudos/$slug'
+      path: '/conteudos/$slug'
+      fullPath: '/conteudos/$slug'
+      preLoaderRoute: typeof ConteudosSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/delegacias/': {
+      id: '/delegacias/'
+      path: '/delegacias'
+      fullPath: '/delegacias/'
+      preLoaderRoute: typeof DelegaciasIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/delegacias/$slug': {
+      id: '/delegacias/$slug'
+      path: '/delegacias/$slug'
+      fullPath: '/delegacias/$slug'
+      preLoaderRoute: typeof DelegaciasSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/triagem': {
+      id: '/api/public/triagem'
+      path: '/api/public/triagem'
+      fullPath: '/api/public/triagem'
+      preLoaderRoute: typeof ApiPublicTriagemRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AreasDeAtuacaoRoute: AreasDeAtuacaoRoute,
+  AtendimentoReservadoRoute: AtendimentoReservadoRoute,
+  ContatoRoute: ContatoRoute,
+  OEscritorioRoute: OEscritorioRoute,
+  PauloSinigaliaRoute: PauloSinigaliaRoute,
+  ConteudosSlugRoute: ConteudosSlugRoute,
+  DelegaciasSlugRoute: DelegaciasSlugRoute,
+  ConteudosIndexRoute: ConteudosIndexRoute,
+  DelegaciasIndexRoute: DelegaciasIndexRoute,
+  ApiPublicTriagemRoute: ApiPublicTriagemRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
