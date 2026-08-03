@@ -17,6 +17,8 @@ import { Route as OEscritorioRouteImport } from './routes/o-escritorio'
 import { Route as PauloSinigaliaRouteImport } from './routes/paulo-sinigalia'
 import { Route as ConteudosIndexRouteImport } from './routes/conteudos.index'
 import { Route as ConteudosSlugRouteImport } from './routes/conteudos.$slug'
+import { Route as DelegaciasIndexRouteImport } from './routes/delegacias.index'
+import { Route as DelegaciasSlugRouteImport } from './routes/delegacias.$slug'
 import { Route as ApiPublicTriagemRouteImport } from './routes/api/public/triagem'
 
 const IndexRoute = IndexRouteImport.update({
@@ -59,6 +61,16 @@ const ConteudosSlugRoute = ConteudosSlugRouteImport.update({
   path: '/conteudos/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DelegaciasIndexRoute = DelegaciasIndexRouteImport.update({
+  id: '/delegacias/',
+  path: '/delegacias/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DelegaciasSlugRoute = DelegaciasSlugRouteImport.update({
+  id: '/delegacias/$slug',
+  path: '/delegacias/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPublicTriagemRoute = ApiPublicTriagemRouteImport.update({
   id: '/api/public/triagem',
   path: '/api/public/triagem',
@@ -73,7 +85,9 @@ export interface FileRoutesByFullPath {
   '/o-escritorio': typeof OEscritorioRoute
   '/paulo-sinigalia': typeof PauloSinigaliaRoute
   '/conteudos/$slug': typeof ConteudosSlugRoute
+  '/delegacias/$slug': typeof DelegaciasSlugRoute
   '/conteudos/': typeof ConteudosIndexRoute
+  '/delegacias/': typeof DelegaciasIndexRoute
   '/api/public/triagem': typeof ApiPublicTriagemRoute
 }
 export interface FileRoutesByTo {
@@ -84,7 +98,9 @@ export interface FileRoutesByTo {
   '/o-escritorio': typeof OEscritorioRoute
   '/paulo-sinigalia': typeof PauloSinigaliaRoute
   '/conteudos/$slug': typeof ConteudosSlugRoute
+  '/delegacias/$slug': typeof DelegaciasSlugRoute
   '/conteudos': typeof ConteudosIndexRoute
+  '/delegacias': typeof DelegaciasIndexRoute
   '/api/public/triagem': typeof ApiPublicTriagemRoute
 }
 export interface FileRoutesById {
@@ -96,7 +112,9 @@ export interface FileRoutesById {
   '/o-escritorio': typeof OEscritorioRoute
   '/paulo-sinigalia': typeof PauloSinigaliaRoute
   '/conteudos/$slug': typeof ConteudosSlugRoute
+  '/delegacias/$slug': typeof DelegaciasSlugRoute
   '/conteudos/': typeof ConteudosIndexRoute
+  '/delegacias/': typeof DelegaciasIndexRoute
   '/api/public/triagem': typeof ApiPublicTriagemRoute
 }
 export interface FileRouteTypes {
@@ -109,7 +127,9 @@ export interface FileRouteTypes {
     | '/o-escritorio'
     | '/paulo-sinigalia'
     | '/conteudos/$slug'
+    | '/delegacias/$slug'
     | '/conteudos/'
+    | '/delegacias/'
     | '/api/public/triagem'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -120,7 +140,9 @@ export interface FileRouteTypes {
     | '/o-escritorio'
     | '/paulo-sinigalia'
     | '/conteudos/$slug'
+    | '/delegacias/$slug'
     | '/conteudos'
+    | '/delegacias'
     | '/api/public/triagem'
   id:
     | '__root__'
@@ -131,7 +153,9 @@ export interface FileRouteTypes {
     | '/o-escritorio'
     | '/paulo-sinigalia'
     | '/conteudos/$slug'
+    | '/delegacias/$slug'
     | '/conteudos/'
+    | '/delegacias/'
     | '/api/public/triagem'
   fileRoutesById: FileRoutesById
 }
@@ -143,7 +167,9 @@ export interface RootRouteChildren {
   OEscritorioRoute: typeof OEscritorioRoute
   PauloSinigaliaRoute: typeof PauloSinigaliaRoute
   ConteudosSlugRoute: typeof ConteudosSlugRoute
+  DelegaciasSlugRoute: typeof DelegaciasSlugRoute
   ConteudosIndexRoute: typeof ConteudosIndexRoute
+  DelegaciasIndexRoute: typeof DelegaciasIndexRoute
   ApiPublicTriagemRoute: typeof ApiPublicTriagemRoute
 }
 
@@ -205,6 +231,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ConteudosSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/delegacias/': {
+      id: '/delegacias/'
+      path: '/delegacias'
+      fullPath: '/delegacias/'
+      preLoaderRoute: typeof DelegaciasIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/delegacias/$slug': {
+      id: '/delegacias/$slug'
+      path: '/delegacias/$slug'
+      fullPath: '/delegacias/$slug'
+      preLoaderRoute: typeof DelegaciasSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/triagem': {
       id: '/api/public/triagem'
       path: '/api/public/triagem'
@@ -223,7 +263,9 @@ const rootRouteChildren: RootRouteChildren = {
   OEscritorioRoute: OEscritorioRoute,
   PauloSinigaliaRoute: PauloSinigaliaRoute,
   ConteudosSlugRoute: ConteudosSlugRoute,
+  DelegaciasSlugRoute: DelegaciasSlugRoute,
   ConteudosIndexRoute: ConteudosIndexRoute,
+  DelegaciasIndexRoute: DelegaciasIndexRoute,
   ApiPublicTriagemRoute: ApiPublicTriagemRoute,
 }
 export const routeTree = rootRouteImport
