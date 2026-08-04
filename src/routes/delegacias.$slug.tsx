@@ -76,7 +76,35 @@ function DelegaciaPage() {
                     Bairros de referência: {dp.bairros.join(", ")}.
                   </p>
                 )}
+                {dp.observacaoBairros && (
+                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                    {dp.observacaoBairros}
+                  </p>
+                )}
               </article>
+              {dp.secoes?.map((secao) => (
+                <article key={secao.titulo}>
+                  <h2 className="text-2xl text-ivory md:text-3xl">{secao.titulo}</h2>
+                  <Hairline className="my-6 max-w-16" />
+                  {secao.paragrafos?.map((p) => (
+                    <p key={p} className="mb-4 text-base leading-relaxed text-muted-foreground">
+                      {p}
+                    </p>
+                  ))}
+                  {secao.lista && (
+                    <ul className="mt-4 space-y-2 text-sm text-ivory/70">
+                      {secao.lista.map((item) => (
+                        <li key={item} className="flex gap-2">
+                          <span aria-hidden className="text-gold">
+                            —
+                          </span>
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </article>
+              ))}
               {dp.faq.length > 0 && (
                 <article>
                   <h2 className="text-2xl text-ivory md:text-3xl">Perguntas frequentes</h2>
@@ -115,6 +143,11 @@ function DelegaciaPage() {
               )}
             </aside>
           </div>
+          {dp.avisoRodape && (
+            <p className="mt-14 border-t border-border pt-6 text-xs leading-relaxed text-muted-foreground">
+              {dp.avisoRodape}
+            </p>
+          )}
         </Container>
       </Section>
       <CtaReservado />

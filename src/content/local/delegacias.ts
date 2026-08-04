@@ -1,4 +1,5 @@
 import type { Delegacia } from "../types";
+import { AVISO_RODAPE, delegaciasExtra } from "./delegacias-extra";
 
 interface DelegaciaSeed {
   slug: string;
@@ -72,8 +73,8 @@ const seeds: DelegaciaSeed[] = [
     slug: "advogado-34-dp-morumbi",
     numero: "34",
     ordinal: "34º",
-    nomeOficial: "34º Distrito Policial — Morumbi",
-    bairro: "Morumbi",
+    nomeOficial: "34º Distrito Policial — Vila Sônia / Morumbi",
+    bairro: "Vila Sônia/Morumbi",
     regiaoSlug: "morumbi",
     bairros: ["Morumbi", "Real Parque", "Jardim Vitória Régia", "Vila Andrade"],
     contextoTerritorial:
@@ -140,6 +141,9 @@ function build(seed: DelegaciaSeed): Delegacia {
     id: `dp-${seed.numero}`,
     slug: seed.slug,
     h1,
+    cardTitulo: `Advogado criminal próximo ao ${seed.ordinal} DP`,
+    cardSubtitulo: seed.bairro,
+    cardResumo: `Atendimento jurídico na região de ${seed.bairro}, em São Paulo, incluindo procedimentos relacionados ao ${seed.nomeOficial}.`,
     seo: {
       title: `Advogado Criminal Próximo ao ${seed.ordinal} DP ${seed.bairro} | Paulo Sinigalia`,
       description: `Atuação criminal e cível estratégica na região do ${seed.ordinal} DP ${seed.bairro}, em São Paulo. Análise individualizada e atendimento reservado com Paulo Sinigalia, OAB/SP 411.502.`,
@@ -159,6 +163,9 @@ function build(seed: DelegaciaSeed): Delegacia {
     contextoTerritorial: seed.contextoTerritorial,
     regiaoSlug: seed.regiaoSlug,
     bairros: seed.bairros,
+    observacaoBairros:
+      "A indicação de bairros é referência territorial de proximidade e não define a circunscrição policial responsável, que depende do endereço exato e da natureza dos fatos.",
+    avisoRodape: AVISO_RODAPE,
     situacoesRelacionadas: seed.situacoes,
     faq: [
       {
@@ -189,4 +196,21 @@ function build(seed: DelegaciaSeed): Delegacia {
   };
 }
 
-export const delegacias: Delegacia[] = seeds.map(build);
+const ORDEM = [
+  "advogado-14-dp-pinheiros",
+  "advogado-15-dp-itaim-bibi",
+  "advogado-27-dp-campo-belo",
+  "advogado-34-dp-morumbi",
+  "advogado-51-dp-butanta",
+  "advogado-89-dp-portal-do-morumbi",
+  "advogado-96-dp-brooklin",
+  "advogado-criminal-11-dp-santo-amaro",
+  "advogado-criminal-16-dp-vila-clementino",
+  "advogado-criminal-7-dp-vila-romana",
+  "advogado-criminal-23-dp-perdizes",
+  "advogado-criminal-91-dp-ceagesp-vila-leopoldina",
+];
+
+export const delegacias: Delegacia[] = [...seeds.map(build), ...delegaciasExtra].sort(
+  (a, b) => ORDEM.indexOf(a.slug) - ORDEM.indexOf(b.slug),
+);

@@ -97,10 +97,22 @@ export interface Delegacia {
   h1: string;
   seo: SeoConfig;
   introducao: string;
+  /** Título curto do card na listagem (ex.: "Advogado criminal próximo ao 7º DP"). */
+  cardTitulo: string;
+  /** Subtítulo do card (bairro/região). */
+  cardSubtitulo: string;
+  /** Texto do card na listagem. */
+  cardResumo: string;
   unidade: DelegaciaUnidade;
   contextoTerritorial: string;
   regiaoSlug: string;
   bairros: string[];
+  /** Seções longas de conteúdo editorial da página. */
+  secoes?: { titulo: string; paragrafos?: string[]; lista?: string[] }[];
+  /** Observação sobre limites de circunscrição exibida abaixo dos bairros. */
+  observacaoBairros?: string;
+  /** Aviso informativo padrão exibido no rodapé da página. */
+  avisoRodape?: string;
   situacoesRelacionadas: string[];
   faq: FAQ[];
   conteudosRelacionados: string[];

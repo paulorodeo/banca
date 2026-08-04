@@ -46,9 +46,10 @@ function DelegaciasPage() {
                 params={{ slug: dp.slug }}
                 className="surface-panel group rounded-xs p-7 transition-colors hover:border-gold/40"
               >
-                <h2 className="text-lg text-ivory group-hover:text-gold">{dp.h1}</h2>
-                <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-muted-foreground">
-                  {dp.introducao}
+                <h2 className="text-base text-ivory group-hover:text-gold">{dp.cardTitulo}</h2>
+                <p className="mt-1 text-lg text-gold/90">{dp.cardSubtitulo}</p>
+                <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
+                  {dp.cardResumo}
                 </p>
               </Link>
             ))}
