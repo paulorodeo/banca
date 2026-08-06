@@ -9,14 +9,14 @@ interface Data {
   conteudo: ConteudoJuridico;
 }
 
-export const Route = createFileRoute("/conteudos/$slug")({
+export const Route = createFileRoute("/artigos/$slug")({
   loader: async ({ params }): Promise<Data> => {
     const conteudo = await content.getConteudo(params.slug);
     if (!conteudo) throw notFound();
     return { conteudo };
   },
   head: ({ params, loaderData }) => {
-    const path = `/conteudos/${params.slug}`;
+    const path = `/artigos/${params.slug}`;
     if (!loaderData) {
       return {
         meta: [{ title: "Conteúdo indisponível" }, { name: "robots", content: "noindex" }],
@@ -49,7 +49,7 @@ export const Route = createFileRoute("/conteudos/$slug")({
           children: JSON.stringify(
             breadcrumbSchema([
               { name: "Início", path: "/" },
-              { name: "Conteúdos", path: "/conteudos" },
+              { name: "Artigos", path: "/artigos" },
               { name: conteudo.titulo, path },
             ]),
           ),
@@ -70,8 +70,8 @@ function ConteudoPage() {
         lead={conteudo.resumo}
         crumbs={[
           { name: "Início", path: "/" },
-          { name: "Conteúdos", path: "/conteudos" },
-          { name: conteudo.titulo, path: `/conteudos/${conteudo.slug}` },
+          { name: "Artigos", path: "/artigos" },
+          { name: conteudo.titulo, path: `/artigos/${conteudo.slug}` },
         ]}
       />
       <Section>

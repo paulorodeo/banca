@@ -5,9 +5,9 @@ import { Container, Section } from "@/components/site/primitives";
 import { ConteudoCard, CtaReservado, PageHero } from "@/components/site/blocks";
 import { canonicalLink, pageMeta } from "@/lib/seo";
 
-const PATH = "/conteudos";
+const PATH = "/artigos";
 
-export const Route = createFileRoute("/conteudos/")({
+export const Route = createFileRoute("/artigos/")({
   loader: async (): Promise<{ conteudos: ConteudoJuridico[] }> => ({
     conteudos: await content.listConteudos(),
   }),
