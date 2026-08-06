@@ -28,7 +28,8 @@ export const Route = createFileRoute("/")({
   loader: async (): Promise<HomeData> => ({
     areas: await content.listAreas(),
     situacoes: await content.listSituacoes(),
-    regioes: await content.listRegioes(),
+    // Mantém sempre colunas completas (múltiplos de 3) na grade territorial.
+    regioes: await content.listRegioes().then((r) => r.slice(0, Math.floor(r.length / 3) * 3)),
     conteudos: (await content.listConteudos()).slice(0, 3),
   }),
   head: () => ({
@@ -212,7 +213,7 @@ function Index() {
 
       <Section tone="raised">
         <Container>
-          <SectionHeading eyebrow="Conteúdos" title="Conteúdos jurídicos em destaque" />
+          <SectionHeading eyebrow="Artigos" title="Artigos jurídicos em destaque" />
           <div className="mt-14 grid gap-6 md:grid-cols-3">
             {conteudos.map((conteudo) => (
               <ConteudoCard key={conteudo.id} conteudo={conteudo} />
