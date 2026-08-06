@@ -65,13 +65,12 @@ const posicionamento = [
     texto:
       "Atuação em cenários que envolvem liberdade, patrimônio, atividade empresarial e exposição reputacional.",
   },
+  {
+    titulo: "Presença territorial",
+    texto:
+      "Conhecimento das dinâmicas de cada região de São Paulo e das rotinas dos procedimentos que nelas tramitam.",
+  },
 ];
-
-posicionamento.push({
-  titulo: "Presença territorial",
-  texto:
-    "Conhecimento das dinâmicas de cada região de São Paulo e das rotinas dos procedimentos que nelas tramitam.",
-});
 
 const processo = [
   { passo: "01", titulo: "Informações iniciais", texto: "Compreensão da natureza geral da situação e verificação de urgência." },
