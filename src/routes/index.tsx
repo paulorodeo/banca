@@ -67,6 +67,12 @@ const posicionamento = [
   },
 ];
 
+posicionamento.push({
+  titulo: "Presença territorial",
+  texto:
+    "Conhecimento das dinâmicas de cada região de São Paulo e das rotinas dos procedimentos que nelas tramitam.",
+});
+
 const processo = [
   { passo: "01", titulo: "Informações iniciais", texto: "Compreensão da natureza geral da situação e verificação de urgência." },
   { passo: "02", titulo: "Análise de viabilidade", texto: "Exame preliminar dos elementos informados, sem parecer automático." },
