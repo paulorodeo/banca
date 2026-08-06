@@ -82,7 +82,7 @@ export function RegiaoCard({ regiao }: { regiao: Regiao }) {
 export function ConteudoCard({ conteudo }: { conteudo: ConteudoJuridico }) {
   return (
     <Link
-      to="/conteudos/$slug"
+      to="/artigos/$slug"
       params={{ slug: conteudo.slug }}
       className="surface-panel group flex flex-col rounded-xs p-7 hover:border-gold/40"
     >

@@ -13,7 +13,7 @@ export const Route = createFileRoute("/artigos/")({
   }),
   head: () => ({
     meta: pageMeta({
-      title: "Conteúdos Jurídicos | Paulo Sinigalia — Advocacia em São Paulo",
+      title: "Artigos Jurídicos | Paulo Sinigalia — Advocacia em São Paulo",
       description:
         "Materiais informativos sobre defesa criminal, medidas urgentes, conflitos societários e proteção patrimonial.",
       path: PATH,
@@ -28,12 +28,12 @@ function ConteudosPage() {
   return (
     <>
       <PageHero
-        eyebrow="Conteúdos"
-        title="Conteúdos jurídicos"
+        eyebrow="Artigos"
+        title="Artigos jurídicos"
         lead="Material de caráter informativo. Não substitui análise individualizada de cada situação."
         crumbs={[
           { name: "Início", path: "/" },
-          { name: "Conteúdos", path: PATH },
+          { name: "Artigos", path: PATH },
         ]}
       />
       <Section>
