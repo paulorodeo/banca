@@ -380,7 +380,7 @@ export const delegaciasExtra2: Delegacia[] = [
     },
     contextoTerritorial:
       "A formação territorial da Vila Mariana é anterior ao reconhecimento administrativo do distrito. Registros históricos relacionam a área a uma sesmaria concedida no final do século XVIII. Durante o século XIX, a abertura de caminhos e a implantação da linha de transporte que ligava São Paulo a Santo Amaro favoreceram a ocupação da região.",
-    regiaoSlug: "vila-mariana",
+    regiaoSlug: "moema-vila-mariana",
     bairros: [
       "Vila Mariana",
       "Paraíso",

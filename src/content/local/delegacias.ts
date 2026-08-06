@@ -1,6 +1,7 @@
 import type { Delegacia } from "../types";
 import { AVISO_RODAPE, delegaciasExtra } from "./delegacias-extra";
 import { delegaciasExtra2 } from "./delegacias-extra-2";
+import { delegaciasExtra3 } from "./delegacias-extra-3";
 
 interface DelegaciaSeed {
   slug: string;
@@ -216,10 +217,17 @@ const ORDEM = [
   "advogado-criminal-36-dp-vila-mariana",
   "advogado-criminal-35-dp-jabaquara",
   "advogado-criminal-99-dp-campo-grande",
+  "advogado-criminal-17-dp-ipiranga",
+  "advogado-criminal-26-dp-sacoma",
+  "advogado-criminal-102-dp-socorro",
+  "advogado-criminal-37-dp-campo-limpo",
+  "advogado-criminal-43-dp-cidade-ademar",
+  "advogado-criminal-48-dp-cidade-dutra",
 ];
 
 export const delegacias: Delegacia[] = [
   ...seeds.map(build),
   ...delegaciasExtra,
   ...delegaciasExtra2,
+  ...delegaciasExtra3,
 ].sort((a, b) => ORDEM.indexOf(a.slug) - ORDEM.indexOf(b.slug));
