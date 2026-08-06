@@ -10,7 +10,7 @@ const navItems = [
   { to: "/paulo-sinigalia", label: "Paulo Sinigalia" },
   { to: "/areas-de-atuacao", label: "Áreas de atuação" },
   { to: "/delegacias", label: "Regiões" },
-  { to: "/conteudos", label: "Conteúdos" },
+  { to: "/artigos", label: "Artigos" },
   { to: "/atendimento-reservado", label: "Atendimento" },
 ];
 
