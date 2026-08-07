@@ -2,6 +2,7 @@ import type { Delegacia } from "../types";
 import { AVISO_RODAPE, delegaciasExtra } from "./delegacias-extra";
 import { delegaciasExtra2 } from "./delegacias-extra-2";
 import { delegaciasExtra3 } from "./delegacias-extra-3";
+import { delegaciasExtra4 } from "./delegacias-extra-4";
 
 interface DelegaciaSeed {
   slug: string;
@@ -223,11 +224,197 @@ const ORDEM = [
   "advogado-criminal-37-dp-campo-limpo",
   "advogado-criminal-43-dp-cidade-ademar",
   "advogado-criminal-48-dp-cidade-dutra",
+  "advogado-criminal-47-dp-capao-redondo",
+  "advogado-criminal-92-dp-parque-santo-antonio",
+  "advogado-criminal-100-dp-jardim-herculano",
 ];
 
-export const delegacias: Delegacia[] = [
+/**
+ * Grafo territorial interno: cada unidade aponta para vizinhas geograficamente
+ * coerentes, distribuindo autoridade interna e ajudando o visitante a
+ * localizar a unidade correta conforme o endereço dos fatos.
+ */
+const RELACIONADAS: Record<string, string[]> = {
+  "advogado-14-dp-pinheiros": [
+    "advogado-criminal-7-dp-vila-romana",
+    "advogado-criminal-23-dp-perdizes",
+    "advogado-51-dp-butanta",
+    "advogado-criminal-78-dp-jardins",
+  ],
+  "advogado-15-dp-itaim-bibi": [
+    "advogado-14-dp-pinheiros",
+    "advogado-criminal-78-dp-jardins",
+    "advogado-27-dp-campo-belo",
+    "advogado-96-dp-brooklin",
+  ],
+  "advogado-27-dp-campo-belo": [
+    "advogado-15-dp-itaim-bibi",
+    "advogado-96-dp-brooklin",
+    "advogado-criminal-11-dp-santo-amaro",
+    "advogado-criminal-35-dp-jabaquara",
+  ],
+  "advogado-34-dp-morumbi": [
+    "advogado-89-dp-portal-do-morumbi",
+    "advogado-51-dp-butanta",
+    "advogado-criminal-37-dp-campo-limpo",
+    "advogado-criminal-75-dp-jardim-arpoador",
+  ],
+  "advogado-51-dp-butanta": [
+    "advogado-14-dp-pinheiros",
+    "advogado-34-dp-morumbi",
+    "advogado-criminal-93-dp-jaguare",
+    "advogado-criminal-91-dp-ceagesp-vila-leopoldina",
+  ],
+  "advogado-89-dp-portal-do-morumbi": [
+    "advogado-34-dp-morumbi",
+    "advogado-criminal-37-dp-campo-limpo",
+    "advogado-96-dp-brooklin",
+    "advogado-criminal-11-dp-santo-amaro",
+  ],
+  "advogado-96-dp-brooklin": [
+    "advogado-27-dp-campo-belo",
+    "advogado-15-dp-itaim-bibi",
+    "advogado-criminal-11-dp-santo-amaro",
+    "advogado-criminal-35-dp-jabaquara",
+  ],
+  "advogado-criminal-11-dp-santo-amaro": [
+    "advogado-criminal-102-dp-socorro",
+    "advogado-27-dp-campo-belo",
+    "advogado-96-dp-brooklin",
+    "advogado-criminal-92-dp-parque-santo-antonio",
+  ],
+  "advogado-criminal-16-dp-vila-clementino": [
+    "advogado-criminal-36-dp-vila-mariana",
+    "advogado-criminal-35-dp-jabaquara",
+    "advogado-criminal-17-dp-ipiranga",
+    "advogado-27-dp-campo-belo",
+  ],
+  "advogado-criminal-7-dp-vila-romana": [
+    "advogado-criminal-23-dp-perdizes",
+    "advogado-criminal-91-dp-ceagesp-vila-leopoldina",
+    "advogado-criminal-93-dp-jaguare",
+    "advogado-14-dp-pinheiros",
+  ],
+  "advogado-criminal-23-dp-perdizes": [
+    "advogado-criminal-7-dp-vila-romana",
+    "advogado-14-dp-pinheiros",
+    "advogado-criminal-91-dp-ceagesp-vila-leopoldina",
+    "advogado-criminal-78-dp-jardins",
+  ],
+  "advogado-criminal-91-dp-ceagesp-vila-leopoldina": [
+    "advogado-criminal-7-dp-vila-romana",
+    "advogado-criminal-93-dp-jaguare",
+    "advogado-51-dp-butanta",
+    "advogado-criminal-23-dp-perdizes",
+  ],
+  "advogado-criminal-78-dp-jardins": [
+    "advogado-14-dp-pinheiros",
+    "advogado-15-dp-itaim-bibi",
+    "advogado-criminal-23-dp-perdizes",
+    "advogado-criminal-36-dp-vila-mariana",
+  ],
+  "advogado-criminal-93-dp-jaguare": [
+    "advogado-criminal-91-dp-ceagesp-vila-leopoldina",
+    "advogado-51-dp-butanta",
+    "advogado-criminal-7-dp-vila-romana",
+    "advogado-14-dp-pinheiros",
+  ],
+  "advogado-criminal-75-dp-jardim-arpoador": [
+    "advogado-51-dp-butanta",
+    "advogado-criminal-37-dp-campo-limpo",
+    "advogado-34-dp-morumbi",
+    "advogado-criminal-93-dp-jaguare",
+  ],
+  "advogado-criminal-36-dp-vila-mariana": [
+    "advogado-criminal-16-dp-vila-clementino",
+    "advogado-criminal-35-dp-jabaquara",
+    "advogado-criminal-17-dp-ipiranga",
+    "advogado-criminal-78-dp-jardins",
+  ],
+  "advogado-criminal-35-dp-jabaquara": [
+    "advogado-criminal-43-dp-cidade-ademar",
+    "advogado-27-dp-campo-belo",
+    "advogado-criminal-16-dp-vila-clementino",
+    "advogado-criminal-99-dp-campo-grande",
+  ],
+  "advogado-criminal-99-dp-campo-grande": [
+    "advogado-criminal-48-dp-cidade-dutra",
+    "advogado-criminal-102-dp-socorro",
+    "advogado-criminal-43-dp-cidade-ademar",
+    "advogado-criminal-35-dp-jabaquara",
+  ],
+  "advogado-criminal-17-dp-ipiranga": [
+    "advogado-criminal-26-dp-sacoma",
+    "advogado-criminal-36-dp-vila-mariana",
+    "advogado-criminal-16-dp-vila-clementino",
+  ],
+  "advogado-criminal-26-dp-sacoma": [
+    "advogado-criminal-17-dp-ipiranga",
+    "advogado-criminal-35-dp-jabaquara",
+    "advogado-criminal-16-dp-vila-clementino",
+  ],
+  "advogado-criminal-102-dp-socorro": [
+    "advogado-criminal-11-dp-santo-amaro",
+    "advogado-criminal-99-dp-campo-grande",
+    "advogado-criminal-48-dp-cidade-dutra",
+    "advogado-criminal-92-dp-parque-santo-antonio",
+  ],
+  "advogado-criminal-37-dp-campo-limpo": [
+    "advogado-34-dp-morumbi",
+    "advogado-89-dp-portal-do-morumbi",
+    "advogado-criminal-47-dp-capao-redondo",
+    "advogado-criminal-92-dp-parque-santo-antonio",
+    "advogado-criminal-100-dp-jardim-herculano",
+  ],
+  "advogado-criminal-43-dp-cidade-ademar": [
+    "advogado-27-dp-campo-belo",
+    "advogado-criminal-35-dp-jabaquara",
+    "advogado-criminal-99-dp-campo-grande",
+    "advogado-criminal-48-dp-cidade-dutra",
+  ],
+  "advogado-criminal-48-dp-cidade-dutra": [
+    "advogado-criminal-99-dp-campo-grande",
+    "advogado-criminal-102-dp-socorro",
+    "advogado-criminal-43-dp-cidade-ademar",
+    "advogado-criminal-35-dp-jabaquara",
+  ],
+  "advogado-criminal-47-dp-capao-redondo": [
+    "advogado-criminal-37-dp-campo-limpo",
+    "advogado-criminal-92-dp-parque-santo-antonio",
+    "advogado-criminal-100-dp-jardim-herculano",
+    "advogado-51-dp-butanta",
+  ],
+  "advogado-criminal-92-dp-parque-santo-antonio": [
+    "advogado-criminal-37-dp-campo-limpo",
+    "advogado-criminal-47-dp-capao-redondo",
+    "advogado-criminal-100-dp-jardim-herculano",
+    "advogado-criminal-102-dp-socorro",
+  ],
+  "advogado-criminal-100-dp-jardim-herculano": [
+    "advogado-criminal-92-dp-parque-santo-antonio",
+    "advogado-criminal-47-dp-capao-redondo",
+    "advogado-criminal-102-dp-socorro",
+    "advogado-criminal-37-dp-campo-limpo",
+  ],
+};
+
+const base: Delegacia[] = [
   ...seeds.map(build),
   ...delegaciasExtra,
   ...delegaciasExtra2,
   ...delegaciasExtra3,
+  ...delegaciasExtra4,
 ].sort((a, b) => ORDEM.indexOf(a.slug) - ORDEM.indexOf(b.slug));
+
+const porSlug = new Map(base.map((dp) => [dp.slug, dp]));
+
+export const delegacias: Delegacia[] = base.map((dp) => ({
+  ...dp,
+  delegaciasRelacionadas: (RELACIONADAS[dp.slug] ?? [])
+    .map((slug) => porSlug.get(slug))
+    .filter((vizinha): vizinha is Delegacia => Boolean(vizinha))
+    .map((vizinha) => ({
+      slug: vizinha.slug,
+      titulo: `${vizinha.cardTitulo} ${vizinha.cardSubtitulo}`,
+    })),
+}));
