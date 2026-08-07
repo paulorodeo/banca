@@ -777,6 +777,8 @@ export const delegaciasExtra3: Delegacia[] = [
         "advogado criminal 48º DP Cidade Dutra",
         "advogado criminal Interlagos",
         "advogado criminal Avenida Teotônio Vilela",
+        "advogado para intimação Cidade Dutra",
+        "advogado criminal próximo ao Autódromo de Interlagos",
       ],
     },
     introducao:
@@ -795,7 +797,9 @@ export const delegaciasExtra3: Delegacia[] = [
       "Jardim Primavera",
       "Rio Bonito",
       "Vila São José",
-      "Jardim Icaraí",
+      "Jardim Guanhembu",
+      "Jardim Iporanga",
+      "Jardim Santa Rita",
     ],
     observacaoBairros: OBS_PADRAO,
     secoes: [
@@ -823,11 +827,93 @@ export const delegaciasExtra3: Delegacia[] = [
         lista: [
           "Avenida Teotônio Vilela",
           "Avenida Interlagos",
+          "Rua Aníbal dos Anjos Carvalho",
+          "Avenida Atlântica",
           "Represa Guarapiranga",
+          "Represa Billings",
           "Autódromo de Interlagos",
-          "estações Grajaú e Autódromo",
-          "eixo Cidade Dutra–Socorro",
+          "estações Autódromo e Primavera–Interlagos",
+          "eixo Cidade Dutra–Grajaú e eixo Cidade Dutra–Socorro",
+          "proximidades do Rio Bonito",
           "divisa com Grajaú e Parelheiros",
+        ],
+      },
+      {
+        titulo: "Atendimento antes do comparecimento ao 48º DP",
+        paragrafos: [
+          "O recebimento de uma intimação ou convocação deve ser tratado com atenção. Uma convocação não deve ser ignorada, mas também não é recomendável apresentar informações sensíveis sem compreender o contexto do procedimento.",
+          "Quando o chamado ocorre por telefone ou aplicativo, a pessoa pode confirmar os dados por canais oficiais antes de fornecer documentos ou informações pessoais.",
+        ],
+        lista: [
+          "autenticidade do documento ou do contato",
+          "número do procedimento e unidade responsável",
+          "data e horário indicados",
+          "condição da pessoa convocada",
+          "documentos solicitados",
+          "existência de medida urgente",
+          "possibilidade de acompanhamento profissional",
+        ],
+      },
+      {
+        titulo: "História de Cidade Dutra",
+        paragrafos: [
+          "Cidade Dutra integra o território administrado pela Subprefeitura de Capela do Socorro. A região esteve originalmente ligada ao antigo Município de Santo Amaro e a áreas rurais próximas às represas e aos caminhos que conduziam ao extremo sul de São Paulo.",
+          "A expansão urbana ganhou força durante o século XX, influenciada pela construção das represas, pelo desenvolvimento de Interlagos e pela criação de novos núcleos habitacionais. O nome Cidade Dutra está ligado ao projeto denominado Cidade Previdenciária Presidente Dutra, implantado como conjunto habitacional destinado a trabalhadores e segurados de instituições previdenciárias.",
+          "Com o crescimento populacional, novos bairros, comércios, escolas, serviços e linhas de transporte passaram a ocupar o território. A Avenida Senador Teotônio Vilela consolidou-se como um dos principais eixos comerciais e de mobilidade, conectando Cidade Dutra ao Grajaú, a Interlagos e a outras áreas da Zona Sul.",
+          "Atualmente, Cidade Dutra possui perfil predominantemente residencial e comercial, com grande circulação de trabalhadores, estudantes, passageiros e pessoas que se deslocam para eventos e atividades de lazer em Interlagos.",
+        ],
+      },
+      {
+        titulo: "História territorial do 48º Distrito Policial",
+        paragrafos: [
+          "O 48º Distrito Policial é uma das referências da Polícia Civil para procedimentos relacionados a Cidade Dutra e está historicamente associado ao endereço da Rua Aníbal dos Anjos Carvalho.",
+          "Em 2007, o prédio do 48º DP recebeu a instalação de uma estrutura de Polícia Ambiental criada para apoiar ações de proteção dos mananciais Guarapiranga e Billings. Esse registro é relevante porque Cidade Dutra integra uma região marcada pela proximidade com represas, áreas verdes, cursos d'água e territórios sujeitos a regras ambientais específicas.",
+          "A existência histórica dessa estrutura não deve ser interpretada como afirmação de que a mesma organização permaneça atualmente inalterada. Informações operacionais devem ser verificadas diretamente nos canais oficiais da Polícia Civil.",
+        ],
+      },
+      {
+        titulo: "Cidade Dutra, Interlagos e as áreas de mananciais",
+        paragrafos: [
+          "A Subprefeitura de Capela do Socorro abrange os distritos de Socorro, Cidade Dutra e Grajaú. Parcela significativa de seu território está relacionada às áreas de proteção dos mananciais que contribuem para o abastecimento da Região Metropolitana de São Paulo.",
+          "Nem toda irregularidade ambiental constitui automaticamente crime. É necessário distinguir as esferas administrativa, civil e penal, além de identificar qual órgão realizou a fiscalização e qual procedimento foi instaurado.",
+        ],
+        lista: [
+          "ocupação de imóveis e documentação de terrenos",
+          "intervenções em áreas protegidas",
+          "descarte irregular e danos ambientais",
+          "atividades empresariais e transporte de materiais",
+          "obras e conflitos sobre uso da propriedade",
+          "atuação de órgãos de fiscalização",
+        ],
+      },
+      {
+        titulo: "Atendimento relacionado a eventos e ao Autódromo de Interlagos",
+        paragrafos: [
+          "A região recebe grandes eventos esportivos, musicais, empresariais e culturais. A pessoa não precisa residir em Cidade Dutra para solicitar análise jurídica de uma ocorrência registrada na região: visitantes de outras cidades, estados ou países podem necessitar de orientação relacionada ao procedimento local.",
+        ],
+        lista: [
+          "furto de objetos e perda ou uso indevido de documentos",
+          "conflitos entre participantes e lesões",
+          "danos e ocorrências envolvendo veículos",
+          "fraudes na compra de ingressos e falsificação",
+          "abordagem policial",
+          "necessidade de preservação de imagens",
+          "intimação posterior aos fatos",
+        ],
+      },
+      {
+        titulo: "Atendimento a condomínios e estabelecimentos",
+        paragrafos: [
+          "Síndicos, administradoras, empresas e comerciantes podem solicitar análise de situações registradas em áreas comuns ou em estabelecimentos. Imagens e registros devem ser preservados antes que sejam automaticamente sobrescritos pelos sistemas, e a divulgação indevida em grupos ou redes sociais pode expor moradores, vítimas, testemunhas e terceiros.",
+        ],
+        lista: [
+          "imagens de câmeras e identificação de visitantes",
+          "furtos em áreas comuns e desaparecimento de bens",
+          "entrada não autorizada e danos",
+          "ameaças e conflitos entre moradores",
+          "ocorrências com funcionários",
+          "documentos solicitados pela polícia",
+          "fraudes",
         ],
       },
       {
@@ -865,6 +951,30 @@ export const delegaciasExtra3: Delegacia[] = [
           "O acompanhamento pode ser avaliado conforme a condição da pessoa convocada, o tipo de procedimento, a data indicada e a disponibilidade profissional.",
       },
       { id: "dp48-faq-4", ...FAQ_SEM_VINCULO("48º") },
+      {
+        id: "dp48-faq-6",
+        pergunta: "O escritório atende pessoas que não moram em São Paulo?",
+        resposta:
+          "Sim. Uma pessoa pode solicitar análise jurídica mesmo residindo em outra cidade ou estado, especialmente quando a ocorrência ou o procedimento está relacionado a uma unidade policial da capital.",
+      },
+      {
+        id: "dp48-faq-7",
+        pergunta: "Crimes ambientais podem ser tratados pelo escritório?",
+        resposta:
+          "Situações com possível repercussão penal podem ser analisadas. É necessário distinguir eventual procedimento criminal de autuações administrativas e de questões civis.",
+      },
+      {
+        id: "dp48-faq-8",
+        pergunta: "Recebi uma intimação do 48º DP. Devo enviar o documento?",
+        resposta:
+          "Os dados gerais podem ser informados na triagem. Documentos sensíveis devem ser enviados apenas por canal confirmado pelo escritório.",
+      },
+      {
+        id: "dp48-faq-9",
+        pergunta: "Um condomínio pode pedir orientação para entregar imagens?",
+        resposta:
+          "Sim. O atendimento pode avaliar a preservação e a apresentação de imagens, observando a solicitação recebida e a proteção dos dados de terceiros.",
+      },
       { id: "dp48-faq-5", ...FAQ_TRIAGEM },
     ],
     conteudosRelacionados: [

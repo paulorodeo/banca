@@ -114,6 +114,8 @@ export interface Delegacia {
   /** Aviso informativo padrão exibido no rodapé da página. */
   avisoRodape?: string;
   situacoesRelacionadas: string[];
+  /** Unidades territorialmente próximas, para navegação interna. */
+  delegaciasRelacionadas?: { slug: string; titulo: string }[];
   faq: FAQ[];
   conteudosRelacionados: string[];
 }

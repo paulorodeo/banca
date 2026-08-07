@@ -1,4 +1,4 @@
-import { createFileRoute, notFound } from "@tanstack/react-router";
+import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { content } from "@/content/repository";
 import type { Delegacia } from "@/content/types";
 import { Container, Hairline, Section } from "@/components/site/primitives";
@@ -119,6 +119,32 @@ function DelegaciaPage() {
                       </div>
                     ))}
                   </dl>
+                </article>
+              )}
+              {dp.delegaciasRelacionadas && dp.delegaciasRelacionadas.length > 0 && (
+                <article>
+                  <h2 className="text-2xl text-ivory md:text-3xl">Delegacias e regiões próximas</h2>
+                  <Hairline className="my-6 max-w-16" />
+                  <p className="text-base leading-relaxed text-muted-foreground">
+                    Dependendo do endereço em que os fatos ocorreram, o procedimento pode estar
+                    relacionado a outra unidade policial da região.
+                  </p>
+                  <ul className="mt-5 space-y-2 text-sm">
+                    {dp.delegaciasRelacionadas.map((rel) => (
+                      <li key={rel.slug} className="flex gap-2">
+                        <span aria-hidden className="text-gold">
+                          —
+                        </span>
+                        <Link
+                          to="/delegacias/$slug"
+                          params={{ slug: rel.slug }}
+                          className="text-ivory/80 underline-offset-4 transition-colors hover:text-gold hover:underline"
+                        >
+                          {rel.titulo}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
                 </article>
               )}
             </div>
