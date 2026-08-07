@@ -193,4 +193,28 @@ export const regioes: Regiao[] = [
     bairros: ["Cidade Dutra", "Interlagos", "Jardim Primavera"],
     href: "/delegacias/advogado-criminal-48-dp-cidade-dutra",
   },
+  {
+    id: "reg-capao-redondo",
+    slug: "capao-redondo",
+    nome: "Capão Redondo",
+    descricao: "Eixo da Estrada de Itapecerica, com forte densidade residencial e comercial.",
+    bairros: ["Capão Redondo", "Jardim Amália", "Cohab Adventista"],
+    href: "/delegacias/advogado-criminal-47-dp-capao-redondo",
+  },
+  {
+    id: "reg-parque-santo-antonio",
+    slug: "parque-santo-antonio",
+    nome: "Parque Santo Antônio",
+    descricao: "Jardim São Luís e M'Boi Mirim, região onde o escritório está estabelecido.",
+    bairros: ["Parque Santo Antônio", "Jardim São Luís", "Jardim das Flores"],
+    href: "/delegacias/advogado-criminal-92-dp-parque-santo-antonio",
+  },
+  {
+    id: "reg-jardim-herculano",
+    slug: "jardim-herculano",
+    nome: "Jardim Herculano",
+    descricao: "Jardim Ângela e Riviera Paulista, no extremo sul de M'Boi Mirim.",
+    bairros: ["Jardim Herculano", "Jardim Ângela", "Riviera Paulista"],
+    href: "/delegacias/advogado-criminal-100-dp-jardim-herculano",
+  },
 ];
