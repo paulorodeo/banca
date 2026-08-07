@@ -1,4 +1,4 @@
-import { createFileRoute, notFound } from "@tanstack/react-router";
+import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { content } from "@/content/repository";
 import type { Delegacia } from "@/content/types";
 import { Container, Hairline, Section } from "@/components/site/primitives";
