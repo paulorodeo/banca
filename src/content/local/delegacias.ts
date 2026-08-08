@@ -401,7 +401,8 @@ const RELACIONADAS: Record<string, string[]> = {
   "advogado-criminal-43-dp-cidade-ademar": [
     "advogado-27-dp-campo-belo",
     "advogado-criminal-35-dp-jabaquara",
-    "advogado-criminal-99-dp-campo-grande",
+    "advogado-criminal-80-dp-vila-joaniza",
+    "advogado-criminal-98-dp-jardim-miriam",
     "advogado-criminal-48-dp-cidade-dutra",
   ],
   "advogado-criminal-48-dp-cidade-dutra": [
