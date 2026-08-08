@@ -3,6 +3,7 @@ import { AVISO_RODAPE, delegaciasExtra } from "./delegacias-extra";
 import { delegaciasExtra2 } from "./delegacias-extra-2";
 import { delegaciasExtra3 } from "./delegacias-extra-3";
 import { delegaciasExtra4 } from "./delegacias-extra-4";
+import { delegaciasExtra5 } from "./delegacias-extra-5";
 
 interface DelegaciaSeed {
   slug: string;
@@ -230,6 +231,35 @@ const ORDEM = [
 ];
 
 /**
+ * Escopo territorial em relação ao endereço físico do escritório
+ * (Jardim das Flores / M'Boi Mirim, Zona Sul):
+ * localCore = núcleo próximo; extendedArea = região ampliada;
+ * serviceArea = demais áreas atendidas (padrão).
+ */
+const LOCAL_CORE = [
+  "advogado-criminal-92-dp-parque-santo-antonio",
+  "advogado-criminal-102-dp-socorro",
+  "advogado-criminal-100-dp-jardim-herculano",
+  "advogado-criminal-11-dp-santo-amaro",
+];
+
+const EXTENDED_AREA = [
+  "advogado-criminal-37-dp-campo-limpo",
+  "advogado-criminal-47-dp-capao-redondo",
+  "advogado-criminal-99-dp-campo-grande",
+  "advogado-criminal-48-dp-cidade-dutra",
+  "advogado-criminal-43-dp-cidade-ademar",
+  "advogado-criminal-80-dp-vila-joaniza",
+  "advogado-criminal-98-dp-jardim-miriam",
+];
+
+function escopoDe(slug: string): "localCore" | "extendedArea" | "serviceArea" {
+  if (LOCAL_CORE.includes(slug)) return "localCore";
+  if (EXTENDED_AREA.includes(slug)) return "extendedArea";
+  return "serviceArea";
+}
+
+/**
  * Grafo territorial interno: cada unidade aponta para vizinhas geograficamente
  * coerentes, distribuindo autoridade interna e ajudando o visitante a
  * localizar a unidade correta conforme o endereço dos fatos.
@@ -410,6 +440,7 @@ const porSlug = new Map(base.map((dp) => [dp.slug, dp]));
 
 export const delegacias: Delegacia[] = base.map((dp) => ({
   ...dp,
+  escopoTerritorial: escopoDe(dp.slug),
   delegaciasRelacionadas: (RELACIONADAS[dp.slug] ?? [])
     .map((slug) => porSlug.get(slug))
     .filter((vizinha): vizinha is Delegacia => Boolean(vizinha))
