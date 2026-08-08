@@ -107,6 +107,12 @@ export interface Delegacia {
   contextoTerritorial: string;
   regiaoSlug: string;
   bairros: string[];
+  /**
+   * Relação territorial com o endereço físico do escritório:
+   * localCore (núcleo próximo), extendedArea (região ampliada)
+   * ou serviceArea (demais áreas atendidas).
+   */
+  escopoTerritorial?: "localCore" | "extendedArea" | "serviceArea";
   /** Seções longas de conteúdo editorial da página. */
   secoes?: { titulo: string; paragrafos?: string[]; lista?: string[] }[];
   /** Observação sobre limites de circunscrição exibida abaixo dos bairros. */

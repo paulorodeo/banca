@@ -118,7 +118,7 @@ export const delegaciasExtra: Delegacia[] = [
     cardTitulo: "Advogado criminal próximo ao 11º DP",
     cardSubtitulo: "Santo Amaro",
     cardResumo:
-      "Atendimento jurídico criminal em Santo Amaro e bairros próximos, incluindo análise de ocorrências e procedimentos relacionados ao 11º Distrito Policial.",
+      "Atendimento jurídico criminal na Zona Sul, incluindo Santo Amaro, Socorro, Guarapiranga e regiões próximas ao 11º DP.",
     seo: {
       title: "Advogado criminal próximo ao 11º DP Santo Amaro | SP",
       description:
@@ -127,11 +127,13 @@ export const delegaciasExtra: Delegacia[] = [
       keywords: [
         "advogado criminal 11º DP Santo Amaro",
         "advogado criminal Santo Amaro",
-        "advogado criminal Zona Sul SP",
+        "advogado próximo ao 11º DP",
+        "advogado para intimação Santo Amaro",
+        "advogado criminal Chácara Santo Antônio",
       ],
     },
     introducao:
-      "O Escritório de Advocacia atende pessoas e empresas em Santo Amaro, Chácara Santo Antônio, Alto da Boa Vista, Granja Julieta, Campo Grande e regiões próximas, inclusive quando existe boletim de ocorrência, intimação ou investigação relacionada ao 11º Distrito Policial.",
+      "Escritório estabelecido na Zona Sul de São Paulo, o Escritório de Advocacia presta atendimento jurídico criminal em Santo Amaro, Chácara Santo Antônio, Alto da Boa Vista, Granja Julieta, Socorro, Guarapiranga, Jardim São Luís e regiões próximas, incluindo procedimentos relacionados ao 11º Distrito Policial — Santo Amaro. Santo Amaro concentra comércio, hospitais, empresas e terminais de transporte de toda a região, o que produz ocorrências de naturezas bastante distintas — de conflitos patrimoniais e empresariais a intimações, depoimentos e investigações em andamento. Cada situação é analisada de forma reservada e individualizada.",
     unidade: {
       numero: "11",
       nomeOficial: "11º Distrito Policial — Santo Amaro",
@@ -152,6 +154,13 @@ export const delegaciasExtra: Delegacia[] = [
     observacaoBairros:
       "Essas localidades são referências territoriais de proximidade. A definição da delegacia competente depende do endereço exato da ocorrência e da organização territorial da Polícia Civil.",
     secoes: [
+      {
+        titulo: "Escritório de Advocacia com atendimento na Zona Sul",
+        paragrafos: [
+          "O Escritório de Advocacia possui endereço na região de Jardim das Flores / M'Boi Mirim, na Zona Sul de São Paulo, e presta atendimento regional nos eixos que se articulam com Santo Amaro, como Socorro, Guarapiranga, Jardim São Luís e Chácara Santo Antônio.",
+          "Não existe instalação do escritório em Santo Amaro nem junto ao 11º Distrito Policial: a referência é territorial, indicando a área de atendimento. O Escritório é privado e independente, sem vínculo com a Polícia Civil ou com qualquer órgão público.",
+        ],
+      },
       {
         titulo: "Atuação criminal em Santo Amaro",
         paragrafos: [
