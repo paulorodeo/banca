@@ -228,6 +228,8 @@ const ORDEM = [
   "advogado-criminal-47-dp-capao-redondo",
   "advogado-criminal-92-dp-parque-santo-antonio",
   "advogado-criminal-100-dp-jardim-herculano",
+  "advogado-criminal-80-dp-vila-joaniza",
+  "advogado-criminal-98-dp-jardim-miriam",
 ];
 
 /**
@@ -426,6 +428,18 @@ const RELACIONADAS: Record<string, string[]> = {
     "advogado-criminal-102-dp-socorro",
     "advogado-criminal-37-dp-campo-limpo",
   ],
+  "advogado-criminal-80-dp-vila-joaniza": [
+    "advogado-criminal-43-dp-cidade-ademar",
+    "advogado-criminal-98-dp-jardim-miriam",
+    "advogado-criminal-35-dp-jabaquara",
+    "advogado-27-dp-campo-belo",
+  ],
+  "advogado-criminal-98-dp-jardim-miriam": [
+    "advogado-criminal-43-dp-cidade-ademar",
+    "advogado-criminal-80-dp-vila-joaniza",
+    "advogado-criminal-35-dp-jabaquara",
+    "advogado-27-dp-campo-belo",
+  ],
 };
 
 const base: Delegacia[] = [
@@ -434,6 +448,7 @@ const base: Delegacia[] = [
   ...delegaciasExtra2,
   ...delegaciasExtra3,
   ...delegaciasExtra4,
+  ...delegaciasExtra5,
 ].sort((a, b) => ORDEM.indexOf(a.slug) - ORDEM.indexOf(b.slug));
 
 const porSlug = new Map(base.map((dp) => [dp.slug, dp]));
