@@ -217,4 +217,20 @@ export const regioes: Regiao[] = [
     bairros: ["Jardim Herculano", "Jardim Ângela", "Riviera Paulista"],
     href: "/delegacias/advogado-criminal-100-dp-jardim-herculano",
   },
+  {
+    id: "reg-vila-joaniza",
+    slug: "vila-joaniza",
+    nome: "Vila Joaniza",
+    descricao: "Eixo Cidade Ademar–Pedreira, com forte presença residencial e comercial.",
+    bairros: ["Vila Joaniza", "Cidade Ademar", "Pedreira"],
+    href: "/delegacias/advogado-criminal-80-dp-vila-joaniza",
+  },
+  {
+    id: "reg-jardim-miriam",
+    slug: "jardim-miriam",
+    nome: "Jardim Miriam",
+    descricao: "Corredor da Avenida Cupecê, entre Cidade Ademar e a divisa com Diadema.",
+    bairros: ["Jardim Miriam", "Cupecê", "Cidade Júlia"],
+    href: "/delegacias/advogado-criminal-98-dp-jardim-miriam",
+  },
 ];
