@@ -326,7 +326,7 @@ export const delegaciasExtra3: Delegacia[] = [
     cardTitulo: "Advogado criminal próximo ao 102º DP",
     cardSubtitulo: "Socorro",
     cardResumo:
-      "Atendimento jurídico criminal no Socorro, Jurubatuba, Interlagos, Vila Friburgo e regiões próximas ao 102º Distrito Policial.",
+      "Atendimento jurídico criminal na Zona Sul para pessoas e empresas de Socorro, Guarapiranga, Jurubatuba e bairros próximos ao 102º DP.",
     seo: {
       title: "Advogado criminal próximo ao 102º DP Socorro | Zona Sul",
       description:
@@ -334,12 +334,15 @@ export const delegaciasExtra3: Delegacia[] = [
       canonicalPath: "/delegacias/advogado-criminal-102-dp-socorro",
       keywords: [
         "advogado criminal 102º DP Socorro",
+        "advogado criminal Socorro",
+        "advogado próximo ao 102º DP",
+        "advogado criminal Guarapiranga",
         "advogado criminal Jurubatuba",
-        "advogado criminal Interlagos",
+        "advogado para intimação Socorro",
       ],
     },
     introducao:
-      "O Escritório de Advocacia presta atendimento jurídico criminal a pessoas, famílias, condomínios, comerciantes e empresas no Socorro, Jurubatuba, Vila Friburgo, Interlagos, Guarapiranga e regiões próximas, incluindo procedimentos relacionados ao 102º Distrito Policial — Socorro. A atuação pode envolver situações urgentes, intimações, boletins de ocorrência, investigações já iniciadas ou ocorrências que demandem preservação imediata de documentos e imagens.",
+      "Com endereço estabelecido na Zona Sul de São Paulo, na região do Jardim das Flores e M'Boi Mirim, o Escritório de Advocacia presta atendimento jurídico criminal no Socorro, Guarapiranga, Vila Friburgo, Jurubatuba, Veleiros, Interlagos e bairros próximos. A localização regional permite atendimento a pessoas, famílias, profissionais, condomínios e empresas envolvidas em boletins de ocorrência, intimações, investigações e procedimentos relacionados ao 102º Distrito Policial — Socorro. Cada atendimento é conduzido de forma reservada e individualizada.",
     unidade: {
       numero: "102",
       nomeOficial: "102º Distrito Policial — Socorro",
@@ -360,6 +363,13 @@ export const delegaciasExtra3: Delegacia[] = [
     observacaoBairros:
       "A indicação não significa que todos os fatos ocorridos em Interlagos, Jurubatuba ou Guarapiranga pertençam automaticamente à circunscrição do 102º DP. Determinadas ocorrências podem ser encaminhadas a outras unidades territoriais.",
     secoes: [
+      {
+        titulo: "Escritório de Advocacia com atendimento na Zona Sul",
+        paragrafos: [
+          "O Escritório possui endereço no Jardim das Flores, região de M'Boi Mirim, Zona Sul de São Paulo. A partir dessa localização, o atendimento alcança o eixo do Socorro, da Guarapiranga, de Jurubatuba, dos Veleiros e de Interlagos, incluindo condomínios, clubes, marinas e empresas instaladas na região.",
+          "O endereço postal e os dados de contato do escritório correspondem sempre a Jardim das Flores — São Paulo/SP. O Escritório é privado e independente e não possui vínculo com qualquer Distrito Policial ou órgão público.",
+        ],
+      },
       {
         titulo: "Advocacia criminal no Socorro, Jurubatuba e Guarapiranga",
         paragrafos: [
