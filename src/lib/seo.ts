@@ -12,6 +12,18 @@ export const ORG_NAME = "Paulo Sinigalia — Advocacia e Consultoria Jurídica";
 export const ATTORNEY_NAME = "Paulo José Sinigalia";
 export const OAB = "OAB/SP 411.502";
 
+/** Endereço real e único do escritório. Não criar variações por página. */
+export const OFFICE_ADDRESS = {
+  "@type": "PostalAddress",
+  streetAddress: "Rua Antônio Raposo Barreto, 31",
+  addressLocality: "São Paulo",
+  addressRegion: "SP",
+  postalCode: "04904-170",
+  addressCountry: "BR",
+  // Bairro postal do escritório
+  name: "Jardim das Flores",
+} as const;
+
 interface MetaInput {
   title: string;
   description: string;
@@ -49,12 +61,7 @@ export function legalServiceSchema(path: string) {
     name: ORG_NAME,
     url: canonical(path),
     areaServed: { "@type": "City", name: "São Paulo" },
-    address: {
-      "@type": "PostalAddress",
-      addressLocality: "São Paulo",
-      addressRegion: "SP",
-      addressCountry: "BR",
-    },
+    address: OFFICE_ADDRESS,
     provider: {
       "@type": "Attorney",
       name: ATTORNEY_NAME,
