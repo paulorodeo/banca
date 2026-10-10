@@ -4,6 +4,7 @@ import { delegaciasExtra2 } from "./delegacias-extra-2";
 import { delegaciasExtra3 } from "./delegacias-extra-3";
 import { delegaciasExtra4 } from "./delegacias-extra-4";
 import { delegaciasExtra5 } from "./delegacias-extra-5";
+import { delegaciaAmericanopolis } from "./delegacia-americanopolis";
 
 interface DelegaciaSeed {
   slug: string;
@@ -229,6 +230,7 @@ const ORDEM = [
   "advogado-criminal-92-dp-parque-santo-antonio",
   "advogado-criminal-100-dp-jardim-herculano",
   "advogado-criminal-80-dp-vila-joaniza",
+  "advogado-criminal-97-dp-americanopolis",
   "advogado-criminal-98-dp-jardim-miriam",
 ];
 
@@ -252,6 +254,7 @@ const EXTENDED_AREA = [
   "advogado-criminal-48-dp-cidade-dutra",
   "advogado-criminal-43-dp-cidade-ademar",
   "advogado-criminal-80-dp-vila-joaniza",
+  "advogado-criminal-97-dp-americanopolis",
   "advogado-criminal-98-dp-jardim-miriam",
 ];
 
@@ -364,6 +367,7 @@ const RELACIONADAS: Record<string, string[]> = {
     "advogado-criminal-78-dp-jardins",
   ],
   "advogado-criminal-35-dp-jabaquara": [
+    "advogado-criminal-97-dp-americanopolis",
     "advogado-criminal-43-dp-cidade-ademar",
     "advogado-27-dp-campo-belo",
     "advogado-criminal-16-dp-vila-clementino",
@@ -399,6 +403,7 @@ const RELACIONADAS: Record<string, string[]> = {
     "advogado-criminal-100-dp-jardim-herculano",
   ],
   "advogado-criminal-43-dp-cidade-ademar": [
+    "advogado-criminal-97-dp-americanopolis",
     "advogado-27-dp-campo-belo",
     "advogado-criminal-35-dp-jabaquara",
     "advogado-criminal-80-dp-vila-joaniza",
@@ -430,16 +435,24 @@ const RELACIONADAS: Record<string, string[]> = {
     "advogado-criminal-37-dp-campo-limpo",
   ],
   "advogado-criminal-80-dp-vila-joaniza": [
+    "advogado-criminal-97-dp-americanopolis",
     "advogado-criminal-43-dp-cidade-ademar",
     "advogado-criminal-98-dp-jardim-miriam",
     "advogado-criminal-35-dp-jabaquara",
     "advogado-27-dp-campo-belo",
   ],
   "advogado-criminal-98-dp-jardim-miriam": [
+    "advogado-criminal-97-dp-americanopolis",
     "advogado-criminal-43-dp-cidade-ademar",
     "advogado-criminal-80-dp-vila-joaniza",
     "advogado-criminal-35-dp-jabaquara",
     "advogado-27-dp-campo-belo",
+  ],
+  "advogado-criminal-97-dp-americanopolis": [
+    "advogado-criminal-35-dp-jabaquara",
+    "advogado-criminal-80-dp-vila-joaniza",
+    "advogado-criminal-98-dp-jardim-miriam",
+    "advogado-criminal-43-dp-cidade-ademar",
   ],
 };
 
@@ -450,6 +463,7 @@ const base: Delegacia[] = [
   ...delegaciasExtra3,
   ...delegaciasExtra4,
   ...delegaciasExtra5,
+  delegaciaAmericanopolis,
 ].sort((a, b) => ORDEM.indexOf(a.slug) - ORDEM.indexOf(b.slug));
 
 const porSlug = new Map(base.map((dp) => [dp.slug, dp]));
