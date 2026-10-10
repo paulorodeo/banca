@@ -233,4 +233,12 @@ export const regioes: Regiao[] = [
     bairros: ["Jardim Miriam", "Cupecê", "Cidade Júlia"],
     href: "/delegacias/advogado-criminal-98-dp-jardim-miriam",
   },
+  {
+    id: "reg-americanopolis",
+    slug: "americanopolis",
+    nome: "Americanópolis",
+    descricao: "Atendimento jurídico na Zona Sul, incluindo procedimentos relacionados ao 97º DP.",
+    bairros: ["Americanópolis"],
+    href: "/delegacias/advogado-criminal-97-dp-americanopolis",
+  },
 ];
