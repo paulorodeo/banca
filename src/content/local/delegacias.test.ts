@@ -1,31 +1,32 @@
-import { describe, expect, test } from "bun:test";
+import { describe, test } from "node:test";
+import assert from "node:assert/strict";
 import { delegacias } from "./delegacias";
 import { regioes } from "./regioes";
 
 describe("Americanópolis na grade territorial", () => {
   test("completa 30 delegacias sem duplicar unidades", () => {
-    expect(delegacias).toHaveLength(30);
-    expect(new Set(delegacias.map((dp) => dp.unidade.numero)).size).toBe(30);
-    expect(delegacias.slice(-3).map((dp) => dp.unidade.numero)).toEqual(["80", "97", "98"]);
+    assert.equal(delegacias.length, 30);
+    assert.equal(new Set(delegacias.map((dp) => dp.unidade.numero)).size, 30);
+    assert.deepEqual(delegacias.slice(-3).map((dp) => dp.unidade.numero), ["80", "97", "98"]);
   });
 
   test("inclui Americanópolis entre as 30 regiões da home", () => {
-    expect(regioes).toHaveLength(30);
-    expect(regioes.find((regiao) => regiao.slug === "americanopolis")?.href).toBe(
+    assert.equal(regioes.length, 30);
+    assert.equal(regioes.find((regiao) => regiao.slug === "americanopolis")?.href,
       "/delegacias/advogado-criminal-97-dp-americanopolis",
     );
   });
 
   test("classifica Americanópolis como área ampliada, não núcleo físico", () => {
-    expect(delegacias.find((dp) => dp.unidade.numero === "97")?.escopoTerritorial).toBe("extendedArea");
+    assert.equal(delegacias.find((dp) => dp.unidade.numero === "97")?.escopoTerritorial, "extendedArea");
   });
 
   test("conecta reciprocamente o 97º aos quatro distritos do lote", () => {
     const americanopolis = delegacias.find((dp) => dp.unidade.numero === "97");
     for (const numero of ["35", "80", "98", "43"]) {
       const vizinha = delegacias.find((dp) => dp.unidade.numero === numero);
-      expect(americanopolis?.delegaciasRelacionadas?.some((rel) => rel.slug === vizinha?.slug)).toBe(true);
-      expect(vizinha?.delegaciasRelacionadas?.some((rel) => rel.slug === americanopolis?.slug)).toBe(true);
+      assert.equal(americanopolis?.delegaciasRelacionadas?.some((rel) => rel.slug === vizinha?.slug), true);
+      assert.equal(vizinha?.delegaciasRelacionadas?.some((rel) => rel.slug === americanopolis?.slug), true);
     }
   });
 });
