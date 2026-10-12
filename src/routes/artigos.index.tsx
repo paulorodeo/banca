@@ -7,6 +7,7 @@ import { articlesQuery } from '@/content/articles.queries';
 import { Container, Section } from '@/components/site/primitives';
 import { ConteudoCard, CtaReservado, PageHero } from '@/components/site/blocks';
 import { ArticleState, ArticlesPending } from '@/components/site/article-state';
+import { articleListPath } from '@/lib/public-url';
 import { canonicalLink, pageMeta } from '@/lib/seo';
 
 const PATH = '/artigos';
@@ -14,9 +15,9 @@ export const Route = createFileRoute('/artigos/')({
   validateSearch: (search): Partial<ArticleSearch> => articleSearchSchema.parse(search),
   loaderDeps: ({ search }) => articleSearchSchema.parse(search),
   loader: ({ context, deps }) => context.queryClient.ensureQueryData(articlesQuery(deps)),
-  head: ({ loaderData }) => ({
-    meta: [...pageMeta({ title: 'Artigos Jurídicos | Banca Paulista', description: 'Publicações informativas sobre Direito Criminal, delegacias e regiões de São Paulo.', path: PATH }), ...(!loaderData?.ok ? [{ name: 'robots', content: 'noindex' }] : [])],
-    links: canonicalLink(PATH),
+  head: ({ loaderData, match }) => ({
+    meta: [...pageMeta({ title: 'Artigos Jurídicos | Banca Paulista', description: 'Publicações informativas sobre Direito Criminal, delegacias e regiões de São Paulo.', path: articleListPath(articleSearchSchema.parse(match.search)) }), ...(!loaderData?.ok || articleSearchSchema.parse(match.search).sort !== '-publishedAt' ? [{ name: 'robots', content: 'noindex' }] : [])],
+    links: canonicalLink(articleListPath(articleSearchSchema.parse(match.search))),
   }),
   pendingComponent: ArticlesPending,
   errorComponent: () => <ArticleState />,

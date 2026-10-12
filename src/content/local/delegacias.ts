@@ -148,7 +148,7 @@ const seeds: DelegaciaSeed[] = [
     regiaoSlug: "parelheiros",
     bairros: ["Parelheiros", "Marsilac", "Vila Santana", "Barragem", "Sítio Represa"],
     contextoTerritorial:
-      "Parelheiros ocupa o extremo sul do município, entre as represas Billings e Guarapiranga, em área de transição entre a mancha urbana e territórios de proteção ambiental. A região conurba-se com Embu-Guaçu e Itapecerica da Serra e concentra bairros residenciais, conjuntos habitacionais e sítios ao longo de toda a sua extensão.",
+      "Parelheiros e Marsilac são referências territoriais do extremo sul de São Paulo, em região de mananciais e proteção ambiental. O 25º DP — Parelheiros integra a 6ª Delegacia Seccional — Santo Amaro. Essa vinculação administrativa não permite inferir a circunscrição de um endereço; confirme a unidade responsável nos canais oficiais da Polícia Civil.",
     situacoes: ["intimacao", "inquerito", "prisao-em-flagrante"],
     conteudos: [
       "intimacao-o-que-considerar-antes-de-responder",

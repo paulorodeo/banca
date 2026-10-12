@@ -1,3 +1,4 @@
+import { absoluteUrl, DEFAULT_SITE_ORIGIN } from "../lib/public-url";
 import { z } from 'zod';
 import type { ConteudoJuridico, Media } from './types';
 
@@ -50,9 +51,11 @@ export const payloadArticleSchema = z.object({
 export type PayloadArticle = z.infer<typeof payloadArticleSchema>;
 
 export function safeUrl(value: string, base?: string): string | undefined {
+  if (!value.trim()) return undefined;
   try {
     const url = new URL(value, base);
-    return ['https:', 'http:'].includes(url.protocol) && !url.username && !url.password ? url.href : undefined;
+    const local = ['localhost', '127.0.0.1'].includes(url.hostname);
+    return (url.protocol === 'https:' || (local && url.protocol === 'http:')) && !url.username && !url.password ? url.href : undefined;
   } catch { return undefined; }
 }
 function media(value: z.infer<typeof mediaSchema> | null | undefined, base: string): Media | undefined {
@@ -81,7 +84,14 @@ export function parseLexical(nodes: unknown[], base: string, depth = 0, budget =
       return image ? [{ type: 'image', media: image }] : [];
     }
     if (node.type === 'link' || node.type === 'autolink') {
-      const url = safeUrl(node.fields?.url ?? node.url ?? '', base);
+      const raw = node.fields?.url ?? node.url ?? '';
+      // Only articles relations are supported; all other relationships remain plain text.
+      const relation = node.fields?.doc as { relationTo?: unknown; value?: { slug?: unknown } } | undefined;
+      const relationSlug = relation?.value?.slug;
+      const internal = node.fields?.linkType === 'internal';
+      const url = internal
+        ? relation?.relationTo === 'articles' && typeof relationSlug === 'string' && /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(relationSlug) ? absoluteUrl(`/artigos/${relationSlug}`) : undefined
+        : raw.trim() && !raw.startsWith('//') ? safeUrl(raw, DEFAULT_SITE_ORIGIN) : undefined;
       return url ? [{ type: 'link', url, children }] : children;
     }
     if (node.type === 'heading') return [{ type: 'heading', tag: ['h1', 'h2', 'h3'].includes(node.tag ?? '') ? (node.tag ?? 'h3') : 'h3', children }];
