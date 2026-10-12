@@ -115,3 +115,12 @@ Antes de conectar:
 - [ ] Verificar proxies, HTTP 503 SSR, canonical, uploads, painel, backups e abas abertas em produção.
 
 Parelheiros: apenas contexto da página existente foi revisado, sem endereço/telefone/horário inventado e sem nova rota. Referência administrativa pública SEADE: https://produtos.seade.gov.br/produtos/msp/jsg/jsg4_002.htm; é referência histórica, não prova de circunscrição atual por endereço. Confirmar organização atual com a Polícia Civil antes de usar o vínculo como informação operacional.
+
+## Arquivos desta entrega
+- Transporte/contrato: `src/content/payload-transport.ts`, `src/content/payload.ts`, `src/content/articles.server.ts`, `src/content/articles.functions.ts`.
+- URLs e SEO: `src/lib/public-url.ts`, `src/lib/public-url.functions.ts`, `src/lib/seo.ts`, `src/router.tsx`, `src/routes/__root.tsx`, `src/routes/artigos.index.tsx`.
+- Preparação de eventos e testes: `src/content/editorial-events.ts`, `src/content/editorial-audit.test.ts`.
+- Única revisão territorial: contexto de Parelheiros em `src/content/local/delegacias.ts`.
+- Documentação: `docs/payload-editorial.md`, `AGENTS.md`, `roadmap.md`.
+
+Resultado local final: 35 testes passaram (11 editoriais anteriores, 12 novos, 12 territoriais), build automático OK. Playwright verificou artigo com corpo no HTML inicial, 404/noindex, paginação com canonical próprio e ordenação alternativa noindex; todas as 34 delegacias e cinco zonas responderam 200. Nenhuma definição de rota foi alterada. VPS e projeto original não foram acessados/modificados; permissões, assinatura com remetente real, replay durável, purge e Cache API distribuída continuam não validados.
