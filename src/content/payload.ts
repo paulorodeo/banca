@@ -72,12 +72,12 @@ const lexicalNodeSchema = z.object({
   url: z.string().optional(), value: mediaSchema.nullish(),
 });
 /** Whitelisted Lexical nodes only; no HTML, CSS or arbitrary CMS attributes survive. */
-export function parseLexical(nodes: unknown[], base: string, depth = 0, budget = { remaining: 5000 }): RichNode[] {
+export function parseLexical(nodes: unknown[], base: string, depth = 0, budget = { remaining: 5000 }, siteOrigin = DEFAULT_SITE_ORIGIN): RichNode[] {
   if (depth > 30) throw new Error('CMS rich text is too deeply nested');
   return nodes.flatMap((input): RichNode[] => {
     if (--budget.remaining < 0) throw new Error('CMS rich text is too large');
     const node = lexicalNodeSchema.parse(input);
-    const children = node.children ? parseLexical(node.children, base, depth + 1, budget) : [];
+    const children = node.children ? parseLexical(node.children, base, depth + 1, budget, siteOrigin) : [];
     if (node.type === 'text') return [{ type: 'text', text: node.text ?? '', format: typeof node.format === 'number' ? node.format : 0 }];
     if (node.type === 'upload') {
       const image = media(node.value, base);
@@ -90,8 +90,8 @@ export function parseLexical(nodes: unknown[], base: string, depth = 0, budget =
       const relationSlug = relation?.value?.slug;
       const internal = node.fields?.linkType === 'internal';
       const url = internal
-        ? relation?.relationTo === 'articles' && typeof relationSlug === 'string' && /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(relationSlug) ? absoluteUrl(`/artigos/${relationSlug}`) : undefined
-        : raw.trim() && !raw.startsWith('//') ? safeUrl(raw, DEFAULT_SITE_ORIGIN) : undefined;
+        ? relation?.relationTo === 'articles' && typeof relationSlug === 'string' && /^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(relationSlug) ? absoluteUrl(`/artigos/${relationSlug}`, siteOrigin) : undefined
+        : raw.trim() && !raw.startsWith('//') ? safeUrl(raw, siteOrigin) : undefined;
       return url ? [{ type: 'link', url, children }] : children;
     }
     if (node.type === 'heading') return [{ type: 'heading', tag: ['h1', 'h2', 'h3'].includes(node.tag ?? '') ? (node.tag ?? 'h3') : 'h3', children }];
@@ -102,7 +102,7 @@ export function parseLexical(nodes: unknown[], base: string, depth = 0, budget =
   });
 }
 export interface TerritoryRegistry { regions: Set<string>; delegacias: Set<string>; bairros: Set<string>; themes: Set<string> }
-export function adaptPayloadArticle(input: unknown, base: string, territory: TerritoryRegistry): ConteudoJuridico {
+export function adaptPayloadArticle(input: unknown, base: string, territory: TerritoryRegistry, siteOrigin = DEFAULT_SITE_ORIGIN): ConteudoJuridico {
   const doc = payloadArticleSchema.parse(input);
   const refs = (kind: keyof TerritoryRegistry, values: { slug: string }[] = []) => values.map(value => {
     if (!territory[kind].has(value.slug)) throw new Error(`Unknown territorial reference: ${kind}/${value.slug}`);
@@ -115,7 +115,7 @@ export function adaptPayloadArticle(input: unknown, base: string, territory: Ter
     id: String(doc.id), slug: doc.slug, titulo: doc.title, resumo: doc.excerpt,
     categoria: doc.category?.title ?? 'Artigos', publicadoEm: doc.publishedAt, status: 'publicado',
     ...(doc.updatedAt ? { atualizadoEm: doc.updatedAt } : {}), corpo: [],
-    richText: parseLexical(doc.content.root.children, base),
+    richText: parseLexical(doc.content.root.children, base, 0, { remaining: 5000 }, siteOrigin),
     ...(capa ? { capa } : {}),
     ...(doc.author ? { autor: { nome: doc.author.name, bio: doc.author.bio ?? '', ...(doc.author.oab ? { oab: doc.author.oab } : {}), ...(foto ? { foto } : {}) } } : {}),
     seoEditorial: { ...(doc.seo?.title ? { title: doc.seo.title } : {}), ...(doc.seo?.description ? { description: doc.seo.description } : {}), ...(social ? { socialImage: social } : {}) },

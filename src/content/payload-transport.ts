@@ -1,5 +1,5 @@
 /** Fetch-only transport: no Payload/Next/Node runtime dependencies. Called only on the server. */
-export interface CmsConfig { baseUrl: string; path: string; ttl: number; timeout: number; namespace: string; revisionPath?: string }
+export interface CmsConfig { baseUrl: string; path: string; ttl: number; timeout: number; namespace: string; revisionPath?: string; siteOrigin?: string }
 export interface SharedCache { match(request: Request): Promise<Response | undefined>; put(request: Request, response: Response): Promise<unknown> }
 export function cmsConfig(env: Record<string, string | undefined>): CmsConfig | null {
   const raw = env['PAYLOAD_API_URL'];

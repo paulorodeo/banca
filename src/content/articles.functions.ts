@@ -25,7 +25,8 @@ export const readArticles = createServerFn({ method: 'GET' })
   .handler(async ({ data }): Promise<PageResult> => {
     setResponseHeader('Cache-Control', 'no-store');
     try {
-      const config = cmsConfig(process.env);
+      const configured = cmsConfig(process.env);
+      const config = configured ? { ...configured, siteOrigin: publicOrigin(process.env['PUBLIC_SITE_URL']) } : null;
       return { ok: true, page: await loadArticlePage(config, data, config?.revisionPath ? runtimeCache() : undefined) };
     } catch { return unavailable(); }
   });
@@ -34,7 +35,8 @@ export const readArticle = createServerFn({ method: 'GET' })
   .handler(async ({ data }): Promise<ArticleResult> => {
     setResponseHeader('Cache-Control', 'no-store');
     try {
-      const config = cmsConfig(process.env);
+      const configured = cmsConfig(process.env);
+      const config = configured ? { ...configured, siteOrigin: publicOrigin(process.env['PUBLIC_SITE_URL']) } : null;
       const configuredOrigin = process.env['PUBLIC_SITE_URL'];
       const origin = publicOrigin(configuredOrigin);
       if (config && origin === new URL(config.baseUrl).origin) throw new Error('Public origin cannot be the CMS origin');

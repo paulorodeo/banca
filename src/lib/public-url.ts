@@ -28,7 +28,7 @@ export function absoluteHead<T>(origin: string | undefined, produce: () => T): T
     if (Array.isArray(value)) return value.map(walk);
     if (!value || typeof value !== 'object') return value;
     return Object.fromEntries(Object.entries(value).map(([key, entry]) => {
-      if (['href', 'url', 'item', 'content'].includes(key) && typeof entry === 'string') {
+      if ((['url', 'item'].includes(key) || (key === 'href' && (value as {rel?:string}).rel === 'canonical') || (key === 'content' && (value as {property?:string}).property === 'og:url')) && typeof entry === 'string') {
         if (entry.startsWith('/') && !entry.startsWith('//')) return [key, absoluteUrl(entry, base)];
         if (entry.startsWith(`${DEFAULT_SITE_ORIGIN}/`)) return [key, absoluteUrl(entry.slice(DEFAULT_SITE_ORIGIN.length), base)];
       }
