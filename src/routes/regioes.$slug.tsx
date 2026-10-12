@@ -20,15 +20,15 @@ export const Route = createFileRoute("/regioes/$slug")({
   },
   head: ({ loaderData }) => {
     if (!loaderData) {
-      return { meta: [{ title: "Página indisponível" }, { name: "robots", content: "noindex" }] };
+      return { meta: [...pageMeta({ title: "Região indisponível | Banca Paulista", description: "Consulte as regiões publicadas pela Banca Paulista.", path: "/regioes" }), { name: "robots", content: "noindex" }] };
     }
     const { zona } = loaderData as Data;
     const path = `/regioes/${zona.slug}`;
     const artigo = artigoDaZona(zona.slug);
     return {
       meta: pageMeta({
-        title: `Advogado ${artigo} ${zona.nome} de São Paulo | Paulo Sinigalia`,
-        description: `Atuação criminal e cível estratégica ${artigo} ${zona.nome} de São Paulo. Páginas territoriais por região, com contexto local, orientação sobre situações frequentes e atendimento reservado.`,
+        title: `Delegacias e regiões ${artigo} ${zona.nome} | Banca Paulista`,
+        description: `Guia editorial de delegacias e bairros ${artigo} ${zona.nome} de São Paulo. Contexto territorial e informações sobre procedimentos policiais, sem oferta de atendimento jurídico.`,
         path,
       }),
       links: canonicalLink(path),
@@ -100,6 +100,7 @@ function ZonaPage() {
           </Container>
         </Section>
       )}
+      <Section><Container><SectionHeading eyebrow={zona.nome} title="Profissionais participantes" lead="Ainda não há profissionais publicados nesta região. A cobertura desta página é editorial e não representa atendimento disponível." /></Container></Section>
       <CtaReservado />
     </>
   );

@@ -1,75 +1,44 @@
 import type { Delegacia } from "../types";
-import { AVISO_RODAPE } from "./delegacias-extra";
-
-/**
- * Expansão Zona Sul / Sudeste: 17º (Ipiranga), 26º (Sacomã), 102º (Socorro),
- * 37º (Campo Limpo), 43º (Cidade Ademar) e 48º (Cidade Dutra).
- * Nenhum dado operacional das unidades é afirmado; o contexto histórico
- * refere-se ao bairro e possui finalidade exclusivamente informativa.
- */
-
-const OBS_PADRAO =
-  "Os bairros e pontos citados são referências territoriais. A unidade policial responsável por determinada ocorrência depende do endereço exato dos fatos, da natureza da ocorrência e da organização territorial da Polícia Civil.";
-
-const FAQ_SEM_VINCULO = (numero: string) => ({
-  pergunta: `O escritório possui vínculo com o ${numero} DP?`,
-  resposta: `Não. O Escritório de Advocacia é privado e independente, sem parceria, credenciamento, indicação ou vínculo institucional com o ${numero} Distrito Policial, com a Polícia Civil ou com o Estado de São Paulo.`,
-});
-
-const FAQ_TRIAGEM = {
-  pergunta: "O primeiro contato garante atendimento?",
-  resposta:
-    "Não. O contato inicial serve para triagem, verificação de disponibilidade, análise de conflito de interesses e avaliação preliminar de viabilidade. Não constitui consulta jurídica nem promessa de resultado.",
-};
 
 export const delegaciasExtra3: Delegacia[] = [
   {
-    id: "dp-17",
-    slug: "advogado-criminal-17-dp-ipiranga",
-    h1: "Advogado criminal próximo ao 17º DP Ipiranga",
-    cardTitulo: "Advogado criminal próximo ao 17º DP",
-    cardSubtitulo: "Ipiranga",
-    cardResumo:
-      "Atendimento jurídico criminal no Ipiranga, Vila Monumento, Alto do Ipiranga e bairros próximos, incluindo procedimentos relacionados ao 17º Distrito Policial.",
-    seo: {
-      title: "Advogado criminal próximo ao 17º DP Ipiranga | São Paulo",
-      description:
-        "Atendimento jurídico criminal no Ipiranga, Vila Monumento, Alto do Ipiranga, Vila Dom Pedro I e região do 17º Distrito Policial.",
-      canonicalPath: "/delegacias/advogado-criminal-17-dp-ipiranga",
-      keywords: [
-        "advogado criminal 17º DP Ipiranga",
-        "advogado criminal Ipiranga São Paulo",
-        "advogado para intimação no Ipiranga",
-      ],
+    "id": "dp-17",
+    "slug": "advogado-criminal-17-dp-ipiranga",
+    "h1": "17º DP — Ipiranga",
+    "cardTitulo": "17º Distrito Policial",
+    "cardSubtitulo": "Ipiranga",
+    "cardResumo": "Guia editorial sobre Ipiranga, bairros de referência e procedimentos relacionados ao 17º DP de São Paulo.",
+    "seo": {
+      "title": "17º DP Ipiranga | Guia territorial — Banca Paulista",
+      "description": "Informações sobre o 17º DP e a região de Ipiranga, em São Paulo: contexto territorial, intimações e procedimentos policiais. Portal editorial independente.",
+      "canonicalPath": "/delegacias/advogado-criminal-17-dp-ipiranga"
     },
-    introducao:
-      "O Escritório de Advocacia presta atendimento jurídico criminal a pessoas, famílias, profissionais e empresas no Ipiranga, Vila Monumento, Alto do Ipiranga, Vila Dom Pedro I e regiões próximas, incluindo situações que possam estar relacionadas ao 17º Distrito Policial — Ipiranga. A atuação pode começar antes do comparecimento à delegacia, após o recebimento de uma intimação, durante uma situação urgente ou quando já existe boletim de ocorrência ou investigação em andamento. Cada atendimento é conduzido de forma reservada, com análise individualizada da posição jurídica da pessoa envolvida, dos documentos disponíveis e da fase em que se encontra o procedimento.",
-    unidade: {
-      numero: "17",
-      nomeOficial: "17º Distrito Policial — Ipiranga",
-      dadosDeDesenvolvimento: true,
+    "introducao": "Esta página reúne informações sobre a região de Ipiranga e o 17º Distrito Policial — Ipiranga. Os bairros e pontos de referência ajudam a contextualizar documentos e procedimentos, sem definir limites oficiais de circunscrição ou indicar disponibilidade de advogado.",
+    "unidade": {
+      "numero": "17",
+      "nomeOficial": "17º Distrito Policial — Ipiranga",
+      "dadosDeDesenvolvimento": true
     },
-    contextoTerritorial:
-      "O Ipiranga é uma das regiões mais conhecidas e historicamente simbólicas de São Paulo, ligada aos antigos caminhos entre o núcleo urbano e o litoral e aos acontecimentos de 1822 nas proximidades do Ribeirão do Ipiranga. Hoje combina patrimônio histórico, bairros residenciais tradicionais, verticalização, comércio de rua e intensa circulação metropolitana.",
-    regiaoSlug: "ipiranga",
-    bairros: [
+    "contextoTerritorial": "O Ipiranga é uma das regiões mais conhecidas e historicamente simbólicas de São Paulo, ligada aos antigos caminhos entre o núcleo urbano e o litoral e aos acontecimentos de 1822 nas proximidades do Ribeirão do Ipiranga. Hoje combina patrimônio histórico, bairros residenciais tradicionais, verticalização, comércio de rua e intensa circulação metropolitana.",
+    "regiaoSlug": "ipiranga",
+    "bairros": [
       "Ipiranga",
       "Vila Monumento",
       "Alto do Ipiranga",
       "Vila Dom Pedro I",
       "Vila Independência",
-      "Vila Gumercindo",
+      "Vila Gumercindo"
     ],
-    observacaoBairros: OBS_PADRAO,
-    secoes: [
+    "observacaoBairros": "Os bairros e pontos citados são referências territoriais. A unidade policial responsável por determinada ocorrência depende do endereço exato dos fatos, da natureza da ocorrência e da organização territorial da Polícia Civil.",
+    "secoes": [
       {
-        titulo: "Atendimento jurídico criminal no Ipiranga",
-        paragrafos: [
+        "titulo": "Informações sobre procedimentos criminais no Ipiranga",
+        "paragrafos": [
           "O Ipiranga reúne áreas residenciais, condomínios, estabelecimentos comerciais, instituições de ensino, hospitais, museus, empresas e importantes corredores de circulação.",
           "A região recebe diariamente moradores, estudantes, trabalhadores, turistas e comerciantes que utilizam vias como a Avenida Nazaré, a Rua Silva Bueno, a Avenida Dom Pedro I e a Rua Bom Pastor.",
-          "A natureza jurídica de uma ocorrência não deve ser definida apenas pela descrição inicial apresentada por uma das partes: é necessário verificar o conteúdo dos documentos, as circunstâncias dos fatos e os elementos já reunidos no procedimento.",
+          "A natureza jurídica de uma ocorrência não deve ser definida apenas pela descrição inicial apresentada por uma das partes: é necessário verificar o conteúdo dos documentos, as circunstâncias dos fatos e os elementos já reunidos no procedimento."
         ],
-        lista: [
+        "lista": [
           "intimações para comparecimento à delegacia",
           "boletins de ocorrência",
           "prisão em flagrante",
@@ -81,36 +50,35 @@ export const delegaciasExtra3: Delegacia[] = [
           "ocorrências em condomínios e estabelecimentos comerciais",
           "acidentes de trânsito com possível repercussão criminal",
           "busca e apreensão e medidas protetivas",
-          "orientação jurídica para vítimas e defesa de pessoas investigadas",
-        ],
+          "orientação jurídica para vítimas e defesa de pessoas investigadas"
+        ]
       },
       {
-        titulo: "Atuação antes do comparecimento ao 17º DP",
-        paragrafos: [
-          "Quando uma pessoa recebe uma intimação ou é informada de que deverá comparecer ao distrito policial, é importante identificar previamente os dados do documento.",
-          "O atendimento jurídico prévio permite compreender melhor a situação e verificar quais providências devem ser avaliadas antes do comparecimento. O acompanhamento profissional dependerá da natureza do ato, da disponibilidade do escritório e da formalização do atendimento.",
+        "titulo": "Atuação antes do comparecimento ao 17º DP",
+        "paragrafos": [
+          "Quando uma pessoa recebe uma intimação ou é informada de que deverá comparecer ao distrito policial, é importante identificar previamente os dados do documento."
         ],
-        lista: [
+        "lista": [
           "qual unidade realizou a convocação",
           "o número do boletim ou procedimento",
           "a data e o horário do comparecimento",
           "o nome da autoridade ou do setor responsável",
           "a condição em que a pessoa poderá ser ouvida",
           "os documentos solicitados",
-          "a existência de prazo ou medida urgente",
-        ],
+          "a existência de prazo ou medida urgente"
+        ]
       },
       {
-        titulo: "Contexto territorial e histórico do Ipiranga",
-        paragrafos: [
+        "titulo": "Contexto territorial e histórico do Ipiranga",
+        "paragrafos": [
           "A localização do Ipiranga esteve ligada, desde os primeiros períodos de ocupação, aos caminhos utilizados para o deslocamento entre o núcleo urbano paulistano e o litoral, o que favoreceu a formação de sítios, atividades comerciais e pontos de passagem.",
           "O Parque da Independência, o Monumento à Independência e o Museu Paulista consolidaram o bairro como referência histórica, cultural e turística. A chegada da ferrovia, no final do século XIX, favoreceu a instalação de fábricas e a formação de um núcleo industrial relevante.",
-          "Parte das antigas áreas industriais passou a ser ocupada por residências, condomínios, comércio, serviços e instituições de ensino. O 17º Distrito Policial está inserido nesse contexto territorial; a referência à unidade nesta página possui finalidade exclusivamente informativa e geográfica.",
-        ],
+          "Parte das antigas áreas industriais passou a ser ocupada por residências, condomínios, comércio, serviços e instituições de ensino. O 17º Distrito Policial está inserido nesse contexto territorial; a referência à unidade nesta página possui finalidade exclusivamente informativa e geográfica."
+        ]
       },
       {
-        titulo: "Pontos e eixos de referência",
-        lista: [
+        "titulo": "Pontos e eixos de referência",
+        "lista": [
           "Museu do Ipiranga e Parque da Independência",
           "Avenida Nazaré",
           "Rua Silva Bueno",
@@ -118,108 +86,92 @@ export const delegaciasExtra3: Delegacia[] = [
           "Rua Bom Pastor",
           "Avenida Ricardo Jafet",
           "estações Alto do Ipiranga e Sacomã",
-          "região do Expresso Tiradentes",
-        ],
+          "região do Expresso Tiradentes"
+        ]
       },
       {
-        titulo: "Atendimento a empresas e estabelecimentos comerciais",
-        paragrafos: [
+        "titulo": "Contexto de empresas e estabelecimentos comerciais",
+        "paragrafos": [
           "Empresas e estabelecimentos podem aparecer em uma ocorrência como vítimas, proprietários de bens, responsáveis pela preservação de imagens, empregadores de pessoas envolvidas, destinatários de requisições ou interessados no procedimento.",
-          "A apresentação de documentos deve ser analisada conforme o conteúdo da solicitação e a posição jurídica da empresa no procedimento.",
+          "A apresentação de documentos deve ser analisada conforme o conteúdo da solicitação e a posição jurídica da empresa no procedimento."
         ],
-        lista: [
+        "lista": [
           "imagens de câmeras",
           "registros de acesso",
           "documentos fiscais e contratos",
           "mensagens e controles internos",
           "identificação de funcionários e prestadores",
-          "dados de sistemas eletrônicos",
-        ],
-      },
+          "dados de sistemas eletrônicos"
+        ]
+      }
     ],
-    avisoRodape: AVISO_RODAPE,
-    situacoesRelacionadas: ["intimacao", "inquerito", "prisao-em-flagrante", "busca-e-apreensao"],
-    faq: [
-      {
-        id: "dp17-faq-1",
-        pergunta: "O Escritório de Advocacia atende procedimentos relacionados ao 17º DP Ipiranga?",
-        resposta:
-          "Sim. O escritório pode analisar boletins de ocorrência, intimações, investigações e demais situações relacionadas ao 17º Distrito Policial, conforme a natureza do caso, a disponibilidade profissional e a ausência de conflito de interesses.",
-      },
-      {
-        id: "dp17-faq-2",
-        pergunta: "Fui intimado pelo 17º DP. Preciso saber por que estou sendo chamado?",
-        resposta:
-          "Sempre que possível, é importante verificar previamente o número do procedimento e a condição em que a pessoa foi convocada. A análise da intimação pode auxiliar na preparação para o comparecimento.",
-      },
-      {
-        id: "dp17-faq-3",
-        pergunta: "O advogado pode acompanhar um depoimento?",
-        resposta:
-          "O acompanhamento pode ser avaliado conforme o procedimento, a condição da pessoa convocada, a data indicada e a disponibilidade do escritório.",
-      },
-      {
-        id: "dp17-faq-4",
-        pergunta: "Posso enviar prints, gravações e documentos?",
-        resposta:
-          "Esses elementos podem ser relevantes, mas não é recomendável enviar documentos sensíveis antes da confirmação do canal oficial de atendimento. Arquivos originais devem ser preservados sem edição ou alteração.",
-      },
-      { id: "dp17-faq-5", ...FAQ_SEM_VINCULO("17º") },
-      { id: "dp17-faq-6", ...FAQ_TRIAGEM },
+    "avisoRodape": "Banca Paulista é um portal editorial independente, sem vínculo com a Polícia Civil, distritos policiais ou órgãos públicos. Não presta consulta jurídica nem oferece atendimento de urgência. Os bairros citados não definem circunscrição oficial; confirme a unidade responsável pelos canais oficiais.",
+    "situacoesRelacionadas": [
+      "intimacao",
+      "inquerito",
+      "prisao-em-flagrante",
+      "busca-e-apreensao"
     ],
-    conteudosRelacionados: [
+    "faq": [
+      {
+        "id": "dp17-faq-2",
+        "pergunta": "Fui intimado pelo 17º DP. Preciso saber por que estou sendo chamado?",
+        "resposta": "Sempre que possível, é importante verificar previamente o número do procedimento e a condição em que a pessoa foi convocada. A análise da intimação pode auxiliar na preparação para o comparecimento."
+      },
+      {
+        "id": "dp17-editorial-1",
+        "pergunta": "Esta página é um canal oficial do 17º DP?",
+        "resposta": "Não. É um guia editorial independente. Informações operacionais, endereço e horário devem ser confirmados diretamente nos canais oficiais da Polícia Civil."
+      },
+      {
+        "id": "dp17-editorial-2",
+        "pergunta": "Há advogado disponível por este portal?",
+        "resposta": "Ainda não há profissionais participantes publicados. O portal não recebe casos, não realiza consultas jurídicas e não oferece plantão de atendimento."
+      }
+    ],
+    "conteudosRelacionados": [
       "intimacao-o-que-considerar-antes-de-responder",
-      "busca-e-apreensao-limites-da-decisao-judicial",
-    ],
+      "busca-e-apreensao-limites-da-decisao-judicial"
+    ]
   },
   {
-    id: "dp-26",
-    slug: "advogado-criminal-26-dp-sacoma",
-    h1: "Advogado criminal próximo ao 26º DP Sacomã",
-    cardTitulo: "Advogado criminal próximo ao 26º DP",
-    cardSubtitulo: "Sacomã",
-    cardResumo:
-      "Atendimento jurídico criminal no Sacomã, Moinho Velho, Vila das Mercês, São João Clímaco e bairros próximos ao 26º Distrito Policial.",
-    seo: {
-      title: "Advogado criminal próximo ao 26º DP Sacomã | São Paulo",
-      description:
-        "Atendimento jurídico criminal no Sacomã, Moinho Velho, Vila das Mercês, São João Clímaco e região do 26º Distrito Policial.",
-      canonicalPath: "/delegacias/advogado-criminal-26-dp-sacoma",
-      keywords: [
-        "advogado criminal 26º DP Sacomã",
-        "advogado criminal Sacomã",
-        "advogado para intimação no Sacomã",
-      ],
+    "id": "dp-26",
+    "slug": "advogado-criminal-26-dp-sacoma",
+    "h1": "26º DP — Sacomã",
+    "cardTitulo": "26º Distrito Policial",
+    "cardSubtitulo": "Sacomã",
+    "cardResumo": "Guia editorial sobre Sacomã, bairros de referência e procedimentos relacionados ao 26º DP de São Paulo.",
+    "seo": {
+      "title": "26º DP Sacomã | Guia territorial — Banca Paulista",
+      "description": "Informações sobre o 26º DP e a região de Sacomã, em São Paulo: contexto territorial, intimações e procedimentos policiais. Portal editorial independente.",
+      "canonicalPath": "/delegacias/advogado-criminal-26-dp-sacoma"
     },
-    introducao:
-      "O Escritório de Advocacia presta atendimento a moradores, famílias, trabalhadores, comerciantes e empresas no Sacomã, Moinho Velho, Vila das Mercês, São João Clímaco, Vila Vermelha e regiões próximas, incluindo procedimentos relacionados ao 26º Distrito Policial — Sacomã. O atendimento é conduzido de forma reservada e começa pela identificação do tipo de ocorrência, das pessoas envolvidas, da existência de documentos policiais e de eventuais prazos ou medidas urgentes.",
-    unidade: {
-      numero: "26",
-      nomeOficial: "26º Distrito Policial — Sacomã",
-      dadosDeDesenvolvimento: true,
+    "introducao": "Esta página reúne informações sobre a região de Sacomã e o 26º Distrito Policial — Sacomã. Os bairros e pontos de referência ajudam a contextualizar documentos e procedimentos, sem definir limites oficiais de circunscrição ou indicar disponibilidade de advogado.",
+    "unidade": {
+      "numero": "26",
+      "nomeOficial": "26º Distrito Policial — Sacomã",
+      "dadosDeDesenvolvimento": true
     },
-    contextoTerritorial:
-      "O Sacomã ocupa posição estratégica entre o Ipiranga, a Vila das Mercês, São João Clímaco, Heliópolis, a Via Anchieta e o eixo da Rodovia dos Imigrantes, reunindo bairros residenciais, comunidades, comércio, indústrias, empresas de transporte e importantes corredores de deslocamento.",
-    regiaoSlug: "sacoma",
-    bairros: [
+    "contextoTerritorial": "O Sacomã ocupa posição estratégica entre o Ipiranga, a Vila das Mercês, São João Clímaco, Heliópolis, a Via Anchieta e o eixo da Rodovia dos Imigrantes, reunindo bairros residenciais, comunidades, comércio, indústrias, empresas de transporte e importantes corredores de deslocamento.",
+    "regiaoSlug": "sacoma",
+    "bairros": [
       "Sacomã",
       "Moinho Velho",
       "Vila das Mercês",
       "São João Clímaco",
       "Vila Vermelha",
       "Jardim Santa Cruz",
-      "Jardim Patente",
+      "Jardim Patente"
     ],
-    observacaoBairros:
-      "A menção a Heliópolis e a outros bairros limítrofes não significa que todas as ocorrências dessas localidades pertençam ao 26º DP. A delegacia responsável deve ser confirmada conforme o endereço exato e a distribuição do procedimento.",
-    secoes: [
+    "observacaoBairros": "A menção a Heliópolis e a outros bairros limítrofes não significa que todas as ocorrências dessas localidades pertençam ao 26º DP. A delegacia responsável deve ser confirmada conforme o endereço exato e a distribuição do procedimento.",
+    "secoes": [
       {
-        titulo: "Advocacia criminal no Sacomã e no eixo Anchieta–Imigrantes",
-        paragrafos: [
+        "titulo": "Informações sobre procedimentos criminais no Sacomã e no eixo Anchieta–Imigrantes",
+        "paragrafos": [
           "A região apresenta grande diversidade territorial, reunindo bairros residenciais, comércio, indústrias, empresas de transporte, centros logísticos, escolas, unidades de saúde e corredores de deslocamento metropolitano.",
-          "Cada situação deve ser analisada individualmente. Uma mesma ocorrência pode possuir repercussões criminais, cíveis, trabalhistas ou administrativas, sem que isso signifique que todas serão tratadas no mesmo procedimento.",
+          "Cada situação deve ser analisada individualmente. Uma mesma ocorrência pode possuir repercussões criminais, cíveis, trabalhistas ou administrativas, sem que isso signifique que todas serão tratadas no mesmo procedimento."
         ],
-        lista: [
+        "lista": [
           "prisão em flagrante e comparecimento ao distrito policial",
           "boletins de ocorrência e intimações",
           "depoimentos, oitivas e inquéritos policiais",
@@ -230,153 +182,136 @@ export const delegaciasExtra3: Delegacia[] = [
           "ocorrências familiares e medidas protetivas",
           "acidentes com possível repercussão criminal",
           "investigações envolvendo empresas e busca e apreensão",
-          "orientação jurídica a vítimas",
-        ],
+          "orientação jurídica a vítimas"
+        ]
       },
       {
-        titulo: "Situações relacionadas a transporte, veículos e empresas",
-        paragrafos: [
+        "titulo": "Situações relacionadas a transporte, veículos e empresas",
+        "paragrafos": [
           "A proximidade com a Via Anchieta, com a Rodovia dos Imigrantes e com corredores de acesso ao ABC e ao litoral cria intenso movimento de veículos, mercadorias, empresas e trabalhadores.",
-          "A preservação de elementos documentais pode ser relevante para esclarecer a dinâmica dos fatos. O recebimento de uma solicitação policial de documentos deve ser tratado com seriedade, observando-se o conteúdo do pedido, o prazo e a posição jurídica do destinatário.",
+          "A preservação de elementos documentais pode ser relevante para esclarecer a dinâmica dos fatos. O recebimento de uma solicitação policial de documentos deve ser tratado com seriedade, observando-se o conteúdo do pedido, o prazo e a posição jurídica do destinatário."
         ],
-        lista: [
+        "lista": [
           "documentos de veículos e notas fiscais",
           "registros de carga e comprovantes de entrega",
           "identificação de motoristas e rastreamento",
           "imagens de segurança e registros de acesso",
           "contratos com transportadoras",
           "mensagens entre funcionários e prestadores",
-          "relatórios internos e dados de sistemas",
-        ],
+          "relatórios internos e dados de sistemas"
+        ]
       },
       {
-        titulo: "Contexto histórico e formação do Sacomã",
-        paragrafos: [
+        "titulo": "Contexto histórico e formação do Sacomã",
+        "paragrafos": [
           "A história do Sacomã está ligada aos antigos caminhos entre São Paulo e o litoral. A região do Moinho Velho e da Estrada das Lágrimas integrava o percurso utilizado por viajantes que seguiam pelo Caminho do Mar em direção a Santos.",
           "No final do século XIX, os irmãos da família Sacoman estabeleceram uma fábrica de telhas conhecida como Cerâmica Sacoman Frères, atividade que se tornou referência local e contribuiu para a denominação da região.",
-          "Com a expansão ferroviária e industrial do Ipiranga, o Sacomã passou a receber fábricas, moradias operárias e comércio. A inauguração da Via Anchieta, em 1947, fortaleceu a conexão entre a capital, o ABC e a Baixada Santista. Posteriormente, a chegada do metrô e a implantação do Terminal Sacomã transformaram o bairro em importante ponto de conexão metropolitana.",
-        ],
+          "Com a expansão ferroviária e industrial do Ipiranga, o Sacomã passou a receber fábricas, moradias operárias e comércio. A inauguração da Via Anchieta, em 1947, fortaleceu a conexão entre a capital, o ABC e a Baixada Santista. Posteriormente, a chegada do metrô e a implantação do Terminal Sacomã transformaram o bairro em importante ponto de conexão metropolitana."
+        ]
       },
       {
-        titulo: "Referências territoriais",
-        lista: [
+        "titulo": "Referências territoriais",
+        "lista": [
           "Estrada das Lágrimas",
           "Avenida Padre Arlindo Vieira",
           "Via Anchieta e Rodovia dos Imigrantes",
           "Avenida do Cursino",
           "Terminal Sacomã e estação Sacomã",
           "região de Heliópolis",
-          "divisa com São Caetano do Sul",
-        ],
+          "divisa com São Caetano do Sul"
+        ]
       },
       {
-        titulo: "Atendimento a moradores, famílias e vítimas",
-        paragrafos: [
-          "O envio de uma narrativa inicial não substitui a análise dos documentos oficiais. Quando existir intimação, boletim, decisão, medida protetiva ou termo policial, esses documentos devem ser preservados para avaliação.",
+        "titulo": "Contexto de moradores, famílias e vítimas",
+        "paragrafos": [
+          "O envio de uma narrativa inicial não substitui a análise dos documentos oficiais. Quando existir intimação, boletim, decisão, medida protetiva ou termo policial, esses documentos devem ser preservados para avaliação."
         ],
-        lista: [
+        "lista": [
           "pessoas que receberam intimação",
           "pessoas mencionadas em boletim de ocorrência",
           "vítimas de ameaça, agressão, furto ou fraude",
           "familiares de pessoa detida",
           "testemunhas convocadas",
-          "representantes de empresa envolvida na ocorrência",
-        ],
-      },
+          "representantes de empresa envolvida na ocorrência"
+        ]
+      }
     ],
-    avisoRodape: AVISO_RODAPE,
-    situacoesRelacionadas: ["prisao-em-flagrante", "intimacao", "inquerito", "investigacao-empresarial"],
-    faq: [
-      {
-        id: "dp26-faq-1",
-        pergunta: "O escritório atende procedimentos relacionados ao 26º DP Sacomã?",
-        resposta:
-          "Sim. O escritório pode analisar ocorrências, intimações e investigações relacionadas ao 26º Distrito Policial, conforme a natureza do caso e a viabilidade do atendimento.",
-      },
-      {
-        id: "dp26-faq-2",
-        pergunta: "Uma ocorrência em Heliópolis será necessariamente atendida pelo 26º DP?",
-        resposta:
-          "Não. Heliópolis possui organização policial própria e determinados procedimentos podem ser encaminhados a outras unidades. É necessário confirmar o local exato e a unidade indicada no documento.",
-      },
-      {
-        id: "dp26-faq-3",
-        pergunta: "Fui chamado por telefone para comparecer. Como confirmar a informação?",
-        resposta:
-          "É recomendável solicitar a identificação da unidade, o nome do setor responsável, o número do procedimento e a finalidade do comparecimento. O contato não deve ser ignorado, mas sua autenticidade pode ser verificada por canal oficial.",
-      },
-      {
-        id: "dp26-faq-4",
-        pergunta: "Devo entregar imagens de câmeras imediatamente?",
-        resposta:
-          "As imagens devem ser preservadas para evitar exclusão automática. A forma e o momento da entrega dependem da solicitação recebida e da análise do procedimento.",
-      },
-      { id: "dp26-faq-5", ...FAQ_SEM_VINCULO("26º") },
-      { id: "dp26-faq-6", ...FAQ_TRIAGEM },
+    "avisoRodape": "Banca Paulista é um portal editorial independente, sem vínculo com a Polícia Civil, distritos policiais ou órgãos públicos. Não presta consulta jurídica nem oferece atendimento de urgência. Os bairros citados não definem circunscrição oficial; confirme a unidade responsável pelos canais oficiais.",
+    "situacoesRelacionadas": [
+      "prisao-em-flagrante",
+      "intimacao",
+      "inquerito",
+      "investigacao-empresarial"
     ],
-    conteudosRelacionados: [
+    "faq": [
+      {
+        "id": "dp26-faq-2",
+        "pergunta": "Uma ocorrência em Heliópolis será necessariamente atendida pelo 26º DP?",
+        "resposta": "Não. Heliópolis possui organização policial própria e determinados procedimentos podem ser encaminhados a outras unidades. É necessário confirmar o local exato e a unidade indicada no documento."
+      },
+      {
+        "id": "dp26-faq-3",
+        "pergunta": "Fui chamado por telefone para comparecer. Como confirmar a informação?",
+        "resposta": "É recomendável solicitar a identificação da unidade, o nome do setor responsável, o número do procedimento e a finalidade do comparecimento. O contato não deve ser ignorado, mas sua autenticidade pode ser verificada por canal oficial."
+      },
+      {
+        "id": "dp26-faq-4",
+        "pergunta": "Devo entregar imagens de câmeras imediatamente?",
+        "resposta": "As imagens devem ser preservadas para evitar exclusão automática. A forma e o momento da entrega dependem da solicitação recebida e da análise do procedimento."
+      },
+      {
+        "id": "dp26-editorial-1",
+        "pergunta": "Esta página é um canal oficial do 26º DP?",
+        "resposta": "Não. É um guia editorial independente. Informações operacionais, endereço e horário devem ser confirmados diretamente nos canais oficiais da Polícia Civil."
+      },
+      {
+        "id": "dp26-editorial-2",
+        "pergunta": "Há advogado disponível por este portal?",
+        "resposta": "Ainda não há profissionais participantes publicados. O portal não recebe casos, não realiza consultas jurídicas e não oferece plantão de atendimento."
+      }
+    ],
+    "conteudosRelacionados": [
       "intimacao-o-que-considerar-antes-de-responder",
-      "conflitos-societarios-e-exposicao-penal",
-    ],
+      "conflitos-societarios-e-exposicao-penal"
+    ]
   },
   {
-    id: "dp-102",
-    slug: "advogado-criminal-102-dp-socorro",
-    h1: "Advogado criminal próximo ao 102º DP Socorro",
-    cardTitulo: "Advogado criminal próximo ao 102º DP",
-    cardSubtitulo: "Socorro",
-    cardResumo:
-      "Atendimento jurídico criminal na Zona Sul para pessoas e empresas de Socorro, Guarapiranga, Jurubatuba e bairros próximos ao 102º DP.",
-    seo: {
-      title: "Advogado criminal próximo ao 102º DP Socorro | Zona Sul",
-      description:
-        "Atendimento jurídico criminal no Socorro, Jurubatuba, Interlagos, Vila Friburgo, Guarapiranga e região do 102º Distrito Policial.",
-      canonicalPath: "/delegacias/advogado-criminal-102-dp-socorro",
-      keywords: [
-        "advogado criminal 102º DP Socorro",
-        "advogado criminal Socorro",
-        "advogado próximo ao 102º DP",
-        "advogado criminal Guarapiranga",
-        "advogado criminal Jurubatuba",
-        "advogado para intimação Socorro",
-      ],
+    "id": "dp-102",
+    "slug": "advogado-criminal-102-dp-socorro",
+    "h1": "102º DP — Socorro",
+    "cardTitulo": "102º Distrito Policial",
+    "cardSubtitulo": "Socorro",
+    "cardResumo": "Guia editorial sobre Socorro, bairros de referência e procedimentos relacionados ao 102º DP de São Paulo.",
+    "seo": {
+      "title": "102º DP Socorro | Guia territorial — Banca Paulista",
+      "description": "Informações sobre o 102º DP e a região de Socorro, em São Paulo: contexto territorial, intimações e procedimentos policiais. Portal editorial independente.",
+      "canonicalPath": "/delegacias/advogado-criminal-102-dp-socorro"
     },
-    introducao:
-      "Com endereço estabelecido na Zona Sul de São Paulo, na região do Jardim das Flores e M'Boi Mirim, o Escritório de Advocacia presta atendimento jurídico criminal no Socorro, Guarapiranga, Vila Friburgo, Jurubatuba, Veleiros, Interlagos e bairros próximos. A localização regional permite atendimento a pessoas, famílias, profissionais, condomínios e empresas envolvidas em boletins de ocorrência, intimações, investigações e procedimentos relacionados ao 102º Distrito Policial — Socorro. Cada atendimento é conduzido de forma reservada e individualizada.",
-    unidade: {
-      numero: "102",
-      nomeOficial: "102º Distrito Policial — Socorro",
-      dadosDeDesenvolvimento: true,
+    "introducao": "Esta página reúne informações sobre a região de Socorro e o 102º Distrito Policial — Socorro. Os bairros e pontos de referência ajudam a contextualizar documentos e procedimentos, sem definir limites oficiais de circunscrição ou indicar disponibilidade de advogado.",
+    "unidade": {
+      "numero": "102",
+      "nomeOficial": "102º Distrito Policial — Socorro",
+      "dadosDeDesenvolvimento": true
     },
-    contextoTerritorial:
-      "A região do Socorro apresenta características residenciais, comerciais, industriais, empresariais e de lazer, reunindo condomínios, clubes, marinas, restaurantes, centros empresariais, indústrias, galpões e vias de intensa circulação como a Avenida Robert Kennedy, a Avenida Guarapiranga e a Avenida Interlagos.",
-    regiaoSlug: "socorro",
-    bairros: [
+    "contextoTerritorial": "A região do Socorro apresenta características residenciais, comerciais, industriais, empresariais e de lazer, reunindo condomínios, clubes, marinas, restaurantes, centros empresariais, indústrias, galpões e vias de intensa circulação como a Avenida Robert Kennedy, a Avenida Guarapiranga e a Avenida Interlagos.",
+    "regiaoSlug": "socorro",
+    "bairros": [
       "Socorro",
       "Jurubatuba",
       "Vila Friburgo",
       "Veleiros",
       "Interlagos",
       "Jardim Suzana",
-      "Guarapiranga",
+      "Guarapiranga"
     ],
-    observacaoBairros:
-      "A indicação não significa que todos os fatos ocorridos em Interlagos, Jurubatuba ou Guarapiranga pertençam automaticamente à circunscrição do 102º DP. Determinadas ocorrências podem ser encaminhadas a outras unidades territoriais.",
-    secoes: [
+    "observacaoBairros": "A indicação não significa que todos os fatos ocorridos em Interlagos, Jurubatuba ou Guarapiranga pertençam automaticamente à circunscrição do 102º DP. Determinadas ocorrências podem ser encaminhadas a outras unidades territoriais.",
+    "secoes": [
       {
-        titulo: "Escritório de Advocacia com atendimento na Zona Sul",
-        paragrafos: [
-          "O Escritório possui endereço no Jardim das Flores, região de M'Boi Mirim, Zona Sul de São Paulo. A partir dessa localização, o atendimento alcança o eixo do Socorro, da Guarapiranga, de Jurubatuba, dos Veleiros e de Interlagos, incluindo condomínios, clubes, marinas e empresas instaladas na região.",
-          "O endereço postal e os dados de contato do escritório correspondem sempre a Jardim das Flores — São Paulo/SP. O Escritório é privado e independente e não possui vínculo com qualquer Distrito Policial ou órgão público.",
+        "titulo": "Informações sobre procedimentos criminais no Socorro, Jurubatuba e Guarapiranga",
+        "paragrafos": [
+          "O território reúne condomínios, clubes, marinas, estabelecimentos comerciais, centros empresariais, indústrias, escolas e grande fluxo de pessoas nos eixos da Avenida Atlântica, Avenida Guarapiranga, Avenida Robert Kennedy, Marginal Pinheiros e Avenida Interlagos."
         ],
-      },
-      {
-        titulo: "Advocacia criminal no Socorro, Jurubatuba e Guarapiranga",
-        paragrafos: [
-          "O território reúne condomínios, clubes, marinas, estabelecimentos comerciais, centros empresariais, indústrias, escolas e grande fluxo de pessoas nos eixos da Avenida Atlântica, Avenida Guarapiranga, Avenida Robert Kennedy, Marginal Pinheiros e Avenida Interlagos.",
-          "A atuação dependerá dos fatos, dos documentos disponíveis e da fase do procedimento.",
-        ],
-        lista: [
+        "lista": [
           "prisão em flagrante e intimações",
           "acompanhamento em depoimentos",
           "boletins de ocorrência e inquéritos policiais",
@@ -387,36 +322,36 @@ export const delegaciasExtra3: Delegacia[] = [
           "conflitos em condomínios, clubes e estabelecimentos",
           "acidentes de trânsito e ocorrências envolvendo embarcações",
           "medidas protetivas e busca e apreensão",
-          "orientação para vítimas e defesa de pessoas investigadas",
-        ],
+          "orientação para vítimas e defesa de pessoas investigadas"
+        ]
       },
       {
-        titulo: "Atendimento a empresas da região de Jurubatuba",
-        paragrafos: [
+        "titulo": "Contexto de empresas da região de Jurubatuba",
+        "paragrafos": [
           "Jurubatuba e o eixo do Socorro concentram empresas, centros logísticos, indústrias, oficinas e prestadores de serviços. Uma pessoa jurídica pode participar de um procedimento como vítima, proprietária de bens, responsável por imagens, empregadora, destinatária de intimação ou investigada.",
-          "Não é recomendável alterar arquivos, substituir gravações, editar mensagens ou produzir documentos retroativos. A estratégia de apresentação do material deve considerar a origem da solicitação, o conteúdo requisitado e a posição da empresa no procedimento.",
+          "Não é recomendável alterar arquivos, substituir gravações, editar mensagens ou produzir documentos retroativos. A estratégia de apresentação do material deve considerar a origem da solicitação, o conteúdo requisitado e a posição da empresa no procedimento."
         ],
-        lista: [
+        "lista": [
           "contratos e notas fiscais",
           "imagens de câmeras e registros de acesso",
           "documentos internos e logs de sistemas",
           "controles financeiros e relatórios de auditoria",
           "mensagens e identificação de veículos",
           "registros de entrada e saída",
-          "dados de funcionários e prestadores envolvidos",
-        ],
+          "dados de funcionários e prestadores envolvidos"
+        ]
       },
       {
-        titulo: "Contexto histórico do Socorro e de Jurubatuba",
-        paragrafos: [
+        "titulo": "Contexto histórico do Socorro e de Jurubatuba",
+        "paragrafos": [
           "A formação urbana do Socorro está ligada à antiga estrutura territorial de Santo Amaro e ao crescimento da Zona Sul paulistana. Antes da consolidação do bairro, a área possuía características rurais, com sítios, fazendas e caminhos de ligação entre diferentes núcleos.",
           "No início do século XX, a extensão das linhas de bonde favoreceu a ocupação do território. Uma capela dedicada a Nossa Senhora do Perpétuo Socorro, construída na década de 1930, contribuiu para a denominação do bairro. A construção da Represa Guarapiranga e o desenvolvimento das atividades de lazer transformaram profundamente a área.",
-          "A partir das décadas de 1940 a 1960, a industrialização avançou ao longo do canal de Jurubatuba e do Largo do Socorro. Parte desse território industrial passou depois a receber centros empresariais, condomínios e novos empreendimentos. O 102º Distrito Policial está inserido nesse contexto urbano e econômico.",
-        ],
+          "A partir das décadas de 1940 a 1960, a industrialização avançou ao longo do canal de Jurubatuba e do Largo do Socorro. Parte desse território industrial passou depois a receber centros empresariais, condomínios e novos empreendimentos. O 102º Distrito Policial está inserido nesse contexto urbano e econômico."
+        ]
       },
       {
-        titulo: "Vias e pontos de referência",
-        lista: [
+        "titulo": "Vias e pontos de referência",
+        "lista": [
           "Largo do Socorro e Ponte do Socorro",
           "Avenida Robert Kennedy e Avenida Atlântica",
           "Avenida Guarapiranga e Avenida Interlagos",
@@ -424,106 +359,101 @@ export const delegaciasExtra3: Delegacia[] = [
           "estações Socorro e Jurubatuba",
           "Represa Guarapiranga e Autódromo de Interlagos",
           "região dos clubes e marinas",
-          "centros empresariais de Jurubatuba",
-        ],
+          "centros empresariais de Jurubatuba"
+        ]
       },
       {
-        titulo: "Ocorrências em condomínios, clubes e estabelecimentos",
-        paragrafos: [
-          "Síndicos, administradores e gestores devem preservar documentos e imagens, evitando divulgar informações sensíveis em grupos, redes sociais ou canais não autorizados.",
+        "titulo": "Ocorrências em condomínios, clubes e estabelecimentos",
+        "paragrafos": [
+          "Síndicos, administradores e gestores devem preservar documentos e imagens, evitando divulgar informações sensíveis em grupos, redes sociais ou canais não autorizados."
         ],
-        lista: [
+        "lista": [
           "furtos, danos e desaparecimento de objetos",
           "ameaças, agressões e conflitos entre moradores",
           "ocorrências com funcionários e entrada indevida",
           "imagens de segurança e acidentes",
           "crimes contra a honra e perseguição",
-          "descumprimento de medidas judiciais",
-        ],
-      },
+          "descumprimento de medidas judiciais"
+        ]
+      }
     ],
-    avisoRodape: AVISO_RODAPE,
-    situacoesRelacionadas: ["investigacao-empresarial", "intimacao", "inquerito", "busca-e-apreensao"],
-    faq: [
-      {
-        id: "dp102-faq-1",
-        pergunta: "O escritório atende procedimentos relacionados ao 102º DP Socorro?",
-        resposta:
-          "Sim. O escritório pode analisar boletins de ocorrência, intimações, inquéritos e outras situações relacionadas ao 102º Distrito Policial, conforme a viabilidade do atendimento.",
-      },
-      {
-        id: "dp102-faq-2",
-        pergunta: "Uma ocorrência em Interlagos será atendida pelo 102º DP?",
-        resposta:
-          "Não necessariamente. A região de Interlagos pode envolver diferentes circunscrições policiais. A unidade responsável deve ser confirmada pelo endereço dos fatos e pelos documentos do procedimento.",
-      },
-      {
-        id: "dp102-faq-3",
-        pergunta: "Empresas de Jurubatuba podem solicitar atendimento?",
-        resposta:
-          "Sim. Empresas, gestores, funcionários e representantes podem solicitar análise jurídica de intimações, investigações, ocorrências patrimoniais e pedidos de apresentação de documentos.",
-      },
-      {
-        id: "dp102-faq-4",
-        pergunta: "Um condomínio pode solicitar atendimento jurídico criminal?",
-        resposta:
-          "Sim. Condomínios podem estar envolvidos como vítimas, responsáveis pela preservação de imagens ou interessados em ocorrências envolvendo moradores, funcionários, visitantes ou prestadores.",
-      },
-      { id: "dp102-faq-5", ...FAQ_SEM_VINCULO("102º") },
-      { id: "dp102-faq-6", ...FAQ_TRIAGEM },
+    "avisoRodape": "Banca Paulista é um portal editorial independente, sem vínculo com a Polícia Civil, distritos policiais ou órgãos públicos. Não presta consulta jurídica nem oferece atendimento de urgência. Os bairros citados não definem circunscrição oficial; confirme a unidade responsável pelos canais oficiais.",
+    "situacoesRelacionadas": [
+      "investigacao-empresarial",
+      "intimacao",
+      "inquerito",
+      "busca-e-apreensao"
     ],
-    conteudosRelacionados: [
+    "faq": [
+      {
+        "id": "dp102-faq-2",
+        "pergunta": "Uma ocorrência em Interlagos será atendida pelo 102º DP?",
+        "resposta": "Não necessariamente. A região de Interlagos pode envolver diferentes circunscrições policiais. A unidade responsável deve ser confirmada pelo endereço dos fatos e pelos documentos do procedimento."
+      },
+      {
+        "id": "dp102-faq-3",
+        "pergunta": "Empresas de Jurubatuba podem solicitar atendimento?",
+        "resposta": "Sim. Empresas, gestores, funcionários e representantes podem solicitar análise jurídica de intimações, investigações, ocorrências patrimoniais e pedidos de apresentação de documentos."
+      },
+      {
+        "id": "dp102-faq-4",
+        "pergunta": "Um condomínio pode solicitar atendimento jurídico criminal?",
+        "resposta": "Sim. Condomínios podem estar envolvidos como vítimas, responsáveis pela preservação de imagens ou interessados em ocorrências envolvendo moradores, funcionários, visitantes ou prestadores."
+      },
+      {
+        "id": "dp102-editorial-1",
+        "pergunta": "Esta página é um canal oficial do 102º DP?",
+        "resposta": "Não. É um guia editorial independente. Informações operacionais, endereço e horário devem ser confirmados diretamente nos canais oficiais da Polícia Civil."
+      },
+      {
+        "id": "dp102-editorial-2",
+        "pergunta": "Há advogado disponível por este portal?",
+        "resposta": "Ainda não há profissionais participantes publicados. O portal não recebe casos, não realiza consultas jurídicas e não oferece plantão de atendimento."
+      }
+    ],
+    "conteudosRelacionados": [
       "protecao-patrimonial-e-planejamento-sucessorio",
-      "conflitos-societarios-e-exposicao-penal",
-    ],
+      "conflitos-societarios-e-exposicao-penal"
+    ]
   },
   {
-    id: "dp-37",
-    slug: "advogado-criminal-37-dp-campo-limpo",
-    h1: "Advogado criminal próximo ao 37º DP Campo Limpo",
-    cardTitulo: "Advogado criminal próximo ao 37º DP",
-    cardSubtitulo: "Campo Limpo",
-    cardResumo:
-      "Atendimento jurídico criminal no Campo Limpo, Vila Pirajussara, Jardim Umarizal e bairros próximos, incluindo situações relacionadas ao 37º Distrito Policial.",
-    seo: {
-      title: "Advogado criminal próximo ao 37º DP Campo Limpo | São Paulo",
-      description:
-        "Atendimento jurídico criminal no Campo Limpo, Vila Pirajussara, Jardim Umarizal, Vila Prel e região do 37º Distrito Policial.",
-      canonicalPath: "/delegacias/advogado-criminal-37-dp-campo-limpo",
-      keywords: [
-        "advogado criminal 37º DP Campo Limpo",
-        "advogado criminal Vila Pirajussara",
-        "advogado para intimação no Campo Limpo",
-      ],
+    "id": "dp-37",
+    "slug": "advogado-criminal-37-dp-campo-limpo",
+    "h1": "37º DP — Campo Limpo",
+    "cardTitulo": "37º Distrito Policial",
+    "cardSubtitulo": "Campo Limpo",
+    "cardResumo": "Guia editorial sobre Campo Limpo, bairros de referência e procedimentos relacionados ao 37º DP de São Paulo.",
+    "seo": {
+      "title": "37º DP Campo Limpo | Guia territorial — Banca Paulista",
+      "description": "Informações sobre o 37º DP e a região de Campo Limpo, em São Paulo: contexto territorial, intimações e procedimentos policiais. Portal editorial independente.",
+      "canonicalPath": "/delegacias/advogado-criminal-37-dp-campo-limpo"
     },
-    introducao:
-      "O Escritório de Advocacia presta atendimento jurídico criminal a moradores, famílias, profissionais, comerciantes e empresas no Campo Limpo, Vila Pirajussara, Jardim Umarizal, Vila Prel, Parque Arariba e regiões próximas, incluindo procedimentos relacionados ao 37º Distrito Policial — Campo Limpo. Cada situação é examinada de maneira individualizada, reservada e tecnicamente responsável, considerando a posição jurídica da pessoa envolvida, os documentos existentes e a fase do procedimento.",
-    unidade: {
-      numero: "37",
-      nomeOficial: "37º Distrito Policial — Campo Limpo",
-      dadosDeDesenvolvimento: true,
+    "introducao": "Esta página reúne informações sobre a região de Campo Limpo e o 37º Distrito Policial — Campo Limpo. Os bairros e pontos de referência ajudam a contextualizar documentos e procedimentos, sem definir limites oficiais de circunscrição ou indicar disponibilidade de advogado.",
+    "unidade": {
+      "numero": "37",
+      "nomeOficial": "37º Distrito Policial — Campo Limpo",
+      "dadosDeDesenvolvimento": true
     },
-    contextoTerritorial:
-      "O Campo Limpo apresenta intensa ocupação residencial, atividade comercial diversificada e grande circulação de pessoas pelos corredores que conectam a região ao Capão Redondo, à Vila Andrade, ao Morumbi e a Taboão da Serra.",
-    regiaoSlug: "campo-limpo",
-    bairros: [
+    "contextoTerritorial": "O Campo Limpo apresenta intensa ocupação residencial, atividade comercial diversificada e grande circulação de pessoas pelos corredores que conectam a região ao Capão Redondo, à Vila Andrade, ao Morumbi e a Taboão da Serra.",
+    "regiaoSlug": "campo-limpo",
+    "bairros": [
       "Campo Limpo",
       "Vila Pirajussara",
       "Jardim Umarizal",
       "Vila Prel",
       "Jardim Catanduva",
       "Parque Arariba",
-      "Jardim Maria Duarte",
+      "Jardim Maria Duarte"
     ],
-    observacaoBairros: OBS_PADRAO,
-    secoes: [
+    "observacaoBairros": "Os bairros e pontos citados são referências territoriais. A unidade policial responsável por determinada ocorrência depende do endereço exato dos fatos, da natureza da ocorrência e da organização territorial da Polícia Civil.",
+    "secoes": [
       {
-        titulo: "Atendimento jurídico criminal no Campo Limpo",
-        paragrafos: [
+        "titulo": "Informações sobre procedimentos criminais no Campo Limpo",
+        "paragrafos": [
           "A presença de estações de transporte, estabelecimentos comerciais, escolas, hospitais, condomínios, empresas e prestadores de serviços cria um ambiente urbano no qual podem surgir diferentes situações com repercussão policial ou criminal.",
-          "A existência de um boletim de ocorrência não significa, isoladamente, que haverá indiciamento, denúncia ou processo criminal. O desenvolvimento dependerá dos fatos, dos elementos reunidos e das decisões das autoridades competentes.",
+          "A existência de um boletim de ocorrência não significa, isoladamente, que haverá indiciamento, denúncia ou processo criminal. O desenvolvimento dependerá dos fatos, dos elementos reunidos e das decisões das autoridades competentes."
         ],
-        lista: [
+        "lista": [
           "intimações policiais e acompanhamento em depoimentos",
           "boletins de ocorrência e prisão em flagrante",
           "inquéritos policiais",
@@ -533,15 +463,15 @@ export const delegaciasExtra3: Delegacia[] = [
           "conflitos familiares com repercussão criminal e medidas protetivas",
           "ocorrências em condomínios e acidentes de trânsito",
           "investigações envolvendo documentos e busca e apreensão",
-          "orientação de vítimas e defesa de pessoas investigadas",
-        ],
+          "orientação de vítimas e defesa de pessoas investigadas"
+        ]
       },
       {
-        titulo: "Recebi uma intimação do 37º DP: o que verificar?",
-        paragrafos: [
-          "A pessoa convocada pode aparecer no procedimento como vítima, testemunha, investigada, representante de empresa ou responsável pela apresentação de determinado documento. Essas posições não devem ser presumidas apenas pelo conteúdo de uma ligação ou mensagem.",
+        "titulo": "Recebi uma intimação do 37º DP: o que verificar?",
+        "paragrafos": [
+          "A pessoa convocada pode aparecer no procedimento como vítima, testemunha, investigada, representante de empresa ou responsável pela apresentação de determinado documento. Essas posições não devem ser presumidas apenas pelo conteúdo de uma ligação ou mensagem."
         ],
-        lista: [
+        "lista": [
           "número do boletim de ocorrência ou do procedimento",
           "nome da unidade policial",
           "data e horário do comparecimento",
@@ -549,27 +479,27 @@ export const delegaciasExtra3: Delegacia[] = [
           "condição em que a pessoa será ouvida",
           "documentos eventualmente solicitados",
           "prazo indicado e existência de medida urgente",
-          "autenticidade da convocação",
-        ],
+          "autenticidade da convocação"
+        ]
       },
       {
-        titulo: "Contexto histórico do Campo Limpo",
-        paragrafos: [
+        "titulo": "Contexto histórico do Campo Limpo",
+        "paragrafos": [
           "Antes da ocupação intensiva, a região era formada por sítios, chácaras, terrenos rurais e caminhos que se conectavam a Santo Amaro, Itapecerica e às áreas que posteriormente formariam Taboão da Serra.",
           "Relatos históricos relacionam parte da formação local à antiga Fazenda dos Pombinhos. O crescimento dos loteamentos ganhou força ao longo do século XX, atraindo famílias e trabalhadores de diferentes origens. Uma das explicações populares para o nome Campo Limpo está ligada às antigas áreas abertas utilizadas para criação e treinamento de cavalos.",
-          "A Estrada do Campo Limpo tornou-se um dos principais eixos comerciais e de mobilidade, conectando bairros residenciais a outras áreas da capital e à divisa com Taboão da Serra.",
-        ],
+          "A Estrada do Campo Limpo tornou-se um dos principais eixos comerciais e de mobilidade, conectando bairros residenciais a outras áreas da capital e à divisa com Taboão da Serra."
+        ]
       },
       {
-        titulo: "História e identificação do 37º Distrito Policial",
-        paragrafos: [
+        "titulo": "História e identificação do 37º Distrito Policial",
+        "paragrafos": [
           "Em 1991, uma lei estadual atribuiu oficialmente à unidade a denominação “Investigador de Polícia Marco Antônio Ferrari”. Essa denominação integra a história administrativa do distrito.",
-          "A referência à unidade nesta página possui finalidade exclusivamente informativa e geográfica. O Escritório de Advocacia não pertence à delegacia, não atua em nome da Polícia Civil e não possui acesso privilegiado a autoridades, procedimentos ou sistemas públicos.",
-        ],
+          "A referência à unidade nesta página possui finalidade exclusivamente informativa e geográfica."
+        ]
       },
       {
-        titulo: "Referências territoriais",
-        lista: [
+        "titulo": "Referências territoriais",
+        "lista": [
           "Estrada do Campo Limpo",
           "Rua Nossa Senhora do Bom Conselho",
           "Avenida Carlos Caldeira Filho",
@@ -577,107 +507,96 @@ export const delegaciasExtra3: Delegacia[] = [
           "estação e Terminal Campo Limpo",
           "divisa com Taboão da Serra",
           "proximidades da Vila Andrade",
-          "eixo Campo Limpo–Capão Redondo",
-        ],
+          "eixo Campo Limpo–Capão Redondo"
+        ]
       },
       {
-        titulo: "Atendimento a comerciantes e empresas",
-        paragrafos: [
-          "Não é recomendável alterar arquivos, editar gravações, apagar mensagens ou produzir documentos retroativos para explicar uma ocorrência.",
+        "titulo": "Contexto de comerciantes e empresas",
+        "paragrafos": [
+          "Não é recomendável alterar arquivos, editar gravações, apagar mensagens ou produzir documentos retroativos para explicar uma ocorrência."
         ],
-        lista: [
+        "lista": [
           "imagens de câmeras e registros de entrada e saída",
           "contratos e notas fiscais",
           "controles financeiros e relatórios internos",
           "mensagens e arquivos eletrônicos",
           "identificação de funcionários e registros de veículos",
-          "comprovantes de entrega ou pagamento",
-        ],
-      },
+          "comprovantes de entrega ou pagamento"
+        ]
+      }
     ],
-    avisoRodape: AVISO_RODAPE,
-    situacoesRelacionadas: ["intimacao", "inquerito", "prisao-em-flagrante", "busca-e-apreensao"],
-    faq: [
-      {
-        id: "dp37-faq-1",
-        pergunta: "O escritório atende procedimentos relacionados ao 37º DP Campo Limpo?",
-        resposta:
-          "Sim. O escritório pode analisar intimações, boletins de ocorrência, investigações e outras situações relacionadas ao 37º Distrito Policial, mediante verificação prévia da natureza do caso.",
-      },
-      {
-        id: "dp37-faq-2",
-        pergunta: "Fui convocado por telefone. Como confirmar se o contato é verdadeiro?",
-        resposta:
-          "É recomendável solicitar o nome da unidade, o número do procedimento, a identificação do setor responsável e a data indicada. A confirmação deve ser realizada por um canal oficial da Polícia Civil.",
-      },
-      {
-        id: "dp37-faq-3",
-        pergunta: "O escritório atende moradores da Vila Pirajussara?",
-        resposta:
-          "Sim. A Vila Pirajussara e os bairros próximos podem ser considerados dentro da área regional de atendimento. A delegacia responsável pelo procedimento, entretanto, deve ser confirmada em cada caso.",
-      },
-      {
-        id: "dp37-faq-4",
-        pergunta: "Prints de conversas podem ser utilizados?",
-        resposta:
-          "Podem contribuir para a compreensão dos fatos, mas devem ser preservados juntamente com os arquivos e conversas originais. Recortes isolados podem não apresentar o contexto completo.",
-      },
-      { id: "dp37-faq-5", ...FAQ_SEM_VINCULO("37º") },
-      { id: "dp37-faq-6", ...FAQ_TRIAGEM },
+    "avisoRodape": "Banca Paulista é um portal editorial independente, sem vínculo com a Polícia Civil, distritos policiais ou órgãos públicos. Não presta consulta jurídica nem oferece atendimento de urgência. Os bairros citados não definem circunscrição oficial; confirme a unidade responsável pelos canais oficiais.",
+    "situacoesRelacionadas": [
+      "intimacao",
+      "inquerito",
+      "prisao-em-flagrante",
+      "busca-e-apreensao"
     ],
-    conteudosRelacionados: [
+    "faq": [
+      {
+        "id": "dp37-faq-2",
+        "pergunta": "Fui convocado por telefone. Como confirmar se o contato é verdadeiro?",
+        "resposta": "É recomendável solicitar o nome da unidade, o número do procedimento, a identificação do setor responsável e a data indicada. A confirmação deve ser realizada por um canal oficial da Polícia Civil."
+      },
+      {
+        "id": "dp37-faq-4",
+        "pergunta": "Prints de conversas podem ser utilizados?",
+        "resposta": "Podem contribuir para a compreensão dos fatos, mas devem ser preservados juntamente com os arquivos e conversas originais. Recortes isolados podem não apresentar o contexto completo."
+      },
+      {
+        "id": "dp37-editorial-1",
+        "pergunta": "Esta página é um canal oficial do 37º DP?",
+        "resposta": "Não. É um guia editorial independente. Informações operacionais, endereço e horário devem ser confirmados diretamente nos canais oficiais da Polícia Civil."
+      },
+      {
+        "id": "dp37-editorial-2",
+        "pergunta": "Há advogado disponível por este portal?",
+        "resposta": "Ainda não há profissionais participantes publicados. O portal não recebe casos, não realiza consultas jurídicas e não oferece plantão de atendimento."
+      }
+    ],
+    "conteudosRelacionados": [
       "intimacao-o-que-considerar-antes-de-responder",
-      "busca-e-apreensao-limites-da-decisao-judicial",
-    ],
+      "busca-e-apreensao-limites-da-decisao-judicial"
+    ]
   },
   {
-    id: "dp-43",
-    slug: "advogado-criminal-43-dp-cidade-ademar",
-    h1: "Advogado criminal próximo ao 43º DP Cidade Ademar",
-    cardTitulo: "Advogado criminal próximo ao 43º DP",
-    cardSubtitulo: "Cidade Ademar",
-    cardResumo:
-      "Atendimento jurídico criminal em Cidade Ademar, Jardim Prudência, Cupecê e bairros próximos, incluindo procedimentos relacionados ao 43º Distrito Policial.",
-    seo: {
-      title: "Advogado criminal próximo ao 43º DP Cidade Ademar | SP",
-      description:
-        "Atendimento jurídico criminal em Cidade Ademar, Jardim Prudência, Cupecê, Jardim Alzira e região do 43º Distrito Policial.",
-      canonicalPath: "/delegacias/advogado-criminal-43-dp-cidade-ademar",
-      keywords: [
-        "advogado criminal 43º DP Cidade Ademar",
-        "advogado criminal Avenida Cupecê",
-        "advogado criminal Jardim Prudência",
-      ],
+    "id": "dp-43",
+    "slug": "advogado-criminal-43-dp-cidade-ademar",
+    "h1": "43º DP — Cidade Ademar",
+    "cardTitulo": "43º Distrito Policial",
+    "cardSubtitulo": "Cidade Ademar",
+    "cardResumo": "Guia editorial sobre Cidade Ademar, bairros de referência e procedimentos relacionados ao 43º DP de São Paulo.",
+    "seo": {
+      "title": "43º DP Cidade Ademar | Guia territorial — Banca Paulista",
+      "description": "Informações sobre o 43º DP e a região de Cidade Ademar, em São Paulo: contexto territorial, intimações e procedimentos policiais. Portal editorial independente.",
+      "canonicalPath": "/delegacias/advogado-criminal-43-dp-cidade-ademar"
     },
-    introducao:
-      "O Escritório de Advocacia atende pessoas, famílias, profissionais, comerciantes e empresas em Cidade Ademar, Jardim Prudência, Jardim Alzira, Cupecê, Vila Marari e regiões próximas, incluindo situações relacionadas ao 43º Distrito Policial — Cidade Ademar. O atendimento começa pela compreensão objetiva dos fatos, pela identificação dos documentos existentes e pela verificação da posição ocupada pela pessoa no procedimento.",
-    unidade: {
-      numero: "43",
-      nomeOficial: "43º Distrito Policial — Cidade Ademar",
-      dadosDeDesenvolvimento: true,
+    "introducao": "Esta página reúne informações sobre a região de Cidade Ademar e o 43º Distrito Policial — Cidade Ademar. Os bairros e pontos de referência ajudam a contextualizar documentos e procedimentos, sem definir limites oficiais de circunscrição ou indicar disponibilidade de advogado.",
+    "unidade": {
+      "numero": "43",
+      "nomeOficial": "43º Distrito Policial — Cidade Ademar",
+      "dadosDeDesenvolvimento": true
     },
-    contextoTerritorial:
-      "Cidade Ademar está inserida em um importante eixo residencial e comercial da Zona Sul, com ligações territoriais com Jabaquara, Campo Belo, Pedreira, Americanópolis, Vila Joaniza e o município de Diadema.",
-    regiaoSlug: "cidade-ademar",
-    bairros: [
+    "contextoTerritorial": "Cidade Ademar está inserida em um importante eixo residencial e comercial da Zona Sul, com ligações territoriais com Jabaquara, Campo Belo, Pedreira, Americanópolis, Vila Joaniza e o município de Diadema.",
+    "regiaoSlug": "cidade-ademar",
+    "bairros": [
       "Cidade Ademar",
       "Jardim Prudência",
       "Jardim Alzira",
       "Vila Marari",
       "Jardim Cidália",
       "Cupecê",
-      "Jardim Los Angeles",
+      "Jardim Los Angeles"
     ],
-    observacaoBairros:
-      "Americanópolis, Vila Joaniza e Jardim Miriam são áreas próximas, mas possuem unidades policiais territoriais próprias ou podem estar ligadas a outras circunscrições. A unidade responsável deve ser confirmada conforme o local exato da ocorrência.",
-    secoes: [
+    "observacaoBairros": "Americanópolis, Vila Joaniza e Jardim Miriam são áreas próximas, mas possuem unidades policiais territoriais próprias ou podem estar ligadas a outras circunscrições. A unidade responsável deve ser confirmada conforme o local exato da ocorrência.",
+    "secoes": [
       {
-        titulo: "Atendimento jurídico criminal em Cidade Ademar",
-        paragrafos: [
+        "titulo": "Informações sobre procedimentos criminais em Cidade Ademar",
+        "paragrafos": [
           "A região reúne moradias, condomínios, escolas, unidades de saúde, oficinas, empresas, centros de distribuição, estabelecimentos comerciais e intensa circulação pelas avenidas Cupecê, Yervant Kissajikian e Washington Luís.",
-          "O enquadramento jurídico depende da análise das circunstâncias e dos elementos disponíveis. Uma narrativa inicial não substitui o exame dos documentos oficiais.",
+          "O enquadramento jurídico depende da análise das circunstâncias e dos elementos disponíveis. Uma narrativa inicial não substitui o exame dos documentos oficiais."
         ],
-        lista: [
+        "lista": [
           "boletins de ocorrência e intimações policiais",
           "acompanhamento em depoimentos e prisão em flagrante",
           "inquéritos policiais",
@@ -688,120 +607,113 @@ export const delegaciasExtra3: Delegacia[] = [
           "conflitos familiares e medidas protetivas",
           "ocorrências envolvendo veículos",
           "investigações empresariais e crimes digitais",
-          "busca e apreensão e orientação jurídica a vítimas",
-        ],
+          "busca e apreensão e orientação jurídica a vítimas"
+        ]
       },
       {
-        titulo: "Atuação em intimações e depoimentos",
-        paragrafos: [
+        "titulo": "Atuação em intimações e depoimentos",
+        "paragrafos": [
           "A condição da pessoa convocada pode influenciar a preparação do atendimento: uma vítima, uma testemunha, um investigado e um representante empresarial possuem posições distintas dentro de um procedimento.",
-          "Quando a convocação ocorre apenas por telefone ou aplicativo de mensagens, é prudente verificar sua autenticidade por meio de canais oficiais.",
+          "Quando a convocação ocorre apenas por telefone ou aplicativo de mensagens, é prudente verificar sua autenticidade por meio de canais oficiais."
         ],
-        lista: [
+        "lista": [
           "nome e número do distrito policial",
           "número do boletim ou procedimento",
           "data de emissão",
           "data e horário do comparecimento",
           "nome da pessoa convocada",
           "documentos solicitados e setor responsável",
-          "natureza aparente do ato e existência de prazo",
-        ],
+          "natureza aparente do ato e existência de prazo"
+        ]
       },
       {
-        titulo: "Contexto histórico de Cidade Ademar",
-        paragrafos: [
+        "titulo": "Contexto histórico de Cidade Ademar",
+        "paragrafos": [
           "A ocupação urbana da região intensificou-se durante as décadas de 1960 e 1970. Antes disso, grande parte do território era formada por chácaras, fazendas e terrenos amplos pouco integrados ao núcleo urbano consolidado.",
           "A expansão industrial da capital e dos municípios próximos aumentou a procura por moradia. Antigas propriedades foram parceladas e os lotes passaram a ser adquiridos por trabalhadores, famílias e migrantes de diferentes regiões do país.",
-          "Atualmente, Cidade Ademar reúne bairros residenciais consolidados, comércio de rua, empresas, oficinas, prestadores de serviços, equipamentos públicos e importantes eixos de circulação.",
-        ],
+          "Atualmente, Cidade Ademar reúne bairros residenciais consolidados, comércio de rua, empresas, oficinas, prestadores de serviços, equipamentos públicos e importantes eixos de circulação."
+        ]
       },
       {
-        titulo: "Referência histórica do 43º Distrito Policial",
-        paragrafos: [
+        "titulo": "Referência histórica do 43º Distrito Policial",
+        "paragrafos": [
           "Documentos estaduais registram a unidade na Rua Antônio Gil. Em 2012, um decreto estadual autorizou que parte do imóvel anteriormente ocupada pela antiga carceragem fosse destinada à instalação de um telecentro para atendimento da população local.",
-          "Esse registro constitui um elemento da história do prédio e da relação territorial da unidade com a comunidade. A utilização do nome da delegacia nesta página é exclusivamente informativa e não indica vínculo administrativo, funcional ou institucional.",
-        ],
+          "Esse registro constitui um elemento da história do prédio e da relação territorial da unidade com a comunidade. A utilização do nome da delegacia nesta página é exclusivamente informativa e não indica vínculo administrativo, funcional ou institucional."
+        ]
       },
       {
-        titulo: "Atendimento relacionado a fraudes e meios digitais",
-        paragrafos: [
-          "A pessoa deve evitar apagar conversas, alterar arquivos ou manter contato arriscado com possíveis autores apenas para tentar produzir novas provas.",
+        "titulo": "Atendimento relacionado a fraudes e meios digitais",
+        "paragrafos": [
+          "A pessoa deve evitar apagar conversas, alterar arquivos ou manter contato arriscado com possíveis autores apenas para tentar produzir novas provas."
         ],
-        lista: [
+        "lista": [
           "conversas completas e arquivos originais",
           "endereços eletrônicos, nomes de usuário e links de perfis ou anúncios",
           "comprovantes, extratos e e-mails",
-          "números de telefone e registros de data e horário",
-        ],
-      },
+          "números de telefone e registros de data e horário"
+        ]
+      }
     ],
-    avisoRodape: AVISO_RODAPE,
-    situacoesRelacionadas: ["intimacao", "inquerito", "prisao-em-flagrante", "investigacao-empresarial"],
-    faq: [
-      {
-        id: "dp43-faq-1",
-        pergunta: "O escritório atende casos relacionados ao 43º DP Cidade Ademar?",
-        resposta:
-          "Sim. O escritório pode analisar situações relacionadas ao 43º Distrito Policial, mediante avaliação prévia da natureza do procedimento e da possibilidade de atendimento.",
-      },
-      {
-        id: "dp43-faq-2",
-        pergunta: "Fui chamado para prestar esclarecimentos. Isso significa que sou investigado?",
-        resposta:
-          "Não necessariamente. A pessoa pode ter sido chamada como vítima, testemunha, representante ou investigada. É importante verificar o procedimento antes de presumir sua condição.",
-      },
-      {
-        id: "dp43-faq-3",
-        pergunta: "Uma ocorrência em Americanópolis será atendida pelo 43º DP?",
-        resposta:
-          "Não obrigatoriamente. Americanópolis possui referência policial própria e determinados procedimentos podem ser vinculados a outra unidade territorial.",
-      },
-      {
-        id: "dp43-faq-4",
-        pergunta: "Como conservar provas de uma fraude digital?",
-        resposta:
-          "Devem ser preservados comprovantes, conversas completas, arquivos, extratos, perfis, endereços eletrônicos e demais registros originais relacionados ao fato.",
-      },
-      { id: "dp43-faq-5", ...FAQ_SEM_VINCULO("43º") },
-      { id: "dp43-faq-6", ...FAQ_TRIAGEM },
+    "avisoRodape": "Banca Paulista é um portal editorial independente, sem vínculo com a Polícia Civil, distritos policiais ou órgãos públicos. Não presta consulta jurídica nem oferece atendimento de urgência. Os bairros citados não definem circunscrição oficial; confirme a unidade responsável pelos canais oficiais.",
+    "situacoesRelacionadas": [
+      "intimacao",
+      "inquerito",
+      "prisao-em-flagrante",
+      "investigacao-empresarial"
     ],
-    conteudosRelacionados: [
+    "faq": [
+      {
+        "id": "dp43-faq-2",
+        "pergunta": "Fui chamado para prestar esclarecimentos. Isso significa que sou investigado?",
+        "resposta": "Não necessariamente. A pessoa pode ter sido chamada como vítima, testemunha, representante ou investigada. É importante verificar o procedimento antes de presumir sua condição."
+      },
+      {
+        "id": "dp43-faq-3",
+        "pergunta": "Uma ocorrência em Americanópolis será atendida pelo 43º DP?",
+        "resposta": "Não obrigatoriamente. Americanópolis possui referência policial própria e determinados procedimentos podem ser vinculados a outra unidade territorial."
+      },
+      {
+        "id": "dp43-faq-4",
+        "pergunta": "Como conservar provas de uma fraude digital?",
+        "resposta": "Devem ser preservados comprovantes, conversas completas, arquivos, extratos, perfis, endereços eletrônicos e demais registros originais relacionados ao fato."
+      },
+      {
+        "id": "dp43-editorial-1",
+        "pergunta": "Esta página é um canal oficial do 43º DP?",
+        "resposta": "Não. É um guia editorial independente. Informações operacionais, endereço e horário devem ser confirmados diretamente nos canais oficiais da Polícia Civil."
+      },
+      {
+        "id": "dp43-editorial-2",
+        "pergunta": "Há advogado disponível por este portal?",
+        "resposta": "Ainda não há profissionais participantes publicados. O portal não recebe casos, não realiza consultas jurídicas e não oferece plantão de atendimento."
+      }
+    ],
+    "conteudosRelacionados": [
       "intimacao-o-que-considerar-antes-de-responder",
-      "protecao-patrimonial-e-planejamento-sucessorio",
-    ],
+      "protecao-patrimonial-e-planejamento-sucessorio"
+    ]
   },
   {
-    id: "dp-48",
-    slug: "advogado-criminal-48-dp-cidade-dutra",
-    h1: "Advogado criminal próximo ao 48º DP Cidade Dutra",
-    cardTitulo: "Advogado criminal próximo ao 48º DP",
-    cardSubtitulo: "Cidade Dutra",
-    cardResumo:
-      "Atendimento jurídico criminal em Cidade Dutra, Interlagos, Jardim Primavera e bairros próximos ao 48º Distrito Policial.",
-    seo: {
-      title: "Advogado criminal próximo ao 48º DP Cidade Dutra | Interlagos",
-      description:
-        "Atendimento jurídico criminal em Cidade Dutra, Interlagos, Jardim Primavera, Rio Bonito e região do 48º Distrito Policial.",
-      canonicalPath: "/delegacias/advogado-criminal-48-dp-cidade-dutra",
-      keywords: [
-        "advogado criminal 48º DP Cidade Dutra",
-        "advogado criminal Interlagos",
-        "advogado criminal Avenida Teotônio Vilela",
-        "advogado para intimação Cidade Dutra",
-        "advogado criminal próximo ao Autódromo de Interlagos",
-      ],
+    "id": "dp-48",
+    "slug": "advogado-criminal-48-dp-cidade-dutra",
+    "h1": "48º DP — Cidade Dutra",
+    "cardTitulo": "48º Distrito Policial",
+    "cardSubtitulo": "Cidade Dutra",
+    "cardResumo": "Guia editorial sobre Cidade Dutra, bairros de referência e procedimentos relacionados ao 48º DP de São Paulo.",
+    "seo": {
+      "title": "48º DP Cidade Dutra | Guia territorial — Banca Paulista",
+      "description": "Informações sobre o 48º DP e a região de Cidade Dutra, em São Paulo: contexto territorial, intimações e procedimentos policiais. Portal editorial independente.",
+      "canonicalPath": "/delegacias/advogado-criminal-48-dp-cidade-dutra"
     },
-    introducao:
-      "O Escritório de Advocacia presta atendimento jurídico criminal a moradores, famílias, comerciantes, profissionais, condomínios e empresas em Cidade Dutra, Interlagos, Jardim Primavera, Rio Bonito, Vila São José e regiões próximas, incluindo procedimentos relacionados ao 48º Distrito Policial — Cidade Dutra. A atuação pode envolver situações urgentes, intimações, boletins de ocorrência, investigações, acompanhamento em depoimentos e orientação para preservação de provas.",
-    unidade: {
-      numero: "48",
-      nomeOficial: "48º Distrito Policial — Cidade Dutra",
-      dadosDeDesenvolvimento: true,
+    "introducao": "Esta página reúne informações sobre a região de Cidade Dutra e o 48º Distrito Policial — Cidade Dutra. Os bairros e pontos de referência ajudam a contextualizar documentos e procedimentos, sem definir limites oficiais de circunscrição ou indicar disponibilidade de advogado.",
+    "unidade": {
+      "numero": "48",
+      "nomeOficial": "48º Distrito Policial — Cidade Dutra",
+      "dadosDeDesenvolvimento": true
     },
-    contextoTerritorial:
-      "Cidade Dutra integra o extremo sul da capital, no entorno da Represa Guarapiranga e do eixo formado pela Avenida Teotônio Vilela e pela Avenida Interlagos, com bairros residenciais consolidados, comércio de rua, condomínios, escolas e áreas de lazer ligadas à represa.",
-    regiaoSlug: "cidade-dutra",
-    bairros: [
+    "contextoTerritorial": "Cidade Dutra integra o extremo sul da capital, no entorno da Represa Guarapiranga e do eixo formado pela Avenida Teotônio Vilela e pela Avenida Interlagos, com bairros residenciais consolidados, comércio de rua, condomínios, escolas e áreas de lazer ligadas à represa.",
+    "regiaoSlug": "cidade-dutra",
+    "bairros": [
       "Cidade Dutra",
       "Interlagos",
       "Jardim Primavera",
@@ -809,17 +721,16 @@ export const delegaciasExtra3: Delegacia[] = [
       "Vila São José",
       "Jardim Guanhembu",
       "Jardim Iporanga",
-      "Jardim Santa Rita",
+      "Jardim Santa Rita"
     ],
-    observacaoBairros: OBS_PADRAO,
-    secoes: [
+    "observacaoBairros": "Os bairros e pontos citados são referências territoriais. A unidade policial responsável por determinada ocorrência depende do endereço exato dos fatos, da natureza da ocorrência e da organização territorial da Polícia Civil.",
+    "secoes": [
       {
-        titulo: "Atendimento jurídico criminal em Cidade Dutra",
-        paragrafos: [
-          "Cada caso é analisado de forma reservada, considerando o local dos fatos, as pessoas envolvidas, os documentos existentes e a etapa atual do procedimento.",
-          "A existência de um registro policial não permite concluir, isoladamente, que haverá indiciamento, denúncia ou processo criminal.",
+        "titulo": "Informações sobre procedimentos criminais em Cidade Dutra",
+        "paragrafos": [
+          "A existência de um registro policial não permite concluir, isoladamente, que haverá indiciamento, denúncia ou processo criminal."
         ],
-        lista: [
+        "lista": [
           "intimações e comparecimento à delegacia",
           "boletins de ocorrência e prisão em flagrante",
           "acompanhamento em depoimentos e inquéritos policiais",
@@ -829,12 +740,12 @@ export const delegaciasExtra3: Delegacia[] = [
           "conflitos familiares e medidas protetivas",
           "ocorrências em condomínios e estabelecimentos comerciais",
           "acidentes de trânsito com possível repercussão criminal",
-          "busca e apreensão e orientação jurídica a vítimas",
-        ],
+          "busca e apreensão e orientação jurídica a vítimas"
+        ]
       },
       {
-        titulo: "Referências territoriais e eixos de circulação",
-        lista: [
+        "titulo": "Referências territoriais e eixos de circulação",
+        "lista": [
           "Avenida Teotônio Vilela",
           "Avenida Interlagos",
           "Rua Aníbal dos Anjos Carvalho",
@@ -845,151 +756,137 @@ export const delegaciasExtra3: Delegacia[] = [
           "estações Autódromo e Primavera–Interlagos",
           "eixo Cidade Dutra–Grajaú e eixo Cidade Dutra–Socorro",
           "proximidades do Rio Bonito",
-          "divisa com Grajaú e Parelheiros",
-        ],
+          "divisa com Grajaú e Parelheiros"
+        ]
       },
       {
-        titulo: "Atendimento antes do comparecimento ao 48º DP",
-        paragrafos: [
+        "titulo": "Contexto dentes do comparecimento ao 48º DP",
+        "paragrafos": [
           "O recebimento de uma intimação ou convocação deve ser tratado com atenção. Uma convocação não deve ser ignorada, mas também não é recomendável apresentar informações sensíveis sem compreender o contexto do procedimento.",
-          "Quando o chamado ocorre por telefone ou aplicativo, a pessoa pode confirmar os dados por canais oficiais antes de fornecer documentos ou informações pessoais.",
+          "Quando o chamado ocorre por telefone ou aplicativo, a pessoa pode confirmar os dados por canais oficiais antes de fornecer documentos ou informações pessoais."
         ],
-        lista: [
+        "lista": [
           "autenticidade do documento ou do contato",
           "número do procedimento e unidade responsável",
           "data e horário indicados",
           "condição da pessoa convocada",
           "documentos solicitados",
           "existência de medida urgente",
-          "possibilidade de acompanhamento profissional",
-        ],
+          "possibilidade de acompanhamento profissional"
+        ]
       },
       {
-        titulo: "História de Cidade Dutra",
-        paragrafos: [
+        "titulo": "História de Cidade Dutra",
+        "paragrafos": [
           "Cidade Dutra integra o território administrado pela Subprefeitura de Capela do Socorro. A região esteve originalmente ligada ao antigo Município de Santo Amaro e a áreas rurais próximas às represas e aos caminhos que conduziam ao extremo sul de São Paulo.",
           "A expansão urbana ganhou força durante o século XX, influenciada pela construção das represas, pelo desenvolvimento de Interlagos e pela criação de novos núcleos habitacionais. O nome Cidade Dutra está ligado ao projeto denominado Cidade Previdenciária Presidente Dutra, implantado como conjunto habitacional destinado a trabalhadores e segurados de instituições previdenciárias.",
           "Com o crescimento populacional, novos bairros, comércios, escolas, serviços e linhas de transporte passaram a ocupar o território. A Avenida Senador Teotônio Vilela consolidou-se como um dos principais eixos comerciais e de mobilidade, conectando Cidade Dutra ao Grajaú, a Interlagos e a outras áreas da Zona Sul.",
-          "Atualmente, Cidade Dutra possui perfil predominantemente residencial e comercial, com grande circulação de trabalhadores, estudantes, passageiros e pessoas que se deslocam para eventos e atividades de lazer em Interlagos.",
-        ],
+          "Atualmente, Cidade Dutra possui perfil predominantemente residencial e comercial, com grande circulação de trabalhadores, estudantes, passageiros e pessoas que se deslocam para eventos e atividades de lazer em Interlagos."
+        ]
       },
       {
-        titulo: "História territorial do 48º Distrito Policial",
-        paragrafos: [
+        "titulo": "História territorial do 48º Distrito Policial",
+        "paragrafos": [
           "O 48º Distrito Policial é uma das referências da Polícia Civil para procedimentos relacionados a Cidade Dutra e está historicamente associado ao endereço da Rua Aníbal dos Anjos Carvalho.",
           "Em 2007, o prédio do 48º DP recebeu a instalação de uma estrutura de Polícia Ambiental criada para apoiar ações de proteção dos mananciais Guarapiranga e Billings. Esse registro é relevante porque Cidade Dutra integra uma região marcada pela proximidade com represas, áreas verdes, cursos d'água e territórios sujeitos a regras ambientais específicas.",
-          "A existência histórica dessa estrutura não deve ser interpretada como afirmação de que a mesma organização permaneça atualmente inalterada. Informações operacionais devem ser verificadas diretamente nos canais oficiais da Polícia Civil.",
-        ],
+          "A existência histórica dessa estrutura não deve ser interpretada como afirmação de que a mesma organização permaneça atualmente inalterada. Informações operacionais devem ser verificadas diretamente nos canais oficiais da Polícia Civil."
+        ]
       },
       {
-        titulo: "Cidade Dutra, Interlagos e as áreas de mananciais",
-        paragrafos: [
+        "titulo": "Cidade Dutra, Interlagos e as áreas de mananciais",
+        "paragrafos": [
           "A Subprefeitura de Capela do Socorro abrange os distritos de Socorro, Cidade Dutra e Grajaú. Parcela significativa de seu território está relacionada às áreas de proteção dos mananciais que contribuem para o abastecimento da Região Metropolitana de São Paulo.",
-          "Nem toda irregularidade ambiental constitui automaticamente crime. É necessário distinguir as esferas administrativa, civil e penal, além de identificar qual órgão realizou a fiscalização e qual procedimento foi instaurado.",
+          "Nem toda irregularidade ambiental constitui automaticamente crime. É necessário distinguir as esferas administrativa, civil e penal, além de identificar qual órgão realizou a fiscalização e qual procedimento foi instaurado."
         ],
-        lista: [
+        "lista": [
           "ocupação de imóveis e documentação de terrenos",
           "intervenções em áreas protegidas",
           "descarte irregular e danos ambientais",
           "atividades empresariais e transporte de materiais",
           "obras e conflitos sobre uso da propriedade",
-          "atuação de órgãos de fiscalização",
-        ],
+          "atuação de órgãos de fiscalização"
+        ]
       },
       {
-        titulo: "Atendimento relacionado a eventos e ao Autódromo de Interlagos",
-        paragrafos: [
-          "A região recebe grandes eventos esportivos, musicais, empresariais e culturais. A pessoa não precisa residir em Cidade Dutra para solicitar análise jurídica de uma ocorrência registrada na região: visitantes de outras cidades, estados ou países podem necessitar de orientação relacionada ao procedimento local.",
+        "titulo": "Atendimento relacionado a eventos e ao Autódromo de Interlagos",
+        "paragrafos": [
+          "A região recebe grandes eventos esportivos, musicais, empresariais e culturais. A pessoa não precisa residir em Cidade Dutra para solicitar análise jurídica de uma ocorrência registrada na região: visitantes de outras cidades, estados ou países podem necessitar de orientação relacionada ao procedimento local."
         ],
-        lista: [
+        "lista": [
           "furto de objetos e perda ou uso indevido de documentos",
           "conflitos entre participantes e lesões",
           "danos e ocorrências envolvendo veículos",
           "fraudes na compra de ingressos e falsificação",
           "abordagem policial",
           "necessidade de preservação de imagens",
-          "intimação posterior aos fatos",
-        ],
+          "intimação posterior aos fatos"
+        ]
       },
       {
-        titulo: "Atendimento a condomínios e estabelecimentos",
-        paragrafos: [
-          "Síndicos, administradoras, empresas e comerciantes podem solicitar análise de situações registradas em áreas comuns ou em estabelecimentos. Imagens e registros devem ser preservados antes que sejam automaticamente sobrescritos pelos sistemas, e a divulgação indevida em grupos ou redes sociais pode expor moradores, vítimas, testemunhas e terceiros.",
+        "titulo": "Contexto de condomínios e estabelecimentos",
+        "paragrafos": [
+          "Síndicos, administradoras, empresas e comerciantes podem solicitar análise de situações registradas em áreas comuns ou em estabelecimentos. Imagens e registros devem ser preservados antes que sejam automaticamente sobrescritos pelos sistemas, e a divulgação indevida em grupos ou redes sociais pode expor moradores, vítimas, testemunhas e terceiros."
         ],
-        lista: [
+        "lista": [
           "imagens de câmeras e identificação de visitantes",
           "furtos em áreas comuns e desaparecimento de bens",
           "entrada não autorizada e danos",
           "ameaças e conflitos entre moradores",
           "ocorrências com funcionários",
           "documentos solicitados pela polícia",
-          "fraudes",
-        ],
+          "fraudes"
+        ]
       },
       {
-        titulo: "Preservação de provas e documentos",
-        paragrafos: [
-          "Quando existir intimação, boletim, decisão ou termo policial, esses documentos devem ser preservados integralmente para avaliação. Não é recomendável editar gravações, apagar mensagens ou produzir documentos retroativos.",
+        "titulo": "Preservação de provas e documentos",
+        "paragrafos": [
+          "Quando existir intimação, boletim, decisão ou termo policial, esses documentos devem ser preservados integralmente para avaliação. Não é recomendável editar gravações, apagar mensagens ou produzir documentos retroativos."
         ],
-        lista: [
+        "lista": [
           "imagens de câmeras e registros de acesso",
           "conversas completas e arquivos originais",
           "comprovantes, extratos e notas fiscais",
-          "identificação de veículos e de pessoas envolvidas",
-        ],
-      },
+          "identificação de veículos e de pessoas envolvidas"
+        ]
+      }
     ],
-    avisoRodape: AVISO_RODAPE,
-    situacoesRelacionadas: ["intimacao", "inquerito", "prisao-em-flagrante", "busca-e-apreensao"],
-    faq: [
-      {
-        id: "dp48-faq-1",
-        pergunta: "O escritório atende procedimentos relacionados ao 48º DP Cidade Dutra?",
-        resposta:
-          "Sim. O escritório pode analisar boletins de ocorrência, intimações, inquéritos e outras situações relacionadas ao 48º Distrito Policial, conforme a viabilidade do atendimento.",
-      },
-      {
-        id: "dp48-faq-2",
-        pergunta: "Uma ocorrência em Interlagos pertence sempre ao 48º DP?",
-        resposta:
-          "Não. A região de Interlagos envolve diferentes circunscrições policiais. A unidade responsável deve ser confirmada pelo endereço exato dos fatos e pelos documentos do procedimento.",
-      },
-      {
-        id: "dp48-faq-3",
-        pergunta: "O advogado pode acompanhar o depoimento na delegacia?",
-        resposta:
-          "O acompanhamento pode ser avaliado conforme a condição da pessoa convocada, o tipo de procedimento, a data indicada e a disponibilidade profissional.",
-      },
-      { id: "dp48-faq-4", ...FAQ_SEM_VINCULO("48º") },
-      {
-        id: "dp48-faq-6",
-        pergunta: "O escritório atende pessoas que não moram em São Paulo?",
-        resposta:
-          "Sim. Uma pessoa pode solicitar análise jurídica mesmo residindo em outra cidade ou estado, especialmente quando a ocorrência ou o procedimento está relacionado a uma unidade policial da capital.",
-      },
-      {
-        id: "dp48-faq-7",
-        pergunta: "Crimes ambientais podem ser tratados pelo escritório?",
-        resposta:
-          "Situações com possível repercussão penal podem ser analisadas. É necessário distinguir eventual procedimento criminal de autuações administrativas e de questões civis.",
-      },
-      {
-        id: "dp48-faq-8",
-        pergunta: "Recebi uma intimação do 48º DP. Devo enviar o documento?",
-        resposta:
-          "Os dados gerais podem ser informados na triagem. Documentos sensíveis devem ser enviados apenas por canal confirmado pelo escritório.",
-      },
-      {
-        id: "dp48-faq-9",
-        pergunta: "Um condomínio pode pedir orientação para entregar imagens?",
-        resposta:
-          "Sim. O atendimento pode avaliar a preservação e a apresentação de imagens, observando a solicitação recebida e a proteção dos dados de terceiros.",
-      },
-      { id: "dp48-faq-5", ...FAQ_TRIAGEM },
+    "avisoRodape": "Banca Paulista é um portal editorial independente, sem vínculo com a Polícia Civil, distritos policiais ou órgãos públicos. Não presta consulta jurídica nem oferece atendimento de urgência. Os bairros citados não definem circunscrição oficial; confirme a unidade responsável pelos canais oficiais.",
+    "situacoesRelacionadas": [
+      "intimacao",
+      "inquerito",
+      "prisao-em-flagrante",
+      "busca-e-apreensao"
     ],
-    conteudosRelacionados: [
+    "faq": [
+      {
+        "id": "dp48-faq-2",
+        "pergunta": "Uma ocorrência em Interlagos pertence sempre ao 48º DP?",
+        "resposta": "Não. A região de Interlagos envolve diferentes circunscrições policiais. A unidade responsável deve ser confirmada pelo endereço exato dos fatos e pelos documentos do procedimento."
+      },
+      {
+        "id": "dp48-faq-3",
+        "pergunta": "O advogado pode acompanhar o depoimento na delegacia?",
+        "resposta": "O acompanhamento pode ser avaliado conforme a condição da pessoa convocada, o tipo de procedimento, a data indicada e a disponibilidade profissional."
+      },
+      {
+        "id": "dp48-faq-9",
+        "pergunta": "Um condomínio pode pedir orientação para entregar imagens?",
+        "resposta": "Sim. O atendimento pode avaliar a preservação e a apresentação de imagens, observando a solicitação recebida e a proteção dos dados de terceiros."
+      },
+      {
+        "id": "dp48-editorial-1",
+        "pergunta": "Esta página é um canal oficial do 48º DP?",
+        "resposta": "Não. É um guia editorial independente. Informações operacionais, endereço e horário devem ser confirmados diretamente nos canais oficiais da Polícia Civil."
+      },
+      {
+        "id": "dp48-editorial-2",
+        "pergunta": "Há advogado disponível por este portal?",
+        "resposta": "Ainda não há profissionais participantes publicados. O portal não recebe casos, não realiza consultas jurídicas e não oferece plantão de atendimento."
+      }
+    ],
+    "conteudosRelacionados": [
       "intimacao-o-que-considerar-antes-de-responder",
-      "busca-e-apreensao-limites-da-decisao-judicial",
-    ],
-  },
+      "busca-e-apreensao-limites-da-decisao-judicial"
+    ]
+  }
 ];

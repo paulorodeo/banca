@@ -120,8 +120,8 @@ export function ConteudoCard({ conteudo }: { conteudo: ConteudoJuridico }) {
 }
 
 export function CtaReservado({
-  titulo = "Atendimento reservado",
-  descricao = "O contato inicial serve para compreender a situação e verificar a compatibilidade com a atuação do escritório. Nenhum documento sensível é necessário nesta etapa.",
+  titulo = "Informação jurídica, contexto paulista",
+  descricao = "Conheça as regiões, consulte o guia de delegacias e acompanhe as publicações do portal. O conteúdo é informativo e não substitui orientação profissional.",
 }: {
   titulo?: string;
   descricao?: string;
@@ -130,15 +130,15 @@ export function CtaReservado({
     <Section tone="raised">
       <Container>
         <div className="mx-auto max-w-3xl text-center">
-          <p className="eyebrow mb-5">Contato</p>
+          <p className="eyebrow mb-5">Banca Paulista</p>
           <h2 className="text-3xl leading-tight md:text-[2.5rem]">{titulo}</h2>
           <p className="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-muted-foreground">
             {descricao}
           </p>
           <div className="mt-9 flex flex-wrap justify-center gap-4">
-            <ActionLink to="/contato">Informações para contato</ActionLink>
-            <ActionLink to="/atendimento-reservado" variant="outline">
-              Atendimento reservado
+            <ActionLink to="/regioes">Explorar regiões</ActionLink>
+            <ActionLink to="/artigos" variant="outline">
+              Ler artigos
             </ActionLink>
           </div>
         </div>

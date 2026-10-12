@@ -13,7 +13,7 @@ export const Route = createFileRoute("/artigos/")({
   }),
   head: () => ({
     meta: pageMeta({
-      title: "Artigos Jurídicos | Paulo Sinigalia — Advocacia em São Paulo",
+      title: "Artigos Jurídicos | Banca Paulista",
       description:
         "Materiais informativos sobre defesa criminal, medidas urgentes, conflitos societários e proteção patrimonial.",
       path: PATH,
@@ -38,6 +38,7 @@ function ConteudosPage() {
       />
       <Section>
         <Container>
+          {conteudos.length === 0 && <p className="text-muted-foreground">Novas publicações estão em preparação.</p>}
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {conteudos.map((item) => (
               <ConteudoCard key={item.id} conteudo={item} />

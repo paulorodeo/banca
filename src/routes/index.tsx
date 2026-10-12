@@ -9,7 +9,7 @@ import {
   SituacaoItem,
   ZonaCard,
 } from "@/components/site/blocks";
-import { attorneySchema, canonicalLink, pageMeta } from "@/lib/seo";
+import { websiteSchema, canonicalLink, pageMeta } from "@/lib/seo";
 import type { AreaAtuacao, ConteudoJuridico, SituacaoJuridica, Zona } from "@/content/types";
 
 interface HomeData {
@@ -18,12 +18,11 @@ interface HomeData {
   zonas: (Zona & { quantidade: number })[];
   conteudos: ConteudoJuridico[];
 }
-import retratoAsset from "@/assets/retrato.avif.asset.json";
-import escritorioAsset from "@/assets/escritorio.avif.asset.json";
+import cidadeImage from "@/assets/sao-paulo-editorial.jpg";
 
-const TITLE = "Paulo Sinigalia | Advocacia Estratégica em São Paulo — OAB/SP 411.502";
+const TITLE = "Banca Paulista de Advogados — Portal editorial e defesa criminal";
 const DESCRIPTION =
-  "Advocacia criminal e cível estratégica em São Paulo. Análise individualizada, discrição e acompanhamento próximo em situações de alta responsabilidade.";
+  "Portal editorial sobre defesa criminal, delegacias e regiões de São Paulo. Guias territoriais, artigos informativos e contexto sobre plantão criminal.";
 
 export const Route = createFileRoute("/")({
   loader: async (): Promise<HomeData> => ({
@@ -42,49 +41,24 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: pageMeta({ title: TITLE, description: DESCRIPTION, path: "/" }),
     links: canonicalLink("/"),
-    scripts: [{ type: "application/ld+json", children: JSON.stringify(attorneySchema("/")) }],
+    scripts: [{ type: "application/ld+json", children: JSON.stringify(websiteSchema("/")) }],
   }),
   component: Index,
 });
 
 const posicionamento = [
-  {
-    titulo: "Atuação técnica",
-    texto:
-      "Cada situação é examinada a partir dos elementos disponíveis, do momento processual e das alternativas efetivamente cabíveis.",
-  },
-  {
-    titulo: "Discrição",
-    texto:
-      "A condução observa reserva quanto à identidade das partes e ao conteúdo das informações compartilhadas.",
-  },
-  {
-    titulo: "Análise individualizada",
-    texto:
-      "Não há solução padronizada. A estratégia é definida caso a caso, com clareza sobre limites e riscos.",
-  },
-  {
-    titulo: "Acompanhamento próximo",
-    texto:
-      "Contato direto com o advogado responsável ao longo das etapas do procedimento.",
-  },
-  {
-    titulo: "Alta responsabilidade",
-    texto:
-      "Atuação em cenários que envolvem liberdade, patrimônio, atividade empresarial e exposição reputacional.",
-  },
-  {
-    titulo: "Presença territorial",
-    texto:
-      "Conhecimento das dinâmicas de cada região de São Paulo e das rotinas dos procedimentos que nelas tramitam.",
-  },
+  { titulo: "Clareza editorial", texto: "Conteúdo acessível sobre documentos, procedimentos policiais e temas jurídicos." },
+  { titulo: "Independência", texto: "Sem vínculo com delegacias, tribunais ou órgãos públicos mencionados nas páginas." },
+  { titulo: "Contexto territorial", texto: "Bairros e zonas como referências de navegação, sem presumir circunscrição oficial." },
+  { titulo: "Responsabilidade", texto: "Informação pública não é consulta jurídica, parecer ou promessa de resultado." },
+  { titulo: "Autoria transparente", texto: "Publicações assinadas somente por colaboradores identificados e com autorização." },
+  { titulo: "Respeito à privacidade", texto: "O portal não recebe documentos de processos ou relatos identificáveis de casos." },
 ];
-
 const processo = [
-  { passo: "01", titulo: "Informações iniciais", texto: "Compreensão da natureza geral da situação e verificação de urgência." },
-  { passo: "02", titulo: "Análise de viabilidade", texto: "Exame preliminar dos elementos informados, sem parecer automático." },
-  { passo: "03", titulo: "Contato do escritório", texto: "Retorno reservado para conversa detalhada sobre o escopo do trabalho." },
-  { passo: "04", titulo: "Orientação individualizada", texto: "Definição de estratégia e acompanhamento das etapas seguintes." },
+  { passo: "01", titulo: "Território", texto: "Consulte as páginas da zona e os bairros de referência." },
+  { passo: "02", titulo: "Delegacias", texto: "Conheça o contexto das unidades e confirme dados em canais oficiais." },
+  { passo: "03", titulo: "Publicações", texto: "Leia os artigos sobre documentos e procedimentos." },
+  { passo: "04", titulo: "Profissionais", texto: "Perfis serão publicados quando houver participantes identificados." },
 ];
 
 function Index() {
@@ -93,45 +67,15 @@ function Index() {
   return (
     <>
       <section className="relative overflow-hidden border-b border-border">
-        <img
-          src={escritorioAsset.url}
-          alt=""
-          aria-hidden
-          className="absolute inset-0 size-full object-cover opacity-20"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/85 via-background/92 to-background" />
-        <Container className="relative py-24 md:py-36">
-          <div className="grid items-center gap-14 lg:grid-cols-[1.35fr_0.65fr]">
-            <div className="reveal">
-              <p className="eyebrow mb-6">Advocacia criminal e cível · São Paulo</p>
-              <h1 className="max-w-3xl text-balance text-4xl leading-[1.1] md:text-6xl">
-                Advocacia estratégica para situações jurídicas complexas
-              </h1>
-              <p className="mt-7 max-w-2xl text-base leading-relaxed text-muted-foreground md:text-lg">
-                Escritório dedicado a casos que exigem técnica, reserva e acompanhamento próximo.
-                A análise é individualizada e conduzida diretamente pelo advogado responsável,
-                Paulo José Sinigalia — OAB/SP 411.502.
-              </p>
-              <div className="mt-10 flex flex-wrap gap-4">
-                <ActionLink to="/contato">Informações para contato</ActionLink>
-                <ActionLink to="/areas-de-atuacao" variant="outline">
-                  Conhecer áreas de atuação
-                </ActionLink>
-              </div>
-            </div>
-            <figure className="reveal mx-auto w-full max-w-xs">
-              <img
-                src={retratoAsset.url}
-                alt="Paulo José Sinigalia, advogado responsável pelo escritório"
-                width={480}
-                height={480}
-                className="w-full rounded-full border border-gold/25"
-              />
-              <figcaption className="mt-5 text-center text-xs uppercase tracking-[0.16em] text-muted-foreground">
-                Paulo José Sinigalia · OAB/SP 411.502
-              </figcaption>
-            </figure>
-          </div>
+        <img src={cidadeImage} alt="Imagem editorial ilustrativa da Praça da Sé, em São Paulo" width={1600} height={1008} className="absolute inset-0 size-full object-cover" />
+        <div className="absolute inset-0 bg-background/70" />
+        <Container className="relative py-12 md:py-20">
+          <p className="eyebrow mb-6">Portal editorial · São Paulo</p>
+          <h1 className="max-w-3xl text-balance text-4xl leading-tight md:text-6xl">Banca Paulista<br /><span className="text-gold-light">de Advogados</span></h1>
+          <p className="mt-5 font-serif text-2xl text-ivory">Plantão e Defesa Criminal</p>
+          <p className="mt-6 max-w-xl text-base leading-relaxed text-ivory">Informação jurídica e contexto territorial. Delegacias, bairros e temas de defesa criminal nas cinco zonas de São Paulo.</p>
+          <div className="mt-8 flex flex-wrap gap-4"><ActionLink to="/regioes">Explorar regiões</ActionLink><ActionLink to="/delegacias" variant="outline">Guia de delegacias</ActionLink></div>
+          <p className="mt-8 max-w-xl text-xs leading-relaxed text-ivory/80">Fase editorial · Ainda não há profissionais participantes publicados. O portal não oferece consultas nem atendimento 24h.</p>
         </Container>
       </section>
 
@@ -139,8 +83,8 @@ function Index() {
         <Container>
           <SectionHeading
             eyebrow="Posicionamento"
-            title="Trabalho conduzido com precisão e reserva"
-            lead="A atuação é orientada por método, documentação e comunicação clara sobre alternativas e limites."
+            title="Informação com clareza e responsabilidade"
+            lead="Princípios que orientam as publicações e os guias territoriais da Banca Paulista."
           />
           <div className="mt-14 grid gap-px overflow-hidden border border-border bg-border sm:grid-cols-2 lg:grid-cols-3">
             {posicionamento.map((item) => (
@@ -156,9 +100,9 @@ function Index() {
       <Section tone="raised">
         <Container>
           <SectionHeading
-            eyebrow="Áreas de atuação"
-            title="Frentes de trabalho do escritório"
-            lead="Concentração em matérias que exigem leitura técnica apurada e coordenação entre esferas."
+            eyebrow="Temas jurídicos"
+            title="Defesa criminal e temas relacionados"
+            lead="Informações sobre investigações, medidas urgentes e questões jurídicas relacionadas."
           />
           <div className="mt-14 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {areas.map((area) => (
@@ -167,7 +111,7 @@ function Index() {
           </div>
           <div className="mt-12">
             <ActionLink to="/areas-de-atuacao" variant="outline">
-              Conhecer áreas de atuação
+              Explorar temas jurídicos
             </ActionLink>
           </div>
         </Container>
@@ -191,7 +135,7 @@ function Index() {
         <Container>
           <SectionHeading
             eyebrow="Cobertura territorial"
-            title="Atuação organizada por região de São Paulo"
+            title="São Paulo, região por região"
             lead="Páginas territoriais por zona da cidade, com contexto local e orientação sobre situações frequentes."
           />
           <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -211,7 +155,7 @@ function Index() {
                   />
                 </div>
                 <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-                  Índice completo das regiões atendidas e das páginas territoriais publicadas.
+                  Índice completo das regiões publicadas e das páginas territoriais publicadas.
                 </p>
               </div>
               <p className="mt-6 text-xs uppercase tracking-[0.14em] text-gold/80">
@@ -224,7 +168,7 @@ function Index() {
 
       <Section>
         <Container>
-          <SectionHeading eyebrow="Processo" title="Como funciona o atendimento" />
+          <SectionHeading eyebrow="Portal" title="Território, informação e contexto" />
           <div className="mt-14 grid gap-10 md:grid-cols-2 lg:grid-cols-4">
             {processo.map((etapa) => (
               <div key={etapa.passo}>

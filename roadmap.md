@@ -1,15 +1,12 @@
-# Próximas etapas
+# Transformação editorial — Banca Paulista
+- [x] Atualizar identidade, home, navegação e remover a apresentação de Paulo.
+- [x] Revisar a apresentação territorial preservando as 34 páginas e as cinco zonas.
+- [x] Criar Sobre, Profissionais, Plantão Criminal informativo, Contato e Privacidade; manter redirecionamentos legados.
+- [x] Retirar triagem de casos e revisar autoria/SEO; manter artigos herdados fora de publicação até autorização.
+- [x] Verificar navegação, conteúdo, telas e testes.
 
-## 1. Páginas de zona (arquitetura regional) — concluída
-- [x] Criar páginas-pilar: /regioes (índice) + /regioes/centro, zona-norte, zona-leste, zona-sul, zona-oeste.
-- [x] Substituir os cards de bairros da home por cards das 5 zonas + card "Todas as regiões".
-- [x] Mover os cards de bairros para dentro das páginas de zona (agrupados por zona em /regioes e na página de cada zona).
-- [x] Incluir a zona no rodapé dos cards: "Bairro • Zona Sul • São Paulo — SP".
-- [x] Incluir o 25º DP (Parelheiros) na Zona Sul (34ª delegacia publicada).
-
-## 2. Cobertura completa das delegacias de SP — mais adiante
-- [ ] Lote a lote: Centro, Norte e Leste até cobrir todos os ~93 DPs da capital (Zona Sul completa; Zona Oeste com 8 regiões publicadas).
-
-## 3. Integrações — aguardando dados do usuário
-- [ ] Payload CMS: preencher CMS_API_URL quando o backend existir.
-- [ ] E-mail transacional / painel privado de leads no endpoint de triagem.
+# Dependências futuras (fora desta entrega)
+- Payload CMS: conexão depende da URL do serviço.
+- Contato editorial: publicar canal quando o responsável fornecer e-mail/telefone e identificação do operador.
+- Profissionais: cadastrar apenas após identificação, consentimento e validação do modelo jurídico/comercial.
+- Expansão territorial: novas delegacias serão incorporadas em lotes posteriores.

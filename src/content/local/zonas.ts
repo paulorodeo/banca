@@ -20,13 +20,13 @@ export const zonas: Zona[] = [
         titulo: "Cobertura em expansão",
         paragrafos: [
           "As páginas territoriais do Centro estão sendo publicadas de forma gradual, lote a lote, sempre com o mesmo padrão editorial das demais regiões: contexto territorial, bairros de referência, situações frequentes e observações sobre circunscrição.",
-          "Enquanto a cobertura não está consolidada, o índice geral de delegacias reúne as páginas já publicadas e as regiões atendidas em todo o município.",
+          "Enquanto a cobertura não está consolidada, o índice geral de delegacias reúne as páginas já publicadas e as regiões publicadas em todo o município.",
         ],
       },
       {
-        titulo: "Como o atendimento é organizado",
+        titulo: "Informação editorial e orientação profissional",
         paragrafos: [
-          "Cada situação é examinada de forma individualizada, com atenção ao endereço dos fatos, à unidade responsável e ao momento processual. O contato inicial serve à análise prévia de viabilidade, disponibilidade e conflito de interesses.",
+          "O conteúdo tem finalidade informativa e não substitui orientação de advogado ou da Defensoria Pública. Não há profissionais participantes publicados nem atendimento jurídico oferecido pelo portal.",
         ],
       },
     ],
@@ -48,9 +48,9 @@ export const zonas: Zona[] = [
         ],
       },
       {
-        titulo: "Como o atendimento é organizado",
+        titulo: "Informação editorial e orientação profissional",
         paragrafos: [
-          "A atuação é conduzida de forma reservada, com análise individualizada de cada caso, atenção à unidade responsável e comunicação clara sobre limites e alternativas cabíveis.",
+          "O conteúdo tem finalidade informativa e não substitui orientação de advogado ou da Defensoria Pública. Não há profissionais participantes publicados nem atendimento jurídico oferecido pelo portal.",
         ],
       },
     ],
@@ -72,9 +72,9 @@ export const zonas: Zona[] = [
         ],
       },
       {
-        titulo: "Como o atendimento é organizado",
+        titulo: "Informação editorial e orientação profissional",
         paragrafos: [
-          "Cada caso é examinado a partir dos elementos disponíveis, do endereço dos fatos e da unidade policial responsável, com orientação individualizada sobre os próximos passos.",
+          "O conteúdo tem finalidade informativa e não substitui orientação de advogado ou da Defensoria Pública. Não há profissionais participantes publicados nem atendimento jurídico oferecido pelo portal.",
         ],
       },
     ],
@@ -84,21 +84,21 @@ export const zonas: Zona[] = [
     slug: "zona-sul",
     nome: "Zona Sul",
     descricao:
-      "Núcleo do escritório em Jardim das Flores/M'Boi Mirim e cobertura consolidada do eixo Santo Amaro–Jabaquara–Grajaú–Cidade Dutra.",
+      "Páginas territoriais nos eixos Santo Amaro, Jabaquara, M'Boi Mirim, Grajaú e Cidade Dutra.",
     introducao:
-      "A Zona Sul concentra o núcleo de atuação do escritório, com base em Jardim das Flores, na região de M'Boi Mirim, e atendimento ao longo dos corredores Santo Amaro, Jabaquara, Cidade Ademar, Interlagos e Grajaú.",
+      "A Zona Sul reúne bairros com diferentes perfis urbanos. O guia editorial acompanha os eixos Santo Amaro, Jabaquara, Cidade Ademar, M'Boi Mirim, Interlagos e Grajaú.",
     secoes: [
       {
         titulo: "Cobertura territorial",
         paragrafos: [
           "A região reúne páginas de referência nos eixos Santo Amaro, Brooklin, Campo Belo, Morumbi, Jabaquara, Ipiranga, Sacomã, Cidade Ademar, Capão Redondo, Campo Limpo, Socorro, Cidade Dutra, Parque Santo Antônio, Jardim Herculano, Vila Joaniza, Americanópolis, Jardim Miriam, Jardim Imbuias, Jardim Mirna, Heliópolis e Parelheiros, no extremo sul da cidade.",
-          "O endereço do escritório, em Jardim das Flores / M'Boi Mirim, serve como referência de proximidade para o núcleo local de atendimento. As demais regiões são atendidas mediante análise prévia de viabilidade e disponibilidade.",
+          "Os bairros citados são referências geográficas. A confirmação da unidade responsável depende do endereço exato dos fatos e dos canais oficiais da Polícia Civil.",
         ],
       },
       {
-        titulo: "Como o atendimento é organizado",
+        titulo: "Informação editorial e orientação profissional",
         paragrafos: [
-          "Cada situação é examinada individualmente, com atenção ao endereço dos fatos, à unidade policial responsável e ao momento processual. A indicação de bairros e unidades tem finalidade exclusivamente informativa: a circunscrição responsável depende do endereço exato dos fatos.",
+          "O conteúdo tem finalidade informativa e não substitui orientação de advogado ou da Defensoria Pública. Não há profissionais participantes publicados nem atendimento jurídico oferecido pelo portal.",
         ],
       },
     ],
@@ -120,9 +120,9 @@ export const zonas: Zona[] = [
         ],
       },
       {
-        titulo: "Como o atendimento é organizado",
+        titulo: "Informação editorial e orientação profissional",
         paragrafos: [
-          "A atuação é conduzida de forma reservada, com análise individualizada de cada caso, atenção ao endereço dos fatos e comunicação clara sobre limites, riscos e alternativas cabíveis.",
+          "O conteúdo tem finalidade informativa e não substitui orientação de advogado ou da Defensoria Pública. Não há profissionais participantes publicados nem atendimento jurídico oferecido pelo portal.",
         ],
       },
     ],

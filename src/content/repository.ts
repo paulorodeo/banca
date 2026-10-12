@@ -20,7 +20,7 @@ import type {
 import { areas, situacoes } from "./local/areas";
 import { regioes } from "./local/regioes";
 import { zonas } from "./local/zonas";
-import { conteudos } from "./local/conteudos";
+import { conteudos } from "./local/artigos-editoriais";
 import { delegacias } from "./local/delegacias";
 import { paginas } from "./local/paginas";
 import { autores, siteSettings } from "./local/settings";
@@ -113,7 +113,8 @@ function toConteudo(doc: PayloadDoc): ConteudoJuridico {
     categoria: doc.categoria ?? "Artigo",
     publicadoEm: doc.publicadoEm ?? new Date().toISOString().slice(0, 10),
     ...(doc.atualizadoEm ? { atualizadoEm: doc.atualizadoEm } : {}),
-    autorId: doc.autorId ?? "paulo-sinigalia",
+    ...(doc.autorId ? { autorId: doc.autorId } : {}),
+    status: doc.status ?? "revisao",
     corpo: doc.corpo ?? [],
     areasRelacionadas: doc.areasRelacionadas ?? [],
   };
@@ -129,7 +130,7 @@ export class PayloadContentRepository extends LocalContentRepository {
       const res = await fetch(`${this.baseUrl}/api/artigos?limit=100&depth=0${query}`);
       if (!res.ok) return null;
       const json = (await res.json()) as { docs?: PayloadDoc[] };
-      return (json.docs ?? []).map(toConteudo);
+      return (json.docs ?? []).map(toConteudo).filter((doc) => doc.status === "publicado");
     } catch {
       return null;
     }

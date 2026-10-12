@@ -15,6 +15,10 @@ import { Route as AtendimentoReservadoRouteImport } from './routes/atendimento-r
 import { Route as ContatoRouteImport } from './routes/contato'
 import { Route as OEscritorioRouteImport } from './routes/o-escritorio'
 import { Route as PauloSinigaliaRouteImport } from './routes/paulo-sinigalia'
+import { Route as PlantaoCriminalRouteImport } from './routes/plantao-criminal'
+import { Route as PoliticaDePrivacidadeRouteImport } from './routes/politica-de-privacidade'
+import { Route as ProfissionaisRouteImport } from './routes/profissionais'
+import { Route as SobreRouteImport } from './routes/sobre'
 import { Route as ArtigosIndexRouteImport } from './routes/artigos.index'
 import { Route as ArtigosSlugRouteImport } from './routes/artigos.$slug'
 import { Route as ConteudosIndexRouteImport } from './routes/conteudos.index'
@@ -53,6 +57,26 @@ const OEscritorioRoute = OEscritorioRouteImport.update({
 const PauloSinigaliaRoute = PauloSinigaliaRouteImport.update({
   id: '/paulo-sinigalia',
   path: '/paulo-sinigalia',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PlantaoCriminalRoute = PlantaoCriminalRouteImport.update({
+  id: '/plantao-criminal',
+  path: '/plantao-criminal',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PoliticaDePrivacidadeRoute = PoliticaDePrivacidadeRouteImport.update({
+  id: '/politica-de-privacidade',
+  path: '/politica-de-privacidade',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProfissionaisRoute = ProfissionaisRouteImport.update({
+  id: '/profissionais',
+  path: '/profissionais',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SobreRoute = SobreRouteImport.update({
+  id: '/sobre',
+  path: '/sobre',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ArtigosIndexRoute = ArtigosIndexRouteImport.update({
@@ -108,6 +132,10 @@ export interface FileRoutesByFullPath {
   '/contato': typeof ContatoRoute
   '/o-escritorio': typeof OEscritorioRoute
   '/paulo-sinigalia': typeof PauloSinigaliaRoute
+  '/plantao-criminal': typeof PlantaoCriminalRoute
+  '/politica-de-privacidade': typeof PoliticaDePrivacidadeRoute
+  '/profissionais': typeof ProfissionaisRoute
+  '/sobre': typeof SobreRoute
   '/artigos/$slug': typeof ArtigosSlugRoute
   '/conteudos/$slug': typeof ConteudosSlugRoute
   '/delegacias/$slug': typeof DelegaciasSlugRoute
@@ -125,6 +153,10 @@ export interface FileRoutesByTo {
   '/contato': typeof ContatoRoute
   '/o-escritorio': typeof OEscritorioRoute
   '/paulo-sinigalia': typeof PauloSinigaliaRoute
+  '/plantao-criminal': typeof PlantaoCriminalRoute
+  '/politica-de-privacidade': typeof PoliticaDePrivacidadeRoute
+  '/profissionais': typeof ProfissionaisRoute
+  '/sobre': typeof SobreRoute
   '/artigos/$slug': typeof ArtigosSlugRoute
   '/conteudos/$slug': typeof ConteudosSlugRoute
   '/delegacias/$slug': typeof DelegaciasSlugRoute
@@ -143,6 +175,10 @@ export interface FileRoutesById {
   '/contato': typeof ContatoRoute
   '/o-escritorio': typeof OEscritorioRoute
   '/paulo-sinigalia': typeof PauloSinigaliaRoute
+  '/plantao-criminal': typeof PlantaoCriminalRoute
+  '/politica-de-privacidade': typeof PoliticaDePrivacidadeRoute
+  '/profissionais': typeof ProfissionaisRoute
+  '/sobre': typeof SobreRoute
   '/artigos/$slug': typeof ArtigosSlugRoute
   '/conteudos/$slug': typeof ConteudosSlugRoute
   '/delegacias/$slug': typeof DelegaciasSlugRoute
@@ -162,6 +198,10 @@ export interface FileRouteTypes {
     | '/contato'
     | '/o-escritorio'
     | '/paulo-sinigalia'
+    | '/plantao-criminal'
+    | '/politica-de-privacidade'
+    | '/profissionais'
+    | '/sobre'
     | '/artigos/$slug'
     | '/conteudos/$slug'
     | '/delegacias/$slug'
@@ -179,6 +219,10 @@ export interface FileRouteTypes {
     | '/contato'
     | '/o-escritorio'
     | '/paulo-sinigalia'
+    | '/plantao-criminal'
+    | '/politica-de-privacidade'
+    | '/profissionais'
+    | '/sobre'
     | '/artigos/$slug'
     | '/conteudos/$slug'
     | '/delegacias/$slug'
@@ -196,6 +240,10 @@ export interface FileRouteTypes {
     | '/contato'
     | '/o-escritorio'
     | '/paulo-sinigalia'
+    | '/plantao-criminal'
+    | '/politica-de-privacidade'
+    | '/profissionais'
+    | '/sobre'
     | '/artigos/$slug'
     | '/conteudos/$slug'
     | '/delegacias/$slug'
@@ -214,6 +262,10 @@ export interface RootRouteChildren {
   ContatoRoute: typeof ContatoRoute
   OEscritorioRoute: typeof OEscritorioRoute
   PauloSinigaliaRoute: typeof PauloSinigaliaRoute
+  PlantaoCriminalRoute: typeof PlantaoCriminalRoute
+  PoliticaDePrivacidadeRoute: typeof PoliticaDePrivacidadeRoute
+  ProfissionaisRoute: typeof ProfissionaisRoute
+  SobreRoute: typeof SobreRoute
   ArtigosSlugRoute: typeof ArtigosSlugRoute
   ConteudosSlugRoute: typeof ConteudosSlugRoute
   DelegaciasSlugRoute: typeof DelegaciasSlugRoute
@@ -267,6 +319,34 @@ declare module '@tanstack/react-router' {
       path: '/paulo-sinigalia'
       fullPath: '/paulo-sinigalia'
       preLoaderRoute: typeof PauloSinigaliaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/plantao-criminal': {
+      id: '/plantao-criminal'
+      path: '/plantao-criminal'
+      fullPath: '/plantao-criminal'
+      preLoaderRoute: typeof PlantaoCriminalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/politica-de-privacidade': {
+      id: '/politica-de-privacidade'
+      path: '/politica-de-privacidade'
+      fullPath: '/politica-de-privacidade'
+      preLoaderRoute: typeof PoliticaDePrivacidadeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/profissionais': {
+      id: '/profissionais'
+      path: '/profissionais'
+      fullPath: '/profissionais'
+      preLoaderRoute: typeof ProfissionaisRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sobre': {
+      id: '/sobre'
+      path: '/sobre'
+      fullPath: '/sobre'
+      preLoaderRoute: typeof SobreRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/artigos/': {
@@ -342,6 +422,10 @@ const rootRouteChildren: RootRouteChildren = {
   ContatoRoute: ContatoRoute,
   OEscritorioRoute: OEscritorioRoute,
   PauloSinigaliaRoute: PauloSinigaliaRoute,
+  PlantaoCriminalRoute: PlantaoCriminalRoute,
+  PoliticaDePrivacidadeRoute: PoliticaDePrivacidadeRoute,
+  ProfissionaisRoute: ProfissionaisRoute,
+  SobreRoute: SobreRoute,
   ArtigosSlugRoute: ArtigosSlugRoute,
   ConteudosSlugRoute: ConteudosSlugRoute,
   DelegaciasSlugRoute: DelegaciasSlugRoute,

@@ -13,9 +13,9 @@ export const Route = createFileRoute("/delegacias/")({
   }),
   head: () => ({
     meta: pageMeta({
-      title: "Delegacias em São Paulo | Guia Informativo — Paulo Sinigalia",
+      title: "Delegacias em São Paulo | Guia Informativo — Banca Paulista",
       description:
-        "Páginas informativas sobre delegacias de polícia em São Paulo, com contexto territorial e orientação jurídica preliminar.",
+        "Páginas informativas sobre delegacias de polícia em São Paulo, com contexto territorial e informação sobre procedimentos policiais.",
       path: PATH,
     }),
     links: canonicalLink(PATH),

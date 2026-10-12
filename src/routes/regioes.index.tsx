@@ -27,9 +27,9 @@ export const Route = createFileRoute("/regioes/")({
   },
   head: () => ({
     meta: pageMeta({
-      title: "Regiões de atuação em São Paulo | Paulo Sinigalia",
+      title: "Regiões em São Paulo | Banca Paulista",
       description:
-        "Índice das regiões atendidas pelo escritório em São Paulo, organizado por zona da cidade, com contexto territorial e páginas de referência por distrito.",
+        "Índice das regiões publicadas pelo portal em São Paulo, organizado por zona da cidade, com contexto territorial e páginas de referência por distrito.",
       path: "/regioes",
     }),
     links: canonicalLink("/regioes"),
@@ -55,7 +55,7 @@ function RegioesPage() {
     <>
       <PageHero
         eyebrow="Cobertura territorial"
-        title="Regiões de atuação em São Paulo"
+        title="Regiões em São Paulo"
         lead="Índice organizado por zona da cidade, com páginas territoriais publicadas por distrito e cobertura ampliada de forma gradual."
         crumbs={[
           { name: "Início", path: "/" },
@@ -66,7 +66,7 @@ function RegioesPage() {
         <Container>
           <SectionHeading
             eyebrow="Zonas"
-            title="Atuação organizada por zona"
+            title="Conteúdo organizado por zona"
             lead="Cada zona reúne as páginas territoriais publicadas, com contexto local e situações frequentes."
           />
           <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">

@@ -1,5 +1,5 @@
 /**
- * Content model for the Paulo Sinigalia platform.
+ * Content model for the Banca Paulista editorial portal.
  *
  * These interfaces mirror the collections that will later be created in
  * Payload CMS (PostgreSQL). The front-end never reads raw data directly:
@@ -27,7 +27,7 @@ export interface Media {
 export interface Autor {
   id: string;
   nome: string;
-  oab: string;
+  oab?: string;
   cargo: string;
   bio: string;
   retrato?: Media;
@@ -89,7 +89,9 @@ export interface ConteudoJuridico {
   categoria: string;
   publicadoEm: string;
   atualizadoEm?: string;
-  autorId: string;
+  autorId?: string;
+  /** Only verified publications are exposed by the repository. */
+  status?: "publicado" | "revisao";
   corpo: string[];
   areasRelacionadas: string[];
 }
@@ -122,12 +124,6 @@ export interface Delegacia {
   contextoTerritorial: string;
   regiaoSlug: string;
   bairros: string[];
-  /**
-   * Relação territorial com o endereço físico do escritório:
-   * localCore (núcleo próximo), extendedArea (região ampliada)
-   * ou serviceArea (demais áreas atendidas).
-   */
-  escopoTerritorial?: "localCore" | "extendedArea" | "serviceArea";
   /** Seções longas de conteúdo editorial da página. */
   secoes?: { titulo: string; paragrafos?: string[]; lista?: string[] }[];
   /** Observação sobre limites de circunscrição exibida abaixo dos bairros. */
@@ -152,8 +148,7 @@ export interface PaginaInstitucional {
 
 export interface SiteSettings {
   nome: string;
-  advogado: string;
-  oab: string;
+  oab?: string;
   cidade: string;
   estado: string;
   descricaoCurta: string;

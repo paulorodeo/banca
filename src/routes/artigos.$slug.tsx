@@ -1,4 +1,4 @@
-import { createFileRoute, notFound } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { content } from "@/content/repository";
 import type { ConteudoJuridico } from "@/content/types";
 import { Container, Hairline, Section } from "@/components/site/primitives";
@@ -6,26 +6,26 @@ import { CtaReservado, PageHero } from "@/components/site/blocks";
 import { articleSchema, breadcrumbSchema, canonical, pageMeta } from "@/lib/seo";
 
 interface Data {
-  conteudo: ConteudoJuridico;
+  conteudo: ConteudoJuridico | null;
 }
 
 export const Route = createFileRoute("/artigos/$slug")({
   loader: async ({ params }): Promise<Data> => {
     const conteudo = await content.getConteudo(params.slug);
-    if (!conteudo) throw notFound();
+    if (!conteudo) return { conteudo: null };
     return { conteudo };
   },
   head: ({ params, loaderData }) => {
     const path = `/artigos/${params.slug}`;
-    if (!loaderData) {
+    if (!loaderData?.conteudo) {
       return {
-        meta: [{ title: "Conteúdo indisponível" }, { name: "robots", content: "noindex" }],
+        meta: [...pageMeta({ title: "Artigo indisponível | Banca Paulista", description: "Este artigo não está publicado. Consulte as publicações editoriais atuais da Banca Paulista.", path }), { name: "robots", content: "noindex" }],
       };
     }
-    const { conteudo } = loaderData as Data;
+    const { conteudo } = loaderData;
     return {
       meta: pageMeta({
-        title: `${conteudo.titulo} | Paulo Sinigalia`,
+        title: `${conteudo.titulo} | Banca Paulista`,
         description: conteudo.resumo,
         path,
         type: "article",
@@ -62,6 +62,7 @@ export const Route = createFileRoute("/artigos/$slug")({
 
 function ConteudoPage() {
   const { conteudo } = Route.useLoaderData() as Data;
+  if (!conteudo) return <><PageHero eyebrow="Artigos" title="Artigo indisponível" lead="Este material não está publicado. Os conteúdos herdados permanecem em revisão de origem, autorização e autoria." crumbs={[{ name: "Início", path: "/" }, { name: "Artigos", path: "/artigos" }]} /><CtaReservado /></>;
   return (
     <>
       <PageHero
