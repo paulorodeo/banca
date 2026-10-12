@@ -135,3 +135,8 @@ const NOME_POR_SLUG = new Map(zonas.map((zona) => [zona.slug, zona.nome]));
 export function nomeDaZona(slug: string): string {
   return NOME_POR_SLUG.get(slug) ?? "São Paulo";
 }
+
+/** Artigo correto antes do nome da zona ("no Centro", "na Zona Sul"). */
+export function artigoDaZona(slug: string): "no" | "na" {
+  return slug === "centro" ? "no" : "na";
+}

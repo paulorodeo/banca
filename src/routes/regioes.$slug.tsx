@@ -1,6 +1,7 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
 import { content } from "@/content/repository";
 import type { Regiao, Zona } from "@/content/types";
+import { artigoDaZona } from "@/content/local/zonas";
 import { Container, Hairline, Section, SectionHeading } from "@/components/site/primitives";
 import { CtaReservado, PageHero, RegiaoCard } from "@/components/site/blocks";
 import { breadcrumbSchema, canonicalLink, pageMeta } from "@/lib/seo";
@@ -23,10 +24,11 @@ export const Route = createFileRoute("/regioes/$slug")({
     }
     const { zona } = loaderData as Data;
     const path = `/regioes/${zona.slug}`;
+    const artigo = artigoDaZona(zona.slug);
     return {
       meta: pageMeta({
-        title: `Advogado na ${zona.nome} de São Paulo | Paulo Sinigalia`,
-        description: `Atuação criminal e cível estratégica na ${zona.nome} de São Paulo. Páginas territoriais por região, com contexto local, orientação sobre situações frequentes e atendimento reservado.`,
+        title: `Advogado ${artigo} ${zona.nome} de São Paulo | Paulo Sinigalia`,
+        description: `Atuação criminal e cível estratégica ${artigo} ${zona.nome} de São Paulo. Páginas territoriais por região, com contexto local, orientação sobre situações frequentes e atendimento reservado.`,
         path,
       }),
       links: canonicalLink(path),
@@ -87,7 +89,7 @@ function ZonaPage() {
           <Container>
             <SectionHeading
               eyebrow={zona.nome}
-              title={`Regiões publicadas na ${zona.nome}`}
+              title={`Regiões publicadas ${artigoDaZona(zona.slug)} ${zona.nome}`}
               lead="Páginas territoriais com contexto local, bairros de referência e situações frequentes."
             />
             <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">

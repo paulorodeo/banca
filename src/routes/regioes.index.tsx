@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { content } from "@/content/repository";
 import type { Regiao, Zona } from "@/content/types";
+import { artigoDaZona } from "@/content/local/zonas";
 import { Container, Section, SectionHeading } from "@/components/site/primitives";
 import { CtaReservado, PageHero, RegiaoCard, ZonaCard } from "@/components/site/blocks";
 import { breadcrumbSchema, canonicalLink, pageMeta } from "@/lib/seo";
@@ -79,7 +80,7 @@ function RegioesPage() {
         regioes.length > 0 ? (
           <Section key={zona.id} tone={zona.slug === "zona-sul" ? "base" : "raised"}>
             <Container>
-              <SectionHeading eyebrow={zona.nome} title={`Regiões publicadas na ${zona.nome}`} />
+              <SectionHeading eyebrow={zona.nome} title={`Regiões publicadas ${artigoDaZona(zona.slug)} ${zona.nome}`} />
               <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
                 {regioes.map((regiao) => (
                   <RegiaoCard key={regiao.id} regiao={regiao} />
