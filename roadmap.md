@@ -12,6 +12,12 @@
 - [x] Testar ciclos editoriais com API simulada e verificar o portal.
 - [x] Documentar configuração e dependências do VPS.
 
+# Correções da auditoria antes da Etapa 2
+- [x] Validar antes do cache, limitar leitura e preparar revisão editorial distribuída com controle de concorrência.
+- [x] Centralizar URLs absolutas, canonical de paginação/filtros e links Lexical seguros.
+- [x] Acrescentar testes e documentação de limites/dependências externas.
+- [x] Confirmar preservação das rotas e revisar somente a página existente de Parelheiros.
+
 # Dependências futuras (fora desta entrega)
 - Payload CMS — Etapa 2: conexão e validação real dependem da URL, configuração e acesso à instância do VPS.
 - Contato editorial: publicar canal quando o responsável fornecer e-mail/telefone e identificação do operador.

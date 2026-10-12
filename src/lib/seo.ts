@@ -1,12 +1,12 @@
+import { absoluteUrl, DEFAULT_SITE_ORIGIN } from "./public-url";
 import type { Delegacia, FAQ } from "@/content/types";
 
 /**
- * Canonical configurável. Enquanto não houver domínio definitivo, usamos
- * caminhos relativos — resolvidos pelo crawler contra o host em uso.
+ * Public URLs use the existing published origin; route heads apply runtime configuration.
  */
-export const SITE_ORIGIN = "";
+export const SITE_ORIGIN = DEFAULT_SITE_ORIGIN;
 
-export const canonical = (path: string): string => `${SITE_ORIGIN}${path}`;
+export const canonical = (path: string): string => absoluteUrl(path, SITE_ORIGIN);
 
 export const ORG_NAME = "Banca Paulista de Advogados";
 

@@ -1,5 +1,6 @@
 import { createServerFn } from '@tanstack/react-start';
-import { getRequest, setResponseHeader, setResponseStatus } from '@tanstack/react-start/server';
+import { setResponseHeader, setResponseStatus } from '@tanstack/react-start/server';
+import { absoluteUrl, publicOrigin } from '@/lib/public-url';
 import { z } from 'zod';
 import { articleSearchSchema, type ArticlePage } from './payload';
 import type { ConteudoJuridico } from './types';
@@ -24,8 +25,9 @@ export const readArticles = createServerFn({ method: 'GET' })
   .handler(async ({ data }): Promise<PageResult> => {
     setResponseHeader('Cache-Control', 'no-store');
     try {
-      const config = cmsConfig(process.env);
-      return { ok: true, page: await loadArticlePage(config, data, runtimeCache()) };
+      const configured = cmsConfig(process.env);
+      const config = configured ? { ...configured, siteOrigin: publicOrigin(process.env['PUBLIC_SITE_URL']) } : null;
+      return { ok: true, page: await loadArticlePage(config, data, config?.revisionPath ? runtimeCache() : undefined) };
     } catch { return unavailable(); }
   });
 export const readArticle = createServerFn({ method: 'GET' })
@@ -33,10 +35,11 @@ export const readArticle = createServerFn({ method: 'GET' })
   .handler(async ({ data }): Promise<ArticleResult> => {
     setResponseHeader('Cache-Control', 'no-store');
     try {
-      const config = cmsConfig(process.env);
+      const configured = cmsConfig(process.env);
+      const config = configured ? { ...configured, siteOrigin: publicOrigin(process.env['PUBLIC_SITE_URL']) } : null;
       const configuredOrigin = process.env['PUBLIC_SITE_URL'];
-      const origin = configuredOrigin ? new URL(configuredOrigin).origin : new URL(getRequest().url).origin;
+      const origin = publicOrigin(configuredOrigin);
       if (config && origin === new URL(config.baseUrl).origin) throw new Error('Public origin cannot be the CMS origin');
-      return { ok: true, article: await loadArticle(config, data.slug, runtimeCache()), canonicalUrl: `${origin}/artigos/${data.slug}` };
+      return { ok: true, article: await loadArticle(config, data.slug, config?.revisionPath ? runtimeCache() : undefined), canonicalUrl: absoluteUrl(`/artigos/${data.slug}`, origin) };
     } catch { return unavailable(); }
   });
