@@ -1,4 +1,5 @@
 import type { Regiao } from "../types";
+import { regioesLeste } from "./delegacias-leste";
 
 export const regioes: Regiao[] = [
   {
@@ -307,4 +308,5 @@ export const regioes: Regiao[] = [
     href: "/delegacias/advogado-criminal-25-dp-parelheiros",
     zona: "zona-sul",
   },
+  ...regioesLeste,
 ];

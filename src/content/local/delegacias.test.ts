@@ -21,11 +21,12 @@ describe("Zonas e arquitetura regional", () => {
     }
   });
 
-  test("Zona Sul concentra 26 regiões e Zona Oeste 8", () => {
+  test("Zona Sul mantém 26 regiões, Oeste 8 e Leste recebe 33", () => {
     const porZona = (slug: string) => regioes.filter((regiao) => regiao.zona === slug).length;
     assert.equal(porZona("zona-sul"), 26);
     assert.equal(porZona("zona-oeste"), 8);
-    assert.equal(porZona("centro") + porZona("zona-norte") + porZona("zona-leste"), 0);
+    assert.equal(porZona("zona-leste"), 33);
+    assert.equal(porZona("centro") + porZona("zona-norte"), 0);
   });
 
   test("Pinheiros é Zona Oeste e Americanópolis é Zona Sul", () => {
@@ -35,14 +36,14 @@ describe("Zonas e arquitetura regional", () => {
 });
 
 describe("Americanópolis na grade territorial", () => {
-  test("completa 34 delegacias sem duplicar unidades", () => {
-    assert.equal(delegacias.length, 34);
-    assert.equal(new Set(delegacias.map((dp) => dp.unidade.numero)).size, 34);
-    assert.deepEqual(delegacias.slice(-3).map((dp) => dp.unidade.numero), ["85", "95", "25"]);
+  test("preserva as 34 delegacias e acrescenta 33 sem duplicar unidades", () => {
+    assert.equal(delegacias.length, 67);
+    assert.equal(new Set(delegacias.map((dp) => dp.unidade.numero)).size, 67);
+    assert.deepEqual(delegacias.slice(31, 34).map((dp) => dp.unidade.numero), ["85", "95", "25"]);
   });
 
-  test("inclui Americanópolis entre as 34 regiões da home", () => {
-    assert.equal(regioes.length, 34);
+  test("mantém Americanópolis entre as regiões da home", () => {
+    assert.equal(regioes.length, 67);
     assert.equal(
       regioes.find((regiao) => regiao.slug === "americanopolis")?.href,
       "/delegacias/advogado-criminal-97-dp-americanopolis",
