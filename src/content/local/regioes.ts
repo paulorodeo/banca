@@ -241,4 +241,28 @@ export const regioes: Regiao[] = [
     bairros: ["Americanópolis"],
     href: "/delegacias/advogado-criminal-97-dp-americanopolis",
   },
+  {
+    id: "reg-jardim-imbuias",
+    slug: "jardim-imbuias",
+    nome: "Jardim Imbuias",
+    descricao: "Grajaú e Cantinho do Céu, às margens da Billings.",
+    bairros: ["Jardim Imbuias", "Grajaú", "Cantinho do Céu"],
+    href: "/delegacias/advogado-criminal-101-dp-jardim-imbuias",
+  },
+  {
+    id: "reg-jardim-mirna",
+    slug: "jardim-mirna",
+    nome: "Jardim Mirna",
+    descricao: "Distrito do Grajaú, extremo sul de São Paulo.",
+    bairros: ["Jardim Mirna", "Grajaú", "Parque América"],
+    href: "/delegacias/advogado-criminal-85-dp-jardim-mirna",
+  },
+  {
+    id: "reg-heliopolis",
+    slug: "heliopolis",
+    nome: "Heliópolis",
+    descricao: "Entre Sacomã e Ipiranga, na divisa com São Caetano do Sul.",
+    bairros: ["Heliópolis", "Sacomã", "Vila Heliópolis"],
+    href: "/delegacias/advogado-criminal-95-dp-heliopolis",
+  },
 ];
