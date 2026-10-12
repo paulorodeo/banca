@@ -17,7 +17,9 @@ interface HomeData {
   situacoes: SituacaoJuridica[];
   zonas: (Zona & { quantidade: number })[];
   conteudos: ConteudoJuridico[];
+  artigosErro?: string;
 }
+import { readArticles } from "@/content/articles.functions";
 import cidadeImage from "@/assets/sao-paulo-editorial.jpg";
 
 const TITLE = "Banca Paulista de Advogados — Portal editorial e defesa criminal";
@@ -36,7 +38,7 @@ export const Route = createFileRoute("/")({
         quantidade: regioes.filter((regiao) => regiao.zona === zona.slug).length,
       }));
     }),
-    conteudos: (await content.listConteudos()).slice(0, 3),
+    ...await readArticles({ data: { page: 1, limit: 3, sort: '-publishedAt', category: '' } }).then(result => result.ok ? { conteudos: result.page.docs } : { conteudos: [], artigosErro: result.error }),
   }),
   head: () => ({
     meta: pageMeta({ title: TITLE, description: DESCRIPTION, path: "/" }),
@@ -62,7 +64,7 @@ const processo = [
 ];
 
 function Index() {
-  const { areas, situacoes, zonas, conteudos } = Route.useLoaderData() as HomeData;
+  const { areas, situacoes, zonas, conteudos, artigosErro } = Route.useLoaderData() as HomeData;
 
   return (
     <>
@@ -185,6 +187,7 @@ function Index() {
       <Section tone="raised">
         <Container>
           <SectionHeading eyebrow="Artigos" title="Artigos jurídicos em destaque" />
+          {artigosErro && <p role="status" className="mt-8 text-muted-foreground">{artigosErro}</p>}
           <div className="mt-14 grid gap-6 md:grid-cols-3">
             {conteudos.map((conteudo) => (
               <ConteudoCard key={conteudo.id} conteudo={conteudo} />

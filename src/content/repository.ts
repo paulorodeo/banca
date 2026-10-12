@@ -20,10 +20,10 @@ import type {
 import { areas, situacoes } from "./local/areas";
 import { regioes } from "./local/regioes";
 import { zonas } from "./local/zonas";
-import { conteudos } from "./local/artigos-editoriais";
 import { delegacias } from "./local/delegacias";
 import { paginas } from "./local/paginas";
 import { autores, siteSettings } from "./local/settings";
+import { readArticle, readArticles } from "./articles.functions";
 
 export interface ContentRepository {
   getSettings(): Promise<SiteSettings>;
@@ -71,10 +71,14 @@ export class LocalContentRepository implements ContentRepository {
     return find(zonas, slug);
   }
   async listConteudos() {
-    return [...conteudos].sort((a, b) => b.publicadoEm.localeCompare(a.publicadoEm));
+    const result = await readArticles({ data: { page: 1, limit: 12, sort: '-publishedAt', category: '' } });
+    if (!result.ok) throw new Error(result.error);
+    return result.page.docs;
   }
   async getConteudo(slug: string) {
-    return find(conteudos, slug);
+    const result = await readArticle({ data: { slug } });
+    if (!result.ok) throw new Error(result.error);
+    return result.article;
   }
   async listDelegacias() {
     return delegacias;
@@ -90,70 +94,5 @@ export class LocalContentRepository implements ContentRepository {
   }
 }
 
-/**
- * Adaptador do feed de artigos do Payload CMS.
- *
- * Ativado automaticamente quando `VITE_CMS_API_URL` está definido.
- * A coleção esperada é `artigos`, com os campos: slug, titulo, resumo,
- * categoria, publicadoEm, atualizadoEm, autorId, corpo[], areasRelacionadas[].
- * Em caso de indisponibilidade da API, o conteúdo local é utilizado como
- * fallback para não derrubar a página.
- */
-interface PayloadDoc extends Partial<ConteudoJuridico> {
-  id?: string;
-  slug?: string;
-}
-
-function toConteudo(doc: PayloadDoc): ConteudoJuridico {
-  return {
-    id: String(doc.id ?? doc.slug ?? ""),
-    slug: doc.slug ?? "",
-    titulo: doc.titulo ?? "",
-    resumo: doc.resumo ?? "",
-    categoria: doc.categoria ?? "Artigo",
-    publicadoEm: doc.publicadoEm ?? new Date().toISOString().slice(0, 10),
-    ...(doc.atualizadoEm ? { atualizadoEm: doc.atualizadoEm } : {}),
-    ...(doc.autorId ? { autorId: doc.autorId } : {}),
-    status: doc.status ?? "revisao",
-    corpo: doc.corpo ?? [],
-    areasRelacionadas: doc.areasRelacionadas ?? [],
-  };
-}
-
-export class PayloadContentRepository extends LocalContentRepository {
-  constructor(private readonly baseUrl: string) {
-    super();
-  }
-
-  private async fetchArtigos(query = ""): Promise<ConteudoJuridico[] | null> {
-    try {
-      const res = await fetch(`${this.baseUrl}/api/artigos?limit=100&depth=0${query}`);
-      if (!res.ok) return null;
-      const json = (await res.json()) as { docs?: PayloadDoc[] };
-      return (json.docs ?? []).map(toConteudo).filter((doc) => doc.status === "publicado");
-    } catch {
-      return null;
-    }
-  }
-
-  override async listConteudos() {
-    const docs = await this.fetchArtigos("&sort=-publicadoEm");
-    return docs ?? super.listConteudos();
-  }
-
-  override async getConteudo(slug: string) {
-    const docs = await this.fetchArtigos(`&where[slug][equals]=${encodeURIComponent(slug)}`);
-    if (!docs) return super.getConteudo(slug);
-    return docs[0] ?? null;
-  }
-}
-
-const CMS_API_URL = import.meta.env["VITE_CMS_API_URL"] as string | undefined;
-
-/**
- * Ponto único de troca de fonte de dados: as páginas seguem consumindo
- * `content` sem alteração quando o Payload for conectado.
- */
-export const content: ContentRepository = CMS_API_URL
-  ? new PayloadContentRepository(CMS_API_URL.replace(/\/$/, ""))
-  : new LocalContentRepository();
+/** Territorial reads stay local; all article reads cross the server boundary. */
+export const content: ContentRepository = new LocalContentRepository();

@@ -111,6 +111,7 @@ export function ConteudoCard({ conteudo }: { conteudo: ConteudoJuridico }) {
       params={{ slug: conteudo.slug }}
       className="surface-panel group flex flex-col rounded-xs p-7 hover:border-gold/40"
     >
+      {conteudo.capa && <img src={conteudo.capa.url} alt={conteudo.capa.alt} width={conteudo.capa.width} height={conteudo.capa.height} loading="lazy" className="mb-6 aspect-[16/9] w-full object-cover" />}
       <p className="eyebrow">{conteudo.categoria}</p>
       <h3 className="mt-4 text-xl leading-snug text-ivory">{conteudo.titulo}</h3>
       <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{conteudo.resumo}</p>

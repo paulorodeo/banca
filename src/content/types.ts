@@ -94,6 +94,13 @@ export interface ConteudoJuridico {
   status?: "publicado" | "revisao";
   corpo: string[];
   areasRelacionadas: string[];
+  richText?: import('./payload').RichNode[];
+  capa?: Media;
+  autor?: { nome: string; bio: string; oab?: string; foto?: Media };
+  seoEditorial?: { title?: string; description?: string; socialImage?: Media };
+  regions?: string[];
+  delegacias?: string[];
+  bairros?: string[];
 }
 
 export interface DelegaciaUnidade {
