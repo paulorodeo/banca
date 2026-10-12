@@ -21,6 +21,8 @@ import { Route as ConteudosIndexRouteImport } from './routes/conteudos.index'
 import { Route as ConteudosSlugRouteImport } from './routes/conteudos.$slug'
 import { Route as DelegaciasIndexRouteImport } from './routes/delegacias.index'
 import { Route as DelegaciasSlugRouteImport } from './routes/delegacias.$slug'
+import { Route as RegioesIndexRouteImport } from './routes/regioes.index'
+import { Route as RegioesSlugRouteImport } from './routes/regioes.$slug'
 import { Route as ApiPublicTriagemRouteImport } from './routes/api/public/triagem'
 
 const IndexRoute = IndexRouteImport.update({
@@ -83,6 +85,16 @@ const DelegaciasSlugRoute = DelegaciasSlugRouteImport.update({
   path: '/delegacias/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RegioesIndexRoute = RegioesIndexRouteImport.update({
+  id: '/regioes/',
+  path: '/regioes/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RegioesSlugRoute = RegioesSlugRouteImport.update({
+  id: '/regioes/$slug',
+  path: '/regioes/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPublicTriagemRoute = ApiPublicTriagemRouteImport.update({
   id: '/api/public/triagem',
   path: '/api/public/triagem',
@@ -99,9 +111,11 @@ export interface FileRoutesByFullPath {
   '/artigos/$slug': typeof ArtigosSlugRoute
   '/conteudos/$slug': typeof ConteudosSlugRoute
   '/delegacias/$slug': typeof DelegaciasSlugRoute
+  '/regioes/$slug': typeof RegioesSlugRoute
   '/artigos/': typeof ArtigosIndexRoute
   '/conteudos/': typeof ConteudosIndexRoute
   '/delegacias/': typeof DelegaciasIndexRoute
+  '/regioes/': typeof RegioesIndexRoute
   '/api/public/triagem': typeof ApiPublicTriagemRoute
 }
 export interface FileRoutesByTo {
@@ -114,9 +128,11 @@ export interface FileRoutesByTo {
   '/artigos/$slug': typeof ArtigosSlugRoute
   '/conteudos/$slug': typeof ConteudosSlugRoute
   '/delegacias/$slug': typeof DelegaciasSlugRoute
+  '/regioes/$slug': typeof RegioesSlugRoute
   '/artigos': typeof ArtigosIndexRoute
   '/conteudos': typeof ConteudosIndexRoute
   '/delegacias': typeof DelegaciasIndexRoute
+  '/regioes': typeof RegioesIndexRoute
   '/api/public/triagem': typeof ApiPublicTriagemRoute
 }
 export interface FileRoutesById {
@@ -130,9 +146,11 @@ export interface FileRoutesById {
   '/artigos/$slug': typeof ArtigosSlugRoute
   '/conteudos/$slug': typeof ConteudosSlugRoute
   '/delegacias/$slug': typeof DelegaciasSlugRoute
+  '/regioes/$slug': typeof RegioesSlugRoute
   '/artigos/': typeof ArtigosIndexRoute
   '/conteudos/': typeof ConteudosIndexRoute
   '/delegacias/': typeof DelegaciasIndexRoute
+  '/regioes/': typeof RegioesIndexRoute
   '/api/public/triagem': typeof ApiPublicTriagemRoute
 }
 export interface FileRouteTypes {
@@ -147,9 +165,11 @@ export interface FileRouteTypes {
     | '/artigos/$slug'
     | '/conteudos/$slug'
     | '/delegacias/$slug'
+    | '/regioes/$slug'
     | '/artigos/'
     | '/conteudos/'
     | '/delegacias/'
+    | '/regioes/'
     | '/api/public/triagem'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -162,9 +182,11 @@ export interface FileRouteTypes {
     | '/artigos/$slug'
     | '/conteudos/$slug'
     | '/delegacias/$slug'
+    | '/regioes/$slug'
     | '/artigos'
     | '/conteudos'
     | '/delegacias'
+    | '/regioes'
     | '/api/public/triagem'
   id:
     | '__root__'
@@ -177,9 +199,11 @@ export interface FileRouteTypes {
     | '/artigos/$slug'
     | '/conteudos/$slug'
     | '/delegacias/$slug'
+    | '/regioes/$slug'
     | '/artigos/'
     | '/conteudos/'
     | '/delegacias/'
+    | '/regioes/'
     | '/api/public/triagem'
   fileRoutesById: FileRoutesById
 }
@@ -193,9 +217,11 @@ export interface RootRouteChildren {
   ArtigosSlugRoute: typeof ArtigosSlugRoute
   ConteudosSlugRoute: typeof ConteudosSlugRoute
   DelegaciasSlugRoute: typeof DelegaciasSlugRoute
+  RegioesSlugRoute: typeof RegioesSlugRoute
   ArtigosIndexRoute: typeof ArtigosIndexRoute
   ConteudosIndexRoute: typeof ConteudosIndexRoute
   DelegaciasIndexRoute: typeof DelegaciasIndexRoute
+  RegioesIndexRoute: typeof RegioesIndexRoute
   ApiPublicTriagemRoute: typeof ApiPublicTriagemRoute
 }
 
@@ -285,6 +311,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DelegaciasSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/regioes/': {
+      id: '/regioes/'
+      path: '/regioes'
+      fullPath: '/regioes/'
+      preLoaderRoute: typeof RegioesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/regioes/$slug': {
+      id: '/regioes/$slug'
+      path: '/regioes/$slug'
+      fullPath: '/regioes/$slug'
+      preLoaderRoute: typeof RegioesSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/triagem': {
       id: '/api/public/triagem'
       path: '/api/public/triagem'
@@ -305,9 +345,11 @@ const rootRouteChildren: RootRouteChildren = {
   ArtigosSlugRoute: ArtigosSlugRoute,
   ConteudosSlugRoute: ConteudosSlugRoute,
   DelegaciasSlugRoute: DelegaciasSlugRoute,
+  RegioesSlugRoute: RegioesSlugRoute,
   ArtigosIndexRoute: ArtigosIndexRoute,
   ConteudosIndexRoute: ConteudosIndexRoute,
   DelegaciasIndexRoute: DelegaciasIndexRoute,
+  RegioesIndexRoute: RegioesIndexRoute,
   ApiPublicTriagemRoute: ApiPublicTriagemRoute,
 }
 export const routeTree = rootRouteImport
