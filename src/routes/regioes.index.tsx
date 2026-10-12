@@ -75,23 +75,19 @@ function RegioesPage() {
           </div>
         </Container>
       </Section>
-      {porZona.map(
-        ({ zona, regioes }) =>
-          regioes.length > 0 && (
-            <Section key={zona.id} tone={zona.slug === "zona-sul" ? undefined : "raised"}>
-              <Container>
-                <SectionHeading
-                  eyebrow={zona.nome}
-                  title={`Regiões publicadas na ${zona.nome}`}
-                />
-                <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-                  {regioes.map((regiao) => (
-                    <RegiaoCard key={regiao.id} regiao={regiao} />
-                  ))}
-                </div>
-              </Container>
-            </Section>
-          ),
+      {porZona.map(({ zona, regioes }) =>
+        regioes.length > 0 ? (
+          <Section key={zona.id} tone={zona.slug === "zona-sul" ? "base" : "raised"}>
+            <Container>
+              <SectionHeading eyebrow={zona.nome} title={`Regiões publicadas na ${zona.nome}`} />
+              <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                {regioes.map((regiao) => (
+                  <RegiaoCard key={regiao.id} regiao={regiao} />
+                ))}
+              </div>
+            </Container>
+          </Section>
+        ) : null,
       )}
       <CtaReservado />
     </>
