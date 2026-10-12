@@ -158,61 +158,25 @@ const seeds: DelegaciaSeed[] = [
 ];
 
 function build(seed: DelegaciaSeed): Delegacia {
-  const h1 = `Advogado criminal próximo ao ${seed.ordinal} DP ${seed.bairro}`;
   return {
-    id: `dp-${seed.numero}`,
-    slug: seed.slug,
-    h1,
-    cardTitulo: `Advogado criminal próximo ao ${seed.ordinal} DP`,
-    cardSubtitulo: seed.bairro,
-    cardResumo: `Atendimento jurídico na região de ${seed.bairro}, em São Paulo, incluindo procedimentos relacionados ao ${seed.nomeOficial}.`,
+    id: `dp-${seed.numero}`, slug: seed.slug,
+    h1: `${seed.ordinal} DP — ${seed.bairro}`,
+    cardTitulo: `${seed.ordinal} Distrito Policial`, cardSubtitulo: seed.bairro,
+    cardResumo: `Guia territorial de ${seed.bairro} e dos procedimentos relacionados ao ${seed.ordinal} DP.`,
     seo: {
-      title: `Advogado Criminal Próximo ao ${seed.ordinal} DP ${seed.bairro} | Paulo Sinigalia`,
-      description: `Atuação criminal e cível estratégica na região do ${seed.ordinal} DP ${seed.bairro}, em São Paulo. Análise individualizada e atendimento reservado com Paulo Sinigalia, OAB/SP 411.502.`,
+      title: `${seed.ordinal} DP ${seed.bairro} | Guia territorial — Banca Paulista`,
+      description: `Contexto territorial de ${seed.bairro}, em São Paulo, e informações sobre intimações e procedimentos relacionados ao ${seed.ordinal} DP. Portal editorial independente.`,
       canonicalPath: `/delegacias/${seed.slug}`,
-      keywords: [
-        `advogado criminal ${seed.ordinal} DP ${seed.bairro}`,
-        `advogado perto do ${seed.ordinal} DP`,
-        `advogado ${seed.bairro} São Paulo`,
-      ],
     },
-    introducao: `O escritório presta atendimento a pessoas e empresas envolvidas em situações jurídicas na região de ${seed.bairro}, em São Paulo, incluindo procedimentos que tramitam no ${seed.nomeOficial}. A atuação é conduzida de forma reservada, com análise individualizada de cada caso.`,
-    unidade: {
-      numero: seed.numero,
-      nomeOficial: seed.nomeOficial,
-      dadosDeDesenvolvimento: true,
-    },
-    contextoTerritorial: seed.contextoTerritorial,
-    regiaoSlug: seed.regiaoSlug,
-    bairros: seed.bairros,
-    observacaoBairros:
-      "A indicação de bairros é referência territorial de proximidade e não define a circunscrição policial responsável, que depende do endereço exato e da natureza dos fatos.",
-    avisoRodape: AVISO_RODAPE,
-    situacoesRelacionadas: seed.situacoes,
+    introducao: `Guia editorial da região de ${seed.bairro} e do ${seed.nomeOficial}. As referências geográficas não indicam disponibilidade de advogado nem delimitam a circunscrição policial.`,
+    unidade: { numero: seed.numero, nomeOficial: seed.nomeOficial, dadosDeDesenvolvimento: true },
+    contextoTerritorial: seed.contextoTerritorial, regiaoSlug: seed.regiaoSlug, bairros: seed.bairros,
+    observacaoBairros: "A unidade responsável depende do endereço exato, da natureza dos fatos e da organização da Polícia Civil; bairros próximos não definem circunscrição oficial.",
+    avisoRodape: AVISO_RODAPE, situacoesRelacionadas: seed.situacoes,
     faq: [
-      {
-        id: `${seed.slug}-faq-1`,
-        pergunta: `O escritório atende situações relacionadas ao ${seed.ordinal} DP ${seed.bairro}?`,
-        resposta: `Sim. O escritório atende pessoas e empresas envolvidas em situações jurídicas na região de ${seed.bairro}, incluindo procedimentos vinculados ao ${seed.nomeOficial}, mediante análise prévia de cada caso.`,
-      },
-      {
-        id: `${seed.slug}-faq-2`,
-        pergunta: "O escritório possui vínculo com a Polícia Civil ou com a delegacia?",
-        resposta:
-          "Não. Trata-se de escritório de advocacia privado, sem qualquer vínculo institucional com a Polícia Civil, com o Estado de São Paulo ou com distritos policiais. As referências a unidades policiais têm finalidade exclusivamente informativa e territorial.",
-      },
-      {
-        id: `${seed.slug}-faq-3`,
-        pergunta: "Quais informações devo reunir antes do contato?",
-        resposta:
-          "Informações gerais sobre o que ocorreu, eventuais documentos oficiais recebidos e prazos indicados neste material. Não é necessário enviar documentos sensíveis pelo canal de triagem inicial.",
-      },
-      {
-        id: `${seed.slug}-faq-4`,
-        pergunta: "O envio de informações iniciais garante atendimento?",
-        resposta:
-          "Não. O envio de informações iniciais serve apenas para análise preliminar de viabilidade. Não constitui consulta jurídica, contratação, garantia de atendimento ou de resultado.",
-      },
+      { id: `${seed.slug}-faq-1`, pergunta: `Esta página pertence ao ${seed.ordinal} DP?`, resposta: "Não. Banca Paulista é um portal editorial independente, sem vínculo com a Polícia Civil ou com órgãos públicos." },
+      { id: `${seed.slug}-faq-2`, pergunta: "Como confirmar a unidade responsável?", resposta: "Confira os documentos recebidos e os canais oficiais da Polícia Civil. A indicação de bairros nesta página não define a circunscrição policial." },
+      { id: `${seed.slug}-faq-3`, pergunta: "Há advogado disponível por este portal?", resposta: "Ainda não há profissionais participantes publicados. O portal não recebe casos nem realiza consultas ou plantão de atendimento." },
     ],
     conteudosRelacionados: seed.conteudos,
   };
@@ -254,38 +218,6 @@ const ORDEM = [
   "advogado-criminal-95-dp-heliopolis",
   "advogado-criminal-25-dp-parelheiros",
 ];
-
-/**
- * Escopo territorial em relação ao endereço físico do escritório
- * (Jardim das Flores / M'Boi Mirim, Zona Sul):
- * localCore = núcleo próximo; extendedArea = região ampliada;
- * serviceArea = demais áreas atendidas (padrão).
- */
-const LOCAL_CORE = [
-  "advogado-criminal-92-dp-parque-santo-antonio",
-  "advogado-criminal-102-dp-socorro",
-  "advogado-criminal-100-dp-jardim-herculano",
-  "advogado-criminal-11-dp-santo-amaro",
-];
-
-const EXTENDED_AREA = [
-  "advogado-criminal-37-dp-campo-limpo",
-  "advogado-criminal-47-dp-capao-redondo",
-  "advogado-criminal-99-dp-campo-grande",
-  "advogado-criminal-48-dp-cidade-dutra",
-  "advogado-criminal-43-dp-cidade-ademar",
-  "advogado-criminal-80-dp-vila-joaniza",
-  "advogado-criminal-97-dp-americanopolis",
-  "advogado-criminal-98-dp-jardim-miriam",
-  "advogado-criminal-101-dp-jardim-imbuias",
-  "advogado-criminal-85-dp-jardim-mirna",
-];
-
-function escopoDe(slug: string): "localCore" | "extendedArea" | "serviceArea" {
-  if (LOCAL_CORE.includes(slug)) return "localCore";
-  if (EXTENDED_AREA.includes(slug)) return "extendedArea";
-  return "serviceArea";
-}
 
 /**
  * Grafo territorial interno: cada unidade aponta para vizinhas geograficamente
@@ -521,7 +453,6 @@ const porSlug = new Map(base.map((dp) => [dp.slug, dp]));
 
 export const delegacias: Delegacia[] = base.map((dp) => ({
   ...dp,
-  escopoTerritorial: escopoDe(dp.slug),
   delegaciasRelacionadas: (RELACIONADAS[dp.slug] ?? [])
     .map((slug) => porSlug.get(slug))
     .filter((vizinha): vizinha is Delegacia => Boolean(vizinha))

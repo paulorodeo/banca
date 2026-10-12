@@ -1,6 +1,7 @@
 import type { ConteudoJuridico } from "../types";
 
-export const conteudos: ConteudoJuridico[] = [
+/** Inherited drafts: not published until origin, permission and authorship are verified. */
+export const conteudosLegados: ConteudoJuridico[] = [
   {
     id: "cont-intimacao",
     slug: "intimacao-o-que-considerar-antes-de-responder",
@@ -9,7 +10,7 @@ export const conteudos: ConteudoJuridico[] = [
       "Uma intimação indica um procedimento em curso. Entender qual é a fase e qual é o prazo aplicável é o primeiro passo.",
     categoria: "Criminal",
     publicadoEm: "2026-01-14",
-    autorId: "autor-paulo-sinigalia",
+    status: "revisao",
     areasRelacionadas: ["defesa-criminal-estrategica"],
     corpo: [
       "A intimação é uma comunicação oficial. Ela pode ter origem em um inquérito, em um processo já instaurado ou em um pedido de esclarecimento. Antes de qualquer resposta, é necessário identificar a origem do documento e a fase em que o procedimento se encontra.",
@@ -25,7 +26,7 @@ export const conteudos: ConteudoJuridico[] = [
       "Toda medida de busca e apreensão possui delimitação. Conhecer esses limites é parte da atuação técnica.",
     categoria: "Criminal",
     publicadoEm: "2026-02-03",
-    autorId: "autor-paulo-sinigalia",
+    status: "revisao",
     areasRelacionadas: ["medidas-urgentes-e-investigacoes", "crimes-empresariais-e-patrimoniais"],
     corpo: [
       "A busca e apreensão é medida determinada judicialmente e delimitada por endereço, objeto e finalidade. O registro do que efetivamente foi apreendido é elemento central para a análise posterior.",
@@ -41,7 +42,7 @@ export const conteudos: ConteudoJuridico[] = [
       "Divergências entre sócios podem migrar para a esfera criminal. A coordenação entre as frentes reduz risco.",
     categoria: "Empresarial",
     publicadoEm: "2026-03-11",
-    autorId: "autor-paulo-sinigalia",
+    status: "revisao",
     areasRelacionadas: ["crimes-empresariais-e-patrimoniais", "contratos-patrimonio-e-negocios"],
     corpo: [
       "Conflitos societários frequentemente começam na esfera cível e podem alcançar a esfera criminal por meio de notícias-crime ou representações. Tratar as frentes de forma isolada tende a produzir contradições.",
@@ -57,7 +58,7 @@ export const conteudos: ConteudoJuridico[] = [
       "Organizar patrimônio em vida reduz litígio futuro e preserva a privacidade das famílias.",
     categoria: "Patrimonial",
     publicadoEm: "2026-04-08",
-    autorId: "autor-paulo-sinigalia",
+    status: "revisao",
     areasRelacionadas: ["familia-sucessoes-e-protecao-patrimonial"],
     corpo: [
       "O planejamento sucessório é um trabalho de organização. Ele considera a natureza dos bens, o regime aplicável e os objetivos declarados pela família.",

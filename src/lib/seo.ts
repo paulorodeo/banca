@@ -8,21 +8,7 @@ export const SITE_ORIGIN = "";
 
 export const canonical = (path: string): string => `${SITE_ORIGIN}${path}`;
 
-export const ORG_NAME = "Paulo Sinigalia — Advocacia e Consultoria Jurídica";
-export const ATTORNEY_NAME = "Paulo José Sinigalia";
-export const OAB = "OAB/SP 411.502";
-
-/** Endereço real e único do escritório. Não criar variações por página. */
-export const OFFICE_ADDRESS = {
-  "@type": "PostalAddress",
-  streetAddress: "Rua Antônio Raposo Barreto, 31",
-  addressLocality: "São Paulo",
-  addressRegion: "SP",
-  postalCode: "04904-170",
-  addressCountry: "BR",
-  // Bairro postal do escritório
-  name: "Jardim das Flores",
-} as const;
+export const ORG_NAME = "Banca Paulista de Advogados";
 
 interface MetaInput {
   title: string;
@@ -54,32 +40,21 @@ export function pageMeta({ title, description, path, type = "website", image }: 
 
 export const canonicalLink = (path: string) => [{ rel: "canonical", href: canonical(path) }];
 
-export function legalServiceSchema(path: string) {
+export function organizationSchema(path: string) {
   return {
     "@context": "https://schema.org",
-    "@type": "LegalService",
+    "@type": "Organization",
     name: ORG_NAME,
+    description: "Portal editorial e territorial sobre defesa criminal e delegacias de São Paulo.",
     url: canonical(path),
-    areaServed: { "@type": "City", name: "São Paulo" },
-    address: OFFICE_ADDRESS,
-    provider: {
-      "@type": "Attorney",
-      name: ATTORNEY_NAME,
-      identifier: OAB,
-      knowsLanguage: "pt-BR",
-    },
   };
 }
 
-export function attorneySchema(path: string) {
+export function websiteSchema(path: string) {
   return {
-    "@context": "https://schema.org",
-    "@type": "Attorney",
-    name: ATTORNEY_NAME,
-    identifier: OAB,
-    url: canonical(path),
-    areaServed: { "@type": "City", name: "São Paulo" },
-    worksFor: { "@type": "LegalService", name: ORG_NAME },
+    "@context": "https://schema.org", "@type": "WebSite",
+    name: ORG_NAME, url: canonical(path), inLanguage: "pt-BR",
+    publisher: { "@type": "Organization", name: ORG_NAME },
   };
 }
 
@@ -110,7 +85,7 @@ export function articleSchema(input: {
     url: canonical(input.path),
     datePublished: input.publicadoEm,
     ...(input.atualizadoEm ? { dateModified: input.atualizadoEm } : {}),
-    author: { "@type": "Person", name: ATTORNEY_NAME, identifier: OAB },
+    // No author is asserted unless a real verified contributor is supplied.
     publisher: { "@type": "Organization", name: ORG_NAME },
   };
 }
@@ -130,7 +105,7 @@ export function breadcrumbSchema(items: { name: string; path: string }[]) {
 
 export function delegaciaJsonLd(dp: Delegacia) {
   return [
-    legalServiceSchema(dp.seo.canonicalPath),
+    { "@context": "https://schema.org", "@type": "WebPage", name: dp.h1, description: dp.seo.description, url: canonical(dp.seo.canonicalPath) },
     faqSchema(dp.faq),
     breadcrumbSchema([
       { name: "Início", path: "/" },

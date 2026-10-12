@@ -61,7 +61,7 @@
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
-/* Paulo Sinigalia — institutional dark palette */
+/* Banca Paulista — editorial dark palette */
 :root {
   --radius: 0.25rem;
 
@@ -162,7 +162,7 @@
   blockquote {
     font-family: var(--font-serif);
     font-weight: 300;
-    letter-spacing: -0.01em;
+    letter-spacing: 0;
   }
 
   ::selection {
@@ -177,7 +177,7 @@
 
 @utility eyebrow {
   font-size: 0.6875rem;
-  letter-spacing: 0.28em;
+  letter-spacing: 0;
   text-transform: uppercase;
   color: var(--gold);
   font-weight: 500;
