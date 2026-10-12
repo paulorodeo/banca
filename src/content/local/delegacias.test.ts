@@ -4,14 +4,14 @@ import { delegacias } from "./delegacias";
 import { regioes } from "./regioes";
 
 describe("Americanópolis na grade territorial", () => {
-  test("completa 30 delegacias sem duplicar unidades", () => {
-    assert.equal(delegacias.length, 30);
-    assert.equal(new Set(delegacias.map((dp) => dp.unidade.numero)).size, 30);
-    assert.deepEqual(delegacias.slice(-3).map((dp) => dp.unidade.numero), ["80", "97", "98"]);
+  test("completa 33 delegacias sem duplicar unidades", () => {
+    assert.equal(delegacias.length, 33);
+    assert.equal(new Set(delegacias.map((dp) => dp.unidade.numero)).size, 33);
+    assert.deepEqual(delegacias.slice(-3).map((dp) => dp.unidade.numero), ["101", "85", "95"]);
   });
 
-  test("inclui Americanópolis entre as 30 regiões da home", () => {
-    assert.equal(regioes.length, 30);
+  test("inclui Americanópolis entre as 33 regiões da home", () => {
+    assert.equal(regioes.length, 33);
     assert.equal(regioes.find((regiao) => regiao.slug === "americanopolis")?.href,
       "/delegacias/advogado-criminal-97-dp-americanopolis",
     );
