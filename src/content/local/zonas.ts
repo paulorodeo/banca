@@ -92,7 +92,7 @@ export const zonas: Zona[] = [
         titulo: "Cobertura territorial",
         paragrafos: [
           "A região reúne páginas de referência nos eixos Santo Amaro, Brooklin, Campo Belo, Morumbi, Jabaquara, Ipiranga, Sacomã, Cidade Ademar, Capão Redondo, Campo Limpo, Socorro, Cidade Dutra, Parque Santo Antônio, Jardim Herculano, Vila Joaniza, Americanópolis, Jardim Miriam, Jardim Imbuias, Jardim Mirna, Heliópolis e Parelheiros, no extremo sul da cidade.",
-          "O conteúdo tem finalidade informativa e não substitui orientação de advogado ou da Defensoria Pública. Não há profissionais participantes publicados nem atendimento jurídico oferecido pelo portal.",
+          "Os bairros citados são referências geográficas. A confirmação da unidade responsável depende do endereço exato dos fatos e dos canais oficiais da Polícia Civil.",
         ],
       },
       {

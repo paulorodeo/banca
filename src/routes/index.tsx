@@ -69,7 +69,7 @@ function Index() {
       <section className="relative overflow-hidden border-b border-border">
         <img src={cidadeImage} alt="Imagem editorial ilustrativa da Praça da Sé, em São Paulo" width={1600} height={1008} className="absolute inset-0 size-full object-cover" />
         <div className="absolute inset-0 bg-background/70" />
-        <Container className="relative py-16 md:py-20">
+        <Container className="relative py-12 md:py-20">
           <p className="eyebrow mb-6">Portal editorial · São Paulo</p>
           <h1 className="max-w-3xl text-balance text-4xl leading-tight md:text-6xl">Banca Paulista<br /><span className="text-gold-light">de Advogados</span></h1>
           <p className="mt-5 font-serif text-2xl text-ivory">Plantão e Defesa Criminal</p>
