@@ -56,6 +56,19 @@ export interface SituacaoJuridica {
   descricao: string;
 }
 
+export interface Zona {
+  id: string;
+  slug: string;
+  /** Nome de exibição (ex.: "Zona Sul"). */
+  nome: string;
+  /** Texto curto do card na home e no índice de regiões. */
+  descricao: string;
+  /** Texto de abertura (lead) da página da zona. */
+  introducao: string;
+  /** Seções editoriais da página da zona. */
+  secoes: { titulo: string; paragrafos: string[] }[];
+}
+
 export interface Regiao {
   id: string;
   slug: string;
@@ -64,6 +77,8 @@ export interface Regiao {
   bairros: string[];
   /** Rota interna de destino do card (DP ou página de região). */
   href: string;
+  /** Slug da zona a que a região pertence, para sinalização geográfica. */
+  zona: string;
 }
 
 export interface ConteudoJuridico {

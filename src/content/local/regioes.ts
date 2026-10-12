@@ -8,6 +8,7 @@ export const regioes: Regiao[] = [
     descricao: "Região de intensa atividade empresarial e residencial na zona oeste.",
     bairros: ["Pinheiros", "Vila Madalena", "Alto de Pinheiros"],
     href: "/delegacias/advogado-14-dp-pinheiros",
+    zona: "zona-oeste",
   },
   {
     id: "reg-itaim-bibi",
@@ -16,6 +17,7 @@ export const regioes: Regiao[] = [
     descricao: "Polo corporativo com forte concentração de escritórios e empresas.",
     bairros: ["Itaim Bibi", "Vila Olímpia", "Vila Nova Conceição"],
     href: "/delegacias/advogado-15-dp-itaim-bibi",
+    zona: "zona-sul",
   },
   {
     id: "reg-brooklin",
@@ -24,6 +26,7 @@ export const regioes: Regiao[] = [
     descricao: "Área mista, com presença corporativa e residencial na zona sul.",
     bairros: ["Brooklin Novo", "Brooklin Paulista", "Cidade Monções"],
     href: "/delegacias/advogado-96-dp-brooklin",
+    zona: "zona-sul",
   },
   {
     id: "reg-campo-belo",
@@ -32,6 +35,7 @@ export const regioes: Regiao[] = [
     descricao: "Bairro residencial consolidado, próximo a eixos empresariais da zona sul.",
     bairros: ["Campo Belo", "Jardim Aeroporto", "Vila Cordeiro"],
     href: "/delegacias/advogado-27-dp-campo-belo",
+    zona: "zona-sul",
   },
   {
     id: "reg-morumbi",
@@ -40,6 +44,7 @@ export const regioes: Regiao[] = [
     descricao: "Região residencial de alto padrão com demandas patrimoniais frequentes.",
     bairros: ["Morumbi", "Real Parque", "Vila Andrade"],
     href: "/delegacias/advogado-34-dp-morumbi",
+    zona: "zona-sul",
   },
   {
     id: "reg-butanta",
@@ -48,6 +53,7 @@ export const regioes: Regiao[] = [
     descricao: "Zona oeste com perfil residencial, acadêmico e comercial.",
     bairros: ["Butantã", "Rio Pequeno", "Jardim Bonfiglioli"],
     href: "/delegacias/advogado-51-dp-butanta",
+    zona: "zona-oeste",
   },
   {
     id: "reg-portal-do-morumbi",
@@ -56,6 +62,7 @@ export const regioes: Regiao[] = [
     descricao: "Área residencial no entorno do Morumbi e da Vila Andrade.",
     bairros: ["Portal do Morumbi", "Vila Andrade", "Jardim Ampliação"],
     href: "/delegacias/advogado-89-dp-portal-do-morumbi",
+    zona: "zona-sul",
   },
   {
     id: "reg-perdizes",
@@ -64,6 +71,7 @@ export const regioes: Regiao[] = [
     descricao: "Bairro residencial tradicional da zona oeste.",
     bairros: ["Perdizes", "Pompeia", "Sumaré"],
     href: "/delegacias/advogado-criminal-23-dp-perdizes",
+    zona: "zona-oeste",
   },
   {
     id: "reg-jardins",
@@ -72,6 +80,7 @@ export const regioes: Regiao[] = [
     descricao: "Região central de alto padrão, com demandas patrimoniais e empresariais.",
     bairros: ["Jardim Paulista", "Jardim América", "Jardim Europa"],
     href: "/delegacias/advogado-criminal-78-dp-jardins",
+    zona: "zona-oeste",
   },
   {
     id: "reg-santo-amaro",
@@ -80,6 +89,7 @@ export const regioes: Regiao[] = [
     descricao: "Centro comercial e administrativo relevante da zona sul.",
     bairros: ["Santo Amaro", "Chácara Santo Antônio", "Granja Julieta"],
     href: "/delegacias/advogado-criminal-11-dp-santo-amaro",
+    zona: "zona-sul",
   },
   {
     id: "reg-lapa",
@@ -88,6 +98,7 @@ export const regioes: Regiao[] = [
     descricao: "Zona oeste com perfil residencial, comercial e histórico industrial.",
     bairros: ["Vila Romana", "Lapa", "Vila Ipojuca"],
     href: "/delegacias/advogado-criminal-7-dp-vila-romana",
+    zona: "zona-oeste",
   },
   {
     id: "reg-vila-mariana",
@@ -96,6 +107,7 @@ export const regioes: Regiao[] = [
     descricao: "Polo médico e acadêmico da zona sul, com intensa circulação diária.",
     bairros: ["Vila Clementino", "Vila Mariana", "Saúde"],
     href: "/delegacias/advogado-criminal-16-dp-vila-clementino",
+    zona: "zona-sul",
   },
   {
     id: "reg-vila-leopoldina",
@@ -104,6 +116,7 @@ export const regioes: Regiao[] = [
     descricao: "Região logística, empresarial e residencial no eixo oeste.",
     bairros: ["Vila Leopoldina", "Jaguaré", "Vila Hamburguesa"],
     href: "/delegacias/advogado-criminal-91-dp-ceagesp-vila-leopoldina",
+    zona: "zona-oeste",
   },
   {
     id: "reg-jaguare",
@@ -112,6 +125,7 @@ export const regioes: Regiao[] = [
     descricao: "Eixo residencial, comercial e logístico da zona oeste.",
     bairros: ["Jaguaré", "Vila Lageado", "Rio Pequeno"],
     href: "/delegacias/advogado-criminal-93-dp-jaguare",
+    zona: "zona-oeste",
   },
   {
     id: "reg-raposo-tavares",
@@ -120,6 +134,7 @@ export const regioes: Regiao[] = [
     descricao: "Bairros residenciais no eixo da Rodovia Raposo Tavares.",
     bairros: ["Jardim Arpoador", "Raposo Tavares", "Jardim Educandário"],
     href: "/delegacias/advogado-criminal-75-dp-jardim-arpoador",
+    zona: "zona-oeste",
   },
   {
     id: "reg-jabaquara",
@@ -128,6 +143,7 @@ export const regioes: Regiao[] = [
     descricao: "Eixo residencial e de transporte da zona sul.",
     bairros: ["Jabaquara", "Vila Guarani", "Conceição"],
     href: "/delegacias/advogado-criminal-35-dp-jabaquara",
+    zona: "zona-sul",
   },
   {
     id: "reg-campo-grande",
@@ -136,6 +152,7 @@ export const regioes: Regiao[] = [
     descricao: "Território de ligação entre Santo Amaro, Jurubatuba e Interlagos.",
     bairros: ["Campo Grande", "Jurubatuba", "Jardim Marajoara"],
     href: "/delegacias/advogado-criminal-99-dp-campo-grande",
+    zona: "zona-sul",
   },
   {
     id: "reg-moema-vila-mariana",
@@ -144,6 +161,7 @@ export const regioes: Regiao[] = [
     descricao: "Eixo residencial e cultural entre a Vila Mariana, Moema e o Ibirapuera.",
     bairros: ["Vila Mariana", "Moema", "Paraíso"],
     href: "/delegacias/advogado-criminal-36-dp-vila-mariana",
+    zona: "zona-sul",
   },
   {
     id: "reg-ipiranga",
@@ -152,6 +170,7 @@ export const regioes: Regiao[] = [
     descricao: "Região histórica com bairros residenciais, comércio e intensa circulação.",
     bairros: ["Ipiranga", "Vila Monumento", "Alto do Ipiranga"],
     href: "/delegacias/advogado-criminal-17-dp-ipiranga",
+    zona: "zona-sul",
   },
   {
     id: "reg-sacoma",
@@ -160,6 +179,7 @@ export const regioes: Regiao[] = [
     descricao: "Eixo Anchieta–Imigrantes, com forte presença residencial e logística.",
     bairros: ["Sacomã", "Moinho Velho", "Vila das Mercês"],
     href: "/delegacias/advogado-criminal-26-dp-sacoma",
+    zona: "zona-sul",
   },
   {
     id: "reg-socorro",
@@ -168,6 +188,7 @@ export const regioes: Regiao[] = [
     descricao: "Região empresarial e de lazer no entorno da Guarapiranga.",
     bairros: ["Socorro", "Jurubatuba", "Vila Friburgo"],
     href: "/delegacias/advogado-criminal-102-dp-socorro",
+    zona: "zona-sul",
   },
   {
     id: "reg-campo-limpo",
@@ -176,6 +197,7 @@ export const regioes: Regiao[] = [
     descricao: "Eixo residencial e comercial no sudoeste da capital.",
     bairros: ["Campo Limpo", "Vila Pirajussara", "Jardim Umarizal"],
     href: "/delegacias/advogado-criminal-37-dp-campo-limpo",
+    zona: "zona-sul",
   },
   {
     id: "reg-cidade-ademar",
@@ -184,6 +206,7 @@ export const regioes: Regiao[] = [
     descricao: "Território residencial e comercial no corredor da Avenida Cupecê.",
     bairros: ["Cidade Ademar", "Jardim Prudência", "Cupecê"],
     href: "/delegacias/advogado-criminal-43-dp-cidade-ademar",
+    zona: "zona-sul",
   },
   {
     id: "reg-cidade-dutra",
@@ -192,6 +215,7 @@ export const regioes: Regiao[] = [
     descricao: "Extremo sul, no entorno da Represa Guarapiranga e de Interlagos.",
     bairros: ["Cidade Dutra", "Interlagos", "Jardim Primavera"],
     href: "/delegacias/advogado-criminal-48-dp-cidade-dutra",
+    zona: "zona-sul",
   },
   {
     id: "reg-capao-redondo",
@@ -200,6 +224,7 @@ export const regioes: Regiao[] = [
     descricao: "Eixo da Estrada de Itapecerica, com forte densidade residencial e comercial.",
     bairros: ["Capão Redondo", "Jardim Amália", "Cohab Adventista"],
     href: "/delegacias/advogado-criminal-47-dp-capao-redondo",
+    zona: "zona-sul",
   },
   {
     id: "reg-parque-santo-antonio",
@@ -208,6 +233,7 @@ export const regioes: Regiao[] = [
     descricao: "Jardim São Luís e M'Boi Mirim, região onde o escritório está estabelecido.",
     bairros: ["Parque Santo Antônio", "Jardim São Luís", "Jardim das Flores"],
     href: "/delegacias/advogado-criminal-92-dp-parque-santo-antonio",
+    zona: "zona-sul",
   },
   {
     id: "reg-jardim-herculano",
@@ -216,6 +242,7 @@ export const regioes: Regiao[] = [
     descricao: "Jardim Ângela e Riviera Paulista, no extremo sul de M'Boi Mirim.",
     bairros: ["Jardim Herculano", "Jardim Ângela", "Riviera Paulista"],
     href: "/delegacias/advogado-criminal-100-dp-jardim-herculano",
+    zona: "zona-sul",
   },
   {
     id: "reg-vila-joaniza",
@@ -224,6 +251,7 @@ export const regioes: Regiao[] = [
     descricao: "Eixo Cidade Ademar–Pedreira, com forte presença residencial e comercial.",
     bairros: ["Vila Joaniza", "Cidade Ademar", "Pedreira"],
     href: "/delegacias/advogado-criminal-80-dp-vila-joaniza",
+    zona: "zona-sul",
   },
   {
     id: "reg-jardim-miriam",
@@ -232,6 +260,7 @@ export const regioes: Regiao[] = [
     descricao: "Corredor da Avenida Cupecê, entre Cidade Ademar e a divisa com Diadema.",
     bairros: ["Jardim Miriam", "Cupecê", "Cidade Júlia"],
     href: "/delegacias/advogado-criminal-98-dp-jardim-miriam",
+    zona: "zona-sul",
   },
   {
     id: "reg-americanopolis",
@@ -240,6 +269,7 @@ export const regioes: Regiao[] = [
     descricao: "Atendimento jurídico na Zona Sul, incluindo procedimentos relacionados ao 97º DP.",
     bairros: ["Americanópolis"],
     href: "/delegacias/advogado-criminal-97-dp-americanopolis",
+    zona: "zona-sul",
   },
   {
     id: "reg-jardim-imbuias",
@@ -248,6 +278,7 @@ export const regioes: Regiao[] = [
     descricao: "Grajaú e Cantinho do Céu, às margens da Billings.",
     bairros: ["Jardim Imbuias", "Grajaú", "Cantinho do Céu"],
     href: "/delegacias/advogado-criminal-101-dp-jardim-imbuias",
+    zona: "zona-sul",
   },
   {
     id: "reg-jardim-mirna",
@@ -256,6 +287,7 @@ export const regioes: Regiao[] = [
     descricao: "Distrito do Grajaú, extremo sul de São Paulo.",
     bairros: ["Jardim Mirna", "Grajaú", "Parque América"],
     href: "/delegacias/advogado-criminal-85-dp-jardim-mirna",
+    zona: "zona-sul",
   },
   {
     id: "reg-heliopolis",
@@ -264,5 +296,15 @@ export const regioes: Regiao[] = [
     descricao: "Entre Sacomã e Ipiranga, na divisa com São Caetano do Sul.",
     bairros: ["Heliópolis", "Sacomã", "Vila Heliópolis"],
     href: "/delegacias/advogado-criminal-95-dp-heliopolis",
+    zona: "zona-sul",
+  },
+  {
+    id: "reg-parelheiros",
+    slug: "parelheiros",
+    nome: "Parelheiros e Marsilac",
+    descricao: "Extremo sul da cidade, entre as represas Billings e Guarapiranga.",
+    bairros: ["Parelheiros", "Marsilac", "Vila Santana"],
+    href: "/delegacias/advogado-criminal-25-dp-parelheiros",
+    zona: "zona-sul",
   },
 ];
