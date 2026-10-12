@@ -20,7 +20,6 @@ import type {
 import { areas, situacoes } from "./local/areas";
 import { regioes } from "./local/regioes";
 import { zonas } from "./local/zonas";
-import { conteudos } from "./local/artigos-editoriais";
 import { delegacias } from "./local/delegacias";
 import { paginas } from "./local/paginas";
 import { autores, siteSettings } from "./local/settings";
