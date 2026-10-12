@@ -139,6 +139,22 @@ const seeds: DelegaciaSeed[] = [
       "busca-e-apreensao-limites-da-decisao-judicial",
     ],
   },
+  {
+    slug: "advogado-criminal-25-dp-parelheiros",
+    numero: "25",
+    ordinal: "25º",
+    nomeOficial: "25º Distrito Policial — Parelheiros",
+    bairro: "Parelheiros",
+    regiaoSlug: "parelheiros",
+    bairros: ["Parelheiros", "Marsilac", "Vila Santana", "Barragem", "Sítio Represa"],
+    contextoTerritorial:
+      "Parelheiros ocupa o extremo sul do município, entre as represas Billings e Guarapiranga, em área de transição entre a mancha urbana e territórios de proteção ambiental. A região conurba-se com Embu-Guaçu e Itapecerica da Serra e concentra bairros residenciais, conjuntos habitacionais e sítios ao longo de toda a sua extensão.",
+    situacoes: ["intimacao", "inquerito", "prisao-em-flagrante"],
+    conteudos: [
+      "intimacao-o-que-considerar-antes-de-responder",
+      "busca-e-apreensao-limites-da-decisao-judicial",
+    ],
+  },
 ];
 
 function build(seed: DelegaciaSeed): Delegacia {
@@ -236,6 +252,7 @@ const ORDEM = [
   "advogado-criminal-101-dp-jardim-imbuias",
   "advogado-criminal-85-dp-jardim-mirna",
   "advogado-criminal-95-dp-heliopolis",
+  "advogado-criminal-25-dp-parelheiros",
 ];
 
 /**
@@ -468,16 +485,24 @@ const RELACIONADAS: Record<string, string[]> = {
     "advogado-criminal-102-dp-socorro",
     "advogado-criminal-48-dp-cidade-dutra",
     "advogado-criminal-85-dp-jardim-mirna",
+    "advogado-criminal-25-dp-parelheiros",
   ],
   "advogado-criminal-85-dp-jardim-mirna": [
     "advogado-criminal-101-dp-jardim-imbuias",
     "advogado-criminal-48-dp-cidade-dutra",
     "advogado-criminal-102-dp-socorro",
+    "advogado-criminal-25-dp-parelheiros",
   ],
   "advogado-criminal-95-dp-heliopolis": [
     "advogado-criminal-26-dp-sacoma",
     "advogado-criminal-17-dp-ipiranga",
     "advogado-criminal-97-dp-americanopolis",
+  ],
+  "advogado-criminal-25-dp-parelheiros": [
+    "advogado-criminal-101-dp-jardim-imbuias",
+    "advogado-criminal-85-dp-jardim-mirna",
+    "advogado-criminal-48-dp-cidade-dutra",
+    "advogado-criminal-47-dp-capao-redondo",
   ],
 };
 

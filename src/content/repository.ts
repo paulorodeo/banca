@@ -15,9 +15,11 @@ import type {
   Regiao,
   SiteSettings,
   SituacaoJuridica,
+  Zona,
 } from "./types";
 import { areas, situacoes } from "./local/areas";
 import { regioes } from "./local/regioes";
+import { zonas } from "./local/zonas";
 import { conteudos } from "./local/conteudos";
 import { delegacias } from "./local/delegacias";
 import { paginas } from "./local/paginas";
@@ -30,6 +32,8 @@ export interface ContentRepository {
   listSituacoes(): Promise<SituacaoJuridica[]>;
   listRegioes(): Promise<Regiao[]>;
   getRegiao(slug: string): Promise<Regiao | null>;
+  listZonas(): Promise<Zona[]>;
+  getZona(slug: string): Promise<Zona | null>;
   listConteudos(): Promise<ConteudoJuridico[]>;
   getConteudo(slug: string): Promise<ConteudoJuridico | null>;
   listDelegacias(): Promise<Delegacia[]>;
@@ -59,6 +63,12 @@ export class LocalContentRepository implements ContentRepository {
   }
   async getRegiao(slug: string) {
     return find(regioes, slug);
+  }
+  async listZonas() {
+    return zonas;
+  }
+  async getZona(slug: string) {
+    return find(zonas, slug);
   }
   async listConteudos() {
     return [...conteudos].sort((a, b) => b.publicadoEm.localeCompare(a.publicadoEm));
