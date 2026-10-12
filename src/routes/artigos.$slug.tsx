@@ -22,7 +22,7 @@ export const Route = createFileRoute("/artigos/$slug")({
         meta: [...pageMeta({ title: "Artigo indisponível | Banca Paulista", description: "Este artigo não está publicado. Consulte as publicações editoriais atuais da Banca Paulista.", path }), { name: "robots", content: "noindex" }],
       };
     }
-    const { conteudo } = loaderData as Data;
+    const { conteudo } = loaderData;
     return {
       meta: pageMeta({
         title: `${conteudo.titulo} | Banca Paulista`,

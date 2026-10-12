@@ -51,8 +51,8 @@ describe("Americanópolis na grade territorial", () => {
 
   test("não classifica Americanópolis por proximidade a um escritório", () => {
     assert.equal(
-      delegacias.find((dp) => dp.unidade.numero === "97")?.escopoTerritorial,
-      undefined,
+      "escopoTerritorial" in (delegacias.find((dp) => dp.unidade.numero === "97") ?? {}),
+      false,
     );
   });
 
@@ -102,7 +102,7 @@ describe("Identidade editorial", () => {
     assert.doesNotMatch(texto, /Sinigalia|411\.502|Antônio Raposo Barreto|04904-170|triagem/i);
     for (const dp of delegacias) {
       assert.ok(dp.seo.title.includes("Banca Paulista"));
-      assert.ok(dp.faq.some((faq) => faq.resposta.includes("não há profissionais") || faq.resposta.includes("não há profissionais".replace("não", "não"))));
+      assert.ok(dp.faq.some((faq) => faq.resposta.includes("não há profissionais")));
     }
   });
   test("todos os interlinks territoriais possuem destino real", () => {

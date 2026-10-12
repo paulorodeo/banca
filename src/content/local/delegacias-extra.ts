@@ -388,7 +388,7 @@ export const delegaciasExtra: Delegacia[] = [
       "Parque Villa-Lobos",
       "Entorno da CEAGESP"
     ],
-    "observacaoBairros": "Os pontos citados ajudam a reconhecer a área de atendimento, mas não representam uma declaração formal sobre os limites de circunscrição do 91º DP.",
+    "observacaoBairros": "Os pontos citados ajudam a reconhecer a região, mas não representam uma declaração formal sobre os limites de circunscrição do 91º DP.",
     "secoes": [
       {
         "titulo": "Informações sobre procedimentos criminais na Vila Leopoldina e na região da CEAGESP",
