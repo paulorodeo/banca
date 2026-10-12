@@ -18,6 +18,14 @@
 - [x] Acrescentar testes e documentação de limites/dependências externas.
 - [x] Confirmar preservação das rotas e revisar somente a página existente de Parelheiros.
 
+# Expansão territorial — auditoria antes de publicação
+- [x] Inventariar as 34 páginas, bairros, zonas, slugs e relações existentes.
+- [x] Consultar fontes oficiais, distinguir tipos de unidade e registrar incertezas no relatório.
+- [x] Preparar e apresentar relatório de inventário e lacunas antes da expansão ampla.
+- [ ] Validar relação oficial atual e evidência por DP da Zona Leste — bloqueado por ausência de fonte primária atual verificada com nomes e situação operacional.
+- [ ] Executar lote validado da Zona Leste e conectar cards e regiões — depende da validação primária e apresentação do lote.
+- [ ] Preparar Oeste, Norte e Centro sem páginas vazias — depende do lote validado da Zona Leste.
+
 # Dependências futuras (fora desta entrega)
 - Payload CMS — Etapa 2: conexão e validação real dependem da URL, configuração e acesso à instância do VPS.
 - Contato editorial: publicar canal quando o responsável fornecer e-mail/telefone e identificação do operador.
