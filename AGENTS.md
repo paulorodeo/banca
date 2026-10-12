@@ -10,6 +10,7 @@
 <!-- LOVABLE:END -->
 
 - Keep new police-district editorial entries in typed local content modules and register each in the central district order, territorial graph, and home region collection so the existing shared page template remains authoritative.
+- Derive new East district cards and regional links from the same typed local records, distinguish repeated place names by district number, and retain official-name evidence separately from operational data; this avoids duplicate units and unsupported service-area claims.
 - Keep the zone (zona) architecture centralized in `src/content/local/zonas.ts`: every region in `regioes.ts` must declare a valid zona slug, and the home renders zone cards plus a closing "Todas as regiões" card instead of neighborhood cards.
 
 - Keep brand settings and publisher metadata centralized; the portal must not imply a law firm or individual attorney through shared schemas. This separates the editorial operator from future verified professionals.
