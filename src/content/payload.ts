@@ -84,7 +84,7 @@ export function parseLexical(nodes: unknown[], base: string, depth = 0, budget =
       const url = safeUrl(node.fields?.url ?? node.url ?? '', base);
       return url ? [{ type: 'link', url, children }] : children;
     }
-    if (node.type === 'heading') return [{ type: 'heading', tag: ['h1', 'h2', 'h3'].includes(node.tag ?? '') ? node.tag : 'h3', children }];
+    if (node.type === 'heading') return [{ type: 'heading', tag: ['h1', 'h2', 'h3'].includes(node.tag ?? '') ? (node.tag ?? 'h3') : 'h3', children }];
     if (node.type === 'list') return [{ type: 'list', listType: node.listType === 'number' ? 'number' : 'bullet', start: Math.max(1, node.start ?? 1), children }];
     if (['paragraph', 'listitem', 'quote', 'linebreak', 'horizontalrule'].includes(node.type)) return [{ type: node.type, children }];
     // Unknown/custom blocks are rejected rather than silently publishing incomplete content.

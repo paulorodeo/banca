@@ -2,7 +2,7 @@ import { createFileRoute, Link } from '@tanstack/react-router';
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { articleSearchSchema } from '@/content/payload';
+import { articleSearchSchema, type ArticleSearch } from '@/content/payload';
 import { articlesQuery } from '@/content/articles.queries';
 import { Container, Section } from '@/components/site/primitives';
 import { ConteudoCard, CtaReservado, PageHero } from '@/components/site/blocks';
@@ -11,8 +11,8 @@ import { canonicalLink, pageMeta } from '@/lib/seo';
 
 const PATH = '/artigos';
 export const Route = createFileRoute('/artigos/')({
-  validateSearch: search => articleSearchSchema.parse(search),
-  loaderDeps: ({ search }) => search,
+  validateSearch: (search): Partial<ArticleSearch> => articleSearchSchema.parse(search),
+  loaderDeps: ({ search }) => articleSearchSchema.parse(search),
   loader: ({ context, deps }) => context.queryClient.ensureQueryData(articlesQuery(deps)),
   head: ({ loaderData }) => ({
     meta: [...pageMeta({ title: 'Artigos Jurídicos | Banca Paulista', description: 'Publicações informativas sobre Direito Criminal, delegacias e regiões de São Paulo.', path: PATH }), ...(!loaderData?.ok ? [{ name: 'robots', content: 'noindex' }] : [])],
@@ -24,7 +24,7 @@ export const Route = createFileRoute('/artigos/')({
   component: ConteudosPage,
 });
 function ConteudosPage() {
-  const search = Route.useSearch();
+  const search = articleSearchSchema.parse(Route.useSearch());
   const navigate = Route.useNavigate();
   const { data } = useSuspenseQuery(articlesQuery(search));
   if (!data.ok) return <ArticleState />;

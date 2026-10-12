@@ -19,12 +19,14 @@ export function cmsConfig(env: Record<string, string | undefined>): CmsConfig | 
   return { baseUrl: url.href.replace(/\/$/, ''), path, ttl: number('ARTICLES_CACHE_TTL', 60, 300), timeout: number('PAYLOAD_TIMEOUT_MS', 5000, 15000), namespace };
 }
 export class CmsUnavailable extends Error { constructor() { super('Publicações temporariamente indisponíveis. Tente novamente em instantes.'); } }
-export async function fetchCms(config: CmsConfig, query: URLSearchParams, cache?: SharedCache, fetcher: typeof fetch = fetch): Promise<unknown> {
+export async function fetchCms(config: CmsConfig, query: URLSearchParams, cache?: SharedCache, fetcher: typeof fetch = fetch, publishedOnly = true): Promise<unknown> {
   const url = new URL(config.path, config.baseUrl);
   url.search = query.toString();
   // Payload native drafts authority; also enforced by anonymous collection access on the VPS.
-  url.searchParams.set('where[_status][equals]', 'published');
-  url.searchParams.set('draft', 'false');
+  if (publishedOnly) {
+    url.searchParams.set('where[_status][equals]', 'published');
+    url.searchParams.set('draft', 'false');
+  }
   url.searchParams.set('depth', '2');
   const key = new URL(url);
   key.searchParams.set('__banca_cache', config.namespace);
