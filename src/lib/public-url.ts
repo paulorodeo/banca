@@ -28,7 +28,10 @@ export function absoluteHead<T>(origin: string | undefined, produce: () => T): T
     if (Array.isArray(value)) return value.map(walk);
     if (!value || typeof value !== 'object') return value;
     return Object.fromEntries(Object.entries(value).map(([key, entry]) => {
-      if (['href', 'url', 'item', 'content'].includes(key) && typeof entry === 'string' && entry.startsWith('/') && !entry.startsWith('//')) return [key, absoluteUrl(entry, base)];
+      if (['href', 'url', 'item', 'content'].includes(key) && typeof entry === 'string') {
+        if (entry.startsWith('/') && !entry.startsWith('//')) return [key, absoluteUrl(entry, base)];
+        if (entry.startsWith(`${DEFAULT_SITE_ORIGIN}/`)) return [key, absoluteUrl(entry.slice(DEFAULT_SITE_ORIGIN.length), base)];
+      }
       if (key === 'children' && typeof entry === 'string' && (value as {type?:string}).type === 'application/ld+json') return [key, JSON.stringify(walk(JSON.parse(entry)))];
       return [key, walk(entry)];
     }));
