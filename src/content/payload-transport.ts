@@ -58,7 +58,7 @@ export async function fetchCms(config: CmsConfig, query: URLSearchParams, cache?
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), config.timeout);
   try {
-    const response = await fetcher(url, { signal: controller.signal, headers: { Accept: 'application/json' }, credentials: 'omit', redirect: 'error' });
+    const response = await fetcher(url, { signal: controller.signal, headers: { Accept: 'application/json' }, credentials: 'omit', redirect: 'error', cache: 'no-store' });
     if (!response.ok) throw new CmsUnavailable();
     const raw = await boundedText(response, 5_000_000);
     const data: unknown = JSON.parse(raw);

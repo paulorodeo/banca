@@ -37,7 +37,7 @@ test('Lexical never emits empty, HTTP external, CMS-relative or unsupported rela
 });
 test('unvalidated content never enters cache', async () => {
  const {cache,values} = cacheFixture();
- await assert.rejects(() => fetchCms({...cfg,revisionPath:undefined},new URLSearchParams(),cache,async () => Response.json({bad:true}),true,() => {throw new Error('invalid');}));
+ await assert.rejects(() => fetchCms({baseUrl:cfg.baseUrl,path:cfg.path,ttl:cfg.ttl,timeout:cfg.timeout,namespace:cfg.namespace},new URLSearchParams(),cache,async () => Response.json({bad:true}),true,() => {throw new Error('invalid');}));
  assert.equal(values.size,0);
 });
 test('bounded reader rejects declared and streaming excess', async () => {
