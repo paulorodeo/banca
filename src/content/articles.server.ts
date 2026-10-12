@@ -22,14 +22,14 @@ export async function loadArticlePage(config: CmsConfig | null, search: ArticleS
   }
   const query = new URLSearchParams({ page: String(search.page), limit: String(search.limit), sort: search.sort });
   if (search.category) query.set('where[category.slug][equals]', search.category);
-  const response = envelope.parse(await fetchCms(config, query, cache, fetcher));
-  const categories = categoryEnvelope.parse(await fetchCms({ ...config, path: '/api/categories' }, new URLSearchParams({ limit: '100', sort: 'title' }), cache, fetcher, false));
+  const response = envelope.parse(await fetchCms(config, query, cache, fetcher, true, raw => { const parsed = envelope.parse(raw); parsed.docs.forEach(doc => adaptPayloadArticle(doc, config.baseUrl, registry)); }));
+  const categories = categoryEnvelope.parse(await fetchCms({ ...config, path: '/api/categories' }, new URLSearchParams({ limit: '100', sort: 'title' }), cache, fetcher, false, raw => categoryEnvelope.parse(raw)));
   return { docs: response.docs.map(doc => adaptPayloadArticle(doc, config.baseUrl, registry)), page: response.page, totalPages: response.totalPages, totalDocs: response.totalDocs, categories: categories.docs, source: 'payload' };
 }
 export async function loadArticle(config: CmsConfig | null, slug: string, cache?: SharedCache, fetcher: typeof fetch = fetch) {
   if (!config) return conteudos.find(item => item.slug === slug && item.status === 'publicado') ?? null;
   const query = new URLSearchParams({ 'where[slug][equals]': slug, limit: '1', page: '1' });
-  const response = envelope.parse(await fetchCms(config, query, cache, fetcher));
+  const response = envelope.parse(await fetchCms(config, query, cache, fetcher, true, raw => { const parsed = envelope.parse(raw); parsed.docs.forEach(doc => adaptPayloadArticle(doc, config.baseUrl, registry)); }));
   const doc = response.docs[0];
   return doc ? adaptPayloadArticle(doc, config.baseUrl, registry) : null;
 }
