@@ -60,15 +60,15 @@ export const zonas: Zona[] = [
     slug: "zona-leste",
     nome: "Zona Leste",
     descricao:
-      "Maior extensão territorial da capital, com eixos residenciais e comerciais em consolidação editorial.",
+      "Guias de delegacias nos eixos Brás, Mooca, Penha, Tatuapé, Itaquera, São Miguel, São Mateus e extremo leste.",
     introducao:
-      "A Zona Leste abrange uma das maiores extensões territoriais da cidade, com bairros de perfis muito distintos e unidades policiais que concentram grande volume de procedimentos.",
+      "A Zona Leste reúne referências territoriais de Brás e Mooca até Itaquera, Guaianases, Cidade Tiradentes e Itaim Paulista. Os guias identificam unidades e explicam documentos e procedimentos, sem delimitar circunscrição policial.",
     secoes: [
       {
-        titulo: "Cobertura em expansão",
+        titulo: "Cobertura territorial",
         paragrafos: [
-          "As páginas territoriais da Zona Leste serão publicadas de forma gradual, lote a lote, mantendo o padrão editorial das demais regiões.",
-          "Enquanto a cobertura não está consolidada, o índice geral de delegacias reúne as páginas já publicadas em todo o município.",
+          "Os cards reúnem guias de 33 distritos policiais, com referências como Penha, Ponte Rasa, Vila Carrão, Vila Formosa, Parque São Lucas, Ermelino Matarazzo, Vila Jacuí, São Mateus e Sapopemba. Os dois guias de Itaquera distinguem o 32º e o 103º DP pelo número da unidade.",
+          "Brás é incluído como referência editorial de transição entre Centro e Zona Leste. Este agrupamento organiza a navegação do portal e não corresponde a uma divisão administrativa da Polícia Civil. Bairros e zonas não definem a unidade responsável por um endereço.",
         ],
       },
       {

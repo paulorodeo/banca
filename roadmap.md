@@ -22,9 +22,10 @@
 - [x] Inventariar as 34 páginas, bairros, zonas, slugs e relações existentes.
 - [x] Consultar fontes oficiais, distinguir tipos de unidade e registrar incertezas no relatório.
 - [x] Preparar e apresentar relatório de inventário e lacunas antes da expansão ampla.
-- [ ] Validar relação oficial atual e evidência por DP da Zona Leste — bloqueado por ausência de fonte primária atual verificada com nomes e situação operacional.
-- [ ] Executar lote validado da Zona Leste e conectar cards e regiões — depende da validação primária e apresentação do lote.
-- [ ] Preparar Oeste, Norte e Centro sem páginas vazias — depende do lote validado da Zona Leste.
+- [ ] Implementar os 33 guias solicitados da Zona Leste, com nomes conferidos em fontes oficiais e sem dados operacionais não confirmados.
+- [ ] Conectar regiões, cards e grafo territorial no padrão existente da Zona Sul.
+- [ ] Conferir os nove DPs de referência da Oeste e reaproveitar páginas existentes sem alterar slugs ou o agrupamento de Itaim Bibi.
+- [ ] Verificar todas as páginas, links, metadados e preservação dos 34 guias e cinco hubs existentes.
 
 # Dependências futuras (fora desta entrega)
 - Payload CMS — Etapa 2: conexão e validação real dependem da URL, configuração e acesso à instância do VPS.
