@@ -14,6 +14,7 @@ import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { SiteHeader } from "@/components/site/header";
 import { SiteFooter } from "@/components/site/footer";
+import { readPublicOrigin } from "@/lib/public-url.functions";
 import { organizationSchema } from "@/lib/seo";
 
 function NotFoundComponent() {
@@ -76,7 +77,8 @@ function ErrorComponent({ error, reset }: ErrorComponentProps) {
   );
 }
 
-export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
+export const Route = createRootRouteWithContext<{ queryClient: QueryClient; siteOrigin?: string }>()({
+  beforeLoad: async () => ({ siteOrigin: await readPublicOrigin() }),
   head: () => ({
     meta: [
       { charSet: "utf-8" },
