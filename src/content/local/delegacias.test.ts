@@ -2,31 +2,95 @@ import { describe, test } from "node:test";
 import assert from "node:assert/strict";
 import { delegacias } from "./delegacias";
 import { regioes } from "./regioes";
+import { zonas } from "./zonas";
 
-describe("Americanópolis na grade territorial", () => {
-  test("completa 33 delegacias sem duplicar unidades", () => {
-    assert.equal(delegacias.length, 33);
-    assert.equal(new Set(delegacias.map((dp) => dp.unidade.numero)).size, 33);
-    assert.deepEqual(delegacias.slice(-3).map((dp) => dp.unidade.numero), ["101", "85", "95"]);
+describe("Zonas e arquitetura regional", () => {
+  test("cinco zonas com slugs únicos", () => {
+    assert.equal(zonas.length, 5);
+    assert.equal(new Set(zonas.map((zona) => zona.slug)).size, 5);
+    assert.deepEqual(
+      zonas.map((zona) => zona.slug).sort(),
+      ["centro", "zona-leste", "zona-norte", "zona-oeste", "zona-sul"],
+    );
   });
 
-  test("inclui Americanópolis entre as 33 regiões da home", () => {
-    assert.equal(regioes.length, 33);
-    assert.equal(regioes.find((regiao) => regiao.slug === "americanopolis")?.href,
+  test("toda região declara uma zona válida", () => {
+    const slugs = new Set(zonas.map((zona) => zona.slug));
+    for (const regiao of regioes) {
+      assert.ok(slugs.has(regiao.zona), `${regiao.slug} sem zona válida`);
+    }
+  });
+
+  test("Zona Sul concentra 26 regiões e Zona Oeste 8", () => {
+    const porZona = (slug: string) => regioes.filter((regiao) => regiao.zona === slug).length;
+    assert.equal(porZona("zona-sul"), 26);
+    assert.equal(porZona("zona-oeste"), 8);
+    assert.equal(porZona("centro") + porZona("zona-norte") + porZona("zona-leste"), 0);
+  });
+
+  test("Pinheiros é Zona Oeste e Americanópolis é Zona Sul", () => {
+    assert.equal(regioes.find((regiao) => regiao.slug === "pinheiros")?.zona, "zona-oeste");
+    assert.equal(regioes.find((regiao) => regiao.slug === "americanopolis")?.zona, "zona-sul");
+  });
+});
+
+describe("Americanópolis na grade territorial", () => {
+  test("completa 34 delegacias sem duplicar unidades", () => {
+    assert.equal(delegacias.length, 34);
+    assert.equal(new Set(delegacias.map((dp) => dp.unidade.numero)).size, 34);
+    assert.deepEqual(delegacias.slice(-3).map((dp) => dp.unidade.numero), ["85", "95", "25"]);
+  });
+
+  test("inclui Americanópolis entre as 34 regiões da home", () => {
+    assert.equal(regioes.length, 34);
+    assert.equal(
+      regioes.find((regiao) => regiao.slug === "americanopolis")?.href,
       "/delegacias/advogado-criminal-97-dp-americanopolis",
     );
   });
 
   test("classifica Americanópolis como área ampliada, não núcleo físico", () => {
-    assert.equal(delegacias.find((dp) => dp.unidade.numero === "97")?.escopoTerritorial, "extendedArea");
+    assert.equal(
+      delegacias.find((dp) => dp.unidade.numero === "97")?.escopoTerritorial,
+      "extendedArea",
+    );
   });
 
   test("conecta reciprocamente o 97º aos quatro distritos do lote", () => {
     const americanopolis = delegacias.find((dp) => dp.unidade.numero === "97");
     for (const numero of ["35", "80", "98", "43"]) {
       const vizinha = delegacias.find((dp) => dp.unidade.numero === numero);
-      assert.equal(americanopolis?.delegaciasRelacionadas?.some((rel) => rel.slug === vizinha?.slug), true);
-      assert.equal(vizinha?.delegaciasRelacionadas?.some((rel) => rel.slug === americanopolis?.slug), true);
+      assert.equal(
+        americanopolis?.delegaciasRelacionadas?.some((rel) => rel.slug === vizinha?.slug),
+        true,
+      );
+      assert.equal(
+        vizinha?.delegaciasRelacionadas?.some((rel) => rel.slug === americanopolis?.slug),
+        true,
+      );
+    }
+  });
+});
+
+describe("25º DP Parelheiros fecha a Zona Sul", () => {
+  test("existe página do 25º DP com região própria", () => {
+    const parelheiros = delegacias.find((dp) => dp.unidade.numero === "25");
+    assert.equal(parelheiros?.slug, "advogado-criminal-25-dp-parelheiros");
+    assert.equal(regioes.find((regiao) => regiao.slug === "parelheiros")?.zona, "zona-sul");
+  });
+
+  test("vínculo territorial recíproco com Jardim Imbuias e Jardim Mirna", () => {
+    const parelheiros = delegacias.find((dp) => dp.unidade.numero === "25");
+    for (const numero of ["101", "85"]) {
+      const vizinha = delegacias.find((dp) => dp.unidade.numero === numero);
+      assert.equal(
+        parelheiros?.delegaciasRelacionadas?.some((rel) => rel.slug === vizinha?.slug),
+        true,
+      );
+      assert.equal(
+        vizinha?.delegaciasRelacionadas?.some((rel) => rel.slug === parelheiros?.slug),
+        true,
+      );
     }
   });
 });

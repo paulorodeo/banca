@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowUpRight } from "lucide-react";
-import type { AreaAtuacao, ConteudoJuridico, Regiao, SituacaoJuridica } from "@/content/types";
+import type { AreaAtuacao, ConteudoJuridico, Regiao, SituacaoJuridica, Zona } from "@/content/types";
+import { nomeDaZona } from "@/content/local/zonas";
 import { ActionLink, Container, Hairline, Section, SectionHeading } from "./primitives";
 import { Breadcrumbs, type Crumb } from "./breadcrumbs";
 
@@ -74,7 +75,31 @@ export function RegiaoCard({ regiao }: { regiao: Regiao }) {
         </div>
         <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{regiao.descricao}</p>
       </div>
-      <p className="mt-6 text-xs uppercase tracking-[0.14em] text-gold/80">São Paulo · SP</p>
+      <p className="mt-6 text-xs uppercase tracking-[0.14em] text-gold/80">
+        {nomeDaZona(regiao.zona)} · São Paulo — SP
+      </p>
+    </Link>
+  );
+}
+
+/** Card de macro-zona (página-pilar em /regioes/$slug). */
+export function ZonaCard({ zona, quantidade }: { zona: Zona; quantidade: number }) {
+  return (
+    <Link
+      to="/regioes/$slug"
+      params={{ slug: zona.slug }}
+      className="surface-panel group flex flex-col justify-between rounded-xs p-7 hover:border-gold/40"
+    >
+      <div>
+        <h3 className="text-xl text-ivory">{zona.nome}</h3>
+        <Hairline className="my-5 max-w-16" />
+        <p className="text-sm leading-relaxed text-muted-foreground">{zona.descricao}</p>
+      </div>
+      <p className="mt-6 text-xs uppercase tracking-[0.14em] text-gold/80">
+        {quantidade > 0
+          ? `${quantidade} ${quantidade === 1 ? "região publicada" : "regiões publicadas"} · São Paulo — SP`
+          : "Cobertura em expansão · São Paulo — SP"}
+      </p>
     </Link>
   );
 }

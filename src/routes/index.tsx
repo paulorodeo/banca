@@ -1,20 +1,21 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { ArrowUpRight } from "lucide-react";
 import { content } from "@/content/repository";
 import { ActionLink, Container, Hairline, Section, SectionHeading } from "@/components/site/primitives";
 import {
   AreaCard,
   ConteudoCard,
   CtaReservado,
-  RegiaoCard,
   SituacaoItem,
+  ZonaCard,
 } from "@/components/site/blocks";
 import { attorneySchema, canonicalLink, pageMeta } from "@/lib/seo";
-import type { AreaAtuacao, ConteudoJuridico, Regiao, SituacaoJuridica } from "@/content/types";
+import type { AreaAtuacao, ConteudoJuridico, SituacaoJuridica, Zona } from "@/content/types";
 
 interface HomeData {
   areas: AreaAtuacao[];
   situacoes: SituacaoJuridica[];
-  regioes: Regiao[];
+  zonas: (Zona & { quantidade: number })[];
   conteudos: ConteudoJuridico[];
 }
 import retratoAsset from "@/assets/retrato.avif.asset.json";
@@ -28,8 +29,14 @@ export const Route = createFileRoute("/")({
   loader: async (): Promise<HomeData> => ({
     areas: await content.listAreas(),
     situacoes: await content.listSituacoes(),
-    // Mantém sempre colunas completas (múltiplos de 3) na grade territorial.
-    regioes: await content.listRegioes().then((r) => r.slice(0, Math.floor(r.length / 3) * 3)),
+    // Cards de zona na home, com contagem de regiões publicadas por zona.
+    zonas: await content.listZonas().then(async (zonas) => {
+      const regioes = await content.listRegioes();
+      return zonas.map((zona) => ({
+        ...zona,
+        quantidade: regioes.filter((regiao) => regiao.zona === zona.slug).length,
+      }));
+    }),
     conteudos: (await content.listConteudos()).slice(0, 3),
   }),
   head: () => ({
@@ -81,7 +88,7 @@ const processo = [
 ];
 
 function Index() {
-  const { areas, situacoes, regioes, conteudos } = Route.useLoaderData() as HomeData;
+  const { areas, situacoes, zonas, conteudos } = Route.useLoaderData() as HomeData;
 
   return (
     <>
@@ -183,14 +190,34 @@ function Index() {
       <Section tone="raised">
         <Container>
           <SectionHeading
-            eyebrow="Presença territorial"
-            title="Atuação em regiões estratégicas de São Paulo"
-            lead="Páginas informativas por região, com contexto territorial e orientação sobre situações frequentes."
+            eyebrow="Cobertura territorial"
+            title="Atuação organizada por região de São Paulo"
+            lead="Páginas territoriais por zona da cidade, com contexto local e orientação sobre situações frequentes."
           />
           <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {regioes.map((regiao) => (
-              <RegiaoCard key={regiao.id} regiao={regiao} />
+            {zonas.map((zona) => (
+              <ZonaCard key={zona.id} zona={zona} quantidade={zona.quantidade} />
             ))}
+            <Link
+              to="/regioes"
+              className="surface-panel group flex flex-col justify-between rounded-xs p-7 hover:border-gold/40"
+            >
+              <div>
+                <div className="flex items-start justify-between gap-4">
+                  <h3 className="text-xl text-ivory">Todas as regiões</h3>
+                  <ArrowUpRight
+                    className="size-4 shrink-0 text-gold opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+                    aria-hidden
+                  />
+                </div>
+                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                  Índice completo das regiões atendidas e das páginas territoriais publicadas.
+                </p>
+              </div>
+              <p className="mt-6 text-xs uppercase tracking-[0.14em] text-gold/80">
+                Índice completo · São Paulo — SP
+              </p>
+            </Link>
           </div>
         </Container>
       </Section>

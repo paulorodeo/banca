@@ -10,3 +10,4 @@
 <!-- LOVABLE:END -->
 
 - Keep new police-district editorial entries in typed local content modules and register each in the central district order, territorial graph, and home region collection so the existing shared page template remains authoritative.
+- Keep the zone (zona) architecture centralized in `src/content/local/zonas.ts`: every region in `regioes.ts` must declare a valid zona slug, and the home renders zone cards plus a closing "Todas as regiões" card instead of neighborhood cards.
