@@ -9,7 +9,7 @@ const navItems = [
   { to: "/o-escritorio", label: "O escritório" },
   { to: "/paulo-sinigalia", label: "Paulo Sinigalia" },
   { to: "/areas-de-atuacao", label: "Áreas de atuação" },
-  { to: "/delegacias", label: "Regiões" },
+  { to: "/regioes", label: "Regiões" },
   { to: "/artigos", label: "Artigos" },
   { to: "/atendimento-reservado", label: "Atendimento" },
 ];

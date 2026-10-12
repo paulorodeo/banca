@@ -11,7 +11,7 @@ const institucional = [
 
 const conteudoLinks = [
   { to: "/artigos", label: "Artigos jurídicos" },
-  { to: "/delegacias", label: "Regiões de atuação" },
+  { to: "/regioes", label: "Regiões de atuação" },
   { to: "/contato", label: "Informações para contato" },
   { to: "/politica-de-privacidade", label: "Política de privacidade" },
 ];
