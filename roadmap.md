@@ -6,11 +6,11 @@
 - [x] Verificar navegação, conteúdo, telas e testes.
 
 # Preparação Payload — Etapa 1
-- [ ] Evoluir contrato editorial e adaptador único, mantendo dados territoriais locais.
-- [ ] Mediar leituras no servidor com publicação nativa, cache compartilhado, timeout e erros explícitos.
-- [ ] Preparar rich text Lexical, imagens, autoria opcional, SEO e paginação.
-- [ ] Testar ciclos editoriais com API simulada e verificar o portal.
-- [ ] Documentar configuração e dependências do VPS.
+- [x] Evoluir contrato editorial e adaptador único, mantendo dados territoriais locais.
+- [x] Mediar leituras no servidor com publicação nativa, cache compartilhado, timeout e erros explícitos.
+- [x] Preparar rich text Lexical, imagens, autoria opcional, SEO e paginação.
+- [x] Testar ciclos editoriais com API simulada e verificar o portal.
+- [x] Documentar configuração e dependências do VPS.
 
 # Dependências futuras (fora desta entrega)
 - Payload CMS — Etapa 2: conexão e validação real dependem da URL, configuração e acesso à instância do VPS.
