@@ -5,6 +5,7 @@ import { delegaciasExtra3 } from "./delegacias-extra-3";
 import { delegaciasExtra4 } from "./delegacias-extra-4";
 import { delegaciasExtra5 } from "./delegacias-extra-5";
 import { delegaciaAmericanopolis } from "./delegacia-americanopolis";
+import { delegaciasExtra6 } from "./delegacias-extra-6";
 
 interface DelegaciaSeed {
   slug: string;
@@ -232,6 +233,9 @@ const ORDEM = [
   "advogado-criminal-80-dp-vila-joaniza",
   "advogado-criminal-97-dp-americanopolis",
   "advogado-criminal-98-dp-jardim-miriam",
+  "advogado-criminal-101-dp-jardim-imbuias",
+  "advogado-criminal-85-dp-jardim-mirna",
+  "advogado-criminal-95-dp-heliopolis",
 ];
 
 /**
@@ -256,6 +260,8 @@ const EXTENDED_AREA = [
   "advogado-criminal-80-dp-vila-joaniza",
   "advogado-criminal-97-dp-americanopolis",
   "advogado-criminal-98-dp-jardim-miriam",
+  "advogado-criminal-101-dp-jardim-imbuias",
+  "advogado-criminal-85-dp-jardim-mirna",
 ];
 
 function escopoDe(slug: string): "localCore" | "extendedArea" | "serviceArea" {
@@ -385,11 +391,13 @@ const RELACIONADAS: Record<string, string[]> = {
     "advogado-criminal-16-dp-vila-clementino",
   ],
   "advogado-criminal-26-dp-sacoma": [
+    "advogado-criminal-95-dp-heliopolis",
     "advogado-criminal-17-dp-ipiranga",
     "advogado-criminal-35-dp-jabaquara",
     "advogado-criminal-16-dp-vila-clementino",
   ],
   "advogado-criminal-102-dp-socorro": [
+    "advogado-criminal-101-dp-jardim-imbuias",
     "advogado-criminal-11-dp-santo-amaro",
     "advogado-criminal-99-dp-campo-grande",
     "advogado-criminal-48-dp-cidade-dutra",
@@ -411,6 +419,7 @@ const RELACIONADAS: Record<string, string[]> = {
     "advogado-criminal-48-dp-cidade-dutra",
   ],
   "advogado-criminal-48-dp-cidade-dutra": [
+    "advogado-criminal-85-dp-jardim-mirna",
     "advogado-criminal-99-dp-campo-grande",
     "advogado-criminal-102-dp-socorro",
     "advogado-criminal-43-dp-cidade-ademar",
@@ -453,6 +462,22 @@ const RELACIONADAS: Record<string, string[]> = {
     "advogado-criminal-80-dp-vila-joaniza",
     "advogado-criminal-98-dp-jardim-miriam",
     "advogado-criminal-43-dp-cidade-ademar",
+    "advogado-criminal-95-dp-heliopolis",
+  ],
+  "advogado-criminal-101-dp-jardim-imbuias": [
+    "advogado-criminal-102-dp-socorro",
+    "advogado-criminal-48-dp-cidade-dutra",
+    "advogado-criminal-85-dp-jardim-mirna",
+  ],
+  "advogado-criminal-85-dp-jardim-mirna": [
+    "advogado-criminal-101-dp-jardim-imbuias",
+    "advogado-criminal-48-dp-cidade-dutra",
+    "advogado-criminal-102-dp-socorro",
+  ],
+  "advogado-criminal-95-dp-heliopolis": [
+    "advogado-criminal-26-dp-sacoma",
+    "advogado-criminal-17-dp-ipiranga",
+    "advogado-criminal-97-dp-americanopolis",
   ],
 };
 
@@ -464,6 +489,7 @@ const base: Delegacia[] = [
   ...delegaciasExtra4,
   ...delegaciasExtra5,
   delegaciaAmericanopolis,
+  ...delegaciasExtra6,
 ].sort((a, b) => ORDEM.indexOf(a.slug) - ORDEM.indexOf(b.slug));
 
 const porSlug = new Map(base.map((dp) => [dp.slug, dp]));
