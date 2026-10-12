@@ -3,7 +3,7 @@ import { content } from "@/content/repository";
 import type { AreaAtuacao, SituacaoJuridica } from "@/content/types";
 import { Container, Hairline, Section } from "@/components/site/primitives";
 import { CtaReservado, PageHero, SituacaoItem } from "@/components/site/blocks";
-import { canonicalLink, legalServiceSchema, pageMeta } from "@/lib/seo";
+import { canonicalLink, organizationSchema, pageMeta } from "@/lib/seo";
 
 const PATH = "/areas-de-atuacao";
 interface Data {
@@ -18,13 +18,13 @@ export const Route = createFileRoute("/areas-de-atuacao")({
   }),
   head: () => ({
     meta: pageMeta({
-      title: "Áreas de Atuação | Paulo Sinigalia — Advocacia em São Paulo",
+      title: "Temas Jurídicos | Banca Paulista",
       description:
         "Defesa criminal estratégica, crimes empresariais e patrimoniais, medidas urgentes, responsabilidade civil, contratos e sucessões em São Paulo.",
       path: PATH,
     }),
     links: canonicalLink(PATH),
-    scripts: [{ type: "application/ld+json", children: JSON.stringify(legalServiceSchema(PATH)) }],
+    scripts: [{ type: "application/ld+json", children: JSON.stringify(organizationSchema(PATH)) }],
   }),
   component: AreasPage,
 });
@@ -34,12 +34,12 @@ function AreasPage() {
   return (
     <>
       <PageHero
-        eyebrow="Atuação"
-        title="Áreas de atuação"
-        lead="Frentes de trabalho conduzidas com análise individualizada e comunicação clara sobre alternativas e limites."
+        eyebrow="Informação jurídica"
+        title="Temas jurídicos"
+        lead="Temas abordados pelo portal em caráter informativo, sem oferta de serviços ou orientação individual."
         crumbs={[
           { name: "Início", path: "/" },
-          { name: "Áreas de atuação", path: PATH },
+          { name: "Temas jurídicos", path: PATH },
         ]}
       />
       <Section>

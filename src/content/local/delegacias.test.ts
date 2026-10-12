@@ -49,10 +49,10 @@ describe("Americanópolis na grade territorial", () => {
     );
   });
 
-  test("classifica Americanópolis como área ampliada, não núcleo físico", () => {
+  test("não classifica Americanópolis por proximidade a um escritório", () => {
     assert.equal(
       delegacias.find((dp) => dp.unidade.numero === "97")?.escopoTerritorial,
-      "extendedArea",
+      undefined,
     );
   });
 
@@ -92,5 +92,21 @@ describe("25º DP Parelheiros fecha a Zona Sul", () => {
         true,
       );
     }
+  });
+});
+
+
+describe("Identidade editorial", () => {
+  test("não publica identidade antiga, endereço de escritório ou oferta de triagem", () => {
+    const texto = JSON.stringify(delegacias);
+    assert.doesNotMatch(texto, /Sinigalia|411\.502|Antônio Raposo Barreto|04904-170|triagem/i);
+    for (const dp of delegacias) {
+      assert.ok(dp.seo.title.includes("Banca Paulista"));
+      assert.ok(dp.faq.some((faq) => faq.resposta.includes("não há profissionais") || faq.resposta.includes("não há profissionais".replace("não", "não"))));
+    }
+  });
+  test("todos os interlinks territoriais possuem destino real", () => {
+    const slugs = new Set(delegacias.map((dp) => dp.slug));
+    for (const dp of delegacias) for (const vizinha of dp.delegaciasRelacionadas ?? []) assert.ok(slugs.has(vizinha.slug));
   });
 });

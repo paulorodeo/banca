@@ -3,7 +3,7 @@ import { content } from "@/content/repository";
 import type { Delegacia } from "@/content/types";
 import { Container, Hairline, Section } from "@/components/site/primitives";
 import { CtaReservado, PageHero } from "@/components/site/blocks";
-import { canonical, delegaciaJsonLd, faqSchema, pageMeta } from "@/lib/seo";
+import { canonical, delegaciaJsonLd, pageMeta } from "@/lib/seo";
 
 interface Data {
   dp: Delegacia;
@@ -17,7 +17,7 @@ export const Route = createFileRoute("/delegacias/$slug")({
   },
   head: ({ loaderData }) => {
     if (!loaderData) {
-      return { meta: [{ title: "Página indisponível" }, { name: "robots", content: "noindex" }] };
+      return { meta: [...pageMeta({ title: "Guia indisponível | Banca Paulista", description: "Consulte o índice de delegacias da Banca Paulista.", path: "/delegacias" }), { name: "robots", content: "noindex" }] };
     }
     const { dp } = loaderData as Data;
     return {
@@ -29,9 +29,6 @@ export const Route = createFileRoute("/delegacias/$slug")({
       links: [{ rel: "canonical", href: canonical(dp.seo.canonicalPath) }],
       scripts: [
         { type: "application/ld+json", children: JSON.stringify(delegaciaJsonLd(dp)) },
-        ...(dp.faq.length
-          ? [{ type: "application/ld+json", children: JSON.stringify(faqSchema(dp.faq)) }]
-          : []),
       ],
     };
   },

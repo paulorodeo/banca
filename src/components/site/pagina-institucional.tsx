@@ -19,7 +19,7 @@ export function PaginaInstitucionalView({
       <PageHero eyebrow={eyebrow} title={pagina.titulo} lead={pagina.subtitulo} crumbs={crumbs} />
       <Section>
         <Container>
-          <div className="grid gap-16 lg:grid-cols-[1.5fr_0.9fr]">
+          <div className={aside ? "grid gap-16 lg:grid-cols-[1.5fr_0.9fr]" : "max-w-3xl"}>
             <div className="space-y-14">
               {pagina.blocos.map((bloco) => (
                 <article key={bloco.titulo}>

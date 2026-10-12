@@ -6,9 +6,9 @@ export const areas: AreaAtuacao[] = [
     slug: "defesa-criminal-estrategica",
     titulo: "Defesa criminal estratégica",
     resumo:
-      "Acompanhamento técnico em investigações, inquéritos e ações penais, com definição de estratégia desde o primeiro contato.",
+      "Informações sobre investigações, inquéritos e ações penais e sobre o papel da defesa profissional.",
     descricao:
-      "A defesa criminal exige leitura precisa do momento processual. O trabalho envolve análise dos elementos disponíveis, definição de estratégia e acompanhamento das etapas do procedimento, com comunicação clara sobre alternativas e riscos.",
+      "A defesa criminal exige leitura precisa do momento processual. A assistência profissional pode envolver análise dos elementos disponíveis, definição de estratégia e acompanhamento das etapas do procedimento, com comunicação clara sobre alternativas e riscos.",
     topicos: [
       "Acompanhamento em inquéritos policiais",
       "Defesa em ações penais",
@@ -24,7 +24,7 @@ export const areas: AreaAtuacao[] = [
     resumo:
       "Situações que envolvem atividade empresarial, gestão, sócios e patrimônio, com exposição reputacional relevante.",
     descricao:
-      "Investigações relacionadas à atividade empresarial demandam coordenação entre a esfera penal, cível e societária. A atuação considera a continuidade da operação, a proteção patrimonial e a preservação da imagem das pessoas envolvidas.",
+      "Investigações relacionadas à atividade empresarial demandam coordenação entre a esfera penal, cível e societária. A análise profissional considera a continuidade da operação, a proteção patrimonial e a preservação da imagem das pessoas envolvidas.",
     topicos: [
       "Apurações internas e responsabilidade de gestores",
       "Crimes contra o patrimônio e a ordem econômica",
@@ -38,9 +38,9 @@ export const areas: AreaAtuacao[] = [
     slug: "medidas-urgentes-e-investigacoes",
     titulo: "Medidas urgentes e investigações",
     resumo:
-      "Atuação em cenários de urgência, como prisões em flagrante, buscas e apreensões e prazos em andamento.",
+      "Conteúdo sobre prisões em flagrante, buscas e apreensões e prazos em andamento.",
     descricao:
-      "Momentos de urgência exigem resposta ordenada. A atuação começa pela verificação do que efetivamente ocorreu, pelo levantamento de documentos e pela adoção das medidas processuais cabíveis dentro dos prazos aplicáveis.",
+      "Momentos de urgência exigem resposta ordenada. A avaliação profissional começa pela verificação do que efetivamente ocorreu, pelo levantamento de documentos e pela adoção das medidas processuais cabíveis dentro dos prazos aplicáveis.",
     topicos: [
       "Prisão em flagrante e audiência de custódia",
       "Busca e apreensão",
@@ -71,7 +71,7 @@ export const areas: AreaAtuacao[] = [
     resumo:
       "Estruturação, revisão e discussão de contratos, com atenção a risco jurídico e proteção patrimonial.",
     descricao:
-      "Contratos bem estruturados reduzem litígio futuro. O trabalho abrange elaboração, revisão e discussão de instrumentos, além da análise de garantias e de riscos associados a operações patrimoniais.",
+      "Contratos bem estruturados reduzem litígio futuro. A assistência profissional pode abranger elaboração, revisão e discussão de instrumentos, além da análise de garantias e de riscos associados a operações patrimoniais.",
     topicos: [
       "Elaboração e revisão contratual",
       "Conflitos societários",
@@ -84,7 +84,7 @@ export const areas: AreaAtuacao[] = [
     slug: "familia-sucessoes-e-protecao-patrimonial",
     titulo: "Família, sucessões e proteção patrimonial",
     resumo:
-      "Planejamento sucessório, inventários e questões familiares conduzidos com discrição.",
+      "Informações sobre planejamento sucessório, inventários e questões familiares.",
     descricao:
       "Questões familiares e sucessórias envolvem patrimônio e relações pessoais. A condução privilegia soluções ordenadas, com atenção à privacidade das partes e à preservação do patrimônio familiar.",
     topicos: [
