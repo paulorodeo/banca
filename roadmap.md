@@ -22,10 +22,11 @@
 - [x] Inventariar as 34 páginas, bairros, zonas, slugs e relações existentes.
 - [x] Consultar fontes oficiais, distinguir tipos de unidade e registrar incertezas no relatório.
 - [x] Preparar e apresentar relatório de inventário e lacunas antes da expansão ampla.
-- [ ] Implementar os 33 guias solicitados da Zona Leste, com nomes conferidos em fontes oficiais e sem dados operacionais não confirmados.
-- [ ] Conectar regiões, cards e grafo territorial no padrão existente da Zona Sul.
-- [ ] Conferir os nove DPs de referência da Oeste e reaproveitar páginas existentes sem alterar slugs ou o agrupamento de Itaim Bibi.
-- [ ] Verificar todas as páginas, links, metadados e preservação dos 34 guias e cinco hubs existentes.
+- [x] Implementar os 33 guias e preservar as referências de lugar do escopo como editoriais, sem atribuir denominação institucional não confirmada ou acrescentar dados operacionais.
+- [ ] Confirmar denominações institucionais atuais por unidade — depende de evidência oficial acessível; a listagem municipal devolveu HTTP 403 e o seletor SSP não comprova nomes de lugares.
+- [x] Conectar regiões, cards e grafo territorial no padrão existente da Zona Sul.
+- [x] Conferir os nove DPs de referência da Oeste e reaproveitar páginas existentes sem alterar slugs ou o agrupamento de Itaim Bibi.
+- [x] Verificar todas as páginas, links, metadados e preservação dos 34 guias e cinco hubs existentes.
 
 # Dependências futuras (fora desta entrega)
 - Payload CMS — Etapa 2: conexão e validação real dependem da URL, configuração e acesso à instância do VPS.
