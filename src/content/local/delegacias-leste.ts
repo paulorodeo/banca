@@ -70,7 +70,7 @@ export const relacionadasLeste: Record<string, string[]> = Object.fromEntries(
 
 export const delegaciasLeste: Delegacia[] = distritosLeste.map((dp) => {
   const slug = slugDistrito(dp);
-  const unidade = `${dp.numero}º Distrito Policial — ${dp.nome}`;
+  const unidade = `${dp.numero}º Distrito Policial de São Paulo`;
   const outros = referenciasDoEixo(dp).map((outro) => `${outro.numero}º DP — ${outro.nome}`).join(", ");
   return {
     id: `dp-${dp.numero}`,
@@ -84,7 +84,7 @@ export const delegaciasLeste: Delegacia[] = distritosLeste.map((dp) => {
       description: `Guia independente do ${dp.numero}º DP — ${dp.nome}, em São Paulo. Identificação da unidade, intimações, inquéritos e referências editoriais da Zona Leste.`,
       canonicalPath: `/delegacias/${slug}`,
     },
-    introducao: `Este guia identifica o ${unidade} e reúne informação editorial para compreender documentos que mencionem essa unidade. Não é canal da Polícia Civil nem oferta de atendimento jurídico.`,
+    introducao: `Guia editorial do ${unidade}, organizado pela referência territorial ${dp.nome}. A denominação institucional atual está em verificação; o nome do lugar não define circunscrição. Não é canal da Polícia Civil nem oferta de atendimento jurídico.`,
     unidade: { numero: String(dp.numero), nomeOficial: unidade, dadosDeDesenvolvimento: true },
     regiaoSlug: dp.localSlug,
     bairros: [dp.nome],
