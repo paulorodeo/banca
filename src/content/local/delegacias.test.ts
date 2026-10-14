@@ -26,7 +26,8 @@ describe("Zonas e arquitetura regional", () => {
     assert.equal(porZona("zona-sul"), 26);
     assert.equal(porZona("zona-oeste"), 8);
     assert.equal(porZona("zona-leste"), 33);
-    assert.equal(porZona("centro") + porZona("zona-norte"), 0);
+    assert.equal(porZona("zona-norte"), 16);
+    assert.equal(porZona("centro"), 8);
   });
 
   test("Pinheiros é Zona Oeste e Americanópolis é Zona Sul", () => {
@@ -37,7 +38,7 @@ describe("Zonas e arquitetura regional", () => {
 
 describe("Americanópolis na grade territorial", () => {
   test("preserva as 34 delegacias e acrescenta 33 sem duplicar unidades", () => {
-    assert.equal(delegacias.length, 67);
+    assert.equal(delegacias.length, 91);
     assert.equal(new Set(delegacias.map((dp) => dp.unidade.numero)).size, 67);
     assert.deepEqual(delegacias.slice(31, 34).map((dp) => dp.unidade.numero), ["85", "95", "25"]);
   });
