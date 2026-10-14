@@ -39,12 +39,12 @@ describe("Zonas e arquitetura regional", () => {
 describe("Americanópolis na grade territorial", () => {
   test("preserva as 34 delegacias e acrescenta 33 sem duplicar unidades", () => {
     assert.equal(delegacias.length, 91);
-    assert.equal(new Set(delegacias.map((dp) => dp.unidade.numero)).size, 67);
+    assert.equal(new Set(delegacias.map((dp) => dp.unidade.numero)).size, 91);
     assert.deepEqual(delegacias.slice(31, 34).map((dp) => dp.unidade.numero), ["85", "95", "25"]);
   });
 
   test("mantém Americanópolis entre as regiões da home", () => {
-    assert.equal(regioes.length, 67);
+    assert.equal(regioes.length, 91);
     assert.equal(
       regioes.find((regiao) => regiao.slug === "americanopolis")?.href,
       "/delegacias/advogado-criminal-97-dp-americanopolis",
