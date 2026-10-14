@@ -12,15 +12,15 @@ export const zonas: Zona[] = [
     slug: "centro",
     nome: "Centro",
     descricao:
-      "Região histórica e de intensa circulação, com páginas territoriais em consolidação.",
+      "Guias de delegacias nas referências Liberdade, Bom Retiro, Santa Ifigênia, Consolação, Cambuci, Brás e Santa Cecília.",
     introducao:
       "O Centro de São Paulo concentra equipamentos públicos, comércio intenso e uma trama urbana densa, em que procedimentos variados tramitam nas unidades policiais da região central.",
     secoes: [
       {
-        titulo: "Cobertura em expansão",
+        titulo: "Cobertura territorial",
         paragrafos: [
-          "As páginas territoriais do Centro estão sendo publicadas de forma gradual, lote a lote, sempre com o mesmo padrão editorial das demais regiões: contexto territorial, bairros de referência, situações frequentes e observações sobre circunscrição.",
-          "Enquanto a cobertura não está consolidada, o índice geral de delegacias reúne as páginas já publicadas e as regiões publicadas em todo o município.",
+          "Os cards reúnem guias de oito distritos policiais. Os dois guias de Liberdade distinguem o 1º e o 5º DP pelo número da unidade; o 12º DP, com referência Brás, é distinto do 8º DP, listado na Zona Leste.",
+          "Este agrupamento organiza a navegação do portal e não corresponde a uma divisão administrativa da Polícia Civil. Bairros e zonas não definem a unidade responsável por um endereço.",
         ],
       },
       {
@@ -36,15 +36,15 @@ export const zonas: Zona[] = [
     slug: "zona-norte",
     nome: "Zona Norte",
     descricao:
-      "Território entre a Serra da Cantareira e os eixos de Santana e Tucuruvi, com cobertura em consolidação.",
+      "Guias de delegacias nos eixos Santana, Casa Verde, Vila Maria, Tremembé, Brasilândia, Pirituba e Perus.",
     introducao:
       "A Zona Norte reúne bairros residenciais consolidados e eixos comerciais ao longo das linhas de transporte da região, com demandas variadas distribuídas entre as unidades policiais locais.",
     secoes: [
       {
-        titulo: "Cobertura em expansão",
+        titulo: "Cobertura territorial",
         paragrafos: [
-          "As páginas territoriais da Zona Norte serão publicadas de forma gradual, lote a lote, mantendo o padrão editorial das demais regiões.",
-          "Enquanto a cobertura não está consolidada, o índice geral de delegacias reúne as páginas já publicadas em todo o município.",
+          "Os cards reúnem guias de 16 distritos policiais, com referências como Carandiru, Casa Verde, Vila Maria, Freguesia do Ó, Pirituba, Jaçanã, Jaraguá, Perus e Parque Novo Mundo.",
+          "Este agrupamento organiza a navegação do portal e não corresponde a uma divisão administrativa da Polícia Civil. Bairros e zonas não definem a unidade responsável por um endereço.",
         ],
       },
       {

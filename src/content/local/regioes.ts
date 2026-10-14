@@ -1,5 +1,6 @@
 import type { Regiao } from "../types";
 import { regioesLeste } from "./delegacias-leste";
+import { regioesCentro, regioesNorte } from "./delegacias-norte-centro";
 
 export const regioes: Regiao[] = [
   {
@@ -309,4 +310,6 @@ export const regioes: Regiao[] = [
     zona: "zona-sul",
   },
   ...regioesLeste,
+  ...regioesNorte,
+  ...regioesCentro,
 ];

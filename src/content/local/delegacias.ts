@@ -7,6 +7,7 @@ import { delegaciasExtra5 } from "./delegacias-extra-5";
 import { delegaciaAmericanopolis } from "./delegacia-americanopolis";
 import { delegaciasExtra6 } from "./delegacias-extra-6";
 import { delegaciasLeste, relacionadasLeste } from "./delegacias-leste";
+import { delegaciasNorteCentro, relacionadasNorteCentro } from "./delegacias-norte-centro";
 
 interface DelegaciaSeed {
   slug: string;
@@ -219,6 +220,7 @@ const ORDEM = [
   "advogado-criminal-95-dp-heliopolis",
   "advogado-criminal-25-dp-parelheiros",
   ...delegaciasLeste.map((dp) => dp.slug),
+  ...delegaciasNorteCentro.map((dp) => dp.slug),
 ];
 
 /**
@@ -228,6 +230,7 @@ const ORDEM = [
  */
 const RELACIONADAS: Record<string, string[]> = {
   ...relacionadasLeste,
+  ...relacionadasNorteCentro,
   "advogado-14-dp-pinheiros": [
     "advogado-criminal-7-dp-vila-romana",
     "advogado-criminal-23-dp-perdizes",
@@ -451,6 +454,7 @@ const base: Delegacia[] = [
   delegaciaAmericanopolis,
   ...delegaciasExtra6,
   ...delegaciasLeste,
+  ...delegaciasNorteCentro,
 ].sort((a, b) => ORDEM.indexOf(a.slug) - ORDEM.indexOf(b.slug));
 
 const porSlug = new Map(base.map((dp) => [dp.slug, dp]));
