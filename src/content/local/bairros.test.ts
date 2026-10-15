@@ -73,6 +73,19 @@ describe("Páginas de bairro", () => {
     assert.equal(delegacias.length, 93);
   });
 
+  test("todos os cards da Zona Norte e da Zona Sul têm página territorial publicada", () => {
+    for (const regiao of regioes.filter(
+      (item) => item.zona === "zona-norte" || item.zona === "zona-sul",
+    )) {
+      const pagina = bairros.find((item) => item.slug === regiao.slug);
+      assert.equal(pagina?.status, "publicado", regiao.slug);
+      assert.equal(pagina?.zona, regiao.zona, regiao.slug);
+      assert.equal(pagina?.seo.canonicalPath, `/bairros/${regiao.slug}`, regiao.slug);
+    }
+    assert.equal(delegacias.length, 93);
+    assert.equal(bairros.find((item) => item.slug === "santo-amaro")?.id, "bairro-santo-amaro");
+  });
+
   test("não publica dados operacionais ou perfis fictícios em Pinheiros", () => {
     const text = JSON.stringify(bairros.find((bairro) => bairro.slug === "pinheiros"));
     assert.doesNotMatch(text, /OAB\/?SP|WhatsApp|telefone|atendimento 24/i);

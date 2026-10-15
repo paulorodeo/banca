@@ -80,13 +80,21 @@ export const Route = createFileRoute("/regioes/$slug")({
             ? "Zona Oeste de São Paulo: bairros e informações jurídicas | Banca Paulista"
             : zona.slug === "zona-leste"
               ? "Zona Leste de São Paulo: bairros e informações jurídicas | Banca Paulista"
-              : `${zona.nome}: bairros e informação territorial | Banca Paulista`,
+              : zona.slug === "zona-norte"
+                ? "Zona Norte de São Paulo: bairros e informações jurídicas | Banca Paulista"
+                : zona.slug === "zona-sul"
+                  ? "Zona Sul de São Paulo: bairros e informações jurídicas | Banca Paulista"
+                  : `${zona.nome}: bairros e informação territorial | Banca Paulista`,
         description:
           zona.slug === "zona-oeste"
             ? "Explore os bairros, as instituições públicas e as informações jurídicas da Zona Oeste de São Paulo."
             : zona.slug === "zona-leste"
               ? "Explore os bairros, as instituições públicas e as informações jurídicas da Zona Leste."
-              : `Navegue por bairros e guias publicados ${artigo} ${zona.nome} de São Paulo, com contexto urbano e relações institucionais verificadas.`,
+              : zona.slug === "zona-norte"
+                ? "Explore os bairros, as instituições públicas e as informações jurídicas da Zona Norte."
+                : zona.slug === "zona-sul"
+                  ? "Explore os bairros, as instituições públicas e as informações jurídicas da Zona Sul."
+                  : `Navegue por bairros e guias publicados ${artigo} ${zona.nome} de São Paulo, com contexto urbano e relações institucionais verificadas.`,
         path,
       }),
       links: canonicalLink(path),
@@ -110,10 +118,7 @@ export const Route = createFileRoute("/regioes/$slug")({
 function ZonaPage() {
   const { zona, regioes, bairros, outrasZonas, delegacias } = Route.useLoaderData() as Data;
   const published = new Set(bairros.map((bairro) => bairro.slug));
-  const regionalPhoto =
-    zona.slug === "zona-oeste" || zona.slug === "zona-leste"
-      ? zonePhotography[zona.slug]
-      : undefined;
+  const regionalPhoto = zona.slug === "centro" ? undefined : zonePhotography[zona.slug];
   const regionalHeroImage = regionalPhoto
     ? {
         avifSrc: `/images/sp/${regionalPhoto.asset}.avif`,
@@ -125,10 +130,7 @@ function ZonaPage() {
         priority: true,
       }
     : undefined;
-  const existingHeroImage =
-    zona.slug === "centro" || zona.slug === "zona-sul"
-      ? existingZoneHeroImages[zona.slug]
-      : undefined;
+  const existingHeroImage = zona.slug === "centro" ? existingZoneHeroImages[zona.slug] : undefined;
   const heroImage = regionalHeroImage ?? existingHeroImage;
 
   return (
@@ -140,7 +142,11 @@ function ZonaPage() {
             ? "Zona Oeste de São Paulo"
             : zona.slug === "zona-leste"
               ? "Zona Leste de São Paulo"
-              : zona.nome
+              : zona.slug === "zona-norte"
+                ? "Zona Norte de São Paulo"
+                : zona.slug === "zona-sul"
+                  ? "Zona Sul de São Paulo"
+                  : zona.nome
         }
         lead={zona.introducao}
         crumbs={[
@@ -159,7 +165,15 @@ function ZonaPage() {
           outrasZonas={outrasZonas}
         />
       ) : zona.slug === "zona-leste" ? (
-        <ZonaLesteContent
+        <ZonaEditorialContent
+          zona={zona}
+          regioes={regioes}
+          bairros={bairros}
+          delegacias={delegacias}
+          outrasZonas={outrasZonas}
+        />
+      ) : zona.slug === "zona-norte" || zona.slug === "zona-sul" ? (
+        <ZonaEditorialContent
           zona={zona}
           regioes={regioes}
           bairros={bairros}
@@ -415,7 +429,7 @@ function ZonaOesteContent({
   );
 }
 
-function ZonaLesteContent({
+function ZonaEditorialContent({
   zona,
   regioes,
   bairros,
@@ -441,13 +455,13 @@ function ZonaLesteContent({
 
   return (
     <>
-      <section className="py-14 md:py-20" aria-labelledby="bairros-zona-leste">
+      <section className="py-14 md:py-20" aria-labelledby={`bairros-${zona.slug}`}>
         <Container>
           <p className="text-xs font-semibold uppercase tracking-[0.16em] text-gold">
             Territórios publicados
           </p>
-          <h2 id="bairros-zona-leste" className="mt-3 font-serif text-4xl text-brand-navy">
-            Bairros e localidades da Zona Leste
+          <h2 id={`bairros-${zona.slug}`} className="mt-3 font-serif text-4xl text-brand-navy">
+            Bairros e localidades da {zona.nome}
           </h2>
           <div className="mt-8 grid items-stretch gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {[...territories].map(([slug]) => {
@@ -514,6 +528,20 @@ function ZonaLesteContent({
                         {paragraph}
                       </p>
                     ))}
+                    {zona.slug === "zona-sul" &&
+                    section.titulo === "Bairros e referências territoriais" ? (
+                      <p className="mt-4 text-base leading-8 text-muted-foreground">
+                        Consulte também a página territorial de{" "}
+                        <Link
+                          to="/bairros/$slug"
+                          params={{ slug: "santo-amaro" }}
+                          className="font-semibold text-brand-navy underline decoration-gold underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-navy"
+                        >
+                          Santo Amaro
+                        </Link>
+                        , cujo recorte editorial se concentra no entorno do Largo Treze.
+                      </p>
+                    ) : null}
                   </section>
                 ))}
               </article>
@@ -525,15 +553,18 @@ function ZonaLesteContent({
         </section>
       ) : null}
 
-      <section className="py-14 md:py-20" aria-labelledby="delegacias-zona-leste">
+      <section className="py-14 md:py-20" aria-labelledby={`delegacias-${zona.slug}`}>
         <Container>
           <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.16em] text-gold">
                 Guias informativos publicados
               </p>
-              <h2 id="delegacias-zona-leste" className="mt-3 font-serif text-4xl text-brand-navy">
-                Delegacias da Zona Leste
+              <h2
+                id={`delegacias-${zona.slug}`}
+                className="mt-3 font-serif text-4xl text-brand-navy"
+              >
+                Delegacias da {zona.nome}
               </h2>
             </div>
             <Link

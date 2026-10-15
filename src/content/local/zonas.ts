@@ -38,7 +38,7 @@ export const zonas: Zona[] = [
     descricao:
       "Guias de delegacias nos eixos Santana, Casa Verde, Vila Maria, Tremembé, Brasilândia, Pirituba e Perus.",
     introducao:
-      "A Zona Norte reúne bairros residenciais consolidados e eixos comerciais ao longo das linhas de transporte da região, com demandas variadas distribuídas entre as unidades policiais locais.",
+      "Explore os bairros, as instituições públicas e as informações jurídicas da Zona Norte.",
     secoes: [
       {
         titulo: "Cobertura territorial",
@@ -54,6 +54,53 @@ export const zonas: Zona[] = [
         ],
       },
     ],
+    artigoEditorial: {
+      titulo:
+        "Zona Norte de São Paulo: informações jurídicas, órgãos públicos e serviços por bairro",
+      secoes: [
+        {
+          paragrafos: [
+            "A vida cotidiana nos bairros da Zona Norte envolve questões relacionadas à moradia, ao trabalho, ao comércio e ao acesso aos serviços públicos. Encontrar informações organizadas por território ajuda o visitante a conhecer as instituições e os conteúdos disponíveis para sua região.",
+            "A Banca Paulista reúne páginas de bairros, guias de delegacias e referências institucionais da Zona Norte. Cada conteúdo identifica seu contexto territorial e oferece caminhos para aprofundar a consulta.",
+          ],
+        },
+        {
+          titulo: "Bairros e referências territoriais",
+          paragrafos: [
+            "A página reúne referências publicadas como Carandiru, Casa Verde, Vila Maria, Jardim França, Freguesia do Ó, Pirituba, Perus, Jaçanã, Jaraguá, Vila Brasilândia e outras localidades cadastradas. Os cards acima levam às páginas próprias, que descrevem o recorte editorial e os guias relacionados sem tratar esses nomes como limites administrativos.",
+            "As páginas individuais preservam a identificação de cada localidade e distinguem a organização editorial do portal dos distritos administrativos e das áreas de atuação de instituições públicas.",
+          ],
+        },
+        {
+          titulo: "Órgãos públicos e serviços de Justiça",
+          paragrafos: [
+            "Os registros locais incluem guias informativos de Distritos Policiais associados a referências da Zona Norte. Cada guia identifica sua unidade e mantém seu próprio endereço editorial. Uma relação no portal não comprova localização física dentro de todo bairro citado nem define competência ou atendimento.",
+            "Demandas administrativas, policiais e judiciais podem seguir critérios institucionais próprios. Consulte o órgão competente por seus canais oficiais, considerando o endereço e a natureza do serviço procurado.",
+          ],
+        },
+        {
+          titulo: "Moradia, imóveis e convivência",
+          paragrafos: [
+            "Compra e venda, locação, documentação de imóveis, administração de condomínios e relações de vizinhança são temas que podem surgir em diferentes localidades. A consulta de informações deve considerar os documentos do imóvel e as circunstâncias concretas, sem presumir que o nome de um bairro determine sua situação jurídica.",
+            "O portal apresenta conteúdo editorial geral. Ele não examina contratos, registros ou situações individuais e não substitui os canais públicos ou a orientação profissional adequada.",
+          ],
+        },
+        {
+          titulo: "Comércio, trabalho e serviços",
+          paragrafos: [
+            "Comerciantes, trabalhadores e prestadores de serviços podem buscar referências sobre contratos, relações de consumo, locação comercial e relações de trabalho. As páginas organizam conteúdos e guias disponíveis, sem atribuir um perfil econômico uniforme a cada bairro.",
+            "Regras e procedimentos variam conforme a atividade e o caso. A página regional serve como caminho de navegação para conteúdos publicados e fontes institucionais.",
+          ],
+        },
+        {
+          titulo: "Acesso aos guias da Zona Norte",
+          paragrafos: [
+            "Explore os cards territoriais para acessar as páginas próprias dos bairros e use a seção de delegacias para abrir os guias policiais publicados. Os dois tipos de página têm destinos e propósitos distintos; as relações editoriais não indicam circunscrição ou atendimento.",
+            "A Banca Paulista é um portal editorial independente de informação jurídica e territorial. Os conteúdos não substituem os canais oficiais de atendimento nem a orientação profissional para situações individuais.",
+          ],
+        },
+      ],
+    },
   },
   {
     id: "zona-leste",
@@ -154,7 +201,7 @@ export const zonas: Zona[] = [
     descricao:
       "Páginas territoriais nos eixos Santo Amaro, Jabaquara, M'Boi Mirim, Grajaú e Cidade Dutra.",
     introducao:
-      "A Zona Sul reúne bairros com diferentes perfis urbanos. O guia editorial acompanha os eixos Santo Amaro, Jabaquara, Cidade Ademar, M'Boi Mirim, Interlagos e Grajaú.",
+      "Explore os bairros, as instituições públicas e as informações jurídicas da Zona Sul.",
     secoes: [
       {
         titulo: "Cobertura territorial",
@@ -170,6 +217,59 @@ export const zonas: Zona[] = [
         ],
       },
     ],
+    artigoEditorial: {
+      titulo: "Zona Sul de São Paulo: informações jurídicas, órgãos públicos e serviços por bairro",
+      secoes: [
+        {
+          paragrafos: [
+            "Encontrar informações sobre serviços públicos e instituições exige compreender o território e a natureza de cada atendimento. Na Zona Sul, a Banca Paulista organiza essa consulta por bairros, referências institucionais e guias publicados.",
+            "Esta página reúne caminhos para conhecer as localidades, acessar informações sobre delegacias e explorar temas relacionados à moradia, ao trabalho, ao comércio e à vida urbana.",
+          ],
+        },
+        {
+          titulo: "Bairros e referências territoriais",
+          paragrafos: [
+            "A Zona Sul reúne localidades com páginas próprias, como Santo Amaro, Jabaquara, Brooklin, Campo Belo, Morumbi, Ipiranga, Sacomã, Campo Limpo, Cidade Ademar, Cidade Dutra, Capão Redondo, Socorro, Parelheiros e outras referências publicadas no índice. Cada card leva à página territorial correspondente; os agrupamentos seguem o cadastro editorial e não constituem classificação administrativa oficial.",
+            "Santo Amaro mantém um recorte editorial próprio em torno do Largo Treze. A página distingue esse recorte do distrito administrativo, da subprefeitura e das demais áreas que usam o mesmo nome.",
+          ],
+        },
+        {
+          titulo: "Órgãos públicos e serviços de Justiça",
+          paragrafos: [
+            "Os registros locais oferecem guias informativos de Distritos Policiais associados às referências da Zona Sul. Localização física, relação editorial e competência institucional são informações diferentes; a presença de um guia não determina atendimento ou circunscrição.",
+            "A natureza do procedimento e as regras do órgão responsável influenciam a identificação do serviço adequado. Consulte os canais oficiais para confirmar a unidade competente para cada situação.",
+          ],
+        },
+        {
+          titulo: "Moradia, imóveis e convivência",
+          paragrafos: [
+            "Compra e venda, locação, documentação imobiliária, administração de condomínios e relações de vizinhança fazem parte dos temas que podem afetar moradores e proprietários. As condições variam conforme os documentos, o imóvel e o contexto de cada demanda.",
+            "O portal organiza informações gerais e não analisa contratos, registros ou casos individuais. A consulta aos serviços oficiais e a profissionais habilitados continua necessária quando a situação exigir avaliação específica.",
+          ],
+        },
+        {
+          titulo: "Comércio, trabalho e atividades econômicas",
+          paragrafos: [
+            "Comerciantes, empresas, trabalhadores e prestadores de serviços podem encontrar questões relacionadas a contratos, relações de consumo, locação comercial e trabalho. A página regional apresenta esses assuntos sem atribuir o mesmo perfil econômico a todos os bairros.",
+            "As referências publicadas permitem navegar por conteúdos territoriais e guias relacionados, sem substituir a análise das regras aplicáveis a uma atividade ou relação concreta.",
+          ],
+        },
+        {
+          titulo: "Mobilidade e acesso aos serviços",
+          paragrafos: [
+            "A extensão da Zona Sul torna útil organizar informações por localidade. As páginas do portal oferecem caminhos entre bairros, referências institucionais e guias publicados, sem estimar trajetos, tempos de deslocamento ou atendimento por proximidade.",
+            "A divisão editorial por zonas e bairros facilita a navegação, mas não corresponde necessariamente aos limites administrativos ou às áreas de competência de órgãos públicos.",
+          ],
+        },
+        {
+          titulo: "Explore os bairros e os guias da Zona Sul",
+          paragrafos: [
+            "Use os cards para conhecer as páginas próprias dos bairros e a seção de delegacias para abrir os guias policiais. O guia canônico do 11º DP permanece acessível e relacionado editorialmente a Santo Amaro; essa relação não afirma circunscrição ou atendimento exclusivo.",
+            "A Banca Paulista é um portal editorial independente de informação jurídica e territorial. Os conteúdos não substituem os canais oficiais de atendimento nem a orientação profissional para situações individuais.",
+          ],
+        },
+      ],
+    },
   },
   {
     id: "zona-oeste",
