@@ -1,0 +1,12 @@
+{
+  // Homologação somente. Não é a configuração do domínio definitivo.
+  "name": "banca",
+  "compatibility_date": "2026-10-12",
+  "compatibility_flags": ["nodejs_compat"],
+  "workers_dev": true,
+  "keep_vars": true,
+  "vars": {
+    "PUBLIC_SITE_URL": "https://banca.pjdigital-me.workers.dev",
+    "DEPLOYMENT_ENV": "staging"
+  }
+}

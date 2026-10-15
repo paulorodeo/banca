@@ -9,7 +9,9 @@
     "build:dev": "vite build --mode development",
     "preview": "vite preview",
     "lint": "eslint .",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "build:staging": "DEPLOYMENT_ENV=staging PUBLIC_SITE_URL=https://banca.pjdigital-me.workers.dev bun run build",
+    "deploy:staging": "bun scripts/check-staging-deploy.ts && npx --yes wrangler@4.151.0 deploy --config .output/server/wrangler.json --name banca"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
