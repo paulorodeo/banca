@@ -221,3 +221,23 @@
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Homepage metropolitana: superfícies claras escopadas apenas à home. */
+.home-light {
+  --background: oklch(0.975 0.006 85);
+  --foreground: oklch(0.22 0.05 260);
+  --card: oklch(1 0 0);
+  --muted-foreground: oklch(0.45 0.03 260);
+  --border: oklch(0.9 0.01 260);
+  --navy: oklch(0.2 0.05 262);
+  --navy-foreground: oklch(0.97 0.01 85);
+  --gold-accent: oklch(0.68 0.1 75);
+  background: var(--background);
+  color: var(--foreground);
+}
+@utility bg-navy { background-color: var(--navy); }
+@utility text-navy { color: var(--navy); }
+@utility text-on-navy { color: var(--navy-foreground); }
+@utility text-gold-accent { color: var(--gold-accent); }
+@utility bg-gold-accent { background-color: var(--gold-accent); }
+@utility border-gold-accent { border-color: var(--gold-accent); }
