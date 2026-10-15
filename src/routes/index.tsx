@@ -104,7 +104,7 @@ function HomeHeading({
       </div>
       <Link
         to={to}
-        className="inline-flex shrink-0 items-center gap-2 text-xs font-semibold text-brand-navy hover:underline"
+        className="home-section-action inline-flex shrink-0 items-center gap-2 text-xs font-semibold text-brand-navy hover:underline"
       >
         {cta}
         <ArrowRight className="size-4" aria-hidden />

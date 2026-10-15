@@ -15,6 +15,7 @@ import { reportLovableError } from "../lib/lovable-error-reporting";
 import { SiteHeader } from "@/components/site/header";
 import { SiteFooter } from "@/components/site/footer";
 import { readPublicOrigin } from "@/lib/public-url.functions";
+import { editorialIdentity } from "@/content/local/settings";
 import { organizationSchema } from "@/lib/seo";
 
 function NotFoundComponent() {
@@ -23,9 +24,7 @@ function NotFoundComponent() {
       <div className="max-w-md text-center">
         <h1 className="text-7xl font-bold text-foreground">404</h1>
         <h2 className="mt-4 text-xl font-semibold text-foreground">Página não encontrada</h2>
-        <p className="mt-2 text-sm text-muted-foreground">
-          Esta página não existe ou foi movida.
-        </p>
+        <p className="mt-2 text-sm text-muted-foreground">Esta página não existe ou foi movida.</p>
         <div className="mt-6">
           <Link
             to="/"
@@ -52,9 +51,7 @@ function ErrorComponent({ error, reset }: ErrorComponentProps) {
         <h1 className="text-xl font-semibold tracking-tight text-foreground">
           Não foi possível carregar esta página
         </h1>
-        <p className="mt-2 text-sm text-muted-foreground">
-          Tente novamente ou volte ao início.
-        </p>
+        <p className="mt-2 text-sm text-muted-foreground">Tente novamente ou volte ao início.</p>
         <div className="mt-6 flex flex-wrap justify-center gap-2">
           <button
             onClick={() => {
@@ -77,20 +74,22 @@ function ErrorComponent({ error, reset }: ErrorComponentProps) {
   );
 }
 
-export const Route = createRootRouteWithContext<{ queryClient: QueryClient; siteOrigin?: string }>()({
+export const Route = createRootRouteWithContext<{
+  queryClient: QueryClient;
+  siteOrigin?: string;
+}>()({
   beforeLoad: async () => ({ siteOrigin: await readPublicOrigin() }),
   head: () => ({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Banca Paulista — Portal editorial criminal" },
+      { title: editorialIdentity.name },
       {
         name: "description",
-        content:
-          "Portal editorial sobre defesa criminal, delegacias e regiões de São Paulo.",
+        content: editorialIdentity.description,
       },
-      { name: "author", content: "Banca Paulista" },
-      { property: "og:site_name", content: "Banca Paulista de Advogados" },
+      { name: "author", content: editorialIdentity.name },
+      { property: "og:site_name", content: editorialIdentity.name },
       { property: "og:type", content: "website" },
       { property: "og:locale", content: "pt_BR" },
       { name: "twitter:card", content: "summary_large_image" },

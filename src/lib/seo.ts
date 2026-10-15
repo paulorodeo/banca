@@ -1,14 +1,22 @@
-import { absoluteUrl, DEFAULT_SITE_ORIGIN } from "./public-url";
+import { absoluteUrl } from "./public-url";
 import type { Delegacia, FAQ } from "@/content/types";
 
-/**
- * Public URLs use the existing published origin; route heads apply runtime configuration.
- */
-export const SITE_ORIGIN = DEFAULT_SITE_ORIGIN;
+import { editorialIdentity } from "@/content/local/settings";
+import { zonePhotography } from "@/content/local/visual-media";
 
-export const canonical = (path: string): string => absoluteUrl(path, SITE_ORIGIN);
+export const canonical = (path: string): string => absoluteUrl(path);
+export const ORG_NAME = editorialIdentity.name;
 
-export const ORG_NAME = "Banca Paulista de Advogados";
+export function socialImageFor(path: string): string {
+  const slug = path.startsWith("/regioes/")
+    ? path.split("/")[2]
+    : path === "/bairros/pinheiros"
+      ? "zona-oeste"
+      : undefined;
+  return slug && zonePhotography[slug]
+    ? `/images/sp/${zonePhotography[slug].asset}.webp`
+    : editorialIdentity.socialImage;
+}
 
 interface MetaInput {
   title: string;
@@ -16,9 +24,17 @@ interface MetaInput {
   path: string;
   type?: "website" | "article" | "profile";
   image?: string;
+  imageMetadata?: { width?: number; height?: number; alt?: string };
 }
 
-export function pageMeta({ title, description, path, type = "website", image }: MetaInput) {
+export function pageMeta({
+  title,
+  description,
+  path,
+  type = "website",
+  image,
+  imageMetadata,
+}: MetaInput) {
   const meta: Record<string, string>[] = [
     { title },
     { name: "description", content: description },
@@ -31,9 +47,33 @@ export function pageMeta({ title, description, path, type = "website", image }: 
     { name: "twitter:title", content: title },
     { name: "twitter:description", content: description },
   ];
-  if (image) {
-    meta.push({ property: "og:image", content: image });
-    meta.push({ name: "twitter:image", content: image });
+  const social = image || socialImageFor(path);
+  if (social) {
+    meta.push({ property: "og:image", content: social });
+    meta.push({ name: "twitter:image", content: social });
+    const institutional = social === editorialIdentity.socialImage;
+    if (institutional || social.startsWith("/images/sp/")) {
+      meta.push({ property: "og:image:width", content: institutional ? "1200" : "800" });
+      meta.push({ property: "og:image:height", content: institutional ? "630" : "450" });
+      meta.push({ property: "og:image:type", content: institutional ? "image/png" : "image/webp" });
+    }
+    if (
+      !institutional &&
+      !social.startsWith("/images/sp/") &&
+      imageMetadata?.width &&
+      imageMetadata?.height
+    ) {
+      meta.push({ property: "og:image:width", content: String(imageMetadata.width) });
+      meta.push({ property: "og:image:height", content: String(imageMetadata.height) });
+    }
+    meta.push({
+      property: "og:image:alt",
+      content: institutional ? editorialIdentity.name : imageMetadata?.alt || title,
+    });
+    meta.push({
+      name: "twitter:image:alt",
+      content: institutional ? editorialIdentity.name : imageMetadata?.alt || title,
+    });
   }
   return meta;
 }
@@ -45,15 +85,19 @@ export function organizationSchema(path: string) {
     "@context": "https://schema.org",
     "@type": "Organization",
     name: ORG_NAME,
-    description: "Portal editorial e territorial sobre defesa criminal e delegacias de São Paulo.",
-    url: canonical(path),
+    description: editorialIdentity.description,
+    disambiguatingDescription: editorialIdentity.disclaimer,
+    url: canonical("/"),
   };
 }
 
 export function websiteSchema(path: string) {
   return {
-    "@context": "https://schema.org", "@type": "WebSite",
-    name: ORG_NAME, url: canonical(path), inLanguage: "pt-BR",
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: ORG_NAME,
+    url: canonical(path),
+    inLanguage: "pt-BR",
     publisher: { "@type": "Organization", name: ORG_NAME },
   };
 }
@@ -105,7 +149,13 @@ export function breadcrumbSchema(items: { name: string; path: string }[]) {
 
 export function delegaciaJsonLd(dp: Delegacia) {
   return [
-    { "@context": "https://schema.org", "@type": "WebPage", name: dp.h1, description: dp.seo.description, url: canonical(dp.seo.canonicalPath) },
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      name: dp.h1,
+      description: dp.seo.description,
+      url: canonical(dp.seo.canonicalPath),
+    },
     faqSchema(dp.faq),
     breadcrumbSchema([
       { name: "Início", path: "/" },

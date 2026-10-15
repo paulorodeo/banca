@@ -1,3 +1,5 @@
-import { createServerFn } from '@tanstack/react-start';
-import { publicOrigin } from './public-url';
-export const readPublicOrigin = createServerFn({ method: 'GET' }).handler(() => publicOrigin(process.env['PUBLIC_SITE_URL']));
+import { createServerFn } from "@tanstack/react-start";
+import { runtimePublicOrigin } from "./public-url";
+export const readPublicOrigin = createServerFn({ method: "GET" }).handler(() =>
+  runtimePublicOrigin(process.env),
+);

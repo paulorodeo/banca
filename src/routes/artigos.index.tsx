@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -14,21 +14,33 @@ const PATH = "/artigos";
 export const Route = createFileRoute("/artigos/")({
   validateSearch: (search): Partial<ArticleSearch> => articleSearchSchema.parse(search),
   loaderDeps: ({ search }) => articleSearchSchema.parse(search),
-  loader: ({ context, deps }) => context.queryClient.ensureQueryData(articlesQuery(deps)),
-  head: ({ loaderData, match }) => ({
-    meta: [
-      ...pageMeta({
-        title: "Artigos Jurídicos | Banca Paulista",
-        description:
-          "Publicações informativas sobre Direito Criminal, delegacias e regiões de São Paulo.",
-        path: articleListPath(articleSearchSchema.parse(match.search)),
-      }),
-      ...(!loaderData?.ok || articleSearchSchema.parse(match.search).sort !== "-publishedAt"
-        ? [{ name: "robots", content: "noindex" }]
-        : []),
-    ],
-    links: canonicalLink(articleListPath(articleSearchSchema.parse(match.search))),
-  }),
+  loader: async ({ context, deps }) => {
+    const result = await context.queryClient.ensureQueryData(articlesQuery(deps));
+    if (result.ok && deps.page > Math.max(1, result.page.totalPages)) throw notFound();
+    return result;
+  },
+  head: ({ loaderData, match }) =>
+    !loaderData
+      ? {
+          meta: [
+            { title: "Página não encontrada | Banca Paulista" },
+            { name: "robots", content: "noindex" },
+          ],
+        }
+      : {
+          meta: [
+            ...pageMeta({
+              title: "Artigos Jurídicos | Banca Paulista",
+              description:
+                "Publicações informativas sobre Direito Criminal, delegacias e regiões de São Paulo.",
+              path: articleListPath(articleSearchSchema.parse(match.search)),
+            }),
+            ...(!loaderData?.ok || articleSearchSchema.parse(match.search).sort !== "-publishedAt"
+              ? [{ name: "robots", content: "noindex" }]
+              : []),
+          ],
+          links: canonicalLink(articleListPath(articleSearchSchema.parse(match.search))),
+        },
   pendingComponent: ArticlesPending,
   errorComponent: () => <ArticleState />,
   notFoundComponent: () => <ArticleState missing />,

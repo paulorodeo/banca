@@ -19,13 +19,26 @@ const focusableSelector = 'a[href], button:not([disabled]), [tabindex]:not([tabi
 export function SiteHeader() {
   const [open, setOpen] = useState(false);
   const menuId = useId();
+  const homeRef = useRef<HTMLAnchorElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const desktop = window.matchMedia("(min-width: 1024px)");
+    const closeOnDesktop = () => {
+      if (desktop.matches) setOpen(false);
+    };
+    closeOnDesktop();
+    desktop.addEventListener("change", closeOnDesktop);
+    return () => desktop.removeEventListener("change", closeOnDesktop);
+  }, []);
 
   useEffect(() => {
     if (!open) return;
 
     const trigger = triggerRef.current;
+    const panel = panelRef.current;
+    const home = homeRef.current;
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     const focusTimer = window.setTimeout(() => {
@@ -64,7 +77,8 @@ export function SiteHeader() {
       window.clearTimeout(focusTimer);
       document.removeEventListener("keydown", handleKeyDown);
       document.body.style.overflow = previousOverflow;
-      trigger?.focus();
+      if (trigger?.getClientRects().length) trigger.focus();
+      else if (panel?.contains(document.activeElement)) home?.focus();
     };
   }, [open]);
 
@@ -72,6 +86,7 @@ export function SiteHeader() {
     <header className="sticky top-0 z-50 border-b border-white/10 bg-brand-navy text-ivory shadow-[0_12px_40px_-28px_rgba(0,0,0,0.9)]">
       <Container className="flex h-[4.5rem] items-center justify-between gap-5">
         <Link
+          ref={homeRef}
           to="/"
           className="shrink-0 rounded-sm"
           aria-label="Banca Paulista — página inicial"

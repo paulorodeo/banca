@@ -27,14 +27,15 @@ export const Route = createFileRoute("/artigos/$slug")({
         ],
       };
     const conteudo = loaderData.article;
-    const image = conteudo.capa?.url;
+    const socialMedia = conteudo.seoEditorial?.socialImage ?? conteudo.capa;
+    const image = socialMedia?.url;
     return {
       meta: pageMeta({
         title: conteudo.seoEditorial?.title ?? `${conteudo.titulo} | Banca Paulista`,
         description: conteudo.seoEditorial?.description ?? conteudo.resumo,
         path,
         type: "article",
-        ...(image?.startsWith("https://") ? { image } : {}),
+        ...(image?.startsWith("https://") ? { image, imageMetadata: socialMedia } : {}),
       }).map((meta) =>
         meta["property"] === "og:url" ? { ...meta, content: loaderData.canonicalUrl } : meta,
       ),

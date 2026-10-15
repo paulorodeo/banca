@@ -19,6 +19,8 @@ import { Route as PlantaoCriminalRouteImport } from './routes/plantao-criminal'
 import { Route as PoliticaDePrivacidadeRouteImport } from './routes/politica-de-privacidade'
 import { Route as ProfissionaisRouteImport } from './routes/profissionais'
 import { Route as RadarRouteImport } from './routes/radar'
+import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as SobreRouteImport } from './routes/sobre'
 import { Route as ArtigosIndexRouteImport } from './routes/artigos.index'
 import { Route as ArtigosSlugRouteImport } from './routes/artigos.$slug'
@@ -79,6 +81,16 @@ const ProfissionaisRoute = ProfissionaisRouteImport.update({
 const RadarRoute = RadarRouteImport.update({
   id: '/radar',
   path: '/radar',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RobotsDottxtRoute = RobotsDottxtRouteImport.update({
+  id: '/robots.txt',
+  path: '/robots.txt',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SobreRoute = SobreRouteImport.update({
@@ -148,6 +160,8 @@ export interface FileRoutesByFullPath {
   '/politica-de-privacidade': typeof PoliticaDePrivacidadeRoute
   '/profissionais': typeof ProfissionaisRoute
   '/radar': typeof RadarRoute
+  '/robots.txt': typeof RobotsDottxtRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/sobre': typeof SobreRoute
   '/artigos/$slug': typeof ArtigosSlugRoute
   '/bairros/$slug': typeof BairrosSlugRoute
@@ -171,6 +185,8 @@ export interface FileRoutesByTo {
   '/politica-de-privacidade': typeof PoliticaDePrivacidadeRoute
   '/profissionais': typeof ProfissionaisRoute
   '/radar': typeof RadarRoute
+  '/robots.txt': typeof RobotsDottxtRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/sobre': typeof SobreRoute
   '/artigos/$slug': typeof ArtigosSlugRoute
   '/bairros/$slug': typeof BairrosSlugRoute
@@ -195,6 +211,8 @@ export interface FileRoutesById {
   '/politica-de-privacidade': typeof PoliticaDePrivacidadeRoute
   '/profissionais': typeof ProfissionaisRoute
   '/radar': typeof RadarRoute
+  '/robots.txt': typeof RobotsDottxtRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/sobre': typeof SobreRoute
   '/artigos/$slug': typeof ArtigosSlugRoute
   '/bairros/$slug': typeof BairrosSlugRoute
@@ -220,6 +238,8 @@ export interface FileRouteTypes {
     | '/politica-de-privacidade'
     | '/profissionais'
     | '/radar'
+    | '/robots.txt'
+    | '/sitemap.xml'
     | '/sobre'
     | '/artigos/$slug'
     | '/bairros/$slug'
@@ -243,6 +263,8 @@ export interface FileRouteTypes {
     | '/politica-de-privacidade'
     | '/profissionais'
     | '/radar'
+    | '/robots.txt'
+    | '/sitemap.xml'
     | '/sobre'
     | '/artigos/$slug'
     | '/bairros/$slug'
@@ -266,6 +288,8 @@ export interface FileRouteTypes {
     | '/politica-de-privacidade'
     | '/profissionais'
     | '/radar'
+    | '/robots.txt'
+    | '/sitemap.xml'
     | '/sobre'
     | '/artigos/$slug'
     | '/bairros/$slug'
@@ -290,6 +314,8 @@ export interface RootRouteChildren {
   PoliticaDePrivacidadeRoute: typeof PoliticaDePrivacidadeRoute
   ProfissionaisRoute: typeof ProfissionaisRoute
   RadarRoute: typeof RadarRoute
+  RobotsDottxtRoute: typeof RobotsDottxtRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   SobreRoute: typeof SobreRoute
   ArtigosSlugRoute: typeof ArtigosSlugRoute
   BairrosSlugRoute: typeof BairrosSlugRoute
@@ -373,6 +399,20 @@ declare module '@tanstack/react-router' {
       path: '/radar'
       fullPath: '/radar'
       preLoaderRoute: typeof RadarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/robots.txt': {
+      id: '/robots.txt'
+      path: '/robots.txt'
+      fullPath: '/robots.txt'
+      preLoaderRoute: typeof RobotsDottxtRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/sobre': {
@@ -466,6 +506,8 @@ const rootRouteChildren: RootRouteChildren = {
   PoliticaDePrivacidadeRoute: PoliticaDePrivacidadeRoute,
   ProfissionaisRoute: ProfissionaisRoute,
   RadarRoute: RadarRoute,
+  RobotsDottxtRoute: RobotsDottxtRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   SobreRoute: SobreRoute,
   ArtigosSlugRoute: ArtigosSlugRoute,
   BairrosSlugRoute: BairrosSlugRoute,
