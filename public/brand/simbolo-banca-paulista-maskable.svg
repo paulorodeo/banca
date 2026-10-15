@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100" role="img" aria-label="Banca Paulista — símbolo institucional de quatro colunas">
+    <rect x="0" y="0" width="100" height="100" fill="#101B2B"/>
+    <g transform="translate(17 17) scale(0.66)">
+      <g fill="#C8A66A">
+        <!-- outer, symmetrical classical two-slope pediment -->
+        <path d="M 4,27 L 50,7 L 96,27 L 93,32 L 50,13 L 7,32 Z"/>
+        <!-- inset gable line, matching the selected reference -->
+        <path d="M 18,32 L 50,19 L 82,32 L 72,32 L 50,25 L 28,32 Z"/>
+        <!-- cornice immediately under the gable -->
+        <path d="M 8,35 H 92 L 88,40 H 12 Z"/>
+        <rect x="13" y="83" width="74" height="5" rx="0.3"/>
+        <rect x="6" y="92" width="88" height="5" rx="0.3"/>
+      </g>
+      <g fill="#F4F1EB">
+      <rect x="18" y="43" width="13" height="36"/>
+      <rect x="35" y="43" width="13" height="36"/>
+      <rect x="52" y="43" width="13" height="36"/>
+      <rect x="69" y="43" width="13" height="36"/>
+      </g>
+    </g>
+</svg>

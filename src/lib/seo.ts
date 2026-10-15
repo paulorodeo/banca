@@ -88,6 +88,7 @@ export function organizationSchema(path: string) {
     description: editorialIdentity.description,
     disambiguatingDescription: editorialIdentity.disclaimer,
     url: canonical("/"),
+    logo: canonical("/brand/simbolo-banca-paulista-fundo-azul.svg"),
   };
 }
 

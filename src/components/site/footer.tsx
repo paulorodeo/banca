@@ -23,7 +23,7 @@ export function SiteFooter() {
             className="inline-flex justify-self-start rounded-sm"
             aria-label="Banca Paulista — início"
           >
-            <Brand />
+            <Brand size="compact" />
           </Link>
 
           <nav aria-label="Navegação do rodapé" className="md:justify-self-center">

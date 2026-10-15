@@ -35,11 +35,10 @@ import {
 import { ZoneCardLight } from "@/components/site/territory";
 import { withPublishedGuideCounts } from "@/content/local/zonas";
 import { NeighborhoodCarousel } from "@/components/site/neighborhood-carousel";
-import { marca } from "@/content/local/settings";
+import { editorialIdentity, marca } from "@/content/local/settings";
 
 const TITLE = `${marca.curto} — Informação jurídica e territorial`;
-const DESCRIPTION =
-  "Portal editorial sobre defesa criminal, delegacias e regiões de São Paulo. Guias territoriais, artigos informativos e contexto sobre plantão criminal.";
+const DESCRIPTION = editorialIdentity.description;
 
 export const Route = createFileRoute("/")({
   loader: async (): Promise<HomeData> => {
