@@ -83,6 +83,8 @@ export interface Regiao {
   href: string;
   /** Slug da zona a que a região pertence, para sinalização geográfica. */
   zona: string;
+  /** Slug da página territorial comum quando mais de um guia aponta ao mesmo território. */
+  territorioSlug?: string;
 }
 
 export type InstitutionCategory =

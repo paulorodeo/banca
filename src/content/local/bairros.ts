@@ -1,4 +1,5 @@
 import type { Bairro } from "../types";
+import { bairrosLeste } from "./bairros-leste";
 
 /**
  * Bairros publicados permanecem locais e tipados até o contrato territorial
@@ -588,4 +589,5 @@ export const bairros: Bairro[] = [
       canonicalPath: "/bairros/raposo-tavares",
     },
   },
+  ...bairrosLeste,
 ];

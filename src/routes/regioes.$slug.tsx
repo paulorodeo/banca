@@ -3,7 +3,7 @@ import { ArrowRight, Compass, MapPin } from "lucide-react";
 import { content } from "@/content/repository";
 import type { Bairro, Delegacia, Regiao, Zona } from "@/content/types";
 import { artigoDaZona } from "@/content/local/zonas";
-import { zonePhotography } from "@/content/local/visual-media";
+import { featuredNeighborhoods, zonePhotography } from "@/content/local/visual-media";
 import { Container } from "@/components/site/primitives";
 import { ProfessionalSidebar, TerritoryHero } from "@/components/site/territory";
 import { breadcrumbSchema, canonicalLink, pageMeta } from "@/lib/seo";
@@ -78,11 +78,15 @@ export const Route = createFileRoute("/regioes/$slug")({
         title:
           zona.slug === "zona-oeste"
             ? "Zona Oeste de São Paulo: bairros e informações jurídicas | Banca Paulista"
-            : `${zona.nome}: bairros e informação territorial | Banca Paulista`,
+            : zona.slug === "zona-leste"
+              ? "Zona Leste de São Paulo: bairros e informações jurídicas | Banca Paulista"
+              : `${zona.nome}: bairros e informação territorial | Banca Paulista`,
         description:
           zona.slug === "zona-oeste"
             ? "Explore os bairros, as instituições públicas e as informações jurídicas da Zona Oeste de São Paulo."
-            : `Navegue por bairros e guias publicados ${artigo} ${zona.nome} de São Paulo, com contexto urbano e relações institucionais verificadas.`,
+            : zona.slug === "zona-leste"
+              ? "Explore os bairros, as instituições públicas e as informações jurídicas da Zona Leste."
+              : `Navegue por bairros e guias publicados ${artigo} ${zona.nome} de São Paulo, com contexto urbano e relações institucionais verificadas.`,
         path,
       }),
       links: canonicalLink(path),
@@ -106,30 +110,38 @@ export const Route = createFileRoute("/regioes/$slug")({
 function ZonaPage() {
   const { zona, regioes, bairros, outrasZonas, delegacias } = Route.useLoaderData() as Data;
   const published = new Set(bairros.map((bairro) => bairro.slug));
-  const regionalPhoto = zonePhotography["zona-oeste"];
-  const westHeroImage =
-    zona.slug === "zona-oeste" && regionalPhoto
-      ? {
-          avifSrc: `/images/sp/${regionalPhoto.asset}.avif`,
-          fallbackSrc: `/images/sp/${regionalPhoto.asset}.webp`,
-          alt: regionalPhoto.alt,
-          width: regionalPhoto.width,
-          height: regionalPhoto.height,
-          focalPoint: regionalPhoto.position,
-          priority: true,
-        }
+  const regionalPhoto =
+    zona.slug === "zona-oeste" || zona.slug === "zona-leste"
+      ? zonePhotography[zona.slug]
       : undefined;
+  const regionalHeroImage = regionalPhoto
+    ? {
+        avifSrc: `/images/sp/${regionalPhoto.asset}.avif`,
+        fallbackSrc: `/images/sp/${regionalPhoto.asset}.webp`,
+        alt: regionalPhoto.alt,
+        width: regionalPhoto.width,
+        height: regionalPhoto.height,
+        focalPoint: regionalPhoto.position,
+        priority: true,
+      }
+    : undefined;
   const existingHeroImage =
     zona.slug === "centro" || zona.slug === "zona-sul"
       ? existingZoneHeroImages[zona.slug]
       : undefined;
-  const heroImage = westHeroImage ?? existingHeroImage;
+  const heroImage = regionalHeroImage ?? existingHeroImage;
 
   return (
     <div className="home-light">
       <TerritoryHero
         eyebrow="São Paulo · Hub territorial"
-        title={zona.slug === "zona-oeste" ? "Zona Oeste de São Paulo" : zona.nome}
+        title={
+          zona.slug === "zona-oeste"
+            ? "Zona Oeste de São Paulo"
+            : zona.slug === "zona-leste"
+              ? "Zona Leste de São Paulo"
+              : zona.nome
+        }
         lead={zona.introducao}
         crumbs={[
           { name: "Início", path: "/" },
@@ -143,6 +155,14 @@ function ZonaPage() {
         <ZonaOesteContent
           zona={zona}
           regioes={regioes}
+          delegacias={delegacias}
+          outrasZonas={outrasZonas}
+        />
+      ) : zona.slug === "zona-leste" ? (
+        <ZonaLesteContent
+          zona={zona}
+          regioes={regioes}
+          bairros={bairros}
           delegacias={delegacias}
           outrasZonas={outrasZonas}
         />
@@ -329,6 +349,191 @@ function ZonaOesteContent({
               </p>
               <h2 id="delegacias-zona-oeste" className="mt-3 font-serif text-4xl text-brand-navy">
                 Delegacias da Zona Oeste
+              </h2>
+            </div>
+            <Link
+              to="/delegacias"
+              className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-brand-navy underline decoration-gold underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-navy"
+            >
+              Ver todas as delegacias <ArrowRight className="size-4" aria-hidden />
+            </Link>
+          </div>
+          <div className="mt-7 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {delegacias.map((delegacia) => (
+              <Link
+                key={delegacia.id}
+                to="/delegacias/$slug"
+                params={{ slug: delegacia.slug }}
+                className="group flex min-h-36 flex-col rounded-lg border border-border bg-card p-5 transition-colors hover:border-gold/70 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-navy"
+              >
+                <span className="text-xs font-semibold uppercase tracking-wide text-gold">
+                  Guia de delegacia
+                </span>
+                <span className="mt-3 font-serif text-xl text-brand-navy">
+                  {delegacia.cardTitulo}
+                </span>
+                <span className="mt-1 text-sm text-muted-foreground">
+                  {delegacia.cardSubtitulo}
+                </span>
+                <span className="mt-auto flex items-center gap-2 pt-4 text-xs font-semibold text-brand-navy">
+                  Abrir guia informativo <ArrowRight className="size-4" aria-hidden />
+                </span>
+              </Link>
+            ))}
+          </div>
+        </Container>
+      </section>
+
+      <section className="border-t border-border bg-brand-navy py-10 text-ivory md:py-12">
+        <Container>
+          <div className="grid gap-6 md:grid-cols-[minmax(0,1fr)_auto] md:items-center">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-gold">
+                Navegação territorial
+              </p>
+              <h2 className="mt-2 font-serif text-2xl">Outras regiões de São Paulo</h2>
+            </div>
+            <nav aria-label="Outras regiões">
+              <ul className="flex flex-wrap gap-x-6 gap-y-2">
+                {outrasZonas.map((item) => (
+                  <li key={item.id}>
+                    <Link
+                      to="/regioes/$slug"
+                      params={{ slug: item.slug }}
+                      className="inline-flex min-h-11 items-center gap-2 text-sm text-ivory/85 hover:text-gold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ivory"
+                    >
+                      {item.nome} <ArrowRight className="size-4" aria-hidden />
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          </div>
+        </Container>
+      </section>
+    </>
+  );
+}
+
+function ZonaLesteContent({
+  zona,
+  regioes,
+  bairros,
+  delegacias,
+  outrasZonas,
+}: {
+  zona: Zona;
+  regioes: Regiao[];
+  bairros: Bairro[];
+  delegacias: Delegacia[];
+  outrasZonas: Zona[];
+}) {
+  const territories = new Map<string, Regiao[]>();
+  for (const regiao of regioes) {
+    const slug = regiao.territorioSlug ?? regiao.slug;
+    territories.set(slug, [...(territories.get(slug) ?? []), regiao]);
+  }
+  const bairroBySlug = new Map(bairros.map((bairro) => [bairro.slug, bairro]));
+  const photoByTerritory = new Map(
+    featuredNeighborhoods.map((photo) => [photo.territorioId, photo]),
+  );
+  const article = zona.artigoEditorial;
+
+  return (
+    <>
+      <section className="py-14 md:py-20" aria-labelledby="bairros-zona-leste">
+        <Container>
+          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-gold">
+            Territórios publicados
+          </p>
+          <h2 id="bairros-zona-leste" className="mt-3 font-serif text-4xl text-brand-navy">
+            Bairros e localidades da Zona Leste
+          </h2>
+          <div className="mt-8 grid items-stretch gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {[...territories].map(([slug]) => {
+              const bairro = bairroBySlug.get(slug)!;
+              const photo = photoByTerritory.get(slug);
+              return (
+                <Link
+                  key={slug}
+                  to="/bairros/$slug"
+                  params={{ slug: bairro.slug }}
+                  className="group flex min-h-64 flex-col overflow-hidden rounded-lg border border-border bg-card shadow-sm transition-[transform,border-color] hover:-translate-y-0.5 hover:border-gold/70 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-navy"
+                >
+                  {photo ? (
+                    <picture className="block aspect-[16/9] overflow-hidden bg-muted">
+                      <source srcSet={`/images/sp/${photo.asset}.avif`} type="image/avif" />
+                      <img
+                        src={`/images/sp/${photo.asset}.webp`}
+                        alt={photo.alt}
+                        width={320}
+                        height={180}
+                        loading="lazy"
+                        className="size-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+                      />
+                    </picture>
+                  ) : null}
+                  <span className="flex flex-1 flex-col p-5">
+                    <h3 className="font-serif text-2xl text-brand-navy">{bairro.nome}</h3>
+                    <p className="mt-2 flex-1 text-sm leading-6 text-muted-foreground">
+                      {bairro.descricao}
+                    </p>
+                    <span className="mt-4 flex min-h-11 items-center justify-between text-sm font-semibold text-brand-navy">
+                      Conhecer o bairro
+                      <ArrowRight
+                        className="size-4 transition-transform group-hover:translate-x-1"
+                        aria-hidden
+                      />
+                    </span>
+                  </span>
+                </Link>
+              );
+            })}
+          </div>
+        </Container>
+      </section>
+
+      {article ? (
+        <section className="border-y border-border bg-card py-12 md:py-16">
+          <Container>
+            <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,7fr)_minmax(16rem,3fr)] lg:gap-12">
+              <article className="min-w-0">
+                <h2 className="font-serif text-3xl leading-tight text-brand-navy md:text-4xl">
+                  {article.titulo}
+                </h2>
+                <div className="mt-4 h-px w-12 bg-gold" aria-hidden />
+                {article.secoes.map((section, index) => (
+                  <section key={section.titulo ?? `introducao-${index}`} className="mt-7">
+                    {section.titulo ? (
+                      <h3 className="font-serif text-2xl leading-snug text-brand-navy">
+                        {section.titulo}
+                      </h3>
+                    ) : null}
+                    {section.paragrafos.map((paragraph) => (
+                      <p key={paragraph} className="mt-4 text-base leading-8 text-muted-foreground">
+                        {paragraph}
+                      </p>
+                    ))}
+                  </section>
+                ))}
+              </article>
+              <div className="min-w-0">
+                <ProfessionalSidebar neighborhoodName={zona.nome} />
+              </div>
+            </div>
+          </Container>
+        </section>
+      ) : null}
+
+      <section className="py-14 md:py-20" aria-labelledby="delegacias-zona-leste">
+        <Container>
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-gold">
+                Guias informativos publicados
+              </p>
+              <h2 id="delegacias-zona-leste" className="mt-3 font-serif text-4xl text-brand-navy">
+                Delegacias da Zona Leste
               </h2>
             </div>
             <Link

@@ -49,6 +49,30 @@ describe("Páginas de bairro", () => {
     assert.equal(delegacias.length, 93);
   });
 
+  test("cards da Zona Leste resolvem territórios publicados sem duplicar Itaquera", () => {
+    const leste = regioes.filter((regiao) => regiao.zona === "zona-leste");
+    const zonePages = bairros.filter((bairro) => bairro.zona === "zona-leste");
+    const zoneSlugs = new Set(zonePages.map((bairro) => bairro.slug));
+    const territorialTargets = new Set(leste.map((regiao) => regiao.territorioSlug ?? regiao.slug));
+    const paths = publishedPaths({ delegacias, zonas, bairros, articles: [] });
+
+    assert.equal(leste.length, 34);
+    assert.equal(territorialTargets.size, 33);
+    assert.equal(zonePages.length, 33);
+    for (const slug of territorialTargets) {
+      assert.ok(zoneSlugs.has(slug), `${slug} sem página própria`);
+      assert.ok(paths.includes(`/bairros/${slug}`), `${slug} fora do sitemap`);
+    }
+
+    const itaquera = zonePages.find((bairro) => bairro.slug === "itaquera");
+    assert.equal(itaquera?.nome, "Itaquera");
+    assert.deepEqual(itaquera?.instituicoes.map((relation) => relation.institutionSlug).sort(), [
+      "advogado-criminal-103-dp-itaquera",
+      "advogado-criminal-32-dp-itaquera",
+    ]);
+    assert.equal(delegacias.length, 93);
+  });
+
   test("não publica dados operacionais ou perfis fictícios em Pinheiros", () => {
     const text = JSON.stringify(bairros.find((bairro) => bairro.slug === "pinheiros"));
     assert.doesNotMatch(text, /OAB\/?SP|WhatsApp|telefone|atendimento 24/i);

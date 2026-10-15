@@ -62,7 +62,7 @@ export const zonas: Zona[] = [
     descricao:
       "Guias de delegacias nos eixos Brás, Mooca, Penha, Tatuapé, Itaquera, São Miguel, São Mateus e extremo leste.",
     introducao:
-      "A Zona Leste reúne referências territoriais de Brás e Mooca até Itaquera, Guaianases, Cidade Tiradentes e Itaim Paulista. Os guias identificam unidades e explicam documentos e procedimentos, sem delimitar circunscrição policial.",
+      "Explore os bairros, as instituições públicas e as informações jurídicas da Zona Leste.",
     secoes: [
       {
         titulo: "Cobertura territorial",
@@ -78,6 +78,74 @@ export const zonas: Zona[] = [
         ],
       },
     ],
+    artigoEditorial: {
+      titulo:
+        "Zona Leste de São Paulo: informações jurídicas, instituições públicas e serviços por região",
+      secoes: [
+        {
+          paragrafos: [
+            "A Zona Leste de São Paulo reúne bairros residenciais, centros comerciais, polos empresariais, áreas industriais e importantes corredores de transporte da capital paulista. Sua extensão territorial e diversidade urbana fazem com que questões relacionadas a imóveis, atividades econômicas, serviços públicos, relações de trabalho e procedimentos jurídicos assumam características distintas conforme o bairro e a localidade.",
+            "Regiões como Mooca, Tatuapé, Penha, Vila Formosa, Vila Prudente, Itaquera, São Miguel Paulista, São Mateus, Itaim Paulista, Guaianases e Cidade Tiradentes apresentam diferentes perfis de ocupação, infraestrutura e desenvolvimento urbano. Enquanto alguns setores concentram edifícios residenciais, estabelecimentos comerciais e novos empreendimentos imobiliários, outros possuem ocupações mais antigas, áreas em transformação, conjuntos habitacionais e demandas relacionadas à regularização fundiária e ao acesso a equipamentos públicos.",
+            "A Banca Paulista organiza informações jurídicas e territoriais da Zona Leste, facilitando a consulta a guias de delegacias, referências institucionais, temas jurídicos e conteúdos relacionados à realidade dos bairros. O objetivo é reunir informações úteis para moradores, proprietários de imóveis, comerciantes, empresários e demais interessados nos serviços e instituições da região.",
+          ],
+        },
+        {
+          titulo: "Órgãos públicos, delegacias e serviços de Justiça na Zona Leste",
+          paragrafos: [
+            "A organização dos serviços públicos na Zona Leste envolve diferentes esferas administrativas. Delegacias da Polícia Civil, unidades do Poder Judiciário, serviços de assistência jurídica, subprefeituras e órgãos municipais exercem atribuições distintas, conforme a natureza da demanda e a competência territorial de cada instituição.",
+            "Entre os temas que levam cidadãos a buscar informações sobre esses órgãos estão registros de ocorrências, intimações policiais, investigações, processos judiciais, conflitos de vizinhança, documentação imobiliária, questões familiares, relações de consumo e demandas envolvendo empresas.",
+            "O portal mantém guias territoriais de Distritos Policiais de diferentes localidades da Zona Leste, incluindo referências na Mooca, Penha, Tatuapé, Itaquera, São Mateus e São Miguel Paulista. Esses conteúdos ajudam a localizar informações sobre as unidades e a compreender procedimentos jurídicos relacionados à atividade policial.",
+            "É importante distinguir a localização física de uma delegacia de sua circunscrição oficial. A proximidade de uma unidade não significa necessariamente que ela seja responsável por determinada ocorrência ou endereço. A identificação da autoridade competente deve considerar as informações oficiais da Polícia Civil e dos órgãos responsáveis.",
+          ],
+        },
+        {
+          titulo: "Imóveis, regularização fundiária e questões jurídicas urbanas",
+          paragrafos: [
+            "O mercado imobiliário da Zona Leste apresenta situações bastante diferentes entre seus bairros. Em localidades como Tatuapé, Mooca e Anália Franco, a verticalização e a presença de empreendimentos residenciais e comerciais tornam relevantes questões relacionadas a condomínios, incorporação imobiliária, contratos de compra e venda, locações, obras e documentação patrimonial.",
+            "Em outras partes da região, também merecem atenção a regularização de construções, a titularidade de terrenos, a documentação de imóveis antigos, os procedimentos de usucapião quando cabíveis e a regularização fundiária urbana.",
+            "Antes de adquirir, vender, reformar ou desenvolver um imóvel, é importante compreender a diferença entre documentação registral, cadastro municipal e regularidade urbanística. A inscrição imobiliária utilizada para fins de IPTU, por exemplo, não substitui a matrícula do imóvel no Cartório de Registro de Imóveis.",
+            "Também podem surgir questões relacionadas a inventários, partilhas, direitos de herdeiros, contratos de locação, inadimplência condominial, disputas de posse e responsabilidade por obras ou intervenções em imóveis vizinhos.",
+          ],
+        },
+        {
+          titulo: "Plano Diretor, zoneamento e desenvolvimento urbano da Zona Leste",
+          paragrafos: [
+            "O desenvolvimento da Zona Leste está relacionado às diretrizes do Plano Diretor Estratégico do Município de São Paulo, instituído pela Lei Municipal nº 16.050/2014 e objeto de revisão intermediária pela Lei nº 17.975/2023.",
+            "O planejamento urbano municipal estabelece diretrizes para o crescimento da cidade, o uso do solo, a mobilidade, a habitação, a preservação ambiental e a distribuição de infraestrutura e atividades econômicas.",
+            "A Lei de Parcelamento, Uso e Ocupação do Solo, conhecida como Lei de Zoneamento, também influencia a utilização dos imóveis e as possibilidades de instalação de atividades comerciais, industriais e de serviços, observadas suas alterações posteriores.",
+            "Na Zona Leste, essas regras são particularmente relevantes para áreas próximas a corredores de transporte, como a Radial Leste, a região do Metrô Tatuapé e outros eixos de mobilidade, além de bairros que passam por transformações residenciais e comerciais.",
+            "O enquadramento urbanístico de um imóvel pode interferir nas atividades permitidas, no potencial construtivo, nas exigências de licenciamento e nas condições de regularização. A existência de Zonas Especiais de Interesse Social (ZEIS), áreas de proteção ambiental ou outras restrições legais também pode modificar as possibilidades de utilização de determinado terreno.",
+            "Para uma análise específica, é necessário consultar a legislação vigente e os mapas oficiais disponibilizados pelo Município, incluindo o sistema GeoSampa, considerando a identificação exata do lote.",
+          ],
+        },
+        {
+          titulo: "Empresas, comércio e atividades econômicas",
+          paragrafos: [
+            "A Zona Leste possui uma atividade econômica diversificada, abrangendo comércio varejista e atacadista, prestação de serviços, logística, alimentação, construção civil, atividades industriais e pequenos negócios.",
+            "A instalação e o funcionamento de empresas podem envolver exigências relacionadas ao zoneamento, licenciamento, regularidade cadastral, segurança da edificação, acessibilidade, vigilância sanitária e normas ambientais, conforme o tipo de atividade.",
+            "Entre as questões jurídicas pertinentes à rotina empresarial estão contratos comerciais, relações de consumo, obrigações trabalhistas, locação de imóveis comerciais, cobrança de dívidas, conflitos societários e responsabilidade civil.",
+            "Para estabelecimentos que pretendem mudar de endereço, ampliar instalações ou modificar sua atividade, é especialmente importante verificar a compatibilidade do uso pretendido com o zoneamento e as exigências administrativas aplicáveis.",
+          ],
+        },
+        {
+          titulo: "Bairros, mobilidade e acesso aos serviços públicos",
+          paragrafos: [
+            "A extensão da Zona Leste torna a mobilidade um fator importante na relação entre a população e os serviços públicos.",
+            "A Linha 3-Vermelha do Metrô, os serviços ferroviários metropolitanos, os terminais de ônibus e os principais corredores viários conectam diferentes localidades da região aos centros administrativos e econômicos da capital.",
+            "Entretanto, a distribuição das instituições não acompanha necessariamente os limites informais dos bairros ou os percursos mais utilizados pela população. Dependendo da demanda, o atendimento pode estar vinculado a uma unidade regional, à competência de determinado órgão ou ao serviço disponível em canal eletrônico.",
+            "Por esse motivo, os guias territoriais da Banca Paulista procuram organizar as referências por localidade, preservando a identificação oficial das instituições e seus respectivos serviços.",
+          ],
+        },
+        {
+          titulo: "Consulte os guias jurídicos e territoriais da Zona Leste",
+          paragrafos: [
+            "Nesta página, você encontra acesso aos conteúdos publicados sobre a Zona Leste de São Paulo, incluindo guias de Distritos Policiais, referências de bairros, informações institucionais e temas jurídicos relacionados ao território.",
+            "A navegação permite explorar diferentes localidades e consultar conteúdos sobre procedimentos policiais, documentação imobiliária, legislação urbanística, direitos dos cidadãos e atividades empresariais.",
+            "A Banca Paulista é um portal editorial independente de informação jurídica e territorial. Não possui vínculo institucional com a Polícia Civil, o Poder Judiciário ou os demais órgãos apresentados, nem substitui os canais oficiais de atendimento ou a orientação jurídica individualizada de profissionais habilitados.",
+          ],
+        },
+      ],
+    },
   },
   {
     id: "zona-sul",
