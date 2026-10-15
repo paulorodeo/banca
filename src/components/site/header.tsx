@@ -92,7 +92,7 @@ export function SiteHeader() {
           aria-label="Banca Paulista — página inicial"
           onClick={() => setOpen(false)}
         >
-          <Brand />
+          <Brand presentation="header" />
         </Link>
 
         <nav aria-label="Navegação principal" className="hidden h-full items-center gap-5 lg:flex">
