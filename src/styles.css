@@ -241,3 +241,5 @@
 @utility text-gold-accent { color: var(--gold-accent); }
 @utility bg-gold-accent { background-color: var(--gold-accent); }
 @utility border-gold-accent { border-color: var(--gold-accent); }
+.home-light .dark-cards a { background: var(--card); border: 1px solid var(--border); }
+.home-light .dark-cards h3 { color: var(--navy); }
