@@ -8,6 +8,7 @@ export const institutionalPaths = [
   // Rota antiga permanece até a política nova poder ser ativada e redirecionada.
   "/politica-de-privacidade",
   "/termos-de-uso",
+  "/integridade-e-etica",
   "/profissionais",
   "/areas-de-atuacao",
   "/plantao-criminal",

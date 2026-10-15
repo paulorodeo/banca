@@ -307,7 +307,10 @@ export const politicaPrivacidade: PaginaInstitucional = {
   ],
   linksRelacionados: [
     { rotulo: "Termos de Uso", href: "/termos-de-uso" },
+    { rotulo: "Integridade e Ética", href: "/integridade-e-etica" },
     { rotulo: "Sobre a Banca Paulista", href: "/sobre" },
+    { rotulo: "Profissionais", href: "/profissionais" },
+    { rotulo: "Contato editorial", href: "/contato" },
   ],
   atualizadoEm: "15 de outubro de 2026",
   notaFinal: [

@@ -35,6 +35,7 @@ describe("Política de Privacidade local", () => {
       ...(privacy.linksRelacionados ?? []),
     ];
     assert.ok(links.some((link) => link.href === "/termos-de-uso"));
+    assert.ok(links.some((link) => link.href === "/integridade-e-etica"));
     assert.ok(links.some((link) => link.href === "/sobre"));
     assert.ok(links.some((link) => link.href === "/contato"));
     assert.ok(privacy.blocos[1]?.paragrafos.join(" ").includes("não estão confirmados"));

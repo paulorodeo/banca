@@ -146,7 +146,9 @@ export function PaginaInstitucionalView({
                   ))}
                   {pagina.linksRelacionados?.length ? (
                     <nav aria-label="Páginas institucionais relacionadas">
-                      <h2 className="text-xl text-brand-navy">Páginas relacionadas</h2>
+                      <h2 className="text-xl text-brand-navy">
+                        Documentos institucionais relacionados
+                      </h2>
                       <ul className="mt-4 flex flex-wrap gap-x-6 gap-y-3 text-sm">
                         {pagina.linksRelacionados.map((link) => (
                           <li key={link.href}>

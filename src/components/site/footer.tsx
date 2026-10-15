@@ -58,10 +58,15 @@ export function SiteFooter() {
             <Link to="/termos-de-uso" className="rounded-sm transition-colors hover:text-gold">
               Termos de Uso
             </Link>
+            <Link
+              to="/integridade-e-etica"
+              className="rounded-sm transition-colors hover:text-gold"
+            >
+              Integridade e Ética
+            </Link>
             <Link to="/contato" className="rounded-sm transition-colors hover:text-gold">
               Contato editorial
             </Link>
-            <span>Em fase editorial</span>
           </div>
         </div>
       </Container>

@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as AreasDeAtuacaoRouteImport } from './routes/areas-de-atuacao'
 import { Route as AtendimentoReservadoRouteImport } from './routes/atendimento-reservado'
 import { Route as ContatoRouteImport } from './routes/contato'
+import { Route as IntegridadeEEticaRouteImport } from './routes/integridade-e-etica'
 import { Route as OEscritorioRouteImport } from './routes/o-escritorio'
 import { Route as PauloSinigaliaRouteImport } from './routes/paulo-sinigalia'
 import { Route as PlantaoCriminalRouteImport } from './routes/plantao-criminal'
@@ -54,6 +55,11 @@ const AtendimentoReservadoRoute = AtendimentoReservadoRouteImport.update({
 const ContatoRoute = ContatoRouteImport.update({
   id: '/contato',
   path: '/contato',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IntegridadeEEticaRoute = IntegridadeEEticaRouteImport.update({
+  id: '/integridade-e-etica',
+  path: '/integridade-e-etica',
   getParentRoute: () => rootRouteImport,
 } as any)
 const OEscritorioRoute = OEscritorioRouteImport.update({
@@ -172,6 +178,7 @@ export interface FileRoutesByFullPath {
   '/areas-de-atuacao': typeof AreasDeAtuacaoRoute
   '/atendimento-reservado': typeof AtendimentoReservadoRoute
   '/contato': typeof ContatoRoute
+  '/integridade-e-etica': typeof IntegridadeEEticaRoute
   '/o-escritorio': typeof OEscritorioRoute
   '/paulo-sinigalia': typeof PauloSinigaliaRoute
   '/plantao-criminal': typeof PlantaoCriminalRoute
@@ -200,6 +207,7 @@ export interface FileRoutesByTo {
   '/areas-de-atuacao': typeof AreasDeAtuacaoRoute
   '/atendimento-reservado': typeof AtendimentoReservadoRoute
   '/contato': typeof ContatoRoute
+  '/integridade-e-etica': typeof IntegridadeEEticaRoute
   '/o-escritorio': typeof OEscritorioRoute
   '/paulo-sinigalia': typeof PauloSinigaliaRoute
   '/plantao-criminal': typeof PlantaoCriminalRoute
@@ -229,6 +237,7 @@ export interface FileRoutesById {
   '/areas-de-atuacao': typeof AreasDeAtuacaoRoute
   '/atendimento-reservado': typeof AtendimentoReservadoRoute
   '/contato': typeof ContatoRoute
+  '/integridade-e-etica': typeof IntegridadeEEticaRoute
   '/o-escritorio': typeof OEscritorioRoute
   '/paulo-sinigalia': typeof PauloSinigaliaRoute
   '/plantao-criminal': typeof PlantaoCriminalRoute
@@ -259,6 +268,7 @@ export interface FileRouteTypes {
     | '/areas-de-atuacao'
     | '/atendimento-reservado'
     | '/contato'
+    | '/integridade-e-etica'
     | '/o-escritorio'
     | '/paulo-sinigalia'
     | '/plantao-criminal'
@@ -287,6 +297,7 @@ export interface FileRouteTypes {
     | '/areas-de-atuacao'
     | '/atendimento-reservado'
     | '/contato'
+    | '/integridade-e-etica'
     | '/o-escritorio'
     | '/paulo-sinigalia'
     | '/plantao-criminal'
@@ -315,6 +326,7 @@ export interface FileRouteTypes {
     | '/areas-de-atuacao'
     | '/atendimento-reservado'
     | '/contato'
+    | '/integridade-e-etica'
     | '/o-escritorio'
     | '/paulo-sinigalia'
     | '/plantao-criminal'
@@ -344,6 +356,7 @@ export interface RootRouteChildren {
   AreasDeAtuacaoRoute: typeof AreasDeAtuacaoRoute
   AtendimentoReservadoRoute: typeof AtendimentoReservadoRoute
   ContatoRoute: typeof ContatoRoute
+  IntegridadeEEticaRoute: typeof IntegridadeEEticaRoute
   OEscritorioRoute: typeof OEscritorioRoute
   PauloSinigaliaRoute: typeof PauloSinigaliaRoute
   PlantaoCriminalRoute: typeof PlantaoCriminalRoute
@@ -396,6 +409,13 @@ declare module '@tanstack/react-router' {
       path: '/contato'
       fullPath: '/contato'
       preLoaderRoute: typeof ContatoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/integridade-e-etica': {
+      id: '/integridade-e-etica'
+      path: '/integridade-e-etica'
+      fullPath: '/integridade-e-etica'
+      preLoaderRoute: typeof IntegridadeEEticaRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/o-escritorio': {
@@ -560,6 +580,7 @@ const rootRouteChildren: RootRouteChildren = {
   AreasDeAtuacaoRoute: AreasDeAtuacaoRoute,
   AtendimentoReservadoRoute: AtendimentoReservadoRoute,
   ContatoRoute: ContatoRoute,
+  IntegridadeEEticaRoute: IntegridadeEEticaRoute,
   OEscritorioRoute: OEscritorioRoute,
   PauloSinigaliaRoute: PauloSinigaliaRoute,
   PlantaoCriminalRoute: PlantaoCriminalRoute,

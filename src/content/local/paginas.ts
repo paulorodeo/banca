@@ -1,5 +1,6 @@
 import type { PaginaInstitucional } from "../types";
 import { editorialIdentity } from "./settings";
+import { politicaIntegridade } from "./integridade";
 import { politicaPrivacidade } from "./privacidade";
 
 export const paginas: PaginaInstitucional[] = [
@@ -268,6 +269,12 @@ export const paginas: PaginaInstitucional[] = [
       },
     ],
     atualizadoEm: "15 de outubro de 2026",
+    linksRelacionados: [
+      { rotulo: "Privacidade e Cookies", href: "/privacidade" },
+      { rotulo: "Integridade e Ética", href: "/integridade-e-etica" },
+      { rotulo: "Sobre a Banca Paulista", href: "/sobre" },
+      { rotulo: "Contato Editorial", href: "/contato" },
+    ],
     notaFinal: [
       "Banca Paulista",
       "Informação jurídica, institucional e territorial.",
@@ -429,6 +436,7 @@ export const paginas: PaginaInstitucional[] = [
       },
     ],
   },
+  politicaIntegridade,
   politicaPrivacidade,
   {
     id: "pagina-politica-de-privacidade",
