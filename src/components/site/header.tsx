@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils";
 
 const navItems = [
   { to: "/", label: "Início" },
-  { to: "/regioes", label: "Regiões / Bairros" },
+  { to: "/regioes", label: "Regiões" },
   { to: "/delegacias", label: "Delegacias" },
   { to: "/profissionais", label: "Profissionais" },
   { to: "/artigos", label: "Artigos" },

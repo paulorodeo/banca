@@ -10,14 +10,8 @@ import {
   Users,
 } from "lucide-react";
 import { useMemo, useState } from "react";
-import type {
-  Bairro,
-  ConteudoJuridico,
-  Delegacia,
-  InstitutionCategory,
-  Regiao,
-  Zona,
-} from "@/content/types";
+import { filtrarTerritorios, type TerritorioIndice } from "@/content/local/indice-territorial";
+import type { ConteudoJuridico, Delegacia, InstitutionCategory, Zona } from "@/content/types";
 import { cn } from "@/lib/utils";
 import { zonePhotography } from "@/content/local/visual-media";
 import { Breadcrumbs, type Crumb } from "./breadcrumbs";
@@ -141,38 +135,42 @@ export function ZoneCardLight({
 }
 
 export function NeighborhoodIndex({
-  regioes,
+  territorios,
   zonas,
-  bairrosPublicados,
 }: {
-  regioes: Regiao[];
+  territorios: TerritorioIndice[];
   zonas: Zona[];
-  bairrosPublicados: Bairro[];
 }) {
   const [query, setQuery] = useState("");
   const [zone, setZone] = useState("todas");
-  const publishedSlugs = useMemo(
-    () => new Set(bairrosPublicados.map((bairro) => bairro.slug)),
-    [bairrosPublicados],
+  const visible = useMemo(
+    () => filtrarTerritorios(territorios, query, zone),
+    [query, territorios, zone],
   );
-  const visible = useMemo(() => {
-    const normalized = query.trim().toLocaleLowerCase("pt-BR");
-    return regioes
-      .filter((regiao) => zone === "todas" || regiao.zona === zone)
-      .filter(
-        (regiao) =>
-          !normalized ||
-          regiao.nome.toLocaleLowerCase("pt-BR").includes(normalized) ||
-          regiao.bairros.some((bairro) => bairro.toLocaleLowerCase("pt-BR").includes(normalized)),
-      )
-      .sort((a, b) => a.nome.localeCompare(b.nome, "pt-BR"));
-  }, [query, regioes, zone]);
+  const zoneDescriptions: Record<string, string> = {
+    centro:
+      "Da Liberdade à Santa Cecília, referências urbanas para explorar os guias publicados do centro da cidade.",
+    "zona-norte":
+      "Bairros, distritos e localidades nos eixos de Santana, Casa Verde, Pirituba e Perus.",
+    "zona-leste":
+      "Referências territoriais do Brás ao extremo leste, com os guias relacionados a cada lugar.",
+    "zona-sul": "Territórios dos eixos Santo Amaro, Ipiranga, Grajaú e demais áreas da zona sul.",
+    "zona-oeste":
+      "De Pinheiros a Raposo Tavares, lugares com páginas e guias publicados na zona oeste.",
+  };
+  const typeLabels = {
+    bairro: "Bairro",
+    "distrito-administrativo": "Distrito administrativo",
+    "localidade-editorial": "Localidade editorial",
+  };
+  const totalGuias = new Set(visible.flatMap((item) => item.guias.map((guia) => guia.slug))).size;
+  const totalBairros = visible.filter((item) => item.tipo === "bairro").length;
 
   return (
     <div>
-      <div className="grid gap-4 rounded-xl border border-border bg-card p-4 shadow-sm md:grid-cols-[1fr_auto]">
+      <div className="grid gap-4 rounded-xl border border-brand-navy/20 bg-white p-5 shadow-sm md:grid-cols-[1fr_auto]">
         <label className="relative block">
-          <span className="sr-only">Pesquisar bairros publicados</span>
+          <span className="sr-only">Pesquisar territórios</span>
           <Search
             className="pointer-events-none absolute left-4 top-1/2 size-4 -translate-y-1/2 text-muted-foreground"
             aria-hidden
@@ -181,8 +179,8 @@ export function NeighborhoodIndex({
             type="search"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
-            placeholder="Pesquise por bairro ou região"
-            className="h-12 w-full rounded-md border border-input bg-background pl-11 pr-4 text-sm text-foreground placeholder:text-muted-foreground focus-visible:outline-none"
+            placeholder="Busque um bairro, distrito ou localidade"
+            className="h-12 w-full rounded-md border border-brand-navy/35 bg-white pl-11 pr-4 text-sm text-brand-navy placeholder:text-brand-navy/60 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-navy"
           />
         </label>
         <label className="flex items-center gap-3 text-xs font-semibold text-brand-navy">
@@ -190,9 +188,9 @@ export function NeighborhoodIndex({
           <select
             value={zone}
             onChange={(event) => setZone(event.target.value)}
-            className="h-12 rounded-md border border-input bg-background px-4 text-sm font-normal text-foreground"
+            className="h-12 rounded-md border border-brand-navy/35 bg-white px-4 text-sm font-normal text-brand-navy focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-navy"
           >
-            <option value="todas">Todas</option>
+            <option value="todas">Todas as zonas</option>
             {zonas.map((zona) => (
               <option key={zona.id} value={zona.slug}>
                 {zona.nome}
@@ -201,38 +199,103 @@ export function NeighborhoodIndex({
           </select>
         </label>
       </div>
-      <p className="mt-4 text-sm text-muted-foreground" role="status" aria-live="polite">
-        {visible.length}{" "}
-        {visible.length === 1 ? "território encontrado" : "territórios encontrados"}
+      <p className="mt-5 text-sm text-brand-navy/80" role="status" aria-live="polite">
+        {visible.length} {visible.length === 1 ? "território" : "territórios"} · {totalBairros}{" "}
+        {totalBairros === 1 ? "bairro" : "bairros"} · {totalGuias}{" "}
+        {totalGuias === 1 ? "guia policial relacionado" : "guias policiais relacionados"}
       </p>
       {visible.length ? (
-        <ul className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-          {visible.map((regiao) => {
-            const hasNeighborhood = publishedSlugs.has(regiao.slug);
+        <div className="mt-8 space-y-12">
+          {zonas.map((zona) => {
+            const items = visible.filter((item) => item.zona === zona.slug);
+            if (!items.length) return null;
             return (
-              <li key={regiao.id}>
-                <Link
-                  to={hasNeighborhood ? `/bairros/${regiao.slug}` : regiao.href}
-                  className="group flex h-full items-center justify-between gap-4 rounded-lg border border-border bg-card p-4 text-brand-navy transition-colors hover:border-gold/70"
-                >
-                  <span>
-                    <span className="block font-serif text-lg">{regiao.nome}</span>
-                    <span className="mt-1 block text-xs text-muted-foreground">
-                      {hasNeighborhood ? "Página do bairro" : "Guia territorial existente"}
-                    </span>
-                  </span>
-                  <ArrowRight
-                    className="size-4 shrink-0 transition-transform group-hover:translate-x-1"
-                    aria-hidden
-                  />
-                </Link>
-              </li>
+              <section key={zona.slug} aria-labelledby={`indice-${zona.slug}`}>
+                <div className="flex flex-wrap items-end justify-between gap-4 border-b border-brand-navy/20 pb-5">
+                  <div>
+                    <h3 id={`indice-${zona.slug}`} className="font-serif text-3xl text-brand-navy">
+                      {zona.nome}
+                    </h3>
+                    <p className="mt-2 max-w-2xl text-sm leading-6 text-brand-navy/75">
+                      {zoneDescriptions[zona.slug]}
+                    </p>
+                    <p className="mt-2 text-xs font-semibold uppercase tracking-wide text-brand-navy/70">
+                      {items.length}{" "}
+                      {items.length === 1 ? "território exibido" : "territórios exibidos"}
+                    </p>
+                  </div>
+                  <Link
+                    to="/regioes/$slug"
+                    params={{ slug: zona.slug }}
+                    className="inline-flex items-center gap-2 text-sm font-semibold text-brand-navy underline decoration-gold underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-navy"
+                  >
+                    Explorar {zona.nome} <ArrowRight className="size-4" aria-hidden />
+                  </Link>
+                </div>
+                <ul className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                  {items.map((item) => (
+                    <li
+                      key={item.id}
+                      className="rounded-xl border border-brand-navy/20 bg-white p-5 shadow-sm"
+                    >
+                      <p className="text-xs font-semibold uppercase tracking-wide text-brand-navy/65">
+                        {typeLabels[item.tipo]}
+                      </p>
+                      <h4 className="mt-2 font-serif text-xl text-brand-navy">{item.nome}</h4>
+                      {item.paginaBairro ? (
+                        <Link
+                          to={item.paginaBairro}
+                          className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-brand-navy underline decoration-gold underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-navy"
+                        >
+                          Ver página do bairro <ArrowRight className="size-4" aria-hidden />
+                        </Link>
+                      ) : null}
+                      {item.guias.length ? (
+                        <div className="mt-4 border-t border-brand-navy/15 pt-4">
+                          <p className="text-xs font-semibold text-brand-navy/70">
+                            {item.guias.length === 1
+                              ? "Guia policial relacionado"
+                              : "Guias policiais relacionados"}
+                          </p>
+                          <ul className="mt-2 space-y-2">
+                            {item.guias.map((guia) => (
+                              <li key={guia.slug}>
+                                <Link
+                                  to="/delegacias/$slug"
+                                  params={{ slug: guia.slug }}
+                                  className="text-sm text-brand-navy underline decoration-gold underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-navy"
+                                >
+                                  Ver guia da delegacia relacionada: {guia.numero}º DP, {guia.nome}
+                                </Link>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      ) : !item.paginaBairro ? (
+                        <p className="mt-4 text-sm text-brand-navy/70">
+                          Sem página própria publicada.
+                        </p>
+                      ) : null}
+                    </li>
+                  ))}
+                </ul>
+              </section>
             );
           })}
-        </ul>
+        </div>
       ) : (
-        <div className="mt-5 rounded-lg border border-dashed border-border p-8 text-center text-sm text-muted-foreground">
-          Nenhum território corresponde à pesquisa e ao filtro selecionado.
+        <div className="mt-6 rounded-xl border border-dashed border-brand-navy/30 bg-white p-8 text-center text-sm text-brand-navy/75">
+          <p>Nenhum território corresponde à busca e à zona selecionada.</p>
+          <button
+            type="button"
+            onClick={() => {
+              setQuery("");
+              setZone("todas");
+            }}
+            className="mt-4 rounded-md bg-brand-navy px-4 py-2 font-semibold text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-navy"
+          >
+            Limpar busca e filtros
+          </button>
         </div>
       )}
     </div>

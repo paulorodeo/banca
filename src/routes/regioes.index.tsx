@@ -1,16 +1,16 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Compass, Map, Network } from "lucide-react";
 import { content } from "@/content/repository";
-import type { Bairro, Regiao, Zona } from "@/content/types";
+import type { Zona } from "@/content/types";
 import { withPublishedGuideCounts } from "@/content/local/zonas";
+import { montarIndiceTerritorial, type TerritorioIndice } from "@/content/local/indice-territorial";
 import { Container } from "@/components/site/primitives";
 import { NeighborhoodIndex, TerritoryHero, ZoneCardLight } from "@/components/site/territory";
 import { breadcrumbSchema, canonicalLink, pageMeta } from "@/lib/seo";
 
 interface Data {
   zonas: (Zona & { quantidade: number })[];
-  regioes: Regiao[];
-  bairros: Bairro[];
+  territorios: TerritorioIndice[];
 }
 
 export const Route = createFileRoute("/regioes/")({
@@ -23,13 +23,12 @@ export const Route = createFileRoute("/regioes/")({
     ]);
     return {
       zonas: withPublishedGuideCounts(zonas, regioes, delegacias),
-      regioes,
-      bairros,
+      territorios: montarIndiceTerritorial(regioes, delegacias, bairros, zonas),
     };
   },
   head: () => ({
     meta: pageMeta({
-      title: "São Paulo, bairro por bairro | Banca Paulista",
+      title: "Regiões e territórios de São Paulo | Banca Paulista",
       description:
         "Explore as regiões de São Paulo e encontre páginas publicadas de bairros, órgãos públicos e guias territoriais organizados pelas cinco zonas da capital.",
       path: "/regioes",
@@ -51,14 +50,14 @@ export const Route = createFileRoute("/regioes/")({
 });
 
 function RegioesPage() {
-  const { zonas, regioes, bairros } = Route.useLoaderData() as Data;
+  const { zonas, territorios } = Route.useLoaderData() as Data;
 
   return (
     <div className="home-light">
       <TerritoryHero
         eyebrow="São Paulo · Navegação territorial"
-        title="São Paulo, bairro por bairro."
-        lead="Explore as regiões da capital e encontre informações sobre bairros, órgãos públicos e serviços jurídicos."
+        title="São Paulo, território por território."
+        lead="Explore bairros, distritos administrativos e localidades editoriais da capital. Cada guia policial mantém sua identificação própria."
         crumbs={[
           { name: "Início", path: "/" },
           { name: "Regiões", path: "/regioes" },
@@ -138,13 +137,14 @@ function RegioesPage() {
           <p className="text-xs font-semibold uppercase tracking-[0.16em] text-gold">
             Índice territorial
           </p>
-          <h2 className="mt-3 font-serif text-4xl text-brand-navy">Bairros e regiões publicados</h2>
+          <h2 className="mt-3 font-serif text-4xl text-brand-navy">Encontre um território</h2>
           <p className="mt-3 max-w-3xl text-sm leading-6 text-muted-foreground">
-            Pinheiros já possui página própria. Os demais itens preservam seus guias territoriais
-            válidos até que uma página de bairro seja publicada.
+            O índice distingue bairros, distritos administrativos e localidades editoriais. As
+            ligações com guias de delegacias são referências de navegação e não definem a unidade
+            responsável por um endereço.
           </p>
           <div className="mt-8">
-            <NeighborhoodIndex regioes={regioes} zonas={zonas} bairrosPublicados={bairros} />
+            <NeighborhoodIndex territorios={territorios} zonas={zonas} />
           </div>
         </Container>
       </section>
