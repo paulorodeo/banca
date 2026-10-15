@@ -90,7 +90,7 @@ export const bairros: Bairro[] = [
       {
         nome: "Avenida João Dias",
         contexto:
-          "Endereço da Biblioteca Prefeito Prestes Maia e ligação urbana registrada no núcleo de Santo Amaro.",
+          "A Secretaria Municipal de Cultura registra a Biblioteca Prefeito Prestes Maia nessa avenida, em Santo Amaro.",
       },
       {
         nome: "Estação Largo Treze e terminal de ônibus",
@@ -120,7 +120,7 @@ export const bairros: Bairro[] = [
       descricao:
         "O Largo Treze de Maio e a Praça Floriano Peixoto orientam a leitura deste núcleo histórico. Para conferir os limites oficiais do distrito, consulte o mapa municipal da Subprefeitura Santo Amaro.",
       mapaUrl: "https://capital.sp.gov.br/documents/d/licenciamento/vert_sa",
-      mapaLabel: "Consultar mapa municipal de Santo Amaro",
+      mapaLabel: "Ver mapa oficial da Subprefeitura Santo Amaro",
     },
     fotoTerritorial: {
       asset: "santo-amaro-thumb",
