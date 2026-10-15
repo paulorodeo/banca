@@ -212,6 +212,12 @@ export interface PaginaInstitucional {
     lista?: string[];
     complemento?: string[];
     links?: { rotulo: string; href: string }[];
+    subsecoes?: {
+      titulo: string;
+      paragrafos: string[];
+      lista?: string[];
+      complemento?: string[];
+    }[];
   }[];
   introducao?: string[];
   indice?: { id: string; rotulo: string }[];

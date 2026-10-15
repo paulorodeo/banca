@@ -1,5 +1,6 @@
 import type { PaginaInstitucional } from "../types";
 import { editorialIdentity } from "./settings";
+import { politicaPrivacidade } from "./privacidade";
 
 export const paginas: PaginaInstitucional[] = [
   {
@@ -226,7 +227,7 @@ export const paginas: PaginaInstitucional[] = [
           "A consulta a informações jurídicas ou institucionais não exige que o visitante envie relatos de casos, documentos processuais ou dados pessoais sensíveis.",
           "O canal editorial não deve ser utilizado como meio de encaminhamento de situações jurídicas urgentes ou documentação confidencial sem orientação específica e adequada.",
         ],
-        links: [{ rotulo: "Política de privacidade", href: "/politica-de-privacidade" }],
+        links: [{ rotulo: "Política de Privacidade e Cookies", href: "/privacidade" }],
       },
       {
         titulo: "16. Alterações destes Termos",
@@ -428,6 +429,7 @@ export const paginas: PaginaInstitucional[] = [
       },
     ],
   },
+  politicaPrivacidade,
   {
     id: "pagina-politica-de-privacidade",
     slug: "politica-de-privacidade",

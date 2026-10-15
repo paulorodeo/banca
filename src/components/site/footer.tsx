@@ -52,11 +52,8 @@ export function SiteFooter() {
             com órgãos públicos. Conteúdo informativo não substitui orientação profissional.
           </p>
           <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
-            <Link
-              to="/politica-de-privacidade"
-              className="rounded-sm transition-colors hover:text-gold"
-            >
-              Política de privacidade
+            <Link to="/privacidade" className="rounded-sm transition-colors hover:text-gold">
+              Privacidade e Cookies
             </Link>
             <Link to="/termos-de-uso" className="rounded-sm transition-colors hover:text-gold">
               Termos de Uso

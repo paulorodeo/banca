@@ -23,14 +23,7 @@ describe("Termos de Uso", () => {
     const links = terms.blocos.flatMap((bloco) => bloco.links ?? []).map((link) => link.href);
     assert.deepEqual(
       links.sort(),
-      [
-        "/sobre",
-        "/politica-de-privacidade",
-        "/contato",
-        "/profissionais",
-        "/regioes",
-        "/delegacias",
-      ].sort(),
+      ["/sobre", "/privacidade", "/contato", "/profissionais", "/regioes", "/delegacias"].sort(),
     );
     assert.ok(terms.blocos[16]?.lista?.length);
   });

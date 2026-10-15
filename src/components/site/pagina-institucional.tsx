@@ -94,6 +94,39 @@ export function PaginaInstitucionalView({
                             {paragrafo}
                           </p>
                         ))}
+                        {bloco.subsecoes?.map((subsecao, subIndex) => (
+                          <section key={subsecao.titulo} className="mt-7 space-y-3">
+                            <h3
+                              id={`${pagina.indice?.[index]?.id}-${subIndex + 1}`}
+                              className="scroll-mt-28 text-lg font-semibold text-brand-navy md:text-xl"
+                            >
+                              {subsecao.titulo}
+                            </h3>
+                            {subsecao.paragrafos.map((paragrafo) => (
+                              <p
+                                key={paragrafo}
+                                className="text-base leading-relaxed text-muted-foreground"
+                              >
+                                {paragrafo}
+                              </p>
+                            ))}
+                            {subsecao.lista?.length ? (
+                              <ul className="list-disc space-y-2 pl-6 text-base leading-relaxed text-muted-foreground">
+                                {subsecao.lista.map((item) => (
+                                  <li key={item}>{item}</li>
+                                ))}
+                              </ul>
+                            ) : null}
+                            {subsecao.complemento?.map((paragrafo) => (
+                              <p
+                                key={paragrafo}
+                                className="text-base leading-relaxed text-muted-foreground"
+                              >
+                                {paragrafo}
+                              </p>
+                            ))}
+                          </section>
+                        ))}
                       </div>
                       {bloco.links?.length ? (
                         <ul className="mt-5 flex flex-wrap gap-x-6 gap-y-3 text-sm">

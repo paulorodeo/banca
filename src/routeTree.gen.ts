@@ -17,6 +17,7 @@ import { Route as OEscritorioRouteImport } from './routes/o-escritorio'
 import { Route as PauloSinigaliaRouteImport } from './routes/paulo-sinigalia'
 import { Route as PlantaoCriminalRouteImport } from './routes/plantao-criminal'
 import { Route as PoliticaDePrivacidadeRouteImport } from './routes/politica-de-privacidade'
+import { Route as PrivacidadeRouteImport } from './routes/privacidade'
 import { Route as ProfissionaisRouteImport } from './routes/profissionais'
 import { Route as RadarRouteImport } from './routes/radar'
 import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
@@ -73,6 +74,11 @@ const PlantaoCriminalRoute = PlantaoCriminalRouteImport.update({
 const PoliticaDePrivacidadeRoute = PoliticaDePrivacidadeRouteImport.update({
   id: '/politica-de-privacidade',
   path: '/politica-de-privacidade',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacidadeRoute = PrivacidadeRouteImport.update({
+  id: '/privacidade',
+  path: '/privacidade',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProfissionaisRoute = ProfissionaisRouteImport.update({
@@ -170,6 +176,7 @@ export interface FileRoutesByFullPath {
   '/paulo-sinigalia': typeof PauloSinigaliaRoute
   '/plantao-criminal': typeof PlantaoCriminalRoute
   '/politica-de-privacidade': typeof PoliticaDePrivacidadeRoute
+  '/privacidade': typeof PrivacidadeRoute
   '/profissionais': typeof ProfissionaisRoute
   '/radar': typeof RadarRoute
   '/robots.txt': typeof RobotsDottxtRoute
@@ -197,6 +204,7 @@ export interface FileRoutesByTo {
   '/paulo-sinigalia': typeof PauloSinigaliaRoute
   '/plantao-criminal': typeof PlantaoCriminalRoute
   '/politica-de-privacidade': typeof PoliticaDePrivacidadeRoute
+  '/privacidade': typeof PrivacidadeRoute
   '/profissionais': typeof ProfissionaisRoute
   '/radar': typeof RadarRoute
   '/robots.txt': typeof RobotsDottxtRoute
@@ -225,6 +233,7 @@ export interface FileRoutesById {
   '/paulo-sinigalia': typeof PauloSinigaliaRoute
   '/plantao-criminal': typeof PlantaoCriminalRoute
   '/politica-de-privacidade': typeof PoliticaDePrivacidadeRoute
+  '/privacidade': typeof PrivacidadeRoute
   '/profissionais': typeof ProfissionaisRoute
   '/radar': typeof RadarRoute
   '/robots.txt': typeof RobotsDottxtRoute
@@ -254,6 +263,7 @@ export interface FileRouteTypes {
     | '/paulo-sinigalia'
     | '/plantao-criminal'
     | '/politica-de-privacidade'
+    | '/privacidade'
     | '/profissionais'
     | '/radar'
     | '/robots.txt'
@@ -281,6 +291,7 @@ export interface FileRouteTypes {
     | '/paulo-sinigalia'
     | '/plantao-criminal'
     | '/politica-de-privacidade'
+    | '/privacidade'
     | '/profissionais'
     | '/radar'
     | '/robots.txt'
@@ -308,6 +319,7 @@ export interface FileRouteTypes {
     | '/paulo-sinigalia'
     | '/plantao-criminal'
     | '/politica-de-privacidade'
+    | '/privacidade'
     | '/profissionais'
     | '/radar'
     | '/robots.txt'
@@ -336,6 +348,7 @@ export interface RootRouteChildren {
   PauloSinigaliaRoute: typeof PauloSinigaliaRoute
   PlantaoCriminalRoute: typeof PlantaoCriminalRoute
   PoliticaDePrivacidadeRoute: typeof PoliticaDePrivacidadeRoute
+  PrivacidadeRoute: typeof PrivacidadeRoute
   ProfissionaisRoute: typeof ProfissionaisRoute
   RadarRoute: typeof RadarRoute
   RobotsDottxtRoute: typeof RobotsDottxtRoute
@@ -411,6 +424,13 @@ declare module '@tanstack/react-router' {
       path: '/politica-de-privacidade'
       fullPath: '/politica-de-privacidade'
       preLoaderRoute: typeof PoliticaDePrivacidadeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacidade': {
+      id: '/privacidade'
+      path: '/privacidade'
+      fullPath: '/privacidade'
+      preLoaderRoute: typeof PrivacidadeRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/profissionais': {
@@ -544,6 +564,7 @@ const rootRouteChildren: RootRouteChildren = {
   PauloSinigaliaRoute: PauloSinigaliaRoute,
   PlantaoCriminalRoute: PlantaoCriminalRoute,
   PoliticaDePrivacidadeRoute: PoliticaDePrivacidadeRoute,
+  PrivacidadeRoute: PrivacidadeRoute,
   ProfissionaisRoute: ProfissionaisRoute,
   RadarRoute: RadarRoute,
   RobotsDottxtRoute: RobotsDottxtRoute,

@@ -448,7 +448,7 @@ function Index() {
               icon: Shield,
               title: "Privacidade",
               text: "O portal não recebe relatos de casos nem intermedeia contratação.",
-              to: "/politica-de-privacidade",
+              to: "/privacidade",
             },
             {
               icon: Info,

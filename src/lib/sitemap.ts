@@ -5,6 +5,7 @@ export const institutionalPaths = [
   "/",
   "/sobre",
   "/contato",
+  // Rota antiga permanece até a política nova poder ser ativada e redirecionada.
   "/politica-de-privacidade",
   "/termos-de-uso",
   "/profissionais",
