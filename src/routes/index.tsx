@@ -86,7 +86,7 @@ function Index() {
         <Container className="relative py-16 md:py-24">
           <Eyebrow>São Paulo · Guias e informação</Eyebrow>
           <h1 className="mt-5 max-w-xl font-serif text-4xl leading-[1.08] text-on-navy md:text-6xl">São Paulo, território por território.</h1>
-          <p className="mt-5 max-w-lg text-base leading-relaxed text-on-navy/90">
+          <p className="mt-5 max-w-lg text-base leading-relaxed text-on-navy">
             Explore São Paulo por regiões, bairros e delegacias. Encontre guias territoriais, informações jurídicas e referências para compreender os serviços da capital paulista.
           </p>
           <Link to="/delegacias" className="mt-8 flex max-w-xl items-center gap-3 rounded-full bg-card py-2 pl-5 pr-2 text-sm text-muted-foreground shadow-lg">
@@ -94,7 +94,7 @@ function Index() {
             <span className="flex-1 truncate">Consulte por região, bairro ou delegacia…</span>
             <span className="grid size-9 place-items-center rounded-full bg-gold-accent text-on-navy"><ArrowRight className="size-4" aria-hidden /></span>
           </Link>
-          <p className="mt-5 flex items-center gap-2 text-xs text-on-navy/85"><MapPin className="size-4" aria-hidden /> Capital paulista · Conteúdo informativo</p>
+          <p className="mt-5 flex items-center gap-2 text-xs text-on-navy"><MapPin className="size-4" aria-hidden /> Capital paulista · Conteúdo informativo</p>
         </Container>
       </section>
 
@@ -170,7 +170,7 @@ function Index() {
           <div>
             <Eyebrow>Participação profissional</Eyebrow>
             <h2 className="mt-3 font-serif text-3xl text-on-navy">É advogado e deseja conhecer a Banca Paulista?</h2>
-            <p className="mt-2 text-sm text-on-navy/85">Conheça a proposta editorial do projeto em sua fase inaugural.</p>
+            <p className="mt-2 text-sm text-on-navy">Conheça a proposta editorial do projeto em sua fase inaugural.</p>
           </div>
           <Link to="/sobre" className="inline-flex items-center gap-2 self-start rounded-full bg-gold-accent px-6 py-3 text-sm font-medium text-navy">Conhecer a iniciativa <ArrowRight className="size-4" aria-hidden /></Link>
         </Container>
