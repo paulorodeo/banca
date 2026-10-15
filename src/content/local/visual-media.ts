@@ -46,16 +46,32 @@ export const zonePhotography: Record<string, ZonePhotograph> = {
 };
 
 export const featuredNeighborhoods = [
-  { slug: "pinheiros", asset: "pinheiros-aerea-thumb", alt: "Largo da Batata, em Pinheiros" },
-  { slug: "santo-amaro", asset: "santo-amaro-thumb", alt: "Estação Santo Amaro" },
-  { slug: "carandiru", asset: "carandiru-thumb", alt: "Paisagem urbana do Carandiru" },
-  { slug: "tatuape", asset: "tatuape-thumb", alt: "Tatuapé e Radial Leste" },
-  { slug: "lapa", asset: "lapa-thumb", alt: "Mercado Municipal da Lapa" },
-  { slug: "butanta", asset: "butanta-thumb", alt: "Panorama da Zona Oeste visto do Butantã" },
-  { slug: "itaquera", asset: "itaquera-thumb", alt: "Estação Corinthians-Itaquera" },
-  { slug: "liberdade-1-dp", asset: "liberdade-thumb", alt: "Rua e luminárias da Liberdade" },
-  { slug: "parque-do-carmo", asset: "parque-do-carmo-thumb", alt: "Lago do Parque do Carmo" },
-  { slug: "brooklin", asset: "brooklin-thumb", alt: "Ponte Estaiada na região do Brooklin" },
+  {
+    territorioId: "pinheiros",
+    asset: "pinheiros-aerea-thumb",
+    alt: "Largo da Batata, em Pinheiros",
+  },
+  { territorioId: "santo-amaro", asset: "santo-amaro-thumb", alt: "Estação Santo Amaro" },
+  { territorioId: "carandiru", asset: "carandiru-thumb", alt: "Paisagem urbana do Carandiru" },
+  { territorioId: "tatuape", asset: "tatuape-thumb", alt: "Tatuapé e Radial Leste" },
+  { territorioId: "lapa", asset: "lapa-thumb", alt: "Mercado Municipal da Lapa" },
+  {
+    territorioId: "butanta",
+    asset: "butanta-thumb",
+    alt: "Panorama da Zona Oeste visto do Butantã",
+  },
+  { territorioId: "itaquera", asset: "itaquera-thumb", alt: "Estação Corinthians-Itaquera" },
+  { territorioId: "liberdade", asset: "liberdade-thumb", alt: "Rua e luminárias da Liberdade" },
+  {
+    territorioId: "parque-do-carmo",
+    asset: "parque-do-carmo-thumb",
+    alt: "Lago do Parque do Carmo",
+  },
+  {
+    territorioId: "brooklin",
+    asset: "brooklin-thumb",
+    alt: "Ponte Estaiada na região do Brooklin",
+  },
 ];
 
 export const photoCredits = [

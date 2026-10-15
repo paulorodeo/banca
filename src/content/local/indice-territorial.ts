@@ -126,6 +126,14 @@ const nomesTerritoriais: Record<string, string> = {
   "bras-12-dp": "Brás",
 };
 
+// Identidades de território independentes dos slugs legados de unidades.
+const slugTerritorialPorRegiao: Record<string, string> = {
+  "itaquera-103-dp": "itaquera",
+  "liberdade-1-dp": "liberdade",
+  "liberdade-5-dp": "liberdade",
+  "bras-12-dp": "bras",
+};
+
 const normalized = (value: string) =>
   value
     .normalize("NFD")
@@ -159,7 +167,7 @@ export function montarIndiceTerritorial(
   const paginas = new Map(
     bairrosPublicados
       .filter((bairro) => bairro.status === "publicado")
-      .map((bairro) => [normalized(bairro.nome), bairro]),
+      .map((bairro) => [bairro.slug, bairro]),
   );
   const zonasValidas = new Set(zonas.map((zona) => zona.slug));
   const territorios = new Map<string, TerritorioIndice>();
@@ -167,7 +175,7 @@ export function montarIndiceTerritorial(
   for (const regiao of regioes) {
     if (!zonasValidas.has(regiao.zona)) continue;
     const nome = nomesTerritoriais[regiao.slug] ?? regiao.nome;
-    const chave = normalized(nome);
+    const chave = slugTerritorialPorRegiao[regiao.slug] ?? regiao.slug;
     const existente = territorios.get(chave);
     const pagina = paginas.get(chave);
     const tipo: TipoTerritorio = distritosAdministrativos.has(regiao.slug)
@@ -176,7 +184,7 @@ export function montarIndiceTerritorial(
         ? "bairro"
         : "localidade-editorial";
     const territorio: TerritorioIndice = existente ?? {
-      id: `territorio-${regiao.slug}`,
+      id: `territorio-${chave}`,
       nome,
       tipo,
       // Brás aparece nos registros policiais do Centro e da Leste; o índice
@@ -217,7 +225,7 @@ export function montarIndiceTerritorial(
       numero: guia.unidade.numero,
       nome: guia.cardSubtitulo,
     }));
-    territorios.set(normalized(referencia.nome), {
+    territorios.set(`${referencia.regiaoSlug}-localidade`, {
       id: `territorio-${referencia.regiaoSlug}-localidade`,
       nome: referencia.nome,
       tipo: "localidade-editorial",

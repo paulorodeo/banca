@@ -2,19 +2,12 @@ import { useCallback, useEffect, useId, useRef, useState } from "react";
 import type { KeyboardEvent } from "react";
 import { Link } from "@tanstack/react-router";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import type { Regiao } from "@/content/types";
+import type { HomeNeighborhoodHighlight } from "@/content/local/home-highlights";
 
-export interface NeighborhoodHighlight {
-  region: Regiao;
-  asset: string;
-  alt: string;
-  href: string;
-}
-
-export function NeighborhoodCarousel({ items }: { items: NeighborhoodHighlight[] }) {
+export function NeighborhoodCarousel({ items }: { items: HomeNeighborhoodHighlight[] }) {
   const id = useId();
   const viewportRef = useRef<HTMLUListElement>(null);
-  const [edges, setEdges] = useState({ start: true, end: false });
+  const [edges, setEdges] = useState({ start: true, end: true });
   const measure = useCallback(() => {
     const viewport = viewportRef.current;
     if (!viewport) return;
@@ -92,12 +85,12 @@ export function NeighborhoodCarousel({ items }: { items: NeighborhoodHighlight[]
         id={id}
         className="home-neighborhoods"
         tabIndex={0}
-        aria-label="Bairros e guias publicados; use as setas para navegar"
+        aria-label="Territórios em destaque; use as setas para navegar"
         onKeyDown={onKeyDown}
       >
-        {items.map(({ region, asset, alt, href }) => (
-          <li key={region.id}>
-            <Link to={href} className="home-neighborhood">
+        {items.map(({ id: itemId, nome, asset, alt, paginaBairro, guias }) => (
+          <li key={itemId}>
+            <article className="home-neighborhood">
               <picture>
                 <source srcSet={`/images/sp/${asset}.avif`} type="image/avif" />
                 <img
@@ -108,8 +101,29 @@ export function NeighborhoodCarousel({ items }: { items: NeighborhoodHighlight[]
                   loading="lazy"
                 />
               </picture>
-              <span>{region.nome}</span>
-            </Link>
+              <div className="home-neighborhood-content">
+                <strong>{nome}</strong>
+                {paginaBairro ? (
+                  <Link to={paginaBairro} className="home-neighborhood-link">
+                    Página do bairro
+                  </Link>
+                ) : null}
+                {(!paginaBairro || guias.length > 1) && guias.length ? (
+                  <div className="home-neighborhood-links">
+                    {guias.map((guia) => (
+                      <Link
+                        key={guia.slug}
+                        to="/delegacias/$slug"
+                        params={{ slug: guia.slug }}
+                        className="home-neighborhood-link"
+                      >
+                        Guia da delegacia: {guia.numero}º DP
+                      </Link>
+                    ))}
+                  </div>
+                ) : null}
+              </div>
+            </article>
           </li>
         ))}
       </ul>

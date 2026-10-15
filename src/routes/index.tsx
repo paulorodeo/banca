@@ -27,11 +27,8 @@ interface HomeData {
   artigosErro?: string;
 }
 import { readArticles } from "@/content/articles.functions";
-import {
-  featuredNeighborhoods,
-  photoCredits,
-  editorialIllustrations,
-} from "@/content/local/visual-media";
+import { photoCredits, editorialIllustrations } from "@/content/local/visual-media";
+import { homeFeaturedDistricts, homeNeighborhoodHighlights } from "@/content/local/home-highlights";
 import { ZoneCardLight } from "@/components/site/territory";
 import { withPublishedGuideCounts } from "@/content/local/zonas";
 import { NeighborhoodCarousel } from "@/components/site/neighborhood-carousel";
@@ -112,13 +109,6 @@ function HomeHeading({
   );
 }
 
-const featuredSlugs = [
-  "advogado-criminal-7-dp-vila-romana",
-  "advogado-14-dp-pinheiros",
-  "advogado-criminal-23-dp-perdizes",
-  "advogado-criminal-78-dp-jardins",
-];
-
 function Index() {
   const [heroReady, setHeroReady] = useState(false);
   const [heroPaused, setHeroPaused] = useState(false);
@@ -143,23 +133,8 @@ function Index() {
     };
   }, []);
   const { zonas, regioes, bairros, delegacias, conteudos } = Route.useLoaderData();
-  const neighborhoods = featuredNeighborhoods.flatMap((item) => {
-    const region = regioes.find((region) => region.slug === item.slug);
-    return region
-      ? [
-          {
-            ...item,
-            region,
-            href: bairros.some(
-              (bairro) => bairro.slug === region.slug && bairro.status === "publicado",
-            )
-              ? `/bairros/${region.slug}`
-              : region.href,
-          },
-        ]
-      : [];
-  });
-  const featured = featuredSlugs.flatMap((slug) => delegacias.filter((dp) => dp.slug === slug));
+  const neighborhoods = homeNeighborhoodHighlights(regioes, delegacias, bairros, zonas);
+  const featured = homeFeaturedDistricts(delegacias);
   return (
     <div className="home-light home-page">
       <section className="home-hero relative isolate overflow-hidden bg-brand-navy text-ivory">
@@ -256,9 +231,9 @@ function Index() {
           <HomeHeading
             eyebrow="Explore por bairro"
             title="Bairros em destaque"
-            lead="Acesse as páginas de bairro e os guias territoriais publicados."
+            lead="Pinheiros tem página própria. Nos demais territórios, os links abrem guias informativos das delegacias relacionadas."
             to="/regioes"
-            cta="Ver todos os bairros"
+            cta="Explorar territórios"
           />
           <NeighborhoodCarousel items={neighborhoods} />
         </Container>
@@ -305,14 +280,14 @@ function Index() {
       <section className="py-12">
         <Container>
           <HomeHeading
-            eyebrow="Guias em destaque"
-            title="Acesso direto aos principais guias"
-            lead="Consulte os guias informativos e confirme o atendimento nos canais oficiais."
+            eyebrow="Delegacias em destaque"
+            title="Acesso direto às principais delegacias de Polícia Civil"
+            lead="Seleção editorial de guias informativos sobre delegacias de Polícia Civil de São Paulo. Os cards abrem páginas deste portal, sem vínculo com as unidades."
             to="/delegacias"
-            cta="Ver todos os guias"
+            cta="Ver todas as delegacias"
           />
           <div className="mt-7 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {featured.map((dp) => (
+            {featured.map(({ guia: dp, titulo }) => (
               <Link
                 key={dp.id}
                 to="/delegacias/$slug"
@@ -325,9 +300,9 @@ function Index() {
                 </span>
                 <div>
                   <h3 className="mt-4 font-serif text-xl leading-tight text-brand-navy">
-                    {dp.unidade.nomeOficial}
+                    {titulo}
                   </h3>
-                  <p className="mt-3 text-xs text-muted-foreground">{dp.cardSubtitulo}</p>
+                  <p className="mt-3 text-xs text-muted-foreground">Guia informativo publicado</p>
                 </div>
                 <ArrowRight className="size-4 shrink-0 text-brand-navy" aria-hidden />
               </Link>
