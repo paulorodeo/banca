@@ -265,10 +265,14 @@ function NeighborhoodPage() {
         >
           <Container>
             <p className="text-xs font-semibold uppercase tracking-[0.16em] text-gold">
-              Equipamentos publicados
+              {bairro.zona === "zona-oeste"
+                ? "Instituições e serviços publicados"
+                : "Equipamentos publicados"}
             </p>
             <h2 id="servicos-bairro" className="mt-3 font-serif text-4xl text-brand-navy">
-              Cultura e serviços no território
+              {bairro.zona === "zona-oeste"
+                ? "Instituições e serviços no território"
+                : "Cultura e serviços no território"}
             </h2>
             <div className="mt-7 grid gap-4 md:grid-cols-3">
               {bairro.servicosLocais.map((servico) => (

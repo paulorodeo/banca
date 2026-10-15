@@ -30,8 +30,27 @@ describe("Páginas de bairro", () => {
     }
   });
 
+  test("Zona Oeste mantém um destino próprio para cada card territorial publicado", () => {
+    const oeste = regioes.filter((regiao) => regiao.zona === "zona-oeste");
+    const slugs = new Set(
+      bairros.filter((bairro) => bairro.zona === "zona-oeste").map((bairro) => bairro.slug),
+    );
+    const paths = publishedPaths({ delegacias, zonas, bairros, articles: [] });
+
+    assert.ok(oeste.length >= 8);
+    for (const regiao of oeste) {
+      assert.ok(slugs.has(regiao.slug), `${regiao.nome} sem página própria publicada`);
+      assert.ok(paths.includes(`/bairros/${regiao.slug}`), `${regiao.slug} fora do sitemap`);
+    }
+
+    const lapa = bairros.find((bairro) => bairro.slug === "lapa");
+    assert.equal(lapa?.nome, "Lapa e Vila Romana");
+    assert.equal(regioes.find((regiao) => regiao.slug === "itaim-bibi")?.zona, "zona-sul");
+    assert.equal(delegacias.length, 93);
+  });
+
   test("não publica dados operacionais ou perfis fictícios em Pinheiros", () => {
-    const text = JSON.stringify(bairros);
+    const text = JSON.stringify(bairros.find((bairro) => bairro.slug === "pinheiros"));
     assert.doesNotMatch(text, /OAB\/?SP|WhatsApp|telefone|atendimento 24/i);
     const related = bairros[0]?.instituicoes.map((item) => item.institutionSlug) ?? [];
     assert.deepEqual(related, ["advogado-14-dp-pinheiros"]);

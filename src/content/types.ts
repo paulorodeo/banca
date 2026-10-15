@@ -67,6 +67,10 @@ export interface Zona {
   introducao: string;
   /** Seções editoriais da página da zona. */
   secoes: { titulo: string; paragrafos: string[] }[];
+  artigoEditorial?: {
+    titulo: string;
+    secoes: { titulo?: string; paragrafos: string[] }[];
+  };
 }
 
 export interface Regiao {
