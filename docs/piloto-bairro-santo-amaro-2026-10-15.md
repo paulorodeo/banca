@@ -20,3 +20,15 @@ Consulta editorial em 15 de outubro de 2026. O piloto usa `/bairros/santo-amaro`
 - Verificar o destino específico do Google Maps para o recorte editorial antes de oferecer esse botão. O piloto oferece somente o mapa administrativo oficial, identificado como tal.
 - Confirmar localização atual e eventuais relações de proximidade de outras delegacias antes de criar seções de unidades no bairro ou próximas. Não inferir circunscrição a partir do nome do 11º DP.
 - Publicar artigos relacionados somente quando aprovados e marcados com o slug do bairro. Não há conteúdo editorial adicional criado neste lote.
+
+### Próximas páginas e destaques territoriais
+
+Registro de preparação editorial de 15 de outubro de 2026. Esta fila não cria páginas nem autoriza publicar bairros sem conteúdo próprio. Os destaques da homepage exigem página territorial publicada e resolvível.
+
+- **Barra Funda:** candidato prioritário. O diretório do TRT-2 identifica o Fórum Trabalhista Ruy Barbosa na região. A consulta direta ao diretório retornou 403; endereço e outros dados operacionais precisam de nova verificação antes de publicação. [Diretório do TRT-2](https://ww2.trt2.jus.br/contato/telefones-e-enderecos/forum-trabalhista-ruy-barbosa).
+- **Tatuapé:** candidato prioritário. O TJSP lista o Foro Regional VIII Tatuapé, cuja unidade indicada fica em Parque São Jorge. O nome regional não define os limites do bairro nem transfere para ele a localização física da unidade. [Referência do TJSP](https://portal.tjsp.jus.br/UtilidadePublica/UtilidadePublica/AutorizacaoViagemCriancaAdolescente).
+- **Penha:** candidato prioritário. O TJSP lista o Foro Regional VI Penha de França e o TRT-2 identifica o Fórum Trabalhista da Zona Leste na Penha de França. Confirmar as páginas e informações atuais antes de publicar dados operacionais. [Referência do TJSP](https://portal.tjsp.jus.br/UtilidadePublica/UtilidadePublica/AutorizacaoViagemCriancaAdolescente) e [diretório do TRT-2](https://ww2.trt2.jus.br/contato/telefones-e-enderecos/forum-trabalhista-da-zona-leste).
+- **Santana:** candidato prioritário. O TJSP lista o Foro Regional I Santana; essa denominação não determina sozinha os limites do bairro ou toda a abrangência do foro. [Referência do TJSP](https://portal.tjsp.jus.br/UtilidadePublica/UtilidadePublica/AutorizacaoViagemCriancaAdolescente).
+- **Campo Belo:** permanece condicionado a pesquisa complementar de referências jurídicas e institucionais do bairro paulistano. A associação territorial publicada pela Prefeitura para o 27º DP não satisfaz esse critério e não permite inferir circunscrição ou quantidade de unidades policiais. [Publicação municipal consultada na preparação](https://prefeitura.sp.gov.br/w/smart-sampa-identifica-e-gcm-prende-estuprador-foragido-da-justi%C3%A7a-da-bahia-em-bloco-de-carnaval).
+
+Pinheiros e Santo Amaro já possuem páginas próprias publicadas e permanecem nos destaques. Não criar páginas em lote nem usar os nomes regionais dos foros como prova de localização dentro dos bairros.
