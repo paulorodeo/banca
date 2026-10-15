@@ -206,7 +206,18 @@ export interface PaginaInstitucional {
   titulo: string;
   subtitulo: string;
   seo: SeoConfig;
-  blocos: { titulo: string; paragrafos: string[] }[];
+  blocos: {
+    titulo: string;
+    paragrafos: string[];
+    lista?: string[];
+    complemento?: string[];
+    links?: { rotulo: string; href: string }[];
+  }[];
+  introducao?: string[];
+  indice?: { id: string; rotulo: string }[];
+  linksRelacionados?: { rotulo: string; href: string }[];
+  atualizadoEm?: string;
+  notaFinal?: string[];
 }
 
 export interface SiteSettings {

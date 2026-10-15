@@ -58,6 +58,9 @@ export function SiteFooter() {
             >
               Política de privacidade
             </Link>
+            <Link to="/termos-de-uso" className="rounded-sm transition-colors hover:text-gold">
+              Termos de Uso
+            </Link>
             <Link to="/contato" className="rounded-sm transition-colors hover:text-gold">
               Contato editorial
             </Link>

@@ -6,6 +6,7 @@ export const institutionalPaths = [
   "/sobre",
   "/contato",
   "/politica-de-privacidade",
+  "/termos-de-uso",
   "/profissionais",
   "/areas-de-atuacao",
   "/plantao-criminal",
