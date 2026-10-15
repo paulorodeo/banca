@@ -231,7 +231,7 @@ function Index() {
           <HomeHeading
             eyebrow="Explore por bairro"
             title="Bairros em destaque"
-            lead="Pinheiros tem página própria. Nos demais territórios, os links abrem guias informativos das delegacias relacionadas."
+            lead="Pinheiros e Santo Amaro têm páginas próprias. Nos demais territórios, os links abrem guias informativos das delegacias relacionadas."
             to="/regioes"
             cta="Explorar territórios"
           />

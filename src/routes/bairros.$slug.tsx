@@ -1,5 +1,5 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { ArrowRight, CheckCircle2, MapPin } from "lucide-react";
+import { ArrowRight, CheckCircle2, ExternalLink, MapPin } from "lucide-react";
 import { content } from "@/content/repository";
 import type { Bairro, ConteudoJuridico, Zona } from "@/content/types";
 import { Container } from "@/components/site/primitives";
@@ -109,34 +109,6 @@ function NeighborhoodPage() {
         ]}
       />
 
-      <section className="border-b border-border py-10 md:py-14">
-        <Container>
-          <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_19rem] xl:grid-cols-[minmax(0,1fr)_21rem]">
-            <div className="min-w-0">
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-gold">
-                  Diretório territorial
-                </p>
-                <h2 className="mt-3 font-serif text-4xl text-brand-navy">
-                  Instituições em {bairro.nome}
-                </h2>
-                <p className="mt-3 max-w-3xl text-sm leading-6 text-muted-foreground">
-                  Consulte os guias publicados e confirme competência, endereço e horário nos canais
-                  oficiais antes do deslocamento.
-                </p>
-              </div>
-              <div className="mt-7">
-                <InstitutionDirectory items={institutions} neighborhoodName={bairro.nome} />
-              </div>
-            </div>
-            <div>
-              <ProfessionalSidebar neighborhoodName={bairro.nome} />
-              <RelatedArticles articles={articles} />
-            </div>
-          </div>
-        </Container>
-      </section>
-
       <section className="bg-card py-14 md:py-20">
         <Container>
           <div className="grid gap-12 lg:grid-cols-[0.72fr_1.28fr]">
@@ -148,6 +120,14 @@ function NeighborhoodPage() {
                 {bairro.nome} no território
               </h2>
               <p className="mt-4 text-sm leading-7 text-muted-foreground">{bairro.introducao}</p>
+              {bairro.recorteTerritorial ? (
+                <div className="mt-6 rounded-xl border-l-4 border-gold bg-background p-5">
+                  <h3 className="font-serif text-xl text-brand-navy">Recorte deste guia</h3>
+                  <p className="mt-2 text-sm leading-7 text-muted-foreground">
+                    {bairro.recorteTerritorial}
+                  </p>
+                </div>
+              ) : null}
               <div className="mt-7 rounded-xl border border-border bg-background p-5">
                 <p className="text-xs font-semibold uppercase tracking-[0.14em] text-gold">
                   Referências urbanas
@@ -161,6 +141,48 @@ function NeighborhoodPage() {
                   ))}
                 </ul>
               </div>
+              {bairro.fotoTerritorial ? (
+                <figure className="mt-7 flex items-start gap-4 rounded-xl border border-border bg-background p-4">
+                  <picture className="size-24 shrink-0 overflow-hidden rounded-lg sm:size-32">
+                    <source
+                      srcSet={`/images/sp/${bairro.fotoTerritorial.asset}.avif`}
+                      type="image/avif"
+                    />
+                    <img
+                      src={`/images/sp/${bairro.fotoTerritorial.asset}.webp`}
+                      alt={bairro.fotoTerritorial.alt}
+                      width={bairro.fotoTerritorial.width}
+                      height={bairro.fotoTerritorial.height}
+                      loading="lazy"
+                      className="size-full object-cover"
+                    />
+                  </picture>
+                  <figcaption className="min-w-0 text-xs leading-5 text-muted-foreground">
+                    <p>{bairro.fotoTerritorial.legenda}</p>
+                    <p className="mt-2">
+                      Foto: {bairro.fotoTerritorial.autor}.{" "}
+                      <a
+                        href={bairro.fotoTerritorial.fonteUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="underline decoration-gold underline-offset-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-navy"
+                      >
+                        Fonte
+                      </a>{" "}
+                      e{" "}
+                      <a
+                        href={bairro.fotoTerritorial.licencaUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="underline decoration-gold underline-offset-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-navy"
+                      >
+                        {bairro.fotoTerritorial.licenca}
+                      </a>
+                      .
+                    </p>
+                  </figcaption>
+                </figure>
+              ) : null}
             </div>
             <div className="space-y-10">
               {bairro.secoes.map((section) => (
@@ -175,19 +197,23 @@ function NeighborhoodPage() {
                 </article>
               ))}
               <div>
-                <h2 className="font-serif text-3xl text-brand-navy">
-                  Bairros vizinhos e referências próximas
-                </h2>
-                <ul className="mt-5 flex flex-wrap gap-2">
-                  {bairro.bairrosVizinhos.map((item) => (
-                    <li
-                      key={item}
-                      className="rounded-full border border-border bg-background px-4 py-2 text-xs text-brand-navy"
-                    >
-                      {item}
-                    </li>
-                  ))}
-                </ul>
+                {bairro.bairrosVizinhos.length ? (
+                  <>
+                    <h2 className="font-serif text-3xl text-brand-navy">
+                      Bairros vizinhos e referências próximas
+                    </h2>
+                    <ul className="mt-5 flex flex-wrap gap-2">
+                      {bairro.bairrosVizinhos.map((item) => (
+                        <li
+                          key={item}
+                          className="rounded-full border border-border bg-background px-4 py-2 text-xs text-brand-navy"
+                        >
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </>
+                ) : null}
                 <Link
                   to="/regioes/$slug"
                   params={{ slug: zona.slug }}
@@ -196,11 +222,132 @@ function NeighborhoodPage() {
                   Explorar toda a {zona.nome}
                   <ArrowRight className="size-4" aria-hidden />
                 </Link>
+                <Link
+                  to="/regioes"
+                  className="mt-3 flex items-center gap-2 text-sm font-semibold text-brand-navy underline decoration-gold underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-navy"
+                >
+                  Ver todas as regiões <ArrowRight className="size-4" aria-hidden />
+                </Link>
               </div>
             </div>
           </div>
         </Container>
       </section>
+
+      {bairro.viasAcessos?.length ? (
+        <section className="border-t border-border py-14 md:py-20" aria-labelledby="vias-bairro">
+          <Container>
+            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-gold">
+              Circulação
+            </p>
+            <h2 id="vias-bairro" className="mt-3 font-serif text-4xl text-brand-navy">
+              Vias e acessos
+            </h2>
+            <p className="mt-3 max-w-3xl text-sm leading-6 text-muted-foreground">
+              Referências para entender o território, sem itinerários ou tempos de deslocamento.
+            </p>
+            <div className="mt-7 grid gap-4 md:grid-cols-3">
+              {bairro.viasAcessos.map((acesso) => (
+                <article key={acesso.nome} className="rounded-xl border border-border bg-card p-6">
+                  <h3 className="font-serif text-xl text-brand-navy">{acesso.nome}</h3>
+                  <p className="mt-3 text-sm leading-6 text-muted-foreground">{acesso.contexto}</p>
+                </article>
+              ))}
+            </div>
+          </Container>
+        </section>
+      ) : null}
+
+      {bairro.servicosLocais?.length ? (
+        <section
+          className="border-y border-border bg-card py-14 md:py-20"
+          aria-labelledby="servicos-bairro"
+        >
+          <Container>
+            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-gold">
+              Equipamentos publicados
+            </p>
+            <h2 id="servicos-bairro" className="mt-3 font-serif text-4xl text-brand-navy">
+              Cultura e serviços no território
+            </h2>
+            <div className="mt-7 grid gap-4 md:grid-cols-3">
+              {bairro.servicosLocais.map((servico) => (
+                <article
+                  key={servico.nome}
+                  className="rounded-xl border border-border bg-background p-6"
+                >
+                  <h3 className="font-serif text-xl text-brand-navy">{servico.nome}</h3>
+                  <p className="mt-3 text-sm leading-6 text-muted-foreground">{servico.contexto}</p>
+                  <a
+                    href={servico.fonteUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-4 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-brand-navy underline decoration-gold underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-navy"
+                  >
+                    Consultar fonte oficial <ExternalLink className="size-4" aria-hidden />
+                  </a>
+                </article>
+              ))}
+            </div>
+          </Container>
+        </section>
+      ) : null}
+
+      <section className="border-b border-border py-10 md:py-14">
+        <Container>
+          <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_19rem] xl:grid-cols-[minmax(0,1fr)_21rem]">
+            <div className="min-w-0">
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-gold">
+                  Diretório territorial
+                </p>
+                <h2 className="mt-3 font-serif text-4xl text-brand-navy">
+                  Guias institucionais relacionados a {bairro.nome}
+                </h2>
+                <p className="mt-3 max-w-3xl text-sm leading-6 text-muted-foreground">
+                  Os guias mantêm páginas próprias. A relação editorial com o bairro não define
+                  circunscrição ou atendimento. Confirme a unidade competente nos canais oficiais.
+                </p>
+              </div>
+              <div className="mt-7">
+                <InstitutionDirectory items={institutions} neighborhoodName={bairro.nome} />
+              </div>
+            </div>
+            <div>
+              <ProfessionalSidebar neighborhoodName={bairro.nome} />
+              <RelatedArticles articles={articles} />
+            </div>
+          </div>
+        </Container>
+      </section>
+
+      {bairro.localizacao ? (
+        <section className="py-14 md:py-20" aria-labelledby="localizacao-bairro">
+          <Container>
+            <div className="max-w-3xl rounded-xl border border-border bg-card p-6 md:p-8">
+              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-gold">
+                Localização
+              </p>
+              <h2 id="localizacao-bairro" className="mt-3 font-serif text-3xl text-brand-navy">
+                Onde fica o recorte desta página
+              </h2>
+              <p className="mt-4 text-sm leading-7 text-muted-foreground">
+                {bairro.localizacao.descricao}
+              </p>
+              {bairro.localizacao.mapaUrl && bairro.localizacao.mapaLabel ? (
+                <a
+                  href={bairro.localizacao.mapaUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-5 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-brand-navy underline decoration-gold underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-navy"
+                >
+                  {bairro.localizacao.mapaLabel} <ExternalLink className="size-4" aria-hidden />
+                </a>
+              ) : null}
+            </div>
+          </Container>
+        </section>
+      ) : null}
 
       <section className="py-14 md:py-20">
         <Container>
@@ -221,6 +368,16 @@ function NeighborhoodPage() {
               </div>
             ))}
           </dl>
+          <p className="mt-10 border-t border-border pt-6 text-sm leading-6 text-muted-foreground">
+            Encontrou uma informação territorial que precisa de correção? Use o canal editorial em{" "}
+            <Link
+              to="/contato"
+              className="font-semibold text-brand-navy underline decoration-gold underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-navy"
+            >
+              contato
+            </Link>
+            .
+          </p>
         </Container>
       </section>
     </div>

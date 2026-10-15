@@ -108,6 +108,22 @@ export interface Bairro {
   descricao: string;
   introducao: string;
   referenciasUrbanas: string[];
+  /** Recorte editorial, distinto de distrito, subprefeitura e antigo município. */
+  recorteTerritorial?: string;
+  viasAcessos?: { nome: string; contexto: string }[];
+  servicosLocais?: { nome: string; contexto: string; fonteUrl: string }[];
+  localizacao?: { descricao: string; mapaUrl?: string; mapaLabel?: string };
+  fotoTerritorial?: {
+    asset: string;
+    alt: string;
+    legenda: string;
+    autor: string;
+    fonteUrl: string;
+    licenca: string;
+    licencaUrl: string;
+    width: number;
+    height: number;
+  };
   bairrosVizinhos: string[];
   instituicoes: NeighborhoodInstitutionRelation[];
   secoes: { titulo: string; paragrafos: string[] }[];

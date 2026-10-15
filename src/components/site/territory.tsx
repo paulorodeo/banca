@@ -247,7 +247,10 @@ export function NeighborhoodIndex({
                           to={item.paginaBairro}
                           className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-brand-navy underline decoration-gold underline-offset-4 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-navy"
                         >
-                          Ver página do bairro <ArrowRight className="size-4" aria-hidden />
+                          {item.tipo === "distrito-administrativo"
+                            ? "Ver página territorial"
+                            : "Ver página do bairro"}{" "}
+                          <ArrowRight className="size-4" aria-hidden />
                         </Link>
                       ) : null}
                       {item.guias.length ? (
@@ -392,7 +395,7 @@ export function InstitutionCard({ item }: { item: NeighborhoodInstitution }) {
           {categoryLabels[item.category]}
         </p>
         <h3 className="mt-2 font-serif text-xl leading-tight text-brand-navy">
-          {delegacia.unidade.nomeOficial}
+          {delegacia.unidade.numero}º Distrito Policial, {delegacia.cardSubtitulo}
         </h3>
         <p className="mt-3 flex items-start gap-2 text-xs leading-5 text-muted-foreground">
           <MapPin className="mt-0.5 size-3.5 shrink-0 text-gold" aria-hidden />
