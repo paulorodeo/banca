@@ -24,6 +24,7 @@ interface HomeData {
   delegacias: Delegacia[];
   zonas: (Zona & { quantidade: number })[];
   conteudos: ConteudoJuridico[];
+  neighborhoods: import("@/content/local/home-highlights").HomeNeighborhoodHighlight[];
   artigosErro?: string;
 }
 import { readArticles } from "@/content/articles.functions";
@@ -46,10 +47,14 @@ export const Route = createFileRoute("/")({
       content.listZonas(),
       readArticles({ data: { page: 1, limit: 3, sort: "-publishedAt", category: "" } }),
     ]);
+    const neighborhoods = await homeNeighborhoodHighlights(regioes, bairros, (slug) =>
+      content.getBairro(slug),
+    );
     return {
       regioes,
       delegacias,
       bairros,
+      neighborhoods,
       zonas: withPublishedGuideCounts(zonas, regioes, delegacias),
       ...(articles.ok
         ? { conteudos: articles.page.docs }
@@ -132,8 +137,7 @@ function Index() {
       img.removeEventListener("load", ready);
     };
   }, []);
-  const { zonas, regioes, bairros, delegacias, conteudos } = Route.useLoaderData();
-  const neighborhoods = homeNeighborhoodHighlights(regioes, delegacias, bairros, zonas);
+  const { zonas, delegacias, conteudos, neighborhoods } = Route.useLoaderData();
   const featured = homeFeaturedDistricts(delegacias);
   return (
     <div className="home-light home-page">
@@ -231,7 +235,7 @@ function Index() {
           <HomeHeading
             eyebrow="Explore por bairro"
             title="Bairros em destaque"
-            lead="Pinheiros e Santo Amaro têm páginas próprias. Nos demais territórios, os links abrem guias informativos das delegacias relacionadas."
+            lead="Conheça os bairros e suas referências jurídicas e institucionais."
             to="/regioes"
             cta="Explorar territórios"
           />

@@ -1,60 +1,60 @@
 import { describe, test } from "node:test";
 import assert from "node:assert/strict";
-import { bairros } from "./bairros";
+import { content } from "../repository";
 import { delegacias } from "./delegacias";
 import { homeFeaturedDistricts, homeNeighborhoodHighlights } from "./home-highlights";
 import { regioes } from "./regioes";
-import { zonas } from "./zonas";
+import { featuredNeighborhoods } from "./visual-media";
 
-const bairrosDestaque = homeNeighborhoodHighlights(regioes, delegacias, bairros, zonas);
+describe("destaques da homepage", () => {
+  test("mostra somente bairros com página territorial publicada e resolvível", async () => {
+    const bairros = await content.listBairros();
+    const items = await homeNeighborhoodHighlights(regioes, bairros, (slug) =>
+      content.getBairro(slug),
+    );
 
-describe("destaques territoriais da homepage", () => {
-  test("identidade territorial evita duplicações e preserva todos os guias relacionados", () => {
-    assert.equal(bairrosDestaque.length, 10);
-    assert.equal(new Set(bairrosDestaque.map((item) => item.id)).size, bairrosDestaque.length);
-    assert.ok(bairrosDestaque.every((item) => !/\d+º DP/.test(item.nome)));
     assert.deepEqual(
-      bairrosDestaque
-        .find((item) => item.id === "territorio-itaquera")
-        ?.guias.map((guia) => guia.numero),
-      ["32", "103"],
+      items.map(({ id, nome, href }) => ({ id, nome, href })),
+      [
+        { id: "territorio-pinheiros", nome: "Pinheiros", href: "/bairros/pinheiros" },
+        { id: "territorio-santo-amaro", nome: "Santo Amaro", href: "/bairros/santo-amaro" },
+      ],
     );
-    assert.deepEqual(
-      bairrosDestaque
-        .find((item) => item.id === "territorio-liberdade")
-        ?.guias.map((guia) => guia.numero),
-      ["1", "5"],
-    );
+    assert.ok(items.every((item) => !item.href.startsWith("/delegacias/")));
+    assert.ok(items.every((item) => !/\d+º\s*DP/.test(item.nome)));
+    assert.equal(new Set(items.map((item) => item.id)).size, items.length);
+    assert.equal(featuredNeighborhoods.length, 10);
+    assert.ok(featuredNeighborhoods.some((item) => item.territorioId === "itaquera"));
+    assert.ok(featuredNeighborhoods.some((item) => item.territorioId === "lapa"));
   });
 
-  test("destinos diferenciam página de bairro e guias policiais reais", () => {
-    const pinheiros = bairrosDestaque.find((item) => item.id === "territorio-pinheiros");
-    assert.equal(pinheiros?.paginaBairro, "/bairros/pinheiros");
-    assert.equal(pinheiros?.guias[0]?.numero, "14");
-    assert.ok(bairrosDestaque.every((item) => item.paginaBairro || item.guias.length));
-    const guiasPublicados = new Set(delegacias.map((guia) => guia.slug));
-    for (const item of bairrosDestaque) {
-      for (const guia of item.guias) assert.ok(guiasPublicados.has(guia.slug), guia.slug);
-    }
-  });
-
-  test("a referência conjunta de Lapa e Vila Romana não é separada por suposição", () => {
-    const lapa = bairrosDestaque.find((item) => item.id === "territorio-lapa");
-    assert.equal(lapa?.nome, regioes.find((regiao) => regiao.slug === "lapa")?.nome);
-    assert.equal(lapa?.paginaBairro, undefined);
-    assert.deepEqual(
-      lapa?.guias.map((guia) => guia.numero),
-      ["7"],
+  test("retira itens sem registro publicado ou sem resolução própria", async () => {
+    const bairros = await content.listBairros();
+    const withoutSantoAmaro = bairros.filter((bairro) => bairro.slug !== "santo-amaro");
+    const items = await homeNeighborhoodHighlights(regioes, withoutSantoAmaro, (slug) =>
+      content.getBairro(slug),
     );
+    assert.deepEqual(
+      items.map((item) => item.href),
+      ["/bairros/pinheiros"],
+    );
+
+    const unresolved = await homeNeighborhoodHighlights(regioes, bairros, async () => null);
+    assert.deepEqual(unresolved, []);
   });
 
-  test("seleção policial conserva quatro URLs canônicas e títulos editoriais sem travessão", () => {
+  test("inclui o 27º DP na seleção policial sem alterar seu registro canônico", () => {
     const destaques = homeFeaturedDistricts(delegacias);
     assert.deepEqual(
       destaques.map((item) => item.guia.unidade.numero),
-      ["7", "14", "23", "78"],
+      ["7", "14", "23", "78", "27"],
     );
+    const campoBelo = destaques.at(-1)!;
+    assert.equal(campoBelo.titulo, "27º DP Campo Belo");
+    assert.equal(campoBelo.guia.slug, "advogado-27-dp-campo-belo");
+    assert.equal(campoBelo.guia.unidade.nomeOficial, "27º Distrito Policial — Campo Belo");
     assert.ok(destaques.every((item) => !/[—–]/.test(item.titulo)));
     assert.ok(destaques.every((item) => delegacias.some((guia) => guia.slug === item.guia.slug)));
+    assert.equal(delegacias.length, 93);
   });
 });

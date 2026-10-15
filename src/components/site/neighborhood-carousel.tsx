@@ -1,19 +1,19 @@
 import { useCallback, useEffect, useId, useRef, useState } from "react";
 import type { KeyboardEvent } from "react";
-import { Link } from "@tanstack/react-router";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import type { HomeNeighborhoodHighlight } from "@/content/local/home-highlights";
 
 export function NeighborhoodCarousel({ items }: { items: HomeNeighborhoodHighlight[] }) {
   const id = useId();
   const viewportRef = useRef<HTMLUListElement>(null);
-  const [edges, setEdges] = useState({ start: true, end: true });
+  const [edges, setEdges] = useState({ start: true, end: true, scrollable: false });
   const measure = useCallback(() => {
     const viewport = viewportRef.current;
     if (!viewport) return;
     setEdges({
       start: viewport.scrollLeft <= 2,
       end: viewport.scrollLeft + viewport.clientWidth >= viewport.scrollWidth - 2,
+      scrollable: viewport.scrollWidth > viewport.clientWidth + 2,
     });
   }, []);
 
@@ -69,28 +69,34 @@ export function NeighborhoodCarousel({ items }: { items: HomeNeighborhoodHighlig
   };
 
   return (
-    <div className="home-neighborhood-carousel" role="region" aria-label="Bairros em destaque">
-      <button
-        type="button"
-        className="home-carousel-arrow"
-        aria-label="Bairros anteriores"
-        aria-controls={id}
-        disabled={edges.start}
-        onClick={() => scroll(-1)}
-      >
-        <ArrowLeft className="size-4" aria-hidden />
-      </button>
+    <div
+      className={`home-neighborhood-carousel ${edges.scrollable ? "is-scrollable" : "is-static"}`}
+      role="region"
+      aria-label="Bairros em destaque"
+    >
+      {edges.scrollable ? (
+        <button
+          type="button"
+          className="home-carousel-arrow"
+          aria-label="Bairros anteriores"
+          aria-controls={id}
+          disabled={edges.start}
+          onClick={() => scroll(-1)}
+        >
+          <ArrowLeft className="size-4" aria-hidden />
+        </button>
+      ) : null}
       <ul
         ref={viewportRef}
         id={id}
         className="home-neighborhoods"
         tabIndex={0}
-        aria-label="Territórios em destaque; use as setas para navegar"
+        aria-label="Bairros em destaque; use as setas para navegar"
         onKeyDown={onKeyDown}
       >
-        {items.map(({ id: itemId, nome, asset, alt, paginaBairro, guias }) => (
+        {items.map(({ id: itemId, nome, asset, alt, href }) => (
           <li key={itemId}>
-            <article className="home-neighborhood">
+            <a href={href} className="home-neighborhood">
               <picture>
                 <source srcSet={`/images/sp/${asset}.avif`} type="image/avif" />
                 <img
@@ -101,42 +107,23 @@ export function NeighborhoodCarousel({ items }: { items: HomeNeighborhoodHighlig
                   loading="lazy"
                 />
               </picture>
-              <div className="home-neighborhood-content">
-                <strong>{nome}</strong>
-                {paginaBairro ? (
-                  <Link to={paginaBairro} className="home-neighborhood-link">
-                    Página do bairro
-                  </Link>
-                ) : null}
-                {(!paginaBairro || guias.length > 1) && guias.length ? (
-                  <div className="home-neighborhood-links">
-                    {guias.map((guia) => (
-                      <Link
-                        key={guia.slug}
-                        to="/delegacias/$slug"
-                        params={{ slug: guia.slug }}
-                        className="home-neighborhood-link"
-                      >
-                        Guia da delegacia: {guia.numero}º DP
-                      </Link>
-                    ))}
-                  </div>
-                ) : null}
-              </div>
-            </article>
+              <strong>{nome}</strong>
+            </a>
           </li>
         ))}
       </ul>
-      <button
-        type="button"
-        className="home-carousel-arrow"
-        aria-label="Próximos bairros"
-        aria-controls={id}
-        disabled={edges.end}
-        onClick={() => scroll(1)}
-      >
-        <ArrowRight className="size-4" aria-hidden />
-      </button>
+      {edges.scrollable ? (
+        <button
+          type="button"
+          className="home-carousel-arrow"
+          aria-label="Próximos bairros"
+          aria-controls={id}
+          disabled={edges.end}
+          onClick={() => scroll(1)}
+        >
+          <ArrowRight className="size-4" aria-hidden />
+        </button>
+      ) : null}
     </div>
   );
 }

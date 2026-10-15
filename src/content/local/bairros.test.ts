@@ -6,6 +6,7 @@ import { regioes } from "./regioes";
 import { zonas } from "./zonas";
 import { montarIndiceTerritorial } from "./indice-territorial";
 import { homeNeighborhoodHighlights } from "./home-highlights";
+import { content } from "../repository";
 import { publishedPaths } from "@/lib/sitemap";
 
 describe("Páginas de bairro", () => {
@@ -63,16 +64,17 @@ describe("Páginas de bairro", () => {
     );
   });
 
-  test("índice, destaque e sitemap oferecem Santo Amaro apenas quando publicado", () => {
+  test("índice, destaque e sitemap oferecem Santo Amaro apenas quando publicado", async () => {
     const publicados = montarIndiceTerritorial(regioes, delegacias, bairros, zonas);
     assert.equal(
       publicados.find((item) => item.id === "territorio-santo-amaro")?.paginaBairro,
       "/bairros/santo-amaro",
     );
+    const highlights = await homeNeighborhoodHighlights(regioes, bairros, (slug) =>
+      content.getBairro(slug),
+    );
     assert.equal(
-      homeNeighborhoodHighlights(regioes, delegacias, bairros, zonas).find(
-        (item) => item.id === "territorio-santo-amaro",
-      )?.paginaBairro,
+      highlights.find((item) => item.id === "territorio-santo-amaro")?.href,
       "/bairros/santo-amaro",
     );
     assert.ok(
@@ -88,10 +90,11 @@ describe("Páginas de bairro", () => {
       )?.paginaBairro,
       undefined,
     );
+    const semSantoPublicado = await homeNeighborhoodHighlights(regioes, emRevisao, (slug) =>
+      content.getBairro(slug),
+    );
     assert.equal(
-      homeNeighborhoodHighlights(regioes, delegacias, emRevisao, zonas).find(
-        (item) => item.id === "territorio-santo-amaro",
-      )?.paginaBairro,
+      semSantoPublicado.find((item) => item.id === "territorio-santo-amaro"),
       undefined,
     );
     assert.ok(

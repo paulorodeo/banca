@@ -573,10 +573,13 @@
 }
 .home-neighborhood-carousel {
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-columns: minmax(0, 1fr);
   align-items: center;
   gap: 0.6rem;
   margin-top: 0.75rem;
+}
+.home-neighborhood-carousel.is-scrollable {
+  grid-template-columns: auto minmax(0, 1fr) auto;
 }
 .home-neighborhoods {
   display: flex;
@@ -594,6 +597,11 @@
   scrollbar-width: thin;
   scrollbar-color: var(--border) transparent;
 }
+.home-neighborhood-carousel.is-static .home-neighborhoods {
+  justify-content: center;
+  flex-wrap: wrap;
+  overflow: visible;
+}
 .home-neighborhoods > li {
   display: flex;
   flex: 0 0 auto;
@@ -601,61 +609,40 @@
 }
 .home-neighborhood {
   display: flex;
-  align-items: flex-start;
-  gap: 0.7rem;
+  align-items: center;
+  gap: 0.65rem;
   flex-shrink: 0;
-  width: 15rem;
+  width: 12rem;
   max-width: 75vw;
-  min-height: 5.5rem;
+  min-height: 3.5rem;
   border: 1px solid var(--border);
   border-radius: 0.75rem;
-  padding: 0.65rem;
+  padding: 0.45rem 0.65rem;
   background: var(--card);
   color: var(--brand-navy);
   font-size: 0.78rem;
   line-height: 1.3;
   transition: border-color 160ms;
+  text-decoration: none;
 }
 .home-neighborhood:hover {
   border-color: var(--gold);
 }
 .home-neighborhood picture {
   display: block;
-  flex: 0 0 2.5rem;
-  width: 2.5rem;
-  height: 2.5rem;
+  flex: 0 0 2.75rem;
+  width: 2.75rem;
+  height: 2.75rem;
   overflow: hidden;
   border-radius: 50%;
 }
-.home-neighborhood-content {
-  min-width: 0;
-}
-.home-neighborhood-content strong {
+.home-neighborhood strong {
   display: block;
   font-size: 0.9rem;
   line-height: 1.35;
-  overflow-wrap: anywhere;
+  overflow-wrap: break-word;
 }
-.home-neighborhood-links {
-  display: grid;
-  gap: 0.15rem;
-}
-.home-neighborhood-link {
-  display: inline-flex;
-  min-height: 2.75rem;
-  align-items: center;
-  color: var(--brand-navy);
-  font-size: 0.73rem;
-  line-height: 1.35;
-  text-decoration: underline;
-  text-decoration-color: var(--gold);
-  text-underline-offset: 0.2rem;
-  overflow-wrap: anywhere;
-}
-.home-neighborhood-link:hover {
-  color: var(--gold);
-}
-.home-neighborhood-link:focus-visible,
+.home-neighborhood:focus-visible,
 .home-carousel-arrow:focus-visible,
 .home-featured-guide:focus-visible {
   outline: 2px solid var(--brand-navy);
