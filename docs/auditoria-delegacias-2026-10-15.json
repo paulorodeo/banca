@@ -8,7 +8,7 @@
     51, 52, 53, 54, 55, 56, 57, 58, 59, 62, 63, 64, 65, 66, 67, 68, 69, 70, 72, 73, 74, 75, 77, 78,
     80, 81, 83, 85, 87, 89, 90, 91, 92, 93, 95, 96, 97, 98, 99, 100, 101, 102, 103
   ],
-  "missingFromLocal": [
+  "originalMissingFromLocal": [
     {
       "number": 55,
       "name": "Parque São Rafael"
@@ -18,5 +18,6 @@
       "name": "Parque Bristol"
     }
   ],
-  "note": "Lista municipal consultada, não certificação de funcionamento atual, dados operacionais ou circunscrição. Não presumir implantação das lacunas numéricas."
+  "missingFromLocal": [],
+  "note": "Os DPs 55 e 83 foram incluídos depois da auditoria inicial. Lista municipal consultada, não certificação de funcionamento atual, dados operacionais ou circunscrição. Não presumir implantação das lacunas numéricas."
 }

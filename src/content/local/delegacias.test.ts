@@ -21,11 +21,11 @@ describe("Zonas e arquitetura regional", () => {
     }
   });
 
-  test("Zona Sul mantém 26 regiões, Oeste 8 e Leste recebe 33", () => {
+  test("Zona Sul reúne 27 regiões, Oeste 8 e Leste 34", () => {
     const porZona = (slug: string) => regioes.filter((regiao) => regiao.zona === slug).length;
-    assert.equal(porZona("zona-sul"), 26);
+    assert.equal(porZona("zona-sul"), 27);
     assert.equal(porZona("zona-oeste"), 8);
-    assert.equal(porZona("zona-leste"), 33);
+    assert.equal(porZona("zona-leste"), 34);
     assert.equal(porZona("zona-norte"), 16);
     assert.equal(porZona("centro"), 8);
   });
@@ -37,14 +37,15 @@ describe("Zonas e arquitetura regional", () => {
 });
 
 describe("Americanópolis na grade territorial", () => {
-  test("preserva as 34 delegacias e acrescenta 33 sem duplicar unidades", () => {
-    assert.equal(delegacias.length, 91);
-    assert.equal(new Set(delegacias.map((dp) => dp.unidade.numero)).size, 91);
-    assert.deepEqual(delegacias.slice(31, 34).map((dp) => dp.unidade.numero), ["85", "95", "25"]);
+  test("preserva os guias anteriores e acrescenta 55º e 83º sem duplicar unidades", () => {
+    assert.equal(delegacias.length, 93);
+    assert.equal(new Set(delegacias.map((dp) => dp.unidade.numero)).size, 93);
+    for (const numero of ["25", "55", "83", "85", "95"])
+      assert.equal(delegacias.filter((dp) => dp.unidade.numero === numero).length, 1);
   });
 
   test("mantém Americanópolis entre as regiões da home", () => {
-    assert.equal(regioes.length, 91);
+    assert.equal(regioes.length, 93);
     assert.equal(
       regioes.find((regiao) => regiao.slug === "americanopolis")?.href,
       "/delegacias/advogado-criminal-97-dp-americanopolis",
@@ -94,6 +95,42 @@ describe("25º DP Parelheiros fecha a Zona Sul", () => {
         true,
       );
     }
+  });
+});
+
+describe("Cobertura territorial de 93 DPs", () => {
+  test("55º e 83º usam zonas, URLs e vínculos reais sem dados operacionais presumidos", () => {
+    for (const [numero, zona, regiaoSlug, slug] of [
+      ["55", "zona-leste", "parque-sao-rafael", "advogado-criminal-55-dp-parque-sao-rafael"],
+      ["83", "zona-sul", "parque-bristol", "advogado-criminal-83-dp-parque-bristol"],
+    ] as const) {
+      const dp = delegacias.find((item) => item.unidade.numero === numero);
+      const regiao = regioes.find((item) => item.slug === regiaoSlug);
+      assert.equal(dp?.slug, slug);
+      assert.equal(dp?.seo.canonicalPath, `/delegacias/${slug}`);
+      assert.equal(regiao?.zona, zona);
+      assert.equal(regiao?.href, dp?.seo.canonicalPath);
+      assert.equal(dp?.regiaoSlug, regiaoSlug);
+      assert.equal(dp?.unidade.dadosDeDesenvolvimento, true);
+      for (const key of ["endereco", "telefone", "horario", "competencia"] as const)
+        assert.equal(dp?.unidade[key], undefined);
+      assert.ok(dp?.delegaciasRelacionadas?.length);
+      for (const link of dp?.delegaciasRelacionadas ?? []) {
+        const vizinha = delegacias.find((item) => item.slug === link.slug);
+        assert.ok(vizinha?.delegaciasRelacionadas?.some((item) => item.slug === slug));
+      }
+    }
+  });
+
+  test("3º e 59º exibem denominações oficiais sem perder os slugs antigos", () => {
+    const camposEliseos = delegacias.find((dp) => dp.unidade.numero === "3");
+    const jardimDosIpes = delegacias.find((dp) => dp.unidade.numero === "59");
+    assert.equal(camposEliseos?.slug, "advogado-criminal-3-dp-santa-ifigenia");
+    assert.equal(jardimDosIpes?.slug, "advogado-criminal-59-dp-jardim-noemia");
+    assert.equal(camposEliseos?.unidade.nomeOficial, "3º Distrito Policial — Campos Elíseos");
+    assert.equal(jardimDosIpes?.unidade.nomeOficial, "59º Distrito Policial — Jardim dos Ipês");
+    assert.ok(camposEliseos?.bairros.includes("Santa Ifigênia"));
+    assert.ok(jardimDosIpes?.bairros.includes("Jardim Noêmia"));
   });
 });
 

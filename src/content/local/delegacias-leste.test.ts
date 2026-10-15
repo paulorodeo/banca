@@ -5,9 +5,9 @@ import { regioes } from "./regioes";
 import { delegaciasLeste, distritosLeste, regioesLeste } from "./delegacias-leste";
 
 describe("Lote editorial da Zona Leste", () => {
-  test("inclui exatamente os 33 números aprovados", () => {
-    assert.deepEqual(distritosLeste.map((dp) => dp.numero), [8, 10, 18, 21, 22, 24, 29, 30, 31, 32, 41, 42, 44, 49, 50, 52, 53, 54, 56, 57, 58, 59, 62, 63, 64, 65, 66, 67, 68, 69, 70, 81, 103]);
-    assert.equal(new Set(delegaciasLeste.map((dp) => dp.slug)).size, 33);
+  test("inclui exatamente os 34 números publicados", () => {
+    assert.deepEqual(distritosLeste.map((dp) => dp.numero), [8, 10, 18, 21, 22, 24, 29, 30, 31, 32, 41, 42, 44, 49, 50, 52, 53, 54, 55, 56, 57, 58, 59, 62, 63, 64, 65, 66, 67, 68, 69, 70, 81, 103]);
+    assert.equal(new Set(delegaciasLeste.map((dp) => dp.slug)).size, 34);
     assert.equal(new Set(regioes.map((regiao) => regiao.slug)).size, regioes.length);
   });
   test("cada card aponta ao DP real e à região correspondente", () => {
@@ -28,7 +28,7 @@ describe("Lote editorial da Zona Leste", () => {
       for (const key of ["endereco", "telefone", "horario", "competencia"] as const) assert.equal(dp.unidade[key], undefined);
       assert.ok(dp.avisoRodape?.includes("sem vínculo com a Polícia Civil"));
       assert.ok(dp.observacaoBairros?.includes("Não indicam bairros atendidos"));
-      assert.equal(dp.bairros.length, 1);
+      assert.deepEqual(dp.bairros, dp.unidade.numero === "59" ? ["Jardim dos Ipês", "Jardim Noêmia"] : [dp.cardSubtitulo]);
     }
   });
   test("grafo novo é recíproco e sem destinos inexistentes", () => {

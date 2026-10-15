@@ -8,6 +8,7 @@ import { delegaciaAmericanopolis } from "./delegacia-americanopolis";
 import { delegaciasExtra6 } from "./delegacias-extra-6";
 import { delegaciasLeste, relacionadasLeste } from "./delegacias-leste";
 import { delegaciasNorteCentro, relacionadasNorteCentro } from "./delegacias-norte-centro";
+import { delegaciaParqueBristol, relacionadasParqueBristol } from "./delegacia-parque-bristol";
 
 interface DelegaciaSeed {
   slug: string;
@@ -218,6 +219,7 @@ const ORDEM = [
   "advogado-criminal-101-dp-jardim-imbuias",
   "advogado-criminal-85-dp-jardim-mirna",
   "advogado-criminal-95-dp-heliopolis",
+  "advogado-criminal-83-dp-parque-bristol",
   "advogado-criminal-25-dp-parelheiros",
   ...delegaciasLeste.map((dp) => dp.slug),
   ...delegaciasNorteCentro.map((dp) => dp.slug),
@@ -231,6 +233,7 @@ const ORDEM = [
 const RELACIONADAS: Record<string, string[]> = {
   ...relacionadasLeste,
   ...relacionadasNorteCentro,
+  ...relacionadasParqueBristol,
   "advogado-14-dp-pinheiros": [
     "advogado-criminal-7-dp-vila-romana",
     "advogado-criminal-23-dp-perdizes",
@@ -344,12 +347,14 @@ const RELACIONADAS: Record<string, string[]> = {
     "advogado-criminal-26-dp-sacoma",
     "advogado-criminal-36-dp-vila-mariana",
     "advogado-criminal-16-dp-vila-clementino",
+    "advogado-criminal-83-dp-parque-bristol",
   ],
   "advogado-criminal-26-dp-sacoma": [
     "advogado-criminal-95-dp-heliopolis",
     "advogado-criminal-17-dp-ipiranga",
     "advogado-criminal-35-dp-jabaquara",
     "advogado-criminal-16-dp-vila-clementino",
+    "advogado-criminal-83-dp-parque-bristol",
   ],
   "advogado-criminal-102-dp-socorro": [
     "advogado-criminal-101-dp-jardim-imbuias",
@@ -452,6 +457,7 @@ const base: Delegacia[] = [
   ...delegaciasExtra4,
   ...delegaciasExtra5,
   delegaciaAmericanopolis,
+  delegaciaParqueBristol,
   ...delegaciasExtra6,
   ...delegaciasLeste,
   ...delegaciasNorteCentro,

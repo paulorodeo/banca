@@ -11,6 +11,8 @@ interface DistritoLote {
   lugarSlug: string;
   eixo: string;
   zona: ZonaLote;
+  nomeOficialVerificado?: string;
+  referenciasAdicionais?: string[];
 }
 
 const ROTULO_ZONA: Record<ZonaLote, string> = { "zona-norte": "Zona Norte", centro: "Centro" };
@@ -38,7 +40,7 @@ export const distritosNorte: DistritoLote[] = [
 export const distritosCentro: DistritoLote[] = [
   { numero: 1, nome: "Liberdade", regiaoSlug: "liberdade-1-dp", lugarSlug: "liberdade", eixo: "se", zona: "centro" },
   { numero: 2, nome: "Bom Retiro", regiaoSlug: "bom-retiro", lugarSlug: "bom-retiro", eixo: "luz", zona: "centro" },
-  { numero: 3, nome: "Santa Ifigênia", regiaoSlug: "santa-ifigenia", lugarSlug: "santa-ifigenia", eixo: "luz", zona: "centro" },
+  { numero: 3, nome: "Campos Elíseos", regiaoSlug: "santa-ifigenia", lugarSlug: "santa-ifigenia", eixo: "luz", zona: "centro", nomeOficialVerificado: "3º Distrito Policial — Campos Elíseos", referenciasAdicionais: ["Santa Ifigênia"] },
   { numero: 4, nome: "Consolação", regiaoSlug: "consolacao", lugarSlug: "consolacao", eixo: "republica", zona: "centro" },
   { numero: 5, nome: "Liberdade", regiaoSlug: "liberdade-5-dp", lugarSlug: "liberdade", eixo: "se", zona: "centro" },
   { numero: 6, nome: "Cambuci", regiaoSlug: "cambuci", lugarSlug: "cambuci", eixo: "se", zona: "centro" },
@@ -68,7 +70,7 @@ const criarRegiao = (dp: DistritoLote): Regiao => ({
   slug: dp.regiaoSlug,
   nome: NOMES_REPETIDOS.has(dp.nome) ? `${dp.nome} · ${dp.numero}º DP` : dp.nome,
   descricao: `Guia do ${dp.numero}º DP — ${dp.nome}: identificação da unidade, intimações e documentos de procedimentos policiais.`,
-  bairros: [dp.nome],
+  bairros: [dp.nome, ...(dp.referenciasAdicionais ?? [])],
   href: `/delegacias/${slugDistrito(dp)}`,
   zona: dp.zona,
 });
@@ -82,7 +84,7 @@ export const relacionadasNorteCentro: Record<string, string[]> = Object.fromEntr
 
 function criarDelegacia(dp: DistritoLote): Delegacia {
   const slug = slugDistrito(dp);
-  const unidade = `${dp.numero}º Distrito Policial de São Paulo`;
+  const unidade = dp.nomeOficialVerificado ?? `${dp.numero}º Distrito Policial de São Paulo`;
   const rotulo = ROTULO_ZONA[dp.zona];
   const vizinhos = referenciasDoEixo(dp);
   const outros = vizinhos.map((o) => `${o.numero}º DP — ${o.nome}`).join(", ");
@@ -98,10 +100,10 @@ function criarDelegacia(dp: DistritoLote): Delegacia {
       description: `Guia independente do ${dp.numero}º DP — ${dp.nome}, em São Paulo. Identificação da unidade, intimações, inquéritos e referências editoriais ${dp.zona === "centro" ? "do Centro" : "da Zona Norte"}.`,
       canonicalPath: `/delegacias/${slug}`,
     },
-    introducao: `Guia editorial do ${unidade}, organizado pela referência territorial ${dp.nome}. A denominação institucional atual está em verificação; o nome do lugar não define circunscrição. Não é canal da Polícia Civil nem oferta de atendimento jurídico.`,
+    introducao: `Guia editorial do ${unidade}, organizado pela referência territorial ${dp.nome}. ${dp.nomeOficialVerificado ? "A denominação consta de fonte pública." : "A denominação institucional atual está em verificação."} O nome do lugar não define circunscrição; confirme os dados de atendimento nos canais oficiais. Não é canal da Polícia Civil nem oferta de atendimento jurídico.`,
     unidade: { numero: String(dp.numero), nomeOficial: unidade, dadosDeDesenvolvimento: true },
     regiaoSlug: dp.regiaoSlug,
-    bairros: [dp.nome],
+    bairros: [dp.nome, ...(dp.referenciasAdicionais ?? [])],
     contextoTerritorial: contexto(dp),
     observacaoBairros: "As referências territoriais organizam a navegação. Não indicam bairros atendidos, competência exclusiva ou limites de circunscrição. Confirme a unidade responsável pelo endereço exato e pela natureza dos fatos nos canais oficiais da Polícia Civil.",
     secoes: [

@@ -12,7 +12,7 @@ export const zonas: Zona[] = [
     slug: "centro",
     nome: "Centro",
     descricao:
-      "Guias de delegacias nas referências Liberdade, Bom Retiro, Santa Ifigênia, Consolação, Cambuci, Brás e Santa Cecília.",
+      "Guias de delegacias nas referências Liberdade, Bom Retiro, Campos Elíseos, Santa Ifigênia, Consolação, Cambuci, Brás e Santa Cecília.",
     introducao:
       "O Centro de São Paulo concentra equipamentos públicos, comércio intenso e uma trama urbana densa, em que procedimentos variados tramitam nas unidades policiais da região central.",
     secoes: [
@@ -67,7 +67,7 @@ export const zonas: Zona[] = [
       {
         titulo: "Cobertura territorial",
         paragrafos: [
-          "Os cards reúnem guias de 33 distritos policiais, com referências como Penha, Ponte Rasa, Vila Carrão, Vila Formosa, Parque São Lucas, Ermelino Matarazzo, Vila Jacuí, São Mateus e Sapopemba. Os dois guias de Itaquera distinguem o 32º e o 103º DP pelo número da unidade.",
+          "Os cards reúnem guias de 34 distritos policiais, com referências como Penha, Ponte Rasa, Vila Carrão, Vila Formosa, Parque São Lucas, Ermelino Matarazzo, Vila Jacuí, São Mateus, Parque São Rafael e Sapopemba. Os dois guias de Itaquera distinguem o 32º e o 103º DP pelo número da unidade.",
           "Brás é incluído como referência editorial de transição entre Centro e Zona Leste. Este agrupamento organiza a navegação do portal e não corresponde a uma divisão administrativa da Polícia Civil. Bairros e zonas não definem a unidade responsável por um endereço.",
         ],
       },
@@ -91,7 +91,7 @@ export const zonas: Zona[] = [
       {
         titulo: "Cobertura territorial",
         paragrafos: [
-          "A região reúne páginas de referência nos eixos Santo Amaro, Brooklin, Campo Belo, Morumbi, Jabaquara, Ipiranga, Sacomã, Cidade Ademar, Capão Redondo, Campo Limpo, Socorro, Cidade Dutra, Parque Santo Antônio, Jardim Herculano, Vila Joaniza, Americanópolis, Jardim Miriam, Jardim Imbuias, Jardim Mirna, Heliópolis e Parelheiros, no extremo sul da cidade.",
+          "A região reúne páginas de referência nos eixos Santo Amaro, Brooklin, Campo Belo, Morumbi, Jabaquara, Ipiranga, Sacomã, Parque Bristol, Cidade Ademar, Capão Redondo, Campo Limpo, Socorro, Cidade Dutra, Parque Santo Antônio, Jardim Herculano, Vila Joaniza, Americanópolis, Jardim Miriam, Jardim Imbuias, Jardim Mirna, Heliópolis e Parelheiros, no extremo sul da cidade.",
           "Os bairros citados são referências geográficas. A confirmação da unidade responsável depende do endereço exato dos fatos e dos canais oficiais da Polícia Civil.",
         ],
       },

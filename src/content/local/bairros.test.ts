@@ -11,7 +11,7 @@ describe("Páginas de bairro", () => {
     assert.equal(pinheiros?.status, "publicado");
     assert.equal(pinheiros?.zona, "zona-oeste");
     assert.equal(regioes.find((regiao) => regiao.slug === "pinheiros")?.zona, "zona-oeste");
-    assert.equal(delegacias.length, 91);
+    assert.equal(delegacias.length, 93);
   });
 
   test("toda relação aponta para zona e unidade canônica existentes", () => {

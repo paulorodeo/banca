@@ -48,11 +48,11 @@ export const paginas: PaginaInstitucional[] = [
   {
     id: "pagina-profissionais",
     slug: "profissionais",
-    titulo: "Profissionais",
-    subtitulo: "Participação profissional por região, com identificação real e contato direto.",
+    titulo: "Pessoas e profissionais",
+    subtitulo: "Diretório editorial de representantes institucionais e espaço para profissionais independentes verificados.",
     seo: {
-      title: "Profissionais | Banca Paulista",
-      description: "Participação profissional por região, com identificação real e contato direto.",
+      title: "Pessoas e profissionais | Banca Paulista",
+      description: "Diretório editorial de pessoas ligadas às instituições de Justiça e espaço separado para profissionais independentes verificados.",
       canonicalPath: "/profissionais",
     },
     blocos: [

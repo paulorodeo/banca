@@ -69,7 +69,7 @@ test("sitemap includes all published territory and articles without future modul
     bairros,
     articles: [...conteudos, { ...conteudos[0]!, slug: "rascunho-teste", status: "revisao" }],
   });
-  assert.equal(paths.filter((p) => p.startsWith("/delegacias/")).length, 91);
+  assert.equal(paths.filter((p) => p.startsWith("/delegacias/")).length, 93);
   assert.equal(paths.filter((p) => p.startsWith("/regioes/")).length, 5);
   assert(paths.includes("/bairros/pinheiros"));
   assert(
