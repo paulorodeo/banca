@@ -1,35 +1,37 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { Compass, Map, Network } from "lucide-react";
 import { content } from "@/content/repository";
-import type { Regiao, Zona } from "@/content/types";
-import { artigoDaZona } from "@/content/local/zonas";
-import { Container, Section, SectionHeading } from "@/components/site/primitives";
-import { CtaReservado, PageHero, RegiaoCard, ZonaCard } from "@/components/site/blocks";
+import type { Bairro, Regiao, Zona } from "@/content/types";
+import { withPublishedGuideCounts } from "@/content/local/zonas";
+import { Container } from "@/components/site/primitives";
+import { NeighborhoodIndex, TerritoryHero, ZoneCardLight } from "@/components/site/territory";
 import { breadcrumbSchema, canonicalLink, pageMeta } from "@/lib/seo";
 
 interface Data {
   zonas: (Zona & { quantidade: number })[];
-  porZona: { zona: Zona; regioes: Regiao[] }[];
+  regioes: Regiao[];
+  bairros: Bairro[];
 }
 
 export const Route = createFileRoute("/regioes/")({
   loader: async (): Promise<Data> => {
-    const [zonas, regioes] = await Promise.all([content.listZonas(), content.listRegioes()]);
+    const [zonas, regioes, bairros, delegacias] = await Promise.all([
+      content.listZonas(),
+      content.listRegioes(),
+      content.listBairros(),
+      content.listDelegacias(),
+    ]);
     return {
-      zonas: zonas.map((zona) => ({
-        ...zona,
-        quantidade: regioes.filter((regiao) => regiao.zona === zona.slug).length,
-      })),
-      porZona: zonas.map((zona) => ({
-        zona,
-        regioes: regioes.filter((regiao) => regiao.zona === zona.slug),
-      })),
+      zonas: withPublishedGuideCounts(zonas, regioes, delegacias),
+      regioes,
+      bairros,
     };
   },
   head: () => ({
     meta: pageMeta({
-      title: "Regiões em São Paulo | Banca Paulista",
+      title: "São Paulo, bairro por bairro | Banca Paulista",
       description:
-        "Índice das regiões publicadas pelo portal em São Paulo, organizado por zona da cidade, com contexto territorial e páginas de referência por distrito.",
+        "Explore as regiões de São Paulo e encontre páginas publicadas de bairros, órgãos públicos e guias territoriais organizados pelas cinco zonas da capital.",
       path: "/regioes",
     }),
     links: canonicalLink("/regioes"),
@@ -49,48 +51,103 @@ export const Route = createFileRoute("/regioes/")({
 });
 
 function RegioesPage() {
-  const { zonas, porZona } = Route.useLoaderData() as Data;
+  const { zonas, regioes, bairros } = Route.useLoaderData() as Data;
 
   return (
-    <>
-      <PageHero
-        eyebrow="Cobertura territorial"
-        title="Regiões em São Paulo"
-        lead="Índice organizado por zona da cidade, com páginas territoriais publicadas por distrito e cobertura ampliada de forma gradual."
+    <div className="home-light">
+      <TerritoryHero
+        eyebrow="São Paulo · Navegação territorial"
+        title="São Paulo, bairro por bairro."
+        lead="Explore as regiões da capital e encontre informações sobre bairros, órgãos públicos e serviços jurídicos."
         crumbs={[
           { name: "Início", path: "/" },
           { name: "Regiões", path: "/regioes" },
         ]}
+        image={{
+          avifSrc: "/images/sp/ponte.avif",
+          fallbackSrc: "/images/sp/ponte.webp",
+          alt: "Ponte Estaiada e paisagem urbana de São Paulo",
+          width: 2048,
+          height: 768,
+          focalPoint: "center 52%",
+          priority: true,
+        }}
       />
-      <Section>
+
+      <section className="py-14 md:py-20">
         <Container>
-          <SectionHeading
-            eyebrow="Zonas"
-            title="Conteúdo organizado por zona"
-            lead="Cada zona reúne as páginas territoriais publicadas, com contexto local e situações frequentes."
-          />
-          <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-gold">Cinco zonas</p>
+          <h2 className="mt-3 max-w-2xl font-serif text-4xl text-brand-navy">
+            Um ponto de partida para cada território
+          </h2>
+          <p className="mt-4 max-w-3xl text-base leading-7 text-muted-foreground">
+            As zonas organizam a descoberta editorial. Dentro de cada hub, bairros e guias
+            publicados mantêm seus destinos próprios e suas relações territoriais verificadas.
+          </p>
+          <div className="regions-zone-grid mt-9 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
             {zonas.map((zona) => (
-              <ZonaCard key={zona.id} zona={zona} quantidade={zona.quantidade} />
+              <ZoneCardLight key={zona.id} zona={zona} quantidade={zona.quantidade} />
             ))}
           </div>
         </Container>
-      </Section>
-      {porZona.map(({ zona, regioes }) =>
-        regioes.length > 0 ? (
-          <Section key={zona.id} tone={zona.slug === "zona-sul" ? "base" : "raised"}>
-            <Container>
-              <SectionHeading eyebrow={zona.nome} title={`Regiões publicadas ${artigoDaZona(zona.slug)} ${zona.nome}`} />
-              <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-                {regioes.map((regiao) => (
-                  <RegiaoCard key={regiao.id} regiao={regiao} />
-                ))}
-              </div>
-            </Container>
-          </Section>
-        ) : null,
-      )}
-      <CtaReservado />
-    </>
+      </section>
+
+      <section className="border-y border-border bg-card py-14 md:py-20">
+        <Container>
+          <div className="grid gap-10 lg:grid-cols-[0.75fr_1.25fr] lg:items-start">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-gold">
+                Como funciona
+              </p>
+              <h2 className="mt-3 font-serif text-4xl text-brand-navy">
+                A cidade, conectada pela informação
+              </h2>
+              <p className="mt-4 text-base leading-7 text-muted-foreground">
+                Comece por uma zona, explore os bairros e acesse diretamente os guias das
+                instituições. As relações territoriais ajudam a navegar; a competência e o
+                atendimento devem ser confirmados nos canais oficiais.
+              </p>
+            </div>
+            <div className="grid gap-4 sm:grid-cols-3">
+              {[
+                { icon: Map, title: "Zonas", text: "Cinco portas de entrada para a cidade." },
+                {
+                  icon: Compass,
+                  title: "Bairros",
+                  text: "Páginas próprias somente quando publicadas.",
+                },
+                {
+                  icon: Network,
+                  title: "Instituições",
+                  text: "Relações diretas com guias canônicos.",
+                },
+              ].map(({ icon: Icon, title, text }) => (
+                <div key={title} className="rounded-lg border border-border bg-background p-5">
+                  <Icon className="size-5 text-gold" aria-hidden />
+                  <h3 className="mt-4 font-serif text-xl text-brand-navy">{title}</h3>
+                  <p className="mt-2 text-sm leading-6 text-muted-foreground">{text}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </Container>
+      </section>
+
+      <section className="py-14 md:py-20">
+        <Container>
+          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-gold">
+            Índice territorial
+          </p>
+          <h2 className="mt-3 font-serif text-4xl text-brand-navy">Bairros e regiões publicados</h2>
+          <p className="mt-3 max-w-3xl text-sm leading-6 text-muted-foreground">
+            Pinheiros já possui página própria. Os demais itens preservam seus guias territoriais
+            válidos até que uma página de bairro seja publicada.
+          </p>
+          <div className="mt-8">
+            <NeighborhoodIndex regioes={regioes} zonas={zonas} bairrosPublicados={bairros} />
+          </div>
+        </Container>
+      </section>
+    </div>
   );
 }

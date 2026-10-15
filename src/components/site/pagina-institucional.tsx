@@ -15,7 +15,7 @@ export function PaginaInstitucionalView({
   aside?: React.ReactNode;
 }) {
   return (
-    <>
+    <div className="home-light editorial-page">
       <PageHero eyebrow={eyebrow} title={pagina.titulo} lead={pagina.subtitulo} crumbs={crumbs} />
       <Section>
         <Container>
@@ -27,7 +27,10 @@ export function PaginaInstitucionalView({
                   <Hairline className="my-6 max-w-16" />
                   <div className="space-y-4">
                     {bloco.paragrafos.map((paragrafo) => (
-                      <p key={paragrafo} className="text-base leading-relaxed text-muted-foreground">
+                      <p
+                        key={paragrafo}
+                        className="text-base leading-relaxed text-muted-foreground"
+                      >
                         {paragrafo}
                       </p>
                     ))}
@@ -40,6 +43,6 @@ export function PaginaInstitucionalView({
         </Container>
       </Section>
       <CtaReservado />
-    </>
+    </div>
   );
 }

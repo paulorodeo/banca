@@ -1,35 +1,70 @@
 import { Link } from "@tanstack/react-router";
-import { Container, Hairline } from "./primitives";
+import { MapPin } from "lucide-react";
+import { Container } from "./primitives";
 import { Brand } from "./brand";
 import { marca } from "@/content/local/settings";
 
+const footerLinks = [
+  { to: "/", label: "Início" },
+  { to: "/regioes", label: "Regiões / Bairros" },
+  { to: "/delegacias", label: "Órgãos Públicos · Delegacias" },
+  { to: "/profissionais", label: "Profissionais" },
+  { to: "/artigos", label: "Artigos" },
+  { to: "/sobre", label: "Sobre" },
+] as const;
+
 export function SiteFooter() {
-  return <footer className="border-t border-border bg-graphite">
-    <Container className="py-16">
-      <div className="grid gap-12 md:grid-cols-[1.4fr_1fr_1fr]">
-        <div><Link to="/" aria-label="Banca Paulista — início"><Brand /></Link>
-          <p className="mt-6 max-w-sm text-sm leading-relaxed text-muted-foreground">{marca.completo}. Portal editorial e territorial independente sobre defesa criminal e delegacias de São Paulo.</p>
+  return (
+    <footer className="border-t border-gold/25 bg-brand-navy text-ivory">
+      <Container>
+        <div className="grid gap-7 py-5 md:grid-cols-[auto_1fr_auto] md:items-center">
+          <Link
+            to="/"
+            className="inline-flex justify-self-start rounded-sm"
+            aria-label="Banca Paulista — início"
+          >
+            <Brand />
+          </Link>
+
+          <nav aria-label="Navegação do rodapé" className="md:justify-self-center">
+            <ul className="flex flex-wrap gap-x-6 gap-y-3 text-[0.68rem] text-ivory/65">
+              {footerLinks.map((link) => (
+                <li key={link.to}>
+                  <Link to={link.to} className="rounded-sm transition-colors hover:text-gold">
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+
+          <p className="flex items-center gap-2 text-[0.62rem] leading-4 text-ivory/55 md:max-w-32">
+            <MapPin className="size-3.5 shrink-0 text-gold" aria-hidden />
+            São Paulo · Capital
+            <br />
+            Conteúdo informativo
+          </p>
         </div>
-        <nav aria-label="Portal"><h2 className="eyebrow mb-5">Portal</h2><ul className="space-y-3 text-sm text-muted-foreground">
-          <li><Link to="/sobre">Sobre a Banca Paulista</Link></li>
-          <li><Link to="/profissionais">Profissionais</Link></li>
-          <li><Link to="/plantao-criminal">Plantão criminal: informação</Link></li>
-          <li><Link to="/areas-de-atuacao">Temas jurídicos</Link></li>
-        </ul></nav>
-        <nav aria-label="Conteúdo e contato"><h2 className="eyebrow mb-5">Conteúdo e contato</h2><ul className="space-y-3 text-sm text-muted-foreground">
-          <li><Link to="/delegacias">Guia de delegacias</Link></li>
-          <li><Link to="/regioes">Regiões de São Paulo</Link></li>
-          <li><Link to="/artigos">Artigos</Link></li>
-          <li><Link to="/contato">Contato editorial</Link></li>
-          <li><Link to="/politica-de-privacidade">Política de privacidade</Link></li>
-        </ul></nav>
-      </div>
-      <Hairline className="my-10" />
-      <div className="space-y-4 text-xs leading-relaxed text-muted-foreground">
-        <p>O portal está em fase editorial. Ainda não há profissionais participantes publicados. Não constitui escritório de advocacia ou sociedade de advogados e não presta consulta jurídica, recebe casos ou oferece atendimento 24 horas.</p>
-        <p>Não há vínculo com a Polícia Civil, distritos policiais, tribunais ou órgãos públicos. Conteúdo informativo não substitui orientação profissional. A cobertura territorial não representa presença física ou disponibilidade de advogado.</p>
-        <p>© {new Date().getFullYear()} {marca.curto} · São Paulo, SP.</p>
-      </div>
-    </Container>
-  </footer>;
+
+        <div className="grid gap-4 border-t border-white/10 py-3 text-[0.58rem] leading-4 text-ivory/45 md:grid-cols-[1fr_auto] md:items-center">
+          <p>
+            © {new Date().getFullYear()} {marca.curto}. Portal editorial independente, sem vínculo
+            com órgãos públicos. Conteúdo informativo não substitui orientação profissional.
+          </p>
+          <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
+            <Link
+              to="/politica-de-privacidade"
+              className="rounded-sm transition-colors hover:text-gold"
+            >
+              Política de privacidade
+            </Link>
+            <Link to="/contato" className="rounded-sm transition-colors hover:text-gold">
+              Contato editorial
+            </Link>
+            <span>Em fase editorial</span>
+          </div>
+        </div>
+      </Container>
+    </footer>
+  );
 }

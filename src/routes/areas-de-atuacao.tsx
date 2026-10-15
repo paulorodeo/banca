@@ -32,7 +32,7 @@ export const Route = createFileRoute("/areas-de-atuacao")({
 function AreasPage() {
   const { areas, situacoes } = Route.useLoaderData() as Data;
   return (
-    <>
+    <div className="home-light editorial-page">
       <PageHero
         eyebrow="Informação jurídica"
         title="Temas jurídicos"
@@ -83,6 +83,6 @@ function AreasPage() {
         </Container>
       </Section>
       <CtaReservado />
-    </>
+    </div>
   );
 }

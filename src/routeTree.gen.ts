@@ -18,9 +18,11 @@ import { Route as PauloSinigaliaRouteImport } from './routes/paulo-sinigalia'
 import { Route as PlantaoCriminalRouteImport } from './routes/plantao-criminal'
 import { Route as PoliticaDePrivacidadeRouteImport } from './routes/politica-de-privacidade'
 import { Route as ProfissionaisRouteImport } from './routes/profissionais'
+import { Route as RadarRouteImport } from './routes/radar'
 import { Route as SobreRouteImport } from './routes/sobre'
 import { Route as ArtigosIndexRouteImport } from './routes/artigos.index'
 import { Route as ArtigosSlugRouteImport } from './routes/artigos.$slug'
+import { Route as BairrosSlugRouteImport } from './routes/bairros.$slug'
 import { Route as ConteudosIndexRouteImport } from './routes/conteudos.index'
 import { Route as ConteudosSlugRouteImport } from './routes/conteudos.$slug'
 import { Route as DelegaciasIndexRouteImport } from './routes/delegacias.index'
@@ -74,6 +76,11 @@ const ProfissionaisRoute = ProfissionaisRouteImport.update({
   path: '/profissionais',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RadarRoute = RadarRouteImport.update({
+  id: '/radar',
+  path: '/radar',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SobreRoute = SobreRouteImport.update({
   id: '/sobre',
   path: '/sobre',
@@ -87,6 +94,11 @@ const ArtigosIndexRoute = ArtigosIndexRouteImport.update({
 const ArtigosSlugRoute = ArtigosSlugRouteImport.update({
   id: '/artigos/$slug',
   path: '/artigos/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BairrosSlugRoute = BairrosSlugRouteImport.update({
+  id: '/bairros/$slug',
+  path: '/bairros/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ConteudosIndexRoute = ConteudosIndexRouteImport.update({
@@ -135,8 +147,10 @@ export interface FileRoutesByFullPath {
   '/plantao-criminal': typeof PlantaoCriminalRoute
   '/politica-de-privacidade': typeof PoliticaDePrivacidadeRoute
   '/profissionais': typeof ProfissionaisRoute
+  '/radar': typeof RadarRoute
   '/sobre': typeof SobreRoute
   '/artigos/$slug': typeof ArtigosSlugRoute
+  '/bairros/$slug': typeof BairrosSlugRoute
   '/conteudos/$slug': typeof ConteudosSlugRoute
   '/delegacias/$slug': typeof DelegaciasSlugRoute
   '/regioes/$slug': typeof RegioesSlugRoute
@@ -156,8 +170,10 @@ export interface FileRoutesByTo {
   '/plantao-criminal': typeof PlantaoCriminalRoute
   '/politica-de-privacidade': typeof PoliticaDePrivacidadeRoute
   '/profissionais': typeof ProfissionaisRoute
+  '/radar': typeof RadarRoute
   '/sobre': typeof SobreRoute
   '/artigos/$slug': typeof ArtigosSlugRoute
+  '/bairros/$slug': typeof BairrosSlugRoute
   '/conteudos/$slug': typeof ConteudosSlugRoute
   '/delegacias/$slug': typeof DelegaciasSlugRoute
   '/regioes/$slug': typeof RegioesSlugRoute
@@ -178,8 +194,10 @@ export interface FileRoutesById {
   '/plantao-criminal': typeof PlantaoCriminalRoute
   '/politica-de-privacidade': typeof PoliticaDePrivacidadeRoute
   '/profissionais': typeof ProfissionaisRoute
+  '/radar': typeof RadarRoute
   '/sobre': typeof SobreRoute
   '/artigos/$slug': typeof ArtigosSlugRoute
+  '/bairros/$slug': typeof BairrosSlugRoute
   '/conteudos/$slug': typeof ConteudosSlugRoute
   '/delegacias/$slug': typeof DelegaciasSlugRoute
   '/regioes/$slug': typeof RegioesSlugRoute
@@ -201,8 +219,10 @@ export interface FileRouteTypes {
     | '/plantao-criminal'
     | '/politica-de-privacidade'
     | '/profissionais'
+    | '/radar'
     | '/sobre'
     | '/artigos/$slug'
+    | '/bairros/$slug'
     | '/conteudos/$slug'
     | '/delegacias/$slug'
     | '/regioes/$slug'
@@ -222,8 +242,10 @@ export interface FileRouteTypes {
     | '/plantao-criminal'
     | '/politica-de-privacidade'
     | '/profissionais'
+    | '/radar'
     | '/sobre'
     | '/artigos/$slug'
+    | '/bairros/$slug'
     | '/conteudos/$slug'
     | '/delegacias/$slug'
     | '/regioes/$slug'
@@ -243,8 +265,10 @@ export interface FileRouteTypes {
     | '/plantao-criminal'
     | '/politica-de-privacidade'
     | '/profissionais'
+    | '/radar'
     | '/sobre'
     | '/artigos/$slug'
+    | '/bairros/$slug'
     | '/conteudos/$slug'
     | '/delegacias/$slug'
     | '/regioes/$slug'
@@ -265,8 +289,10 @@ export interface RootRouteChildren {
   PlantaoCriminalRoute: typeof PlantaoCriminalRoute
   PoliticaDePrivacidadeRoute: typeof PoliticaDePrivacidadeRoute
   ProfissionaisRoute: typeof ProfissionaisRoute
+  RadarRoute: typeof RadarRoute
   SobreRoute: typeof SobreRoute
   ArtigosSlugRoute: typeof ArtigosSlugRoute
+  BairrosSlugRoute: typeof BairrosSlugRoute
   ConteudosSlugRoute: typeof ConteudosSlugRoute
   DelegaciasSlugRoute: typeof DelegaciasSlugRoute
   RegioesSlugRoute: typeof RegioesSlugRoute
@@ -342,6 +368,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProfissionaisRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/radar': {
+      id: '/radar'
+      path: '/radar'
+      fullPath: '/radar'
+      preLoaderRoute: typeof RadarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/sobre': {
       id: '/sobre'
       path: '/sobre'
@@ -361,6 +394,13 @@ declare module '@tanstack/react-router' {
       path: '/artigos/$slug'
       fullPath: '/artigos/$slug'
       preLoaderRoute: typeof ArtigosSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/bairros/$slug': {
+      id: '/bairros/$slug'
+      path: '/bairros/$slug'
+      fullPath: '/bairros/$slug'
+      preLoaderRoute: typeof BairrosSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/conteudos/': {
@@ -425,8 +465,10 @@ const rootRouteChildren: RootRouteChildren = {
   PlantaoCriminalRoute: PlantaoCriminalRoute,
   PoliticaDePrivacidadeRoute: PoliticaDePrivacidadeRoute,
   ProfissionaisRoute: ProfissionaisRoute,
+  RadarRoute: RadarRoute,
   SobreRoute: SobreRoute,
   ArtigosSlugRoute: ArtigosSlugRoute,
+  BairrosSlugRoute: BairrosSlugRoute,
   ConteudosSlugRoute: ConteudosSlugRoute,
   DelegaciasSlugRoute: DelegaciasSlugRoute,
   RegioesSlugRoute: RegioesSlugRoute,

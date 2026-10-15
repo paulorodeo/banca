@@ -17,7 +17,16 @@ export const Route = createFileRoute("/delegacias/$slug")({
   },
   head: ({ loaderData }) => {
     if (!loaderData) {
-      return { meta: [...pageMeta({ title: "Guia indisponível | Banca Paulista", description: "Consulte o índice de delegacias da Banca Paulista.", path: "/delegacias" }), { name: "robots", content: "noindex" }] };
+      return {
+        meta: [
+          ...pageMeta({
+            title: "Guia indisponível | Banca Paulista",
+            description: "Consulte o índice de delegacias da Banca Paulista.",
+            path: "/delegacias",
+          }),
+          { name: "robots", content: "noindex" },
+        ],
+      };
     }
     const { dp } = loaderData as Data;
     return {
@@ -27,9 +36,7 @@ export const Route = createFileRoute("/delegacias/$slug")({
         path: dp.seo.canonicalPath,
       }),
       links: [{ rel: "canonical", href: canonical(dp.seo.canonicalPath) }],
-      scripts: [
-        { type: "application/ld+json", children: JSON.stringify(delegaciaJsonLd(dp)) },
-      ],
+      scripts: [{ type: "application/ld+json", children: JSON.stringify(delegaciaJsonLd(dp)) }],
     };
   },
   component: DelegaciaPage,
@@ -47,7 +54,7 @@ function DelegaciaPage() {
   ].filter(([, v]) => Boolean(v)) as [string, string][];
 
   return (
-    <>
+    <div className="home-light editorial-page">
       <PageHero
         eyebrow="Guia informativo"
         title={dp.h1}
@@ -174,6 +181,6 @@ function DelegaciaPage() {
         </Container>
       </Section>
       <CtaReservado />
-    </>
+    </div>
   );
 }

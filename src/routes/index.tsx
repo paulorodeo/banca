@@ -1,196 +1,515 @@
+import { useEffect, useRef, useState } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, MapPin, Search, Shield, Landmark, BookOpen, Info } from "lucide-react";
+import {
+  ArrowRight,
+  MapPin,
+  Shield,
+  Landmark,
+  BookOpen,
+  Info,
+  FileText,
+  Users,
+  Building2,
+  Search,
+} from "lucide-react";
 import { content } from "@/content/repository";
 import { Container } from "@/components/site/primitives";
-import { ConteudoCard } from "@/components/site/blocks";
+
 import { websiteSchema, canonicalLink, pageMeta } from "@/lib/seo";
-import type { ConteudoJuridico, Regiao, Zona } from "@/content/types";
+import type { ConteudoJuridico, Regiao, Zona, Delegacia, Bairro } from "@/content/types";
 
 interface HomeData {
   regioes: Regiao[];
+  bairros: Bairro[];
+  delegacias: Delegacia[];
   zonas: (Zona & { quantidade: number })[];
   conteudos: ConteudoJuridico[];
   artigosErro?: string;
 }
 import { readArticles } from "@/content/articles.functions";
-import ponteAsset from "@/assets/ponte-estaiada.jpg.asset.json";
+import {
+  featuredNeighborhoods,
+  photoCredits,
+  editorialIllustrations,
+} from "@/content/local/visual-media";
+import { ZoneCardLight } from "@/components/site/territory";
+import { withPublishedGuideCounts } from "@/content/local/zonas";
+import { NeighborhoodCarousel } from "@/components/site/neighborhood-carousel";
+import { marca } from "@/content/local/settings";
 
-const TITLE = "Banca Paulista de Advogados — Portal editorial e defesa criminal";
+const TITLE = `${marca.curto} — Informação jurídica e territorial`;
 const DESCRIPTION =
   "Portal editorial sobre defesa criminal, delegacias e regiões de São Paulo. Guias territoriais, artigos informativos e contexto sobre plantão criminal.";
 
 export const Route = createFileRoute("/")({
-  loader: async (): Promise<HomeData> => ({
-    regioes: await content.listRegioes(),
-    // Cards de zona na home, com contagem de regiões publicadas por zona.
-    zonas: await content.listZonas().then(async (zonas) => {
-      const regioes = await content.listRegioes();
-      return zonas.map((zona) => ({
-        ...zona,
-        quantidade: regioes.filter((regiao) => regiao.zona === zona.slug).length,
-      }));
-    }),
-    ...await readArticles({ data: { page: 1, limit: 3, sort: '-publishedAt', category: '' } }).then(result => result.ok ? { conteudos: result.page.docs } : { conteudos: [], artigosErro: result.error }),
-  }),
+  loader: async (): Promise<HomeData> => {
+    const [regioes, delegacias, bairros, zonas, articles] = await Promise.all([
+      content.listRegioes(),
+      content.listDelegacias(),
+      content.listBairros(),
+      content.listZonas(),
+      readArticles({ data: { page: 1, limit: 3, sort: "-publishedAt", category: "" } }),
+    ]);
+    return {
+      regioes,
+      delegacias,
+      bairros,
+      zonas: withPublishedGuideCounts(zonas, regioes, delegacias),
+      ...(articles.ok
+        ? { conteudos: articles.page.docs }
+        : { conteudos: [], artigosErro: articles.error }),
+    };
+  },
   head: () => ({
     meta: pageMeta({ title: TITLE, description: DESCRIPTION, path: "/" }),
-    links: canonicalLink("/"),
+    links: [
+      ...canonicalLink("/"),
+      { rel: "preload", as: "image", href: "/images/sp/masp.avif", type: "image/avif" },
+    ],
     scripts: [{ type: "application/ld+json", children: JSON.stringify(websiteSchema("/")) }],
   }),
   component: Index,
 });
 
-const ZONA_ORDEM = ["centro", "zona-norte", "zona-leste", "zona-sul", "zona-oeste"];
-const ZONA_FOCO: Record<string, string> = {
-  centro: "50% 40%", "zona-norte": "10% 30%", "zona-leste": "30% 60%", "zona-sul": "75% 45%", "zona-oeste": "95% 35%",
-};
-const BAIRROS = ["Santo Amaro", "Pinheiros", "Mooca", "Santana", "Tatuapé", "Butantã", "Lapa", "Itaquera"];
-const GUIAS = ["Vila Romana", "Pinheiros", "Perdizes", "Jardins"];
-
 function Eyebrow({ children }: { children: string }) {
   return (
-    <p className="flex items-center gap-3 text-xs font-medium uppercase tracking-[0.14em] text-gold-accent">
-      <span className="h-px w-8 bg-gold-accent" aria-hidden />
+    <p className="flex items-center gap-3 text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-gold">
+      <span className="h-px w-7 bg-gold" aria-hidden />
       {children}
     </p>
   );
 }
 
-function Header({ eyebrow, title, lead, to, cta }: { eyebrow: string; title: string; lead: string; to: "/regioes" | "/delegacias" | "/artigos"; cta: string }) {
+function HomeHeading({
+  eyebrow,
+  title,
+  lead,
+  to,
+  cta,
+}: {
+  eyebrow: string;
+  title: string;
+  lead: string;
+  to: string;
+  cta: string;
+}) {
   return (
-    <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+    <div className="flex flex-col justify-between gap-4 md:flex-row md:items-end">
       <div>
         <Eyebrow>{eyebrow}</Eyebrow>
-        <h2 className="mt-3 font-serif text-3xl text-navy md:text-4xl">{title}</h2>
-        <p className="mt-2 text-sm text-muted-foreground">{lead}</p>
+        <h2 className="mt-3 font-serif text-3xl leading-tight text-brand-navy md:text-4xl">
+          {title}
+        </h2>
+        <p className="mt-2 text-sm leading-6 text-muted-foreground">{lead}</p>
       </div>
-      <Link to={to} className="inline-flex items-center gap-2 text-sm font-medium text-navy hover:text-gold-accent">
-        {cta} <ArrowRight className="size-4" aria-hidden />
+      <Link
+        to={to}
+        className="inline-flex shrink-0 items-center gap-2 text-xs font-semibold text-brand-navy hover:underline"
+      >
+        {cta}
+        <ArrowRight className="size-4" aria-hidden />
       </Link>
     </div>
   );
 }
 
-function Index() {
-  const { regioes, zonas, conteudos, artigosErro } = Route.useLoaderData() as HomeData;
-  const zonasOrdenadas = ZONA_ORDEM.map((s) => zonas.find((z) => z.slug === s)).filter((z): z is HomeData["zonas"][number] => !!z);
-  const bairros = BAIRROS.map((n) => regioes.find((r) => r.nome === n)).filter((r): r is Regiao => !!r && !!r.href);
-  const guias = GUIAS.map((n) => regioes.find((r) => r.nome === n)).filter((r): r is Regiao => !!r && !!r.href);
-  const nomeZona = (slug: string) => zonas.find((z) => z.slug === slug)?.nome ?? "";
+const featuredSlugs = [
+  "advogado-criminal-7-dp-vila-romana",
+  "advogado-14-dp-pinheiros",
+  "advogado-criminal-23-dp-perdizes",
+  "advogado-criminal-78-dp-jardins",
+];
 
+function Index() {
+  const [heroReady, setHeroReady] = useState(false);
+  const [heroPaused, setHeroPaused] = useState(false);
+  const secondPhotoRef = useRef<HTMLImageElement>(null);
+  useEffect(() => {
+    const img = secondPhotoRef.current;
+    if (!img) return;
+    let active = true;
+    const ready = () => {
+      void img
+        .decode()
+        .then(() => {
+          if (active) setHeroReady(true);
+        })
+        .catch(() => {});
+    };
+    if (img.complete && img.naturalWidth > 0) ready();
+    img.addEventListener("load", ready);
+    return () => {
+      active = false;
+      img.removeEventListener("load", ready);
+    };
+  }, []);
+  const { zonas, regioes, bairros, delegacias, conteudos } = Route.useLoaderData();
+  const neighborhoods = featuredNeighborhoods.flatMap((item) => {
+    const region = regioes.find((region) => region.slug === item.slug);
+    return region
+      ? [
+          {
+            ...item,
+            region,
+            href: bairros.some(
+              (bairro) => bairro.slug === region.slug && bairro.status === "publicado",
+            )
+              ? `/bairros/${region.slug}`
+              : region.href,
+          },
+        ]
+      : [];
+  });
+  const featured = featuredSlugs.flatMap((slug) => delegacias.filter((dp) => dp.slug === slug));
   return (
-    <div className="home-light">
-      <section className="relative overflow-hidden bg-navy">
-        <img src={ponteAsset.url} alt="Ponte Estaiada e a Marginal Pinheiros ao entardecer, em São Paulo" width={960} height={641} fetchPriority="high" className="absolute inset-0 size-full object-cover object-right md:object-center" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[var(--navy)] via-[color-mix(in_oklab,var(--navy)_75%,transparent)] to-transparent md:via-[color-mix(in_oklab,var(--navy)_55%,transparent)]" />
-        <Container className="relative py-16 md:py-24">
+    <div className="home-light home-page">
+      <section className="home-hero relative isolate overflow-hidden bg-brand-navy text-ivory">
+        <picture className="absolute inset-0 -z-20 size-full">
+          <source srcSet="/images/sp/ponte.avif" type="image/avif" />
+          <img
+            src="/images/sp/ponte.webp"
+            alt="Ponte Estaiada ao entardecer, em São Paulo"
+            width={2048}
+            height={768}
+            fetchPriority="high"
+            className="size-full object-cover object-[65%_center]"
+          />
+        </picture>
+        <picture
+          aria-hidden="true"
+          className={`hero-second-image absolute inset-0 -z-20 size-full ${heroReady ? "hero-image-ready" : ""}`}
+          style={{ animationPlayState: heroPaused ? "paused" : "running" }}
+        >
+          <source srcSet="/images/sp/masp.avif" type="image/avif" />
+          <img
+            src="/images/sp/masp.webp"
+            alt=""
+            width={2048}
+            height={768}
+            loading="eager"
+            fetchPriority="low"
+            className="size-full object-cover"
+            ref={secondPhotoRef}
+          />
+        </picture>
+        <div className="absolute inset-0 -z-10 bg-gradient-to-r from-brand-navy/95 via-brand-navy/70 to-brand-navy/5" />
+        {heroReady && (
+          <button
+            type="button"
+            aria-pressed={heroPaused}
+            onClick={() => setHeroPaused((value) => !value)}
+            className="hero-motion-control absolute bottom-4 right-5 z-10 rounded-full border border-white/40 bg-brand-navy/80 px-3 py-2 text-xs text-ivory hover:bg-brand-navy"
+          >
+            {heroPaused ? "Retomar imagens" : "Pausar imagens"}
+          </button>
+        )}
+        <Container className="py-16 md:py-20 lg:py-24">
           <Eyebrow>São Paulo · Guias e informação</Eyebrow>
-          <h1 className="mt-5 max-w-xl font-serif text-4xl leading-[1.08] text-on-navy md:text-6xl">São Paulo, território por território.</h1>
-          <p className="mt-5 max-w-lg text-base leading-relaxed text-on-navy">
-            Explore São Paulo por regiões, bairros e delegacias. Encontre guias territoriais, informações jurídicas e referências para compreender os serviços da capital paulista.
+          <h1 className="mt-5 max-w-xl font-serif text-5xl leading-[1.02] md:text-6xl lg:text-7xl">
+            São Paulo, território por território.
+          </h1>
+          <p className="mt-5 max-w-md text-sm leading-7 text-ivory/85 md:text-base">
+            Explore São Paulo por regiões, bairros e instituições. Encontre guias territoriais,
+            informações jurídicas e referências para compreender os serviços da capital paulista.
           </p>
-          <Link to="/delegacias" className="mt-8 flex max-w-xl items-center gap-3 rounded-full bg-card py-2 pl-5 pr-2 text-sm text-muted-foreground shadow-lg">
-            <Search className="size-5 text-navy" aria-hidden />
-            <span className="flex-1 truncate">Consulte por região, bairro ou delegacia…</span>
-            <span className="grid size-9 place-items-center rounded-full bg-gold-accent text-on-navy"><ArrowRight className="size-4" aria-hidden /></span>
-          </Link>
-          <p className="mt-5 flex items-center gap-2 text-xs text-on-navy"><MapPin className="size-4" aria-hidden /> Capital paulista · Conteúdo informativo</p>
+          <form action="/delegacias" method="get" role="search" className="home-search">
+            <Search className="size-5 shrink-0" aria-hidden />
+            <label className="sr-only" htmlFor="home-search">
+              Buscar delegacia, bairro ou número do DP
+            </label>
+            <input
+              id="home-search"
+              name="q"
+              type="search"
+              maxLength={100}
+              placeholder="Pesquise por bairro, delegacia ou número do DP…"
+            />
+            <button type="submit" aria-label="Buscar nos guias de delegacias">
+              <ArrowRight className="size-4" aria-hidden />
+            </button>
+          </form>
+          <p className="mt-6 flex items-center gap-2 text-xs text-ivory/75">
+            <MapPin className="size-3.5" aria-hidden />
+            Capital paulista · Portal editorial independente
+          </p>
         </Container>
       </section>
 
-      <section className="py-14">
+      <section className="py-12 md:py-16">
         <Container>
-          <Header eyebrow="Explore por região" title="Cinco regiões, um só portal" lead="Acesse os guias territoriais e encontre a informação da sua região." to="/regioes" cta="Ver todas as regiões" />
-          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
-            {zonasOrdenadas.map((zona) => (
-              <Link key={zona.id} to="/regioes/$slug" params={{ slug: zona.slug }} className="group flex flex-col overflow-hidden rounded-md border border-border bg-card shadow-sm transition hover:-translate-y-0.5 hover:shadow-md">
-                <img src={ponteAsset.url} alt="" loading="lazy" className="h-28 w-full object-cover" style={{ objectPosition: ZONA_FOCO[zona.slug] }} />
-                <div className="flex flex-1 flex-col p-4">
-                  <h3 className="font-serif text-xl text-navy">{zona.nome}</h3>
-                  <p className="mt-1 line-clamp-3 text-sm text-muted-foreground">{zona.descricao}</p>
-                  <div className="mt-auto flex items-center justify-between pt-4 text-xs text-muted-foreground">
-                    <span className="flex items-center gap-1.5"><MapPin className="size-3.5" aria-hidden />{zona.quantidade} {zona.quantidade === 1 ? "guia publicado" : "guias publicados"}</span>
-                    <span className="grid size-7 place-items-center rounded-full bg-navy text-on-navy"><ArrowRight className="size-3.5" aria-hidden /></span>
-                  </div>
+          <HomeHeading
+            eyebrow="Explore por região"
+            title="Cinco regiões, um só portal"
+            lead="Guias territoriais e referências para encontrar a informação da sua região."
+            to="/regioes"
+            cta="Ver todas as regiões"
+          />
+          <div className="home-zones">
+            {zonas.map((zona) => (
+              <ZoneCardLight key={zona.id} zona={zona} quantidade={zona.quantidade} compact />
+            ))}
+          </div>
+        </Container>
+      </section>
+
+      <section className="home-neighborhood-section">
+        <Container>
+          <HomeHeading
+            eyebrow="Explore por bairro"
+            title="Bairros em destaque"
+            lead="Acesse as páginas de bairro e os guias territoriais publicados."
+            to="/regioes"
+            cta="Ver todos os bairros"
+          />
+          <NeighborhoodCarousel items={neighborhoods} />
+        </Container>
+      </section>
+
+      <section className="border-y border-border bg-card py-12">
+        <Container>
+          <HomeHeading
+            eyebrow="Instituições e serviços"
+            title="Explore instituições jurídicas"
+            lead="Guias informativos para compreender os órgãos e serviços da capital paulista."
+            to="/delegacias"
+            cta="Consultar delegacias"
+          />
+          <div className="home-institutions mt-7 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-6">
+            <Link
+              to="/delegacias"
+              className="institution-tile rounded-lg border border-gold/60 p-5 text-brand-navy hover:bg-gold/5"
+            >
+              <Shield className="size-7" aria-hidden />
+              <h3 className="mt-4 font-serif text-xl">Delegacias</h3>
+              <p className="mt-2 text-xs leading-5 text-muted-foreground">
+                {delegacias.length} guias publicados
+              </p>
+              <ArrowRight className="mt-4 size-4" aria-hidden />
+            </Link>
+            {[
+              { icon: Landmark, name: "Fóruns" },
+              { icon: FileText, name: "Cartórios" },
+              { icon: Users, name: "INSS" },
+              { icon: Building2, name: "Órgãos fiscais" },
+              { icon: Landmark, name: "Outras instituições" },
+            ].map(({ icon: Icon, name }) => (
+              <div key={name} className="rounded-lg border border-border bg-background/50 p-5">
+                <Icon className="size-7 text-brand-navy/65" aria-hidden />
+                <h3 className="mt-4 font-serif text-xl text-brand-navy">{name}</h3>
+                <p className="mt-3 text-xs text-muted-foreground">Em preparação</p>
+              </div>
+            ))}
+          </div>
+        </Container>
+      </section>
+
+      <section className="py-12">
+        <Container>
+          <HomeHeading
+            eyebrow="Guias em destaque"
+            title="Acesso direto aos principais guias"
+            lead="Consulte os guias informativos e confirme o atendimento nos canais oficiais."
+            to="/delegacias"
+            cta="Ver todos os guias"
+          />
+          <div className="mt-7 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {featured.map((dp) => (
+              <Link
+                key={dp.id}
+                to="/delegacias/$slug"
+                params={{ slug: dp.slug }}
+                className="home-featured-guide"
+              >
+                <span className="home-guide-icon" aria-hidden>
+                  <Landmark className="size-7" />
+                  <small>{dp.unidade.numero}º DP</small>
+                </span>
+                <div>
+                  <h3 className="mt-4 font-serif text-xl leading-tight text-brand-navy">
+                    {dp.unidade.nomeOficial}
+                  </h3>
+                  <p className="mt-3 text-xs text-muted-foreground">{dp.cardSubtitulo}</p>
                 </div>
+                <ArrowRight className="size-4 shrink-0 text-brand-navy" aria-hidden />
               </Link>
             ))}
           </div>
         </Container>
       </section>
 
-      {bairros.length > 0 && (
-        <section className="border-t border-border py-12">
-          <Container>
-            <Header eyebrow="Explore por bairro" title="Bairros em destaque" lead="Acesse diretamente os guias de bairros já publicados." to="/regioes" cta="Ver todos os bairros" />
-            <div className="mt-6 flex gap-3 overflow-x-auto pb-2">
-              {bairros.map((b) => (
-                <a key={b.id} href={b.href} className="flex shrink-0 items-center gap-3 rounded-full border border-border bg-card py-1.5 pl-1.5 pr-5 text-sm font-medium text-navy hover:border-gold-accent">
-                  <span className="grid size-8 place-items-center rounded-full bg-navy text-on-navy"><MapPin className="size-4" aria-hidden /></span>
-                  {b.nome}
-                </a>
-              ))}
-            </div>
-          </Container>
-        </section>
-      )}
-
-      {guias.length > 0 && (
-        <section className="border-t border-border py-12">
-          <Container>
-            <Header eyebrow="Guias em destaque" title="Acesso direto aos guias de delegacias" lead="Alguns guias territoriais já publicados no portal." to="/delegacias" cta="Ver todos os guias" />
-            <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-              {guias.map((g) => (
-                <a key={g.id} href={g.href} className="group flex items-center gap-4 rounded-md border border-border bg-card p-4 hover:border-gold-accent">
-                  <span className="grid size-12 shrink-0 place-items-center rounded-md bg-navy text-on-navy"><Shield className="size-5" aria-hidden /></span>
-                  <span className="flex-1">
-                    <span className="block font-serif text-base text-navy">{g.nome}</span>
-                    <span className="block text-xs text-muted-foreground">{nomeZona(g.zona)}</span>
-                  </span>
-                  <ArrowRight className="size-4 text-navy" aria-hidden />
-                </a>
-              ))}
-            </div>
-          </Container>
-        </section>
-      )}
-
-      <section className="border-t border-border py-12">
+      <section className="border-t border-border bg-card py-12">
         <Container>
-          <Header eyebrow="Informação jurídica e cidadania" title="Artigos e orientações" lead="Conteúdos informativos sobre temas jurídicos do dia a dia." to="/artigos" cta="Ver todos os artigos" />
-          {artigosErro && <p role="status" className="mt-6 text-muted-foreground">{artigosErro}</p>}
-          <div className="dark-cards mt-6 grid gap-5 md:grid-cols-3">
-            {conteudos.map((c) => <ConteudoCard key={c.id} conteudo={c} />)}
-          </div>
+          <HomeHeading
+            eyebrow="Informação jurídica e cidadania"
+            title="Artigos e orientações"
+            lead="Informação editorial com autoria e publicação verificadas."
+            to="/artigos"
+            cta="Ver todos os artigos"
+          />
+          {conteudos.length ? (
+            <div className="dark-cards mt-7 grid gap-5 md:grid-cols-3">
+              {conteudos.map((article) => (
+                <Link
+                  key={article.id}
+                  to="/artigos/$slug"
+                  params={{ slug: article.slug }}
+                  className="home-article-card"
+                >
+                  {article.capa ? (
+                    <img
+                      src={article.capa.url}
+                      alt={article.capa.alt}
+                      width={article.capa.width ?? 100}
+                      height={article.capa.height ?? 100}
+                      loading="lazy"
+                    />
+                  ) : (
+                    <picture>
+                      <source
+                        srcSet={`/images/sp/${editorialIllustrations[article.slug] ?? "masp"}.avif`}
+                        type="image/avif"
+                      />
+                      <img
+                        src={`/images/sp/${editorialIllustrations[article.slug] ?? "masp"}.webp`}
+                        alt=""
+                        width={100}
+                        height={100}
+                        loading="lazy"
+                      />
+                    </picture>
+                  )}
+                  <div>
+                    <h3>{article.titulo}</h3>
+                    <p>
+                      {article.categoria} ·{" "}
+                      <time dateTime={article.publicadoEm}>
+                        {new Date(article.publicadoEm).toLocaleDateString("pt-BR", {
+                          day: "numeric",
+                          month: "short",
+                          year: "numeric",
+                          timeZone: "UTC",
+                        })}
+                      </time>
+                    </p>
+                  </div>
+                  <ArrowRight className="size-4 shrink-0" aria-hidden />
+                </Link>
+              ))}
+            </div>
+          ) : (
+            <div className="mt-7 flex items-start gap-4 rounded-lg border border-border bg-background p-6">
+              <BookOpen className="size-7 shrink-0 text-gold" aria-hidden />
+              <div>
+                <h3 className="font-serif text-xl text-brand-navy">
+                  Uma publicação começa com responsabilidade
+                </h3>
+                <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                  Os artigos aparecem aqui quando estiverem disponíveis e aprovados para publicação.
+                  Conheça nossa proposta editorial.
+                </p>
+                <Link
+                  to="/sobre"
+                  className="mt-4 inline-flex items-center gap-2 text-xs font-semibold text-brand-navy"
+                >
+                  Sobre o portal
+                  <ArrowRight className="size-4" aria-hidden />
+                </Link>
+              </div>
+            </div>
+          )}
         </Container>
       </section>
 
-      <section className="bg-navy py-12">
-        <Container className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
-          <div>
+      <section className="participation-banner relative isolate overflow-hidden bg-brand-navy text-ivory">
+        <picture className="absolute inset-0 -z-20 size-full">
+          <source srcSet="/images/sp/participacao-profissional.avif" type="image/avif" />
+          <img
+            src="/images/sp/participacao-profissional.webp"
+            alt=""
+            width={2172}
+            height={724}
+            loading="lazy"
+            className="size-full object-cover object-right"
+          />
+        </picture>
+        <div className="absolute inset-0 -z-10 bg-gradient-to-r from-brand-navy/95 via-brand-navy/70 to-transparent" />
+        <Container className="home-participation-content">
+          <div className="max-w-3xl">
             <Eyebrow>Participação profissional</Eyebrow>
-            <h2 className="mt-3 font-serif text-3xl text-on-navy">É advogado e deseja conhecer a Banca Paulista?</h2>
-            <p className="mt-2 text-sm text-on-navy">Conheça a proposta editorial do projeto em sua fase inaugural.</p>
+            <h2 className="mt-4 font-serif text-3xl leading-tight md:text-4xl">
+              É advogado e deseja conhecer a Banca Paulista?
+            </h2>
+            <p className="mt-3 max-w-lg text-sm leading-6 text-ivory/85">
+              Conheça a proposta editorial e os critérios de participação de profissionais
+              independentes.
+            </p>
           </div>
-          <Link to="/sobre" className="inline-flex items-center gap-2 self-start rounded-full bg-gold-accent px-6 py-3 text-sm font-medium text-navy">Conhecer a iniciativa <ArrowRight className="size-4" aria-hidden /></Link>
+          <Link to="/profissionais" className="home-participation-cta">
+            Conhecer a iniciativa
+            <ArrowRight className="size-4" aria-hidden />
+          </Link>
         </Container>
       </section>
 
-      <section className="py-12">
-        <Container className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+      <section className="home-pillars py-10">
+        <Container className="grid gap-7 sm:grid-cols-2 lg:grid-cols-4">
           {[
-            { icon: BookOpen, t: "Informação jurídica", d: "Artigos sobre temas do direito, com linguagem clara.", to: "/areas-de-atuacao" as const, c: "Temas jurídicos" },
-            { icon: Landmark, t: "Transparência", d: "O portal não oferece consulta jurídica nem recebe relatos de casos.", to: "/sobre" as const, c: "Saiba mais" },
-            { icon: Shield, t: "Privacidade", d: "Sem vínculo com a Polícia Civil ou órgãos públicos citados.", to: "/politica-de-privacidade" as const, c: "Ver política" },
-            { icon: Info, t: "Sobre o projeto", d: "Portal editorial em fase inicial, sem profissionais publicados.", to: "/sobre" as const, c: "Saiba mais" },
-          ].map(({ icon: Icon, t, d, to, c }) => (
-            <div key={t}>
-              <Icon className="size-6 text-navy" aria-hidden />
-              <h3 className="mt-3 font-serif text-lg text-navy">{t}</h3>
-              <p className="mt-1 text-sm text-muted-foreground">{d}</p>
-              <Link to={to} className="mt-3 inline-flex items-center gap-1 text-sm font-medium text-navy hover:text-gold-accent">{c} <ArrowRight className="size-3.5" aria-hidden /></Link>
+            {
+              icon: BookOpen,
+              title: "Informação jurídica",
+              text: "Conteúdo informativo, com linguagem clara e contexto editorial.",
+              to: "/artigos",
+            },
+            {
+              icon: Landmark,
+              title: "Transparência",
+              text: "Portal independente, sem vínculo com órgãos públicos.",
+              to: "/sobre",
+            },
+            {
+              icon: Shield,
+              title: "Privacidade",
+              text: "O portal não recebe relatos de casos nem intermedeia contratação.",
+              to: "/politica-de-privacidade",
+            },
+            {
+              icon: Info,
+              title: "Sobre o projeto",
+              text: "São Paulo e suas instituições, com responsabilidade editorial.",
+              to: "/sobre",
+            },
+          ].map(({ icon: Icon, title, text, to }) => (
+            <div key={title} className="border-l border-border pl-5">
+              <Icon className="size-6 text-brand-navy" aria-hidden />
+              <h3 className="mt-3 font-serif text-xl text-brand-navy">{title}</h3>
+              <p className="mt-2 text-xs leading-6 text-muted-foreground">{text}</p>
+              <Link
+                to={to}
+                className="mt-3 inline-flex items-center gap-2 text-xs font-semibold text-brand-navy"
+              >
+                Saiba mais
+                <ArrowRight className="size-3.5" aria-hidden />
+              </Link>
             </div>
           ))}
+        </Container>
+        <Container>
+          <details className="photo-credits">
+            <summary>Créditos fotográficos</summary>
+            <p>
+              Recortes e conversões AVIF/WebP das fotografias abaixo, sob as licenças indicadas.
+            </p>
+            <ul>
+              {photoCredits.map((photo) => (
+                <li key={photo.name}>
+                  <a href={photo.source}>
+                    {photo.name} — {photo.author}
+                  </a>{" "}
+                  · <a href={photo.licenseUrl}>{photo.license}</a>
+                </li>
+              ))}
+            </ul>
+          </details>
         </Container>
       </section>
     </div>

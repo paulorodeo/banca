@@ -81,6 +81,40 @@ export interface Regiao {
   zona: string;
 }
 
+export type InstitutionCategory =
+  | "delegacias"
+  | "foruns-tribunais"
+  | "defensorias-publicas"
+  | "conselhos-tutelares"
+  | "cartorios-registros"
+  | "outras-instituicoes";
+
+export interface NeighborhoodInstitutionRelation {
+  id: string;
+  category: InstitutionCategory;
+  /** Slug canônico da unidade; nunca cria uma segunda página por bairro. */
+  institutionSlug: string;
+  institutionType: "delegacia";
+  relation: "localizada" | "relacionada";
+  relationLabel: string;
+}
+
+export interface Bairro {
+  id: string;
+  slug: string;
+  nome: string;
+  zona: string;
+  status: "publicado" | "revisao";
+  descricao: string;
+  introducao: string;
+  referenciasUrbanas: string[];
+  bairrosVizinhos: string[];
+  instituicoes: NeighborhoodInstitutionRelation[];
+  secoes: { titulo: string; paragrafos: string[] }[];
+  faq: FAQ[];
+  seo: SeoConfig;
+}
+
 export interface ConteudoJuridico {
   id: string;
   slug: string;
@@ -94,7 +128,7 @@ export interface ConteudoJuridico {
   status?: "publicado" | "revisao";
   corpo: string[];
   areasRelacionadas: string[];
-  richText?: import('./payload').RichNode[];
+  richText?: import("./payload").RichNode[];
   capa?: Media;
   autor?: { nome: string; bio: string; oab?: string; foto?: Media };
   seoEditorial?: { title?: string; description?: string; socialImage?: Media };

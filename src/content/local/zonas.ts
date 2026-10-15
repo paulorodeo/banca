@@ -1,4 +1,4 @@
-import type { Zona } from "../types";
+import type { Delegacia, Regiao, Zona } from "../types";
 
 /**
  * Arquitetura regional da cidade: cinco macro-zonas que organizam as páginas
@@ -139,4 +139,21 @@ export function nomeDaZona(slug: string): string {
 /** Artigo correto antes do nome da zona ("no Centro", "na Zona Sul"). */
 export function artigoDaZona(slug: string): "no" | "na" {
   return slug === "centro" ? "no" : "na";
+}
+
+/** Contagem de páginas canônicas reais; região/bairro não é unidade de contagem. */
+export function withPublishedGuideCounts(
+  zones: Zona[],
+  regions: Regiao[],
+  guides: Delegacia[],
+): (Zona & { quantidade: number })[] {
+  const zoneByRegion = new Map(regions.map((region) => [region.slug, region.zona]));
+  return zones.map((zone) => ({
+    ...zone,
+    quantidade: new Set(
+      guides
+        .filter((guide) => zoneByRegion.get(guide.regiaoSlug) === zone.slug)
+        .map((guide) => guide.slug),
+    ).size,
+  }));
 }

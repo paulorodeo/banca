@@ -9,6 +9,7 @@
 import type {
   AreaAtuacao,
   Autor,
+  Bairro,
   ConteudoJuridico,
   Delegacia,
   PaginaInstitucional,
@@ -23,7 +24,10 @@ import { zonas } from "./local/zonas";
 import { delegacias } from "./local/delegacias";
 import { paginas } from "./local/paginas";
 import { autores, siteSettings } from "./local/settings";
+import { bairros } from "./local/bairros";
 import { readArticle, readArticles } from "./articles.functions";
+import { publicRadarRecords, type RadarPublicRecord } from "./radar";
+import { radarRecords } from "./local/radar";
 
 export interface ContentRepository {
   getSettings(): Promise<SiteSettings>;
@@ -32,6 +36,8 @@ export interface ContentRepository {
   listSituacoes(): Promise<SituacaoJuridica[]>;
   listRegioes(): Promise<Regiao[]>;
   getRegiao(slug: string): Promise<Regiao | null>;
+  listBairros(): Promise<Bairro[]>;
+  getBairro(slug: string): Promise<Bairro | null>;
   listZonas(): Promise<Zona[]>;
   getZona(slug: string): Promise<Zona | null>;
   listConteudos(): Promise<ConteudoJuridico[]>;
@@ -40,6 +46,7 @@ export interface ContentRepository {
   getDelegacia(slug: string): Promise<Delegacia | null>;
   getPagina(slug: string): Promise<PaginaInstitucional | null>;
   getAutor(id: string): Promise<Autor | null>;
+  listRadarRecords(): Promise<RadarPublicRecord[]>;
 }
 
 const find = <T extends { slug: string }>(list: T[], slug: string): T | null =>
@@ -64,6 +71,13 @@ export class LocalContentRepository implements ContentRepository {
   async getRegiao(slug: string) {
     return find(regioes, slug);
   }
+  async listBairros() {
+    return bairros.filter((bairro) => bairro.status === "publicado");
+  }
+  async getBairro(slug: string) {
+    const bairro = find(bairros, slug);
+    return bairro?.status === "publicado" ? bairro : null;
+  }
   async listZonas() {
     return zonas;
   }
@@ -71,7 +85,9 @@ export class LocalContentRepository implements ContentRepository {
     return find(zonas, slug);
   }
   async listConteudos() {
-    const result = await readArticles({ data: { page: 1, limit: 12, sort: '-publishedAt', category: '' } });
+    const result = await readArticles({
+      data: { page: 1, limit: 12, sort: "-publishedAt", category: "" },
+    });
     if (!result.ok) throw new Error(result.error);
     return result.page.docs;
   }
@@ -91,6 +107,9 @@ export class LocalContentRepository implements ContentRepository {
   }
   async getAutor(id: string) {
     return autores.find((a) => a.id === id) ?? null;
+  }
+  async listRadarRecords() {
+    return publicRadarRecords(radarRecords);
   }
 }
 

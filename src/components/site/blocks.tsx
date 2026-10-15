@@ -1,9 +1,16 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowUpRight } from "lucide-react";
-import type { AreaAtuacao, ConteudoJuridico, Regiao, SituacaoJuridica, Zona } from "@/content/types";
+import type {
+  AreaAtuacao,
+  ConteudoJuridico,
+  Regiao,
+  SituacaoJuridica,
+  Zona,
+} from "@/content/types";
 import { nomeDaZona } from "@/content/local/zonas";
 import { ActionLink, Container, Hairline, Section, SectionHeading } from "./primitives";
-import { Breadcrumbs, type Crumb } from "./breadcrumbs";
+import { type Crumb } from "./breadcrumbs";
+import { TerritoryHero } from "./territory";
 
 export function PageHero({
   eyebrow,
@@ -16,16 +23,7 @@ export function PageHero({
   lead?: string;
   crumbs: Crumb[];
 }) {
-  return (
-    <div className="border-b border-border bg-graphite/50">
-      <Container className="py-14 md:py-20">
-        <Breadcrumbs items={crumbs} />
-        <div className="mt-8 reveal">
-          <SectionHeading as="h1" eyebrow={eyebrow} title={title} {...(lead ? { lead } : {})} />
-        </div>
-      </Container>
-    </div>
-  );
+  return <TerritoryHero eyebrow={eyebrow} title={title} lead={lead ?? ""} crumbs={crumbs} />;
 }
 
 export function AreaCard({ area }: { area: AreaAtuacao }) {
@@ -111,7 +109,16 @@ export function ConteudoCard({ conteudo }: { conteudo: ConteudoJuridico }) {
       params={{ slug: conteudo.slug }}
       className="surface-panel group flex flex-col rounded-xs p-7 hover:border-gold/40"
     >
-      {conteudo.capa && <img src={conteudo.capa.url} alt={conteudo.capa.alt} width={conteudo.capa.width} height={conteudo.capa.height} loading="lazy" className="mb-6 aspect-[16/9] w-full object-cover" />}
+      {conteudo.capa && (
+        <img
+          src={conteudo.capa.url}
+          alt={conteudo.capa.alt}
+          width={conteudo.capa.width}
+          height={conteudo.capa.height}
+          loading="lazy"
+          className="mb-6 aspect-[16/9] w-full object-cover"
+        />
+      )}
       <p className="eyebrow">{conteudo.categoria}</p>
       <h3 className="mt-4 text-xl leading-snug text-ivory">{conteudo.titulo}</h3>
       <p className="mt-4 text-sm leading-relaxed text-muted-foreground">{conteudo.resumo}</p>

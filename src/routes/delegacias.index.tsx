@@ -1,15 +1,23 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { content } from "@/content/repository";
-import type { Delegacia } from "@/content/types";
-import { Container, Section } from "@/components/site/primitives";
-import { CtaReservado, PageHero } from "@/components/site/blocks";
+import type { Delegacia, Regiao, Zona } from "@/content/types";
+import { Container } from "@/components/site/primitives";
+import { TerritoryHero, ProfessionalSidebar } from "@/components/site/territory";
+import { DistrictDirectory } from "@/components/site/district-directory";
+import { BookOpen, Shield, Landmark, Users, FileText } from "lucide-react";
 import { canonicalLink, pageMeta } from "@/lib/seo";
 
 const PATH = "/delegacias";
 
 export const Route = createFileRoute("/delegacias/")({
-  loader: async (): Promise<{ delegacias: Delegacia[] }> => ({
+  validateSearch: (search): { q?: string } =>
+    typeof search["q"] === "string" && search["q"].trim()
+      ? { q: search["q"].trim().slice(0, 100) }
+      : {},
+  loader: async (): Promise<{ delegacias: Delegacia[]; regioes: Regiao[]; zonas: Zona[] }> => ({
     delegacias: await content.listDelegacias(),
+    regioes: await content.listRegioes(),
+    zonas: await content.listZonas(),
   }),
   head: () => ({
     meta: pageMeta({
@@ -24,39 +32,74 @@ export const Route = createFileRoute("/delegacias/")({
 });
 
 function DelegaciasPage() {
-  const { delegacias } = Route.useLoaderData() as { delegacias: Delegacia[] };
+  const { delegacias, regioes, zonas } = Route.useLoaderData();
+  const { q } = Route.useSearch();
   return (
-    <>
-      <PageHero
-        eyebrow="Guia informativo"
+    <div className="home-light">
+      <div className="border-b border-border bg-card">
+        <Container className="flex flex-wrap items-center gap-x-7 gap-y-3 py-4 text-xs text-muted-foreground">
+          <span className="flex items-center gap-2 font-semibold text-brand-navy">
+            <Shield className="size-4" aria-hidden />
+            Delegacias
+          </span>
+          {[
+            { icon: Landmark, name: "Fóruns" },
+            { icon: Users, name: "Defensorias" },
+            { icon: Users, name: "Conselhos Tutelares" },
+            { icon: FileText, name: "Cartórios" },
+          ].map(({ icon: Icon, name }) => (
+            <span key={name} className="flex items-center gap-2">
+              <Icon className="size-4" aria-hidden />
+              {name}
+              <span className="sr-only"> — em preparação</span>
+            </span>
+          ))}
+        </Container>
+      </div>
+      <TerritoryHero
+        eyebrow="Órgãos públicos · Guia informativo"
         title="Delegacias em São Paulo"
-        lead="Conteúdo de caráter informativo sobre unidades policiais e situações jurídicas frequentes em cada região."
+        lead="Explore os guias por região e encontre informação para compreender as unidades e os procedimentos policiais da capital."
         crumbs={[
           { name: "Início", path: "/" },
           { name: "Delegacias", path: PATH },
         ]}
+        image={{
+          avifSrc: "/images/sp/ponte.avif",
+          fallbackSrc: "/images/sp/ponte.webp",
+          alt: "Ponte Estaiada e paisagem metropolitana de São Paulo",
+          width: 2048,
+          height: 768,
+          priority: true,
+          focalPoint: "65% center",
+        }}
       />
-      <Section>
-        <Container>
-          <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-            {delegacias.map((dp) => (
-              <Link
-                key={dp.id}
-                to="/delegacias/$slug"
-                params={{ slug: dp.slug }}
-                className="surface-panel group rounded-xs p-7 transition-colors hover:border-gold/40"
-              >
-                <h2 className="text-base text-ivory group-hover:text-gold">{dp.cardTitulo}</h2>
-                <p className="mt-1 text-lg text-gold/90">{dp.cardSubtitulo}</p>
-                <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
-                  {dp.cardResumo}
+      <section className="py-10 md:py-14">
+        <Container className="grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_19rem]">
+          <div className="min-w-0">
+            <div className="mb-7 flex gap-4 rounded-xl border border-gold/20 bg-gold/5 p-6">
+              <BookOpen className="mt-1 size-7 shrink-0 text-gold" aria-hidden />
+              <div>
+                <h2 className="font-serif text-2xl text-brand-navy">
+                  Como usar o guia de delegacias
+                </h2>
+                <p className="mt-2 text-sm leading-6 text-muted-foreground">
+                  Pesquise pelo nome, bairro ou número do DP e filtre por zona. As relações
+                  territoriais são editoriais; confirme a unidade competente e os dados de
+                  atendimento nos canais oficiais.
                 </p>
-              </Link>
-            ))}
+              </div>
+            </div>
+            <DistrictDirectory
+              delegacias={delegacias}
+              regioes={regioes}
+              zonas={zonas}
+              initialQuery={q ?? ""}
+            />
           </div>
+          <ProfessionalSidebar neighborhoodName="São Paulo" />
         </Container>
-      </Section>
-      <CtaReservado />
-    </>
+      </section>
+    </div>
   );
 }
