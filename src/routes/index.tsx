@@ -13,7 +13,7 @@ interface HomeData {
   artigosErro?: string;
 }
 import { readArticles } from "@/content/articles.functions";
-import ponteAsset from "@/assets/ponte-estaiada.png.asset.json";
+import ponteAsset from "@/assets/ponte-estaiada.jpg.asset.json";
 
 const TITLE = "Banca Paulista de Advogados — Portal editorial e defesa criminal";
 const DESCRIPTION =
@@ -81,7 +81,7 @@ function Index() {
   return (
     <div className="home-light">
       <section className="relative overflow-hidden bg-navy">
-        <img src={ponteAsset.url} alt="Ponte Estaiada e a Marginal Pinheiros ao entardecer, em São Paulo" width={1920} height={641} fetchPriority="high" className="absolute inset-0 size-full object-cover object-[70%_center]" />
+        <img src={ponteAsset.url} alt="Ponte Estaiada e a Marginal Pinheiros ao entardecer, em São Paulo" width={960} height={641} fetchPriority="high" className="absolute inset-0 size-full object-cover object-right md:object-center" />
         <div className="absolute inset-0 bg-gradient-to-r from-[var(--navy)] via-[color-mix(in_oklab,var(--navy)_75%,transparent)] to-transparent md:via-[color-mix(in_oklab,var(--navy)_55%,transparent)]" />
         <Container className="relative py-16 md:py-24">
           <Eyebrow>São Paulo · Guias e informação</Eyebrow>
