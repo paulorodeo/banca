@@ -14,7 +14,7 @@ export const zonas: Zona[] = [
     descricao:
       "Guias de delegacias nas referências Liberdade, Bom Retiro, Campos Elíseos, Santa Ifigênia, Consolação, Cambuci, Brás e Santa Cecília.",
     introducao:
-      "O Centro de São Paulo concentra equipamentos públicos, comércio intenso e uma trama urbana densa, em que procedimentos variados tramitam nas unidades policiais da região central.",
+      "Explore os bairros, as instituições públicas e as informações jurídicas da região central da capital.",
     secoes: [
       {
         titulo: "Cobertura territorial",
@@ -30,6 +30,59 @@ export const zonas: Zona[] = [
         ],
       },
     ],
+    artigoEditorial: {
+      titulo: "Centro de São Paulo: informações jurídicas, órgãos públicos e serviços por bairro",
+      secoes: [
+        {
+          paragrafos: [
+            "A região central de São Paulo pode ser explorada por seus bairros, localidades e referências institucionais. Para quem procura informações sobre serviços públicos ou questões jurídicas, essa organização ajuda a distinguir o território apresentado das atribuições de cada órgão.",
+            "A Banca Paulista reúne páginas de bairros, guias de delegacias e conteúdos relacionados à moradia, ao trabalho, ao comércio e ao acesso à informação pública no centro da capital.",
+          ],
+        },
+        {
+          titulo: "Bairros e localidades da região central",
+          paragrafos: [
+            "Os registros territoriais publicados neste hub incluem Liberdade, Bom Retiro, Campos Elíseos, Santa Ifigênia, Consolação, Cambuci, Santa Cecília e Brás. As páginas próprias apresentam os recortes editoriais usados pelo portal; eles não constituem limites administrativos oficiais.",
+            "Liberdade aparece em um único card territorial, com acesso aos guias do 1º e do 5º DP identificados separadamente. Campos Elíseos e Santa Ifigênia permanecem como localidades distintas no cadastro, sem conversão de uma denominação policial em nome territorial.",
+          ],
+        },
+        {
+          titulo: "Órgãos públicos e serviços de Justiça",
+          paragrafos: [
+            "A região central reúne referências a serviços públicos e instituições judiciais nos materiais editoriais fornecidos. A Banca Paulista mantém guias policiais identificados por unidade e páginas territoriais separadas, sem afirmar que uma instituição atende toda pessoa que mora ou trabalha nas proximidades.",
+            "Localização física, relação editorial com um território e competência institucional são informações diferentes. A identificação da unidade responsável depende das regras do procedimento e deve ser confirmada pelos canais oficiais do órgão.",
+          ],
+        },
+        {
+          titulo: "Moradia, imóveis e convivência",
+          paragrafos: [
+            "Locação, compra e venda, documentação imobiliária, condomínios, reformas e relações de vizinhança são temas que podem surgir em edifícios residenciais e comerciais. Imóveis de épocas diferentes também podem ter documentos, usos e necessidades de manutenção distintos.",
+            "A página reúne informação editorial geral. Ela não determina a regularidade de uma edificação, não confirma restrições específicas e não avalia contratos ou casos individuais.",
+          ],
+        },
+        {
+          titulo: "Comércio, trabalho e serviços",
+          paragrafos: [
+            "Contratos, relações de consumo, locação comercial e relações de trabalho são assuntos relevantes para moradores, trabalhadores, comerciantes e empresas que consultam conteúdos sobre o Centro. A organização territorial ajuda a localizar páginas publicadas, sem atribuir um perfil econômico idêntico a cada bairro.",
+            "As exigências aplicáveis a um estabelecimento ou atividade dependem do imóvel, do uso pretendido e dos órgãos responsáveis. A consulta aos serviços oficiais continua necessária para informações de atendimento e procedimentos.",
+          ],
+        },
+        {
+          titulo: "Patrimônio e utilização dos imóveis",
+          paragrafos: [
+            "O texto editorial fornecido para esta região destaca conservação, reformas e diferentes formas de utilização de edificações como temas de interesse. Uma construção antiga, por si só, não comprova tombamento ou outra restrição patrimonial.",
+            "Antes de uma intervenção ou mudança de uso, a situação específica deve ser consultada nos registros oficiais e nos órgãos de preservação e urbanismo competentes. Este portal não declara que um imóvel determinado esteja protegido ou sujeito a autorização especial.",
+          ],
+        },
+        {
+          titulo: "Acesso aos bairros e às instituições",
+          paragrafos: [
+            "Use os cards para visitar as páginas territoriais e a seção própria de delegacias para consultar os guias policiais publicados. A página da Liberdade reúne as duas opções do 1º e do 5º DP sem escolher silenciosamente uma delas; os demais guias preservam suas URLs canônicas.",
+            "A Banca Paulista é um portal editorial independente de informação jurídica e territorial. Os conteúdos não substituem os canais oficiais de atendimento nem a orientação profissional para situações individuais.",
+          ],
+        },
+      ],
+    },
   },
   {
     id: "zona-norte",

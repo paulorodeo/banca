@@ -50,7 +50,9 @@ export const Route = createFileRoute("/regioes/$slug")({
     return {
       zona,
       regioes: allRegioes.filter((regiao) => regiao.zona === zona.slug),
-      bairros: allBairros.filter((bairro) => bairro.zona === zona.slug),
+      bairros: allBairros.filter(
+        (bairro) => bairro.zona === zona.slug || (zona.slug === "centro" && bairro.slug === "bras"),
+      ),
       outrasZonas: allZonas.filter((item) => item.slug !== zona.slug),
       delegacias: allDelegacias.filter((item) =>
         allRegioes.some((regiao) => regiao.zona === zona.slug && regiao.slug === item.regiaoSlug),
@@ -84,7 +86,9 @@ export const Route = createFileRoute("/regioes/$slug")({
                 ? "Zona Norte de São Paulo: bairros e informações jurídicas | Banca Paulista"
                 : zona.slug === "zona-sul"
                   ? "Zona Sul de São Paulo: bairros e informações jurídicas | Banca Paulista"
-                  : `${zona.nome}: bairros e informação territorial | Banca Paulista`,
+                  : zona.slug === "centro"
+                    ? "Centro de São Paulo: bairros e informações jurídicas | Banca Paulista"
+                    : `${zona.nome}: bairros e informação territorial | Banca Paulista`,
         description:
           zona.slug === "zona-oeste"
             ? "Explore os bairros, as instituições públicas e as informações jurídicas da Zona Oeste de São Paulo."
@@ -94,7 +98,9 @@ export const Route = createFileRoute("/regioes/$slug")({
                 ? "Explore os bairros, as instituições públicas e as informações jurídicas da Zona Norte."
                 : zona.slug === "zona-sul"
                   ? "Explore os bairros, as instituições públicas e as informações jurídicas da Zona Sul."
-                  : `Navegue por bairros e guias publicados ${artigo} ${zona.nome} de São Paulo, com contexto urbano e relações institucionais verificadas.`,
+                  : zona.slug === "centro"
+                    ? "Explore os bairros, as instituições públicas e as informações jurídicas da região central da capital."
+                    : `Navegue por bairros e guias publicados ${artigo} ${zona.nome} de São Paulo, com contexto urbano e relações institucionais verificadas.`,
         path,
       }),
       links: canonicalLink(path),
@@ -146,7 +152,9 @@ function ZonaPage() {
                 ? "Zona Norte de São Paulo"
                 : zona.slug === "zona-sul"
                   ? "Zona Sul de São Paulo"
-                  : zona.nome
+                  : zona.slug === "centro"
+                    ? "Centro de São Paulo"
+                    : zona.nome
         }
         lead={zona.introducao}
         crumbs={[
@@ -167,15 +175,13 @@ function ZonaPage() {
       ) : zona.slug === "zona-leste" ? (
         <ZonaEditorialContent
           zona={zona}
-          regioes={regioes}
           bairros={bairros}
           delegacias={delegacias}
           outrasZonas={outrasZonas}
         />
-      ) : zona.slug === "zona-norte" || zona.slug === "zona-sul" ? (
+      ) : zona.slug === "zona-norte" || zona.slug === "zona-sul" || zona.slug === "centro" ? (
         <ZonaEditorialContent
           zona={zona}
-          regioes={regioes}
           bairros={bairros}
           delegacias={delegacias}
           outrasZonas={outrasZonas}
@@ -431,23 +437,15 @@ function ZonaOesteContent({
 
 function ZonaEditorialContent({
   zona,
-  regioes,
   bairros,
   delegacias,
   outrasZonas,
 }: {
   zona: Zona;
-  regioes: Regiao[];
   bairros: Bairro[];
   delegacias: Delegacia[];
   outrasZonas: Zona[];
 }) {
-  const territories = new Map<string, Regiao[]>();
-  for (const regiao of regioes) {
-    const slug = regiao.territorioSlug ?? regiao.slug;
-    territories.set(slug, [...(territories.get(slug) ?? []), regiao]);
-  }
-  const bairroBySlug = new Map(bairros.map((bairro) => [bairro.slug, bairro]));
   const photoByTerritory = new Map(
     featuredNeighborhoods.map((photo) => [photo.territorioId, photo]),
   );
@@ -464,12 +462,11 @@ function ZonaEditorialContent({
             Bairros e localidades da {zona.nome}
           </h2>
           <div className="mt-8 grid items-stretch gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {[...territories].map(([slug]) => {
-              const bairro = bairroBySlug.get(slug)!;
-              const photo = photoByTerritory.get(slug);
+            {bairros.map((bairro) => {
+              const photo = photoByTerritory.get(bairro.slug);
               return (
                 <Link
-                  key={slug}
+                  key={bairro.slug}
                   to="/bairros/$slug"
                   params={{ slug: bairro.slug }}
                   className="group flex min-h-64 flex-col overflow-hidden rounded-lg border border-border bg-card shadow-sm transition-[transform,border-color] hover:-translate-y-0.5 hover:border-gold/70 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-navy"
@@ -493,7 +490,7 @@ function ZonaEditorialContent({
                       {bairro.descricao}
                     </p>
                     <span className="mt-4 flex min-h-11 items-center justify-between text-sm font-semibold text-brand-navy">
-                      Conhecer o bairro
+                      {zona.slug === "centro" ? "Conhecer a região" : "Conhecer o bairro"}
                       <ArrowRight
                         className="size-4 transition-transform group-hover:translate-x-1"
                         aria-hidden
@@ -564,7 +561,9 @@ function ZonaEditorialContent({
                 id={`delegacias-${zona.slug}`}
                 className="mt-3 font-serif text-4xl text-brand-navy"
               >
-                Delegacias da {zona.nome}
+                {zona.slug === "centro"
+                  ? "Delegacias da região central"
+                  : `Delegacias da ${zona.nome}`}
               </h2>
             </div>
             <Link

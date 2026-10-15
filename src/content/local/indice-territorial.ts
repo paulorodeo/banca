@@ -132,6 +132,7 @@ const slugTerritorialPorRegiao: Record<string, string> = {
   "liberdade-1-dp": "liberdade",
   "liberdade-5-dp": "liberdade",
   "bras-12-dp": "bras",
+  "santa-ifigenia": "campos-eliseos",
 };
 
 const normalized = (value: string) =>
@@ -225,11 +226,13 @@ export function montarIndiceTerritorial(
       numero: guia.unidade.numero,
       nome: guia.cardSubtitulo,
     }));
+    const paginaLocalidade = paginas.get(`${referencia.regiaoSlug}-localidade`);
     territorios.set(`${referencia.regiaoSlug}-localidade`, {
       id: `territorio-${referencia.regiaoSlug}-localidade`,
       nome: referencia.nome,
       tipo: "localidade-editorial",
       zona: referencia.zona,
+      ...(paginaLocalidade ? { paginaBairro: `/bairros/${paginaLocalidade.slug}` } : {}),
       guias,
       referenciasBusca: referencia.variantes,
     });

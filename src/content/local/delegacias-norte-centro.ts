@@ -68,11 +68,19 @@ function contexto(dp: DistritoLote): string {
 const criarRegiao = (dp: DistritoLote): Regiao => ({
   id: `reg-${dp.regiaoSlug}`,
   slug: dp.regiaoSlug,
-  nome: NOMES_REPETIDOS.has(dp.nome) ? `${dp.nome} · ${dp.numero}º DP` : dp.nome,
+  nome:
+    dp.zona === "centro"
+      ? dp.nome
+      : NOMES_REPETIDOS.has(dp.nome)
+        ? `${dp.nome} · ${dp.numero}º DP`
+        : dp.nome,
   descricao: `Guia do ${dp.numero}º DP — ${dp.nome}: identificação da unidade, intimações e documentos de procedimentos policiais.`,
   bairros: [dp.nome, ...(dp.referenciasAdicionais ?? [])],
   href: `/delegacias/${slugDistrito(dp)}`,
   zona: dp.zona,
+  ...(dp.zona === "centro"
+    ? { territorioSlug: dp.numero === 3 ? "campos-eliseos" : dp.lugarSlug }
+    : {}),
 });
 
 export const regioesNorte: Regiao[] = distritosNorte.map(criarRegiao);

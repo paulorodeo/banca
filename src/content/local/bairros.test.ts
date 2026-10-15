@@ -86,6 +86,20 @@ describe("Páginas de bairro", () => {
     assert.equal(bairros.find((item) => item.slug === "santo-amaro")?.id, "bairro-santo-amaro");
   });
 
+  test("páginas do Centro preservam Liberdade, Campos Elíseos e Santa Ifigênia separados", () => {
+    const liberdade = bairros.find((item) => item.slug === "liberdade");
+    assert.deepEqual(liberdade?.instituicoes.map((item) => item.institutionSlug).sort(), [
+      "advogado-criminal-1-dp-liberdade",
+      "advogado-criminal-5-dp-liberdade",
+    ]);
+    assert.equal(bairros.find((item) => item.slug === "campos-eliseos")?.nome, "Campos Elíseos");
+    assert.equal(
+      bairros.find((item) => item.slug === "santa-ifigenia-localidade")?.nome,
+      "Santa Ifigênia",
+    );
+    assert.equal(delegacias.length, 93);
+  });
+
   test("não publica dados operacionais ou perfis fictícios em Pinheiros", () => {
     const text = JSON.stringify(bairros.find((bairro) => bairro.slug === "pinheiros"));
     assert.doesNotMatch(text, /OAB\/?SP|WhatsApp|telefone|atendimento 24/i);

@@ -1,6 +1,7 @@
 import type { Bairro } from "../types";
 import { bairrosLeste } from "./bairros-leste";
 import { bairrosNorteSul } from "./bairros-norte-sul";
+import { bairrosCentro } from "./bairros-centro";
 
 /**
  * Bairros publicados permanecem locais e tipados até o contrato territorial
@@ -592,4 +593,5 @@ export const bairros: Bairro[] = [
   },
   ...bairrosLeste,
   ...bairrosNorteSul,
+  ...bairrosCentro,
 ];

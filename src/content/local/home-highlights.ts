@@ -27,7 +27,7 @@ export async function homeNeighborhoodHighlights(
       if (!bairro) return null;
 
       const regiao = regiaoPorSlug.get(item.territorioId);
-      if (!regiao) throw new Error(`Território destacado não cadastrado: ${item.territorioId}`);
+      if (!regiao) return null;
 
       // A lista publicada e a resolução do repositório precisam concordar.
       // O formato da URL isoladamente não torna um bairro publicável.

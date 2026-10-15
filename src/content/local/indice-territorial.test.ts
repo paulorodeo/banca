@@ -41,6 +41,9 @@ describe("índice territorial de /regioes", () => {
     assert.equal(porNome("Santa Ifigênia")?.tipo, "localidade-editorial");
     assert.equal(porNome("Itaquera")?.tipo, "distrito-administrativo");
     assert.equal(porNome("Pinheiros")?.tipo, "bairro");
+    assert.equal(porNome("Liberdade")?.paginaBairro, "/bairros/liberdade");
+    assert.equal(porNome("Campos Elíseos")?.paginaBairro, "/bairros/campos-eliseos");
+    assert.equal(porNome("Santa Ifigênia")?.paginaBairro, "/bairros/santa-ifigenia-localidade");
   });
 
   test("combina busca sem acento e filtro, com contagens deriváveis dos itens", () => {
