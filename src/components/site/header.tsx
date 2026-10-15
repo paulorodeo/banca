@@ -7,10 +7,11 @@ import { cn } from "@/lib/utils";
 
 const navItems = [
   { to: "/", label: "Início" },
-  { to: "/regioes", label: "Regiões" },
-  { to: "/delegacias", label: "Delegacias" },
-  { to: "/profissionais", label: "Profissionais" },
   { to: "/artigos", label: "Artigos" },
+  { to: "/regioes", label: "Regiões" },
+  { to: "/delegacias", label: "Órgãos" },
+  { to: "/profissionais", label: "Profissionais" },
+  { to: "/vagas", label: "Vagas" },
   { to: "/sobre", label: "Sobre" },
 ] as const;
 
@@ -111,7 +112,7 @@ export function SiteHeader() {
                 }}
               >
                 <summary className="shell-link flex cursor-pointer list-none items-center gap-1 py-5 text-[0.68rem] font-medium">
-                  Órgãos Públicos <ChevronDown className="size-3" aria-hidden />
+                  Órgãos <ChevronDown className="size-3" aria-hidden />
                 </summary>
                 <div className="absolute left-0 top-full min-w-48 rounded-md border border-white/15 bg-brand-navy p-2 shadow-xl">
                   <Link
@@ -198,7 +199,7 @@ export function SiteHeader() {
                       <span className="w-5 text-[0.6rem] font-semibold tracking-[0.12em] text-gold/65">
                         {String(index + 1).padStart(2, "0")}
                       </span>
-                      {item.to === "/delegacias" ? "Órgãos Públicos · Delegacias" : item.label}
+                      {item.label}
                     </span>
                     <ArrowUpRight
                       className="size-4 opacity-55 transition-opacity group-hover:opacity-100"

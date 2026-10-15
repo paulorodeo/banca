@@ -5,7 +5,12 @@ import type { Zona } from "@/content/types";
 import { withPublishedGuideCounts } from "@/content/local/zonas";
 import { montarIndiceTerritorial, type TerritorioIndice } from "@/content/local/indice-territorial";
 import { Container } from "@/components/site/primitives";
-import { NeighborhoodIndex, TerritoryHero, ZoneCardLight } from "@/components/site/territory";
+import {
+  NeighborhoodIndex,
+  ProfessionalSidebar,
+  TerritoryHero,
+  ZoneCardLight,
+} from "@/components/site/territory";
 import { breadcrumbSchema, canonicalLink, pageMeta } from "@/lib/seo";
 
 interface Data {
@@ -143,8 +148,11 @@ function RegioesPage() {
             ligações com guias de delegacias são referências de navegação e não definem a unidade
             responsável por um endereço.
           </p>
-          <div className="mt-8">
-            <NeighborhoodIndex territorios={territorios} zonas={zonas} />
+          <div className="mt-8 grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_19rem]">
+            <div className="min-w-0">
+              <NeighborhoodIndex territorios={territorios} zonas={zonas} />
+            </div>
+            <ProfessionalSidebar neighborhoodName="São Paulo" />
           </div>
         </Container>
       </section>

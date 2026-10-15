@@ -4,7 +4,7 @@ import { content } from "@/content/repository";
 import type { Bairro, Regiao, Zona } from "@/content/types";
 import { artigoDaZona } from "@/content/local/zonas";
 import { Container } from "@/components/site/primitives";
-import { TerritoryHero } from "@/components/site/territory";
+import { ProfessionalSidebar, TerritoryHero } from "@/components/site/territory";
 import { breadcrumbSchema, canonicalLink, pageMeta } from "@/lib/seo";
 
 const zoneHeroImages = {
@@ -127,30 +127,33 @@ function ZonaPage() {
             </div>
             <p className="text-sm text-muted-foreground">{regioes.length} territórios</p>
           </div>
-          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {regioes.map((regiao) => {
-              const hasNeighborhood = published.has(regiao.slug);
-              return (
-                <Link
-                  key={regiao.id}
-                  to={hasNeighborhood ? `/bairros/${regiao.slug}` : regiao.href}
-                  className="group flex min-h-48 flex-col rounded-lg border border-border bg-card p-6 shadow-sm transition-[transform,border-color] hover:-translate-y-0.5 hover:border-gold/70"
-                >
-                  <MapPin className="size-5 text-gold" aria-hidden />
-                  <h3 className="mt-5 font-serif text-2xl text-brand-navy">{regiao.nome}</h3>
-                  <p className="mt-2 flex-1 text-sm leading-6 text-muted-foreground">
-                    {regiao.descricao}
-                  </p>
-                  <span className="mt-5 flex items-center justify-between text-xs font-semibold text-brand-navy">
-                    {hasNeighborhood ? "Explorar bairro" : "Acessar guia existente"}
-                    <ArrowRight
-                      className="size-4 transition-transform group-hover:translate-x-1"
-                      aria-hidden
-                    />
-                  </span>
-                </Link>
-              );
-            })}
+          <div className="mt-8 grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_19rem]">
+            <div className="grid min-w-0 gap-4 sm:grid-cols-2">
+              {regioes.map((regiao) => {
+                const hasNeighborhood = published.has(regiao.slug);
+                return (
+                  <Link
+                    key={regiao.id}
+                    to={hasNeighborhood ? `/bairros/${regiao.slug}` : regiao.href}
+                    className="group flex min-h-48 flex-col rounded-lg border border-border bg-card p-6 shadow-sm transition-[transform,border-color] hover:-translate-y-0.5 hover:border-gold/70"
+                  >
+                    <MapPin className="size-5 text-gold" aria-hidden />
+                    <h3 className="mt-5 font-serif text-2xl text-brand-navy">{regiao.nome}</h3>
+                    <p className="mt-2 flex-1 text-sm leading-6 text-muted-foreground">
+                      {regiao.descricao}
+                    </p>
+                    <span className="mt-5 flex items-center justify-between text-xs font-semibold text-brand-navy">
+                      {hasNeighborhood ? "Explorar bairro" : "Acessar guia existente"}
+                      <ArrowRight
+                        className="size-4 transition-transform group-hover:translate-x-1"
+                        aria-hidden
+                      />
+                    </span>
+                  </Link>
+                );
+              })}
+            </div>
+            <ProfessionalSidebar neighborhoodName={zona.nome} />
           </div>
         </Container>
       </section>

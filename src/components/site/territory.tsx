@@ -232,7 +232,7 @@ export function NeighborhoodIndex({
                     Explorar {zona.nome} <ArrowRight className="size-4" aria-hidden />
                   </Link>
                 </div>
-                <ul className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                <ul className="mt-5 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
                   {items.map((item) => (
                     <li
                       key={item.id}
@@ -315,7 +315,7 @@ export function ProfessionalSidebar({ neighborhoodName }: { neighborhoodName: st
         </span>
         <div>
           <h2 id="professionals-title" className="font-serif text-xl text-brand-navy">
-            Profissionais na região
+            Profissionais da Região
           </h2>
           <p className="mt-1 text-xs leading-5 text-muted-foreground">
             Perfis independentes com cobertura territorial declarada e publicação verificada.
@@ -329,9 +329,10 @@ export function ProfessionalSidebar({ neighborhoodName }: { neighborhoodName: st
         <button
           type="button"
           aria-pressed={sort === "rotativa"}
+          disabled
           onClick={() => setSort("rotativa")}
           className={cn(
-            "rounded px-3 py-2 text-xs font-semibold",
+            "rounded px-3 py-2 text-xs font-semibold disabled:cursor-not-allowed disabled:opacity-60",
             sort === "rotativa" ? "bg-brand-navy text-ivory" : "text-muted-foreground",
           )}
         >
@@ -340,15 +341,19 @@ export function ProfessionalSidebar({ neighborhoodName }: { neighborhoodName: st
         <button
           type="button"
           aria-pressed={sort === "az"}
+          disabled
           onClick={() => setSort("az")}
           className={cn(
-            "rounded px-3 py-2 text-xs font-semibold",
+            "rounded px-3 py-2 text-xs font-semibold disabled:cursor-not-allowed disabled:opacity-60",
             sort === "az" ? "bg-brand-navy text-ivory" : "text-muted-foreground",
           )}
         >
           A–Z
         </button>
       </div>
+      <p className="mt-2 text-xs text-muted-foreground">
+        A ordenação ficará disponível quando houver perfis publicados.
+      </p>
       <div className="mt-5 rounded-lg bg-muted/60 p-5 text-center">
         <ShieldCheck className="mx-auto size-7 text-gold" aria-hidden />
         <p className="mt-3 font-serif text-lg text-brand-navy">Nenhum perfil publicado</p>
