@@ -1,7 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { BriefcaseBusiness } from "lucide-react";
+import { BriefcaseBusiness, ExternalLink } from "lucide-react";
 import { Container } from "@/components/site/primitives";
 import { TerritoryHero } from "@/components/site/territory";
+import { vagasPublicadas } from "@/content/local/vagas";
 import { canonicalLink, pageMeta } from "@/lib/seo";
 
 export const Route = createFileRoute("/vagas")({
@@ -25,7 +26,7 @@ function VagasPage() {
       <TerritoryHero
         eyebrow="Oportunidades"
         title="Vagas"
-        lead="Espaço para oportunidades com origem, prazo e condições verificados antes da publicação."
+        lead="Oportunidades jurídicas com remuneração divulgada e candidatura na plataforma original."
         crumbs={[
           { name: "Início", path: "/" },
           { name: "Vagas", path: "/vagas" },
@@ -33,15 +34,83 @@ function VagasPage() {
       />
       <section className="py-14 md:py-20">
         <Container>
-          <div className="max-w-2xl rounded-xl border border-brand-navy/20 bg-white p-8 shadow-sm">
-            <BriefcaseBusiness className="size-7 text-gold" aria-hidden />
-            <h2 className="mt-5 font-serif text-3xl text-brand-navy">
-              Nenhuma vaga publicada no momento
-            </h2>
-            <p className="mt-4 text-sm leading-7 text-brand-navy/75">
-              A Banca Paulista ainda não publicou oportunidades nesta página. Uma vaga aparecerá
-              aqui somente depois de confirmados sua origem, suas condições e seu prazo.
+          <div className="max-w-3xl">
+            <p className="text-sm leading-7 text-brand-navy/75">
+              A Banca Paulista divulga editorialmente estas oportunidades; não é empregadora,
+              intermediadora nem recebe currículos. Candidate-se somente pela plataforma indicada em
+              cada anúncio.
             </p>
+          </div>
+          <div className="mt-8 grid gap-5 lg:grid-cols-2">
+            {vagasPublicadas.map((vaga) => (
+              <article
+                key={vaga.id}
+                className="flex h-full flex-col rounded-xl border border-brand-navy/20 bg-white p-6 shadow-sm"
+              >
+                <div className="flex items-start justify-between gap-4">
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-[0.14em] text-gold">
+                      {vaga.organizacao}
+                    </p>
+                    <h2 className="mt-2 font-serif text-2xl leading-tight text-brand-navy">
+                      {vaga.cargo}
+                    </h2>
+                  </div>
+                  <BriefcaseBusiness className="size-6 shrink-0 text-gold" aria-hidden />
+                </div>
+                <p className="mt-4 rounded-lg bg-gold/15 px-4 py-3 text-lg font-semibold text-brand-navy">
+                  {vaga.remuneracao.destaque}
+                </p>
+                {vaga.remuneracao.observacao ? (
+                  <p className="mt-2 text-xs leading-5 text-brand-navy/70">
+                    {vaga.remuneracao.observacao}
+                  </p>
+                ) : null}
+                <dl className="mt-5 grid gap-x-5 gap-y-3 text-sm sm:grid-cols-2">
+                  <div>
+                    <dt className="font-semibold text-brand-navy">Local</dt>
+                    <dd className="mt-1 text-brand-navy/75">{vaga.localizacao}</dd>
+                  </div>
+                  {vaga.modalidade ? (
+                    <div>
+                      <dt className="font-semibold text-brand-navy">Modalidade</dt>
+                      <dd className="mt-1 text-brand-navy/75">{vaga.modalidade}</dd>
+                    </div>
+                  ) : null}
+                  {vaga.contratacao ? (
+                    <div>
+                      <dt className="font-semibold text-brand-navy">Contratação</dt>
+                      <dd className="mt-1 text-brand-navy/75">{vaga.contratacao}</dd>
+                    </div>
+                  ) : null}
+                  {vaga.exigeOabAtiva ? (
+                    <div>
+                      <dt className="font-semibold text-brand-navy">Requisito</dt>
+                      <dd className="mt-1 text-brand-navy/75">OAB ativa</dd>
+                    </div>
+                  ) : null}
+                </dl>
+                <p className="mt-5 text-sm leading-6 text-brand-navy/75">{vaga.resumo}</p>
+                <div className="mt-5 border-t border-brand-navy/10 pt-4 text-xs leading-5 text-brand-navy/70">
+                  {vaga.inclusivaPcd ? (
+                    <p>Vaga também destinada a pessoas com deficiência.</p>
+                  ) : null}
+                  {vaga.prazoAnunciado ? <p>Prazo anunciado: {vaga.prazoAnunciado}.</p> : null}
+                  <p>
+                    Fonte: {vaga.fonte.nome} · verificada em {vaga.fonte.consultadaEm}.
+                  </p>
+                </div>
+                <a
+                  href={vaga.fonte.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="mt-5 inline-flex w-fit items-center gap-2 text-sm font-semibold text-brand-navy underline decoration-gold underline-offset-4"
+                >
+                  Candidatar-se na plataforma original{" "}
+                  <ExternalLink className="size-4" aria-hidden />
+                </a>
+              </article>
+            ))}
           </div>
         </Container>
       </section>
