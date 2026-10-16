@@ -2,9 +2,9 @@ import { describe, expect, test } from "bun:test";
 import { vagas, vagasPublicadas } from "./vagas";
 
 describe("vagas editoriais", () => {
-  test("publica as oito oportunidades remuneradas em ordem decrescente", () => {
-    expect(vagasPublicadas).toHaveLength(8);
-    expect(vagasPublicadas.map((vaga) => vaga.slug)).toEqual([
+  test("preserva as oito oportunidades remuneradas em ordem decrescente", () => {
+    expect(vagasPublicadas.slice(0, 8)).toHaveLength(8);
+    expect(vagasPublicadas.slice(0, 8).map((vaga) => vaga.slug)).toEqual([
       "advogada-trabalhista-contencioso-on-the-job",
       "advogado-civel-pleno-radar-gestao",
       "advogado-contencioso-civel-youtility",
@@ -14,6 +14,18 @@ describe("vagas editoriais", () => {
       "paralegal-contencioso-todorovic",
       "assistente-juridico-dnr",
     ]);
+  });
+
+  test("distingue estágios e vagas sem remuneração divulgada", () => {
+    expect(vagasPublicadas).toHaveLength(22);
+    expect(vagasPublicadas.filter((vaga) => vaga.tipo === "profissional")).toHaveLength(16);
+    expect(vagasPublicadas.filter((vaga) => vaga.tipo === "estagio")).toHaveLength(6);
+    expect(
+      vagasPublicadas.filter((vaga) => vaga.tipo === "profissional" && !vaga.remuneracao),
+    ).toHaveLength(8);
+    expect(
+      vagasPublicadas.filter((vaga) => vaga.tipo === "estagio" && !vaga.remuneracao),
+    ).toHaveLength(6);
   });
 
   test("mantém candidatura externa e separa componentes não garantidos", () => {

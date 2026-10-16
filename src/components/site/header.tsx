@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { useEffect, useId, useRef, useState } from "react";
-import { ArrowUpRight, Menu, Search, X, ChevronDown } from "lucide-react";
+import { ArrowUpRight, ChevronDown, Contrast, Menu, Search, X } from "lucide-react";
 import { Brand } from "./brand";
 import { Container } from "./primitives";
 import { cn } from "@/lib/utils";
@@ -21,6 +21,7 @@ const focusableSelector = 'a[href], button:not([disabled]), [tabindex]:not([tabi
 
 export function SiteHeader({ institutions }: { institutions: PublicInstitution[] }) {
   const [open, setOpen] = useState(false);
+  const [highContrast, setHighContrast] = useState(false);
   const menuId = useId();
   const homeRef = useRef<HTMLAnchorElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
@@ -38,6 +39,19 @@ export function SiteHeader({ institutions }: { institutions: PublicInstitution[]
     desktop.addEventListener("change", closeOnDesktop);
     return () => desktop.removeEventListener("change", closeOnDesktop);
   }, []);
+
+  useEffect(() => {
+    const savedContrast = window.localStorage.getItem("banca-contrast") === "high";
+    setHighContrast(savedContrast);
+    document.documentElement.dataset.contrast = savedContrast ? "high" : "soft";
+  }, []);
+
+  const toggleContrast = () => {
+    const nextContrast = !highContrast;
+    setHighContrast(nextContrast);
+    document.documentElement.dataset.contrast = nextContrast ? "high" : "soft";
+    window.localStorage.setItem("banca-contrast", nextContrast ? "high" : "soft");
+  };
 
   useEffect(() => {
     if (!open) return;
@@ -185,6 +199,22 @@ export function SiteHeader({ institutions }: { institutions: PublicInstitution[]
         </nav>
 
         <div className="flex items-center gap-3">
+          <a
+            href="mailto:vagas@bancapaulista.org"
+            className="hidden rounded-sm text-xs font-semibold text-gold underline decoration-gold/50 underline-offset-4 transition-colors hover:text-ivory lg:inline-flex"
+          >
+            vagas@bancapaulista.org
+          </a>
+          <button
+            type="button"
+            onClick={toggleContrast}
+            aria-pressed={highContrast}
+            aria-label={highContrast ? "Usar contraste suave" : "Aumentar contraste"}
+            title={highContrast ? "Usar contraste suave" : "Aumentar contraste"}
+            className="grid size-8 place-items-center rounded-full text-ivory/55 transition-colors hover:bg-white/5 hover:text-gold"
+          >
+            <Contrast className="size-3.5" aria-hidden />
+          </button>
           <Link
             to="/orgaos"
             aria-label="Consultar órgãos e serviços"

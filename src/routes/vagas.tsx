@@ -26,7 +26,7 @@ function VagasPage() {
       <TerritoryHero
         eyebrow="Oportunidades"
         title="Vagas"
-        lead="Oportunidades jurídicas com remuneração divulgada e candidatura na plataforma original."
+        lead="Vagas profissionais e estágios jurídicos com candidatura na plataforma original."
         crumbs={[
           { name: "Início", path: "/" },
           { name: "Vagas", path: "/vagas" },
@@ -49,9 +49,14 @@ function VagasPage() {
               >
                 <div className="flex items-start justify-between gap-4">
                   <div>
-                    <p className="text-xs font-semibold uppercase tracking-[0.14em] text-gold">
-                      {vaga.organizacao}
-                    </p>
+                    <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+                      <p className="text-xs font-semibold uppercase tracking-[0.14em] text-gold">
+                        {vaga.organizacao}
+                      </p>
+                      <span className="text-xs font-semibold uppercase tracking-[0.12em] text-brand-navy/60">
+                        {vaga.tipo === "estagio" ? "Estágio" : "Vaga profissional"}
+                      </span>
+                    </div>
                     <h2 className="mt-2 font-serif text-2xl leading-tight text-brand-navy">
                       {vaga.cargo}
                     </h2>
@@ -59,9 +64,9 @@ function VagasPage() {
                   <BriefcaseBusiness className="size-6 shrink-0 text-gold" aria-hidden />
                 </div>
                 <p className="mt-4 rounded-lg bg-gold/15 px-4 py-3 text-lg font-semibold text-brand-navy">
-                  {vaga.remuneracao.destaque}
+                  {vaga.remuneracao?.destaque ?? "Remuneração não informada"}
                 </p>
-                {vaga.remuneracao.observacao ? (
+                {vaga.remuneracao?.observacao ? (
                   <p className="mt-2 text-xs leading-5 text-brand-navy/70">
                     {vaga.remuneracao.observacao}
                   </p>

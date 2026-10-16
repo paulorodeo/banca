@@ -260,9 +260,11 @@
 
 /* Homepage metropolitana: superfícies claras escopadas apenas à home. */
 .home-light {
-  --background: oklch(0.975 0.006 85);
+  --page-background: oklch(0.952 0.004 255);
+  --page-card: oklch(0.982 0.002 255);
+  --background: var(--page-background);
   --foreground: oklch(0.22 0.05 260);
-  --card: oklch(1 0 0);
+  --card: var(--page-card);
   --muted-foreground: oklch(0.45 0.03 260);
   --border: oklch(0.9 0.01 260);
   --navy: var(--brand-navy);
@@ -270,6 +272,16 @@
   --gold-accent: var(--brand-gold);
   background: var(--background);
   color: var(--foreground);
+}
+.home-light .bg-white {
+  background-color: var(--card);
+}
+html[data-contrast="high"] .home-light {
+  --page-background: oklch(0.985 0.002 255);
+  --page-card: oklch(1 0 0);
+  --foreground: oklch(0.16 0.035 260);
+  --muted-foreground: oklch(0.36 0.025 260);
+  --border: oklch(0.78 0.01 260);
 }
 @utility bg-navy {
   background-color: var(--navy);
@@ -299,8 +311,8 @@
 
 /* Superfícies editoriais compartilhadas. Os heros mantêm contraste próprio. */
 .home-light {
-  --background: var(--brand-ivory);
-  --card: oklch(0.994 0.003 85);
+  --background: var(--page-background);
+  --card: var(--page-card);
   --input: oklch(0.84 0.015 260);
   --muted: oklch(0.93 0.01 85);
   --card-foreground: var(--brand-navy);
@@ -428,7 +440,7 @@
   border-bottom: 1px solid var(--border);
 }
 .home-page {
-  --background: oklch(0.985 0.004 85);
+  --background: var(--page-background);
 }
 .home-page .home-hero > div:last-child {
   padding-block: 2.6rem;
