@@ -14,6 +14,7 @@ import { Route as AreasDeAtuacaoRouteImport } from './routes/areas-de-atuacao'
 import { Route as AtendimentoReservadoRouteImport } from './routes/atendimento-reservado'
 import { Route as ContatoRouteImport } from './routes/contato'
 import { Route as IntegridadeEEticaRouteImport } from './routes/integridade-e-etica'
+import { Route as NoticiasRouteImport } from './routes/noticias'
 import { Route as OEscritorioRouteImport } from './routes/o-escritorio'
 import { Route as PauloSinigaliaRouteImport } from './routes/paulo-sinigalia'
 import { Route as PlantaoCriminalRouteImport } from './routes/plantao-criminal'
@@ -63,6 +64,11 @@ const ContatoRoute = ContatoRouteImport.update({
 const IntegridadeEEticaRoute = IntegridadeEEticaRouteImport.update({
   id: '/integridade-e-etica',
   path: '/integridade-e-etica',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NoticiasRoute = NoticiasRouteImport.update({
+  id: '/noticias',
+  path: '/noticias',
   getParentRoute: () => rootRouteImport,
 } as any)
 const OEscritorioRoute = OEscritorioRouteImport.update({
@@ -197,6 +203,7 @@ export interface FileRoutesByFullPath {
   '/atendimento-reservado': typeof AtendimentoReservadoRoute
   '/contato': typeof ContatoRoute
   '/integridade-e-etica': typeof IntegridadeEEticaRoute
+  '/noticias': typeof NoticiasRoute
   '/o-escritorio': typeof OEscritorioRoute
   '/paulo-sinigalia': typeof PauloSinigaliaRoute
   '/plantao-criminal': typeof PlantaoCriminalRoute
@@ -229,6 +236,7 @@ export interface FileRoutesByTo {
   '/atendimento-reservado': typeof AtendimentoReservadoRoute
   '/contato': typeof ContatoRoute
   '/integridade-e-etica': typeof IntegridadeEEticaRoute
+  '/noticias': typeof NoticiasRoute
   '/o-escritorio': typeof OEscritorioRoute
   '/paulo-sinigalia': typeof PauloSinigaliaRoute
   '/plantao-criminal': typeof PlantaoCriminalRoute
@@ -262,6 +270,7 @@ export interface FileRoutesById {
   '/atendimento-reservado': typeof AtendimentoReservadoRoute
   '/contato': typeof ContatoRoute
   '/integridade-e-etica': typeof IntegridadeEEticaRoute
+  '/noticias': typeof NoticiasRoute
   '/o-escritorio': typeof OEscritorioRoute
   '/paulo-sinigalia': typeof PauloSinigaliaRoute
   '/plantao-criminal': typeof PlantaoCriminalRoute
@@ -296,6 +305,7 @@ export interface FileRouteTypes {
     | '/atendimento-reservado'
     | '/contato'
     | '/integridade-e-etica'
+    | '/noticias'
     | '/o-escritorio'
     | '/paulo-sinigalia'
     | '/plantao-criminal'
@@ -328,6 +338,7 @@ export interface FileRouteTypes {
     | '/atendimento-reservado'
     | '/contato'
     | '/integridade-e-etica'
+    | '/noticias'
     | '/o-escritorio'
     | '/paulo-sinigalia'
     | '/plantao-criminal'
@@ -360,6 +371,7 @@ export interface FileRouteTypes {
     | '/atendimento-reservado'
     | '/contato'
     | '/integridade-e-etica'
+    | '/noticias'
     | '/o-escritorio'
     | '/paulo-sinigalia'
     | '/plantao-criminal'
@@ -393,6 +405,7 @@ export interface RootRouteChildren {
   AtendimentoReservadoRoute: typeof AtendimentoReservadoRoute
   ContatoRoute: typeof ContatoRoute
   IntegridadeEEticaRoute: typeof IntegridadeEEticaRoute
+  NoticiasRoute: typeof NoticiasRoute
   OEscritorioRoute: typeof OEscritorioRoute
   PauloSinigaliaRoute: typeof PauloSinigaliaRoute
   PlantaoCriminalRoute: typeof PlantaoCriminalRoute
@@ -455,6 +468,13 @@ declare module '@tanstack/react-router' {
       path: '/integridade-e-etica'
       fullPath: '/integridade-e-etica'
       preLoaderRoute: typeof IntegridadeEEticaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/noticias': {
+      id: '/noticias'
+      path: '/noticias'
+      fullPath: '/noticias'
+      preLoaderRoute: typeof NoticiasRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/o-escritorio': {
@@ -641,6 +661,7 @@ const rootRouteChildren: RootRouteChildren = {
   AtendimentoReservadoRoute: AtendimentoReservadoRoute,
   ContatoRoute: ContatoRoute,
   IntegridadeEEticaRoute: IntegridadeEEticaRoute,
+  NoticiasRoute: NoticiasRoute,
   OEscritorioRoute: OEscritorioRoute,
   PauloSinigaliaRoute: PauloSinigaliaRoute,
   PlantaoCriminalRoute: PlantaoCriminalRoute,
