@@ -36,6 +36,7 @@ import { Route as ConteudosSlugRouteImport } from './routes/conteudos.$slug'
 import { Route as DelegaciasIndexRouteImport } from './routes/delegacias.index'
 import { Route as DelegaciasSlugRouteImport } from './routes/delegacias.$slug'
 import { Route as InstituicoesSlugRouteImport } from './routes/instituicoes.$slug'
+import { Route as NoticiasIndexRouteImport } from './routes/noticias.index'
 import { Route as NoticiasSlugRouteImport } from './routes/noticias.$slug'
 import { Route as OrgaosIndexRouteImport } from './routes/orgaos.index'
 import { Route as RegioesIndexRouteImport } from './routes/regioes.index'
@@ -177,6 +178,11 @@ const InstituicoesSlugRoute = InstituicoesSlugRouteImport.update({
   path: '/instituicoes/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const NoticiasIndexRoute = NoticiasIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => NoticiasRoute,
+} as any)
 const NoticiasSlugRoute = NoticiasSlugRouteImport.update({
   id: '/$slug',
   path: '/$slug',
@@ -233,6 +239,7 @@ export interface FileRoutesByFullPath {
   '/artigos/': typeof ArtigosIndexRoute
   '/conteudos/': typeof ConteudosIndexRoute
   '/delegacias/': typeof DelegaciasIndexRoute
+  '/noticias/': typeof NoticiasIndexRoute
   '/orgaos/': typeof OrgaosIndexRoute
   '/regioes/': typeof RegioesIndexRoute
   '/api/public/triagem': typeof ApiPublicTriagemRoute
@@ -243,7 +250,6 @@ export interface FileRoutesByTo {
   '/atendimento-reservado': typeof AtendimentoReservadoRoute
   '/contato': typeof ContatoRoute
   '/integridade-e-etica': typeof IntegridadeEEticaRoute
-  '/noticias': typeof NoticiasRouteWithChildren
   '/o-escritorio': typeof OEscritorioRoute
   '/paulo-sinigalia': typeof PauloSinigaliaRoute
   '/plantao-criminal': typeof PlantaoCriminalRoute
@@ -267,6 +273,7 @@ export interface FileRoutesByTo {
   '/artigos': typeof ArtigosIndexRoute
   '/conteudos': typeof ConteudosIndexRoute
   '/delegacias': typeof DelegaciasIndexRoute
+  '/noticias': typeof NoticiasIndexRoute
   '/orgaos': typeof OrgaosIndexRoute
   '/regioes': typeof RegioesIndexRoute
   '/api/public/triagem': typeof ApiPublicTriagemRoute
@@ -302,6 +309,7 @@ export interface FileRoutesById {
   '/artigos/': typeof ArtigosIndexRoute
   '/conteudos/': typeof ConteudosIndexRoute
   '/delegacias/': typeof DelegaciasIndexRoute
+  '/noticias/': typeof NoticiasIndexRoute
   '/orgaos/': typeof OrgaosIndexRoute
   '/regioes/': typeof RegioesIndexRoute
   '/api/public/triagem': typeof ApiPublicTriagemRoute
@@ -338,6 +346,7 @@ export interface FileRouteTypes {
     | '/artigos/'
     | '/conteudos/'
     | '/delegacias/'
+    | '/noticias/'
     | '/orgaos/'
     | '/regioes/'
     | '/api/public/triagem'
@@ -348,7 +357,6 @@ export interface FileRouteTypes {
     | '/atendimento-reservado'
     | '/contato'
     | '/integridade-e-etica'
-    | '/noticias'
     | '/o-escritorio'
     | '/paulo-sinigalia'
     | '/plantao-criminal'
@@ -372,6 +380,7 @@ export interface FileRouteTypes {
     | '/artigos'
     | '/conteudos'
     | '/delegacias'
+    | '/noticias'
     | '/orgaos'
     | '/regioes'
     | '/api/public/triagem'
@@ -406,6 +415,7 @@ export interface FileRouteTypes {
     | '/artigos/'
     | '/conteudos/'
     | '/delegacias/'
+    | '/noticias/'
     | '/orgaos/'
     | '/regioes/'
     | '/api/public/triagem'
@@ -636,6 +646,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof InstituicoesSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/noticias/': {
+      id: '/noticias/'
+      path: '/'
+      fullPath: '/noticias/'
+      preLoaderRoute: typeof NoticiasIndexRouteImport
+      parentRoute: typeof NoticiasRoute
+    }
     '/noticias/$slug': {
       id: '/noticias/$slug'
       path: '/$slug'
@@ -676,10 +693,12 @@ declare module '@tanstack/react-router' {
 
 interface NoticiasRouteChildren {
   NoticiasSlugRoute: typeof NoticiasSlugRoute
+  NoticiasIndexRoute: typeof NoticiasIndexRoute
 }
 
 const NoticiasRouteChildren: NoticiasRouteChildren = {
   NoticiasSlugRoute: NoticiasSlugRoute,
+  NoticiasIndexRoute: NoticiasIndexRoute,
 }
 
 const NoticiasRouteWithChildren = NoticiasRoute._addFileChildren(

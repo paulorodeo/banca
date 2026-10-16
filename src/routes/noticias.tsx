@@ -1,38 +1,14 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, Outlet } from "@tanstack/react-router";
 import { ArrowRight, Clock3, Tags } from "lucide-react";
 import { Container } from "@/components/site/primitives";
 import { TerritoryHero } from "@/components/site/territory";
 import { noticias } from "@/content/local/noticias";
-import { breadcrumbSchema, canonicalLink, pageMeta } from "@/lib/seo";
 
 const categories = ["Segurança Pública", "Direito Imobiliário e Urbanístico"] as const;
 const orderedNoticias = [...noticias].sort((a, b) => b.publicadoEm.localeCompare(a.publicadoEm));
 
 export const Route = createFileRoute("/noticias")({
-  head: () => ({
-    meta: [
-      ...pageMeta({
-        title: "Notícias | Banca Paulista",
-        description:
-          "Notícias sobre segurança pública, direitos, instituições e acontecimentos de São Paulo.",
-        path: "/noticias",
-      }),
-      { name: "robots", content: "noindex, follow" },
-    ],
-    links: canonicalLink("/noticias"),
-    scripts: [
-      {
-        type: "application/ld+json",
-        children: JSON.stringify(
-          breadcrumbSchema([
-            { name: "Início", path: "/" },
-            { name: "Notícias", path: "/noticias" },
-          ]),
-        ),
-      },
-    ],
-  }),
-  component: NoticiasPage,
+  component: Outlet,
 });
 
 function date(value: string) {
@@ -42,7 +18,7 @@ function date(value: string) {
   });
 }
 
-function NoticiasPage() {
+export function NoticiasPage() {
   const [featured, ...remaining] = orderedNoticias;
   if (!featured) return null;
   return (
