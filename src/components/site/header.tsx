@@ -4,12 +4,14 @@ import { ArrowUpRight, Menu, Search, X, ChevronDown } from "lucide-react";
 import { Brand } from "./brand";
 import { Container } from "./primitives";
 import { cn } from "@/lib/utils";
+import { categoriasComInstituicoes } from "@/content/local/orgaos";
+import type { PublicInstitution } from "@/content/types";
 
 const navItems = [
   { to: "/", label: "Início" },
   { to: "/artigos", label: "Artigos" },
   { to: "/regioes", label: "Regiões" },
-  { to: "/delegacias", label: "Órgãos" },
+  { to: "/orgaos", label: "Órgãos e Serviços" },
   { to: "/profissionais", label: "Profissionais" },
   { to: "/vagas", label: "Vagas" },
   { to: "/sobre", label: "Sobre" },
@@ -17,12 +19,15 @@ const navItems = [
 
 const focusableSelector = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
 
-export function SiteHeader() {
+export function SiteHeader({ institutions }: { institutions: PublicInstitution[] }) {
   const [open, setOpen] = useState(false);
   const menuId = useId();
   const homeRef = useRef<HTMLAnchorElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const panelRef = useRef<HTMLDivElement>(null);
+  const categorias = categoriasComInstituicoes(institutions).filter(
+    (categoria) => categoria.instituicoes.length > 0,
+  );
 
   useEffect(() => {
     const desktop = window.matchMedia("(min-width: 1024px)");
@@ -98,7 +103,7 @@ export function SiteHeader() {
 
         <nav aria-label="Navegação principal" className="hidden h-full items-center gap-5 lg:flex">
           {navItems.map((item) =>
-            item.to === "/delegacias" ? (
+            item.to === "/orgaos" ? (
               <details
                 key={item.to}
                 className="public-bodies-menu relative"
@@ -112,18 +117,58 @@ export function SiteHeader() {
                 }}
               >
                 <summary className="shell-link flex cursor-pointer list-none items-center gap-1 py-5 text-[0.68rem] font-medium">
-                  Órgãos <ChevronDown className="size-3" aria-hidden />
+                  Órgãos e Serviços <ChevronDown className="size-3" aria-hidden />
                 </summary>
-                <div className="absolute left-0 top-full min-w-48 rounded-md border border-white/15 bg-brand-navy p-2 shadow-xl">
-                  <Link
-                    to="/delegacias"
-                    onClick={(event) =>
-                      event.currentTarget.closest("details")?.removeAttribute("open")
-                    }
-                    className="block rounded px-4 py-3 text-sm text-ivory hover:bg-white/10"
-                  >
-                    Delegacias
-                  </Link>
+                <div className="absolute left-1/2 top-full w-[min(52rem,calc(100vw-3rem))] -translate-x-1/2 rounded-md border border-white/15 bg-brand-navy p-5 shadow-xl">
+                  <div className="flex items-center justify-between gap-6 border-b border-white/10 pb-4">
+                    <p className="text-xs font-semibold uppercase tracking-[0.14em] text-gold">
+                      Órgãos e Serviços
+                    </p>
+                    <Link
+                      to="/orgaos"
+                      onClick={(event) =>
+                        event.currentTarget.closest("details")?.removeAttribute("open")
+                      }
+                      className="text-xs font-semibold text-ivory underline decoration-gold underline-offset-4 hover:text-gold"
+                    >
+                      Ver índice geral
+                    </Link>
+                  </div>
+                  <div className="mt-4 grid grid-cols-2 gap-x-8 gap-y-5">
+                    {categorias.map((categoria) => (
+                      <section key={categoria.id} aria-label={categoria.nome}>
+                        <p className="text-xs font-semibold text-gold">{categoria.nome}</p>
+                        <ul className="mt-2 space-y-1.5">
+                          {categoria.instituicoes.map((institution) => (
+                            <li key={institution.id}>
+                              <Link
+                                to="/instituicoes/$slug"
+                                params={{ slug: institution.slug }}
+                                onClick={(event) =>
+                                  event.currentTarget.closest("details")?.removeAttribute("open")
+                                }
+                                className="block rounded py-1 text-sm text-ivory/80 hover:text-gold"
+                              >
+                                {institution.sigla ?? institution.nomeOficial}
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      </section>
+                    ))}
+                    <section aria-label="Delegacias">
+                      <p className="text-xs font-semibold text-gold">Polícia e Investigação</p>
+                      <Link
+                        to="/delegacias"
+                        onClick={(event) =>
+                          event.currentTarget.closest("details")?.removeAttribute("open")
+                        }
+                        className="mt-2 block rounded py-1 text-sm text-ivory/80 hover:text-gold"
+                      >
+                        Delegacias
+                      </Link>
+                    </section>
+                  </div>
                 </div>
               </details>
             ) : (
@@ -141,8 +186,8 @@ export function SiteHeader() {
 
         <div className="flex items-center gap-3">
           <Link
-            to="/delegacias"
-            aria-label="Consultar guias de delegacias"
+            to="/orgaos"
+            aria-label="Consultar órgãos e serviços"
             className="hidden size-10 place-items-center rounded-full text-ivory/85 transition-colors hover:bg-white/5 hover:text-gold md:grid"
           >
             <Search className="size-4.5" aria-hidden />
@@ -188,24 +233,76 @@ export function SiteHeader() {
             <ul className="divide-y divide-white/10 border-y border-white/10">
               {navItems.map((item, index) => (
                 <li key={item.to}>
-                  <Link
-                    to={item.to}
-                    tabIndex={open ? 0 : -1}
-                    onClick={() => setOpen(false)}
-                    className="group flex items-center justify-between rounded-sm py-4 text-base text-ivory/80 transition-colors hover:text-gold"
-                    activeProps={{ className: "text-gold" }}
-                  >
-                    <span className="flex items-center gap-4">
-                      <span className="w-5 text-[0.6rem] font-semibold tracking-[0.12em] text-gold/65">
-                        {String(index + 1).padStart(2, "0")}
+                  {item.to === "/orgaos" ? (
+                    <details className="py-4">
+                      <summary className="flex cursor-pointer list-none items-center justify-between text-base text-ivory/80 hover:text-gold">
+                        <span className="flex items-center gap-4">
+                          <span className="w-5 text-[0.6rem] font-semibold tracking-[0.12em] text-gold/65">
+                            {String(index + 1).padStart(2, "0")}
+                          </span>
+                          {item.label}
+                        </span>
+                        <ChevronDown className="size-4" aria-hidden />
+                      </summary>
+                      <div className="mt-4 space-y-4 pl-9">
+                        {categorias.map((categoria) => (
+                          <section key={categoria.id}>
+                            <p className="text-xs font-semibold text-gold">{categoria.nome}</p>
+                            <ul className="mt-2 space-y-2">
+                              {categoria.instituicoes.map((institution) => (
+                                <li key={institution.id}>
+                                  <Link
+                                    to="/instituicoes/$slug"
+                                    params={{ slug: institution.slug }}
+                                    tabIndex={open ? 0 : -1}
+                                    onClick={() => setOpen(false)}
+                                    className="text-sm text-ivory/75 hover:text-gold"
+                                  >
+                                    {institution.sigla ?? institution.nomeOficial}
+                                  </Link>
+                                </li>
+                              ))}
+                            </ul>
+                          </section>
+                        ))}
+                        <Link
+                          to="/delegacias"
+                          tabIndex={open ? 0 : -1}
+                          onClick={() => setOpen(false)}
+                          className="block text-sm text-ivory/75 hover:text-gold"
+                        >
+                          Delegacias
+                        </Link>
+                        <Link
+                          to="/orgaos"
+                          tabIndex={open ? 0 : -1}
+                          onClick={() => setOpen(false)}
+                          className="block text-sm font-semibold text-ivory underline decoration-gold underline-offset-4 hover:text-gold"
+                        >
+                          Ver índice geral
+                        </Link>
+                      </div>
+                    </details>
+                  ) : (
+                    <Link
+                      to={item.to}
+                      tabIndex={open ? 0 : -1}
+                      onClick={() => setOpen(false)}
+                      className="group flex items-center justify-between rounded-sm py-4 text-base text-ivory/80 transition-colors hover:text-gold"
+                      activeProps={{ className: "text-gold" }}
+                    >
+                      <span className="flex items-center gap-4">
+                        <span className="w-5 text-[0.6rem] font-semibold tracking-[0.12em] text-gold/65">
+                          {String(index + 1).padStart(2, "0")}
+                        </span>
+                        {item.label}
                       </span>
-                      {item.label}
-                    </span>
-                    <ArrowUpRight
-                      className="size-4 opacity-55 transition-opacity group-hover:opacity-100"
-                      aria-hidden
-                    />
-                  </Link>
+                      <ArrowUpRight
+                        className="size-4 opacity-55 transition-opacity group-hover:opacity-100"
+                        aria-hidden
+                      />
+                    </Link>
+                  )}
                 </li>
               ))}
             </ul>

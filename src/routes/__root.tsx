@@ -16,6 +16,8 @@ import { SiteHeader } from "@/components/site/header";
 import { SiteFooter } from "@/components/site/footer";
 import { readPublicOrigin } from "@/lib/public-url.functions";
 import { editorialIdentity } from "@/content/local/settings";
+import { content } from "@/content/repository";
+import type { PublicInstitution } from "@/content/types";
 import { organizationSchema } from "@/lib/seo";
 import { MiniRadioPlayer } from "@/features/radio/components/MiniRadioPlayer";
 import { RadioProvider } from "@/features/radio/components/RadioProvider";
@@ -79,8 +81,12 @@ function ErrorComponent({ error, reset }: ErrorComponentProps) {
 export const Route = createRootRouteWithContext<{
   queryClient: QueryClient;
   siteOrigin?: string;
+  institutions?: PublicInstitution[];
 }>()({
-  beforeLoad: async () => ({ siteOrigin: await readPublicOrigin() }),
+  beforeLoad: async () => ({
+    siteOrigin: await readPublicOrigin(),
+    institutions: await content.listInstitutions(),
+  }),
   head: () => ({
     meta: [
       { charSet: "utf-8" },
@@ -143,7 +149,7 @@ function RootShell({ children }: { children: ReactNode }) {
 }
 
 function RootComponent() {
-  const { queryClient } = Route.useRouteContext();
+  const { queryClient, institutions = [] } = Route.useRouteContext();
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -155,7 +161,7 @@ function RootComponent() {
           Ir para o conteúdo
         </a>
         <div className="flex min-h-screen flex-col">
-          <SiteHeader />
+          <SiteHeader institutions={institutions} />
           <main id="conteudo-principal" className="flex-1">
             {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
             <Outlet />

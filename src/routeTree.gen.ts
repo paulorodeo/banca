@@ -35,6 +35,7 @@ import { Route as ConteudosSlugRouteImport } from './routes/conteudos.$slug'
 import { Route as DelegaciasIndexRouteImport } from './routes/delegacias.index'
 import { Route as DelegaciasSlugRouteImport } from './routes/delegacias.$slug'
 import { Route as InstituicoesSlugRouteImport } from './routes/instituicoes.$slug'
+import { Route as OrgaosIndexRouteImport } from './routes/orgaos.index'
 import { Route as RegioesIndexRouteImport } from './routes/regioes.index'
 import { Route as RegioesSlugRouteImport } from './routes/regioes.$slug'
 import { Route as ApiPublicTriagemRouteImport } from './routes/api/public/triagem'
@@ -169,6 +170,11 @@ const InstituicoesSlugRoute = InstituicoesSlugRouteImport.update({
   path: '/instituicoes/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const OrgaosIndexRoute = OrgaosIndexRouteImport.update({
+  id: '/orgaos/',
+  path: '/orgaos/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const RegioesIndexRoute = RegioesIndexRouteImport.update({
   id: '/regioes/',
   path: '/regioes/',
@@ -213,6 +219,7 @@ export interface FileRoutesByFullPath {
   '/artigos/': typeof ArtigosIndexRoute
   '/conteudos/': typeof ConteudosIndexRoute
   '/delegacias/': typeof DelegaciasIndexRoute
+  '/orgaos/': typeof OrgaosIndexRoute
   '/regioes/': typeof RegioesIndexRoute
   '/api/public/triagem': typeof ApiPublicTriagemRoute
 }
@@ -244,6 +251,7 @@ export interface FileRoutesByTo {
   '/artigos': typeof ArtigosIndexRoute
   '/conteudos': typeof ConteudosIndexRoute
   '/delegacias': typeof DelegaciasIndexRoute
+  '/orgaos': typeof OrgaosIndexRoute
   '/regioes': typeof RegioesIndexRoute
   '/api/public/triagem': typeof ApiPublicTriagemRoute
 }
@@ -276,6 +284,7 @@ export interface FileRoutesById {
   '/artigos/': typeof ArtigosIndexRoute
   '/conteudos/': typeof ConteudosIndexRoute
   '/delegacias/': typeof DelegaciasIndexRoute
+  '/orgaos/': typeof OrgaosIndexRoute
   '/regioes/': typeof RegioesIndexRoute
   '/api/public/triagem': typeof ApiPublicTriagemRoute
 }
@@ -309,6 +318,7 @@ export interface FileRouteTypes {
     | '/artigos/'
     | '/conteudos/'
     | '/delegacias/'
+    | '/orgaos/'
     | '/regioes/'
     | '/api/public/triagem'
   fileRoutesByTo: FileRoutesByTo
@@ -340,6 +350,7 @@ export interface FileRouteTypes {
     | '/artigos'
     | '/conteudos'
     | '/delegacias'
+    | '/orgaos'
     | '/regioes'
     | '/api/public/triagem'
   id:
@@ -371,6 +382,7 @@ export interface FileRouteTypes {
     | '/artigos/'
     | '/conteudos/'
     | '/delegacias/'
+    | '/orgaos/'
     | '/regioes/'
     | '/api/public/triagem'
   fileRoutesById: FileRoutesById
@@ -403,6 +415,7 @@ export interface RootRouteChildren {
   ArtigosIndexRoute: typeof ArtigosIndexRoute
   ConteudosIndexRoute: typeof ConteudosIndexRoute
   DelegaciasIndexRoute: typeof DelegaciasIndexRoute
+  OrgaosIndexRoute: typeof OrgaosIndexRoute
   RegioesIndexRoute: typeof RegioesIndexRoute
   ApiPublicTriagemRoute: typeof ApiPublicTriagemRoute
 }
@@ -591,6 +604,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof InstituicoesSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/orgaos/': {
+      id: '/orgaos/'
+      path: '/orgaos'
+      fullPath: '/orgaos/'
+      preLoaderRoute: typeof OrgaosIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/regioes/': {
       id: '/regioes/'
       path: '/regioes'
@@ -643,6 +663,7 @@ const rootRouteChildren: RootRouteChildren = {
   ArtigosIndexRoute: ArtigosIndexRoute,
   ConteudosIndexRoute: ConteudosIndexRoute,
   DelegaciasIndexRoute: DelegaciasIndexRoute,
+  OrgaosIndexRoute: OrgaosIndexRoute,
   RegioesIndexRoute: RegioesIndexRoute,
   ApiPublicTriagemRoute: ApiPublicTriagemRoute,
 }
