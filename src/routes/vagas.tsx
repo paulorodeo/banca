@@ -31,7 +31,14 @@ function VagasPage() {
           { name: "Início", path: "/" },
           { name: "Vagas", path: "/vagas" },
         ]}
-      />
+      >
+        <a
+          href="mailto:vagas@bancapaulista.org"
+          className="mt-8 inline-flex rounded-sm bg-gold px-5 py-3 text-base font-bold text-brand-navy transition-colors hover:bg-ivory focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold md:text-lg"
+        >
+          Envie seu currículo: vagas@bancapaulista.org
+        </a>
+      </TerritoryHero>
       <section className="py-14 md:py-20">
         <Container>
           <div className="max-w-3xl">

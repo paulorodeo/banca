@@ -200,12 +200,6 @@ export function SiteHeader({ institutions }: { institutions: PublicInstitution[]
         </nav>
 
         <div className="flex items-center gap-3">
-          <a
-            href="mailto:vagas@bancapaulista.org"
-            className="hidden rounded-sm text-xs font-semibold text-gold underline decoration-gold/50 underline-offset-4 transition-colors hover:text-ivory lg:inline-flex"
-          >
-            vagas@bancapaulista.org
-          </a>
           <button
             type="button"
             onClick={toggleReducedGlare}

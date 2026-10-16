@@ -9,7 +9,7 @@ import {
   ShieldCheck,
   Users,
 } from "lucide-react";
-import { useMemo, useState } from "react";
+import { type ReactNode, useMemo, useState } from "react";
 import { filtrarTerritorios, type TerritorioIndice } from "@/content/local/indice-territorial";
 import type { ConteudoJuridico, Delegacia, InstitutionCategory, Zona } from "@/content/types";
 import { cn } from "@/lib/utils";
@@ -42,12 +42,14 @@ export function TerritoryHero({
   lead,
   crumbs,
   image,
+  children,
 }: {
   eyebrow: string;
   title: string;
   lead: string;
   crumbs: Crumb[];
   image?: TerritoryHeroImage;
+  children?: ReactNode;
 }) {
   return (
     <section className="territory-hero relative isolate overflow-hidden bg-brand-navy text-ivory">
@@ -83,6 +85,7 @@ export function TerritoryHero({
           {title}
         </h1>
         <p className="mt-5 max-w-2xl text-base leading-7 text-ivory/82 md:text-lg">{lead}</p>
+        {children}
       </Container>
     </section>
   );
