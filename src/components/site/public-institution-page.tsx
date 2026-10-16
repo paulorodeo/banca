@@ -19,6 +19,8 @@ const typeLabels: Record<PublicInstitution["tipo"], string> = {
   orgao: "Órgão público",
   departamento: "Departamento",
   "unidade-atendimento": "Unidade de atendimento",
+  "nucleo-especializado": "Núcleo especializado",
+  "foro-regional": "Foro Regional",
 };
 
 /** Shared page template. Render only for a repository record approved for publication. */

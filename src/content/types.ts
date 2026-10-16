@@ -110,7 +110,7 @@ export interface PublicInstitution {
   /** Nome e URL canônica são únicos por registro, não por bairro relacionado. */
   nomeOficial: string;
   sigla?: string;
-  tipo: "orgao" | "departamento" | "unidade-atendimento";
+  tipo: "orgao" | "departamento" | "unidade-atendimento" | "nucleo-especializado" | "foro-regional";
   categoria: PublicInstitutionCategory;
   descricao: string;
   contatos?: {

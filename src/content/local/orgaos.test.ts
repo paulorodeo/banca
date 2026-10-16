@@ -6,20 +6,34 @@ import { categoriasComInstituicoes, categoriasOrgaos } from "./orgaos";
 describe("categorias editoriais de órgãos e serviços", () => {
   test("agrupa somente fichas institucionais publicadas sem duplicar registros", async () => {
     const categorias = categoriasComInstituicoes(await content.listInstitutions());
-    const slugs = categorias.flatMap((categoria) => categoria.instituicoes.map((item) => item.slug));
+    const slugs = categorias.flatMap((categoria) =>
+      categoria.instituicoes.map((item) => item.slug),
+    );
 
     assert.equal(new Set(slugs).size, slugs.length);
     assert.deepEqual(
-      categorias.find((categoria) => categoria.id === "ministerio-publico")?.instituicoes.map(
-        (item) => item.slug,
-      ),
+      categorias
+        .find((categoria) => categoria.id === "ministerio-publico")
+        ?.instituicoes.map((item) => item.slug),
       ["gecradi", "gaeco"],
     );
     assert.deepEqual(
-      categorias.find((categoria) => categoria.id === "policia-investigacao")?.instituicoes.map(
-        (item) => item.slug,
-      ),
+      categorias
+        .find((categoria) => categoria.id === "policia-investigacao")
+        ?.instituicoes.map((item) => item.slug),
       ["1-ddm-cambuci", "3-ddm-jaguare", "7-ddm-itaquera"],
+    );
+    assert.deepEqual(
+      categorias
+        .find((categoria) => categoria.id === "defensoria-publica")
+        ?.instituicoes.map((item) => item.slug),
+      ["defensoria-publica-sp", "nupir"],
+    );
+    assert.deepEqual(
+      categorias
+        .find((categoria) => categoria.id === "justica-tribunais")
+        ?.instituicoes.map((item) => item.slug),
+      ["foro-regional-ii-santo-amaro", "foro-regional-iii-jabaquara"],
     );
   });
 
