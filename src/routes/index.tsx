@@ -6,11 +6,13 @@ import {
   Shield,
   Landmark,
   BookOpen,
-  Info,
   FileText,
   Users,
   Building2,
   Search,
+  BriefcaseBusiness,
+  Radar,
+  Handshake,
 } from "lucide-react";
 import { content } from "@/content/repository";
 import { Container } from "@/components/site/primitives";
@@ -429,53 +431,13 @@ function Index() {
         </Container>
       </section>
 
-      <section className="home-pillars py-10">
-        <Container className="grid gap-7 sm:grid-cols-2 lg:grid-cols-4">
-          {[
-            {
-              icon: BookOpen,
-              title: "Informação jurídica",
-              text: "Conteúdo informativo, com linguagem clara e contexto editorial.",
-              to: "/artigos",
-            },
-            {
-              icon: Landmark,
-              title: "Transparência",
-              text: "Portal independente, sem vínculo com órgãos públicos.",
-              to: "/sobre",
-            },
-            {
-              icon: Shield,
-              title: "Privacidade",
-              text: "O portal não recebe relatos de casos nem intermedeia contratação.",
-              to: "/privacidade",
-            },
-            {
-              icon: Info,
-              title: "Sobre o projeto",
-              text: "São Paulo e suas instituições, com responsabilidade editorial.",
-              to: "/sobre",
-            },
-          ].map(({ icon: Icon, title, text, to }) => (
-            <div key={title} className="border-l border-border pl-5">
-              <Icon className="size-6 text-brand-navy" aria-hidden />
-              <h3 className="mt-3 font-serif text-xl text-brand-navy">{title}</h3>
-              <p className="mt-2 text-xs leading-6 text-muted-foreground">{text}</p>
-              <Link
-                to={to}
-                className="mt-3 inline-flex items-center gap-2 text-xs font-semibold text-brand-navy"
-              >
-                Saiba mais
-                <ArrowRight className="size-3.5" aria-hidden />
-              </Link>
-            </div>
-          ))}
-        </Container>
+      <section className="py-4">
         <Container>
           <details className="photo-credits">
             <summary>Créditos fotográficos</summary>
             <p>
-              Recortes e conversões AVIF/WebP das fotografias abaixo, sob as licenças indicadas.
+              Recortes e conversões AVIF/WebP das fotografias utilizadas nesta página, sob as
+              licenças indicadas.
             </p>
             <ul>
               {photoCredits.map((photo) => (
@@ -488,6 +450,61 @@ function Index() {
               ))}
             </ul>
           </details>
+        </Container>
+      </section>
+
+      <section className="home-opportunities border-t border-border py-10 md:py-12">
+        <Container>
+          <div className="grid gap-y-8 sm:grid-cols-2 lg:grid-cols-4 lg:divide-x lg:divide-border">
+            {[
+              {
+                icon: Users,
+                title: "Profissionais",
+                description:
+                  "Amplie sua presença profissional em São Paulo. Conheça o espaço da Banca Paulista para apresentação de perfis independentes e atuação por região.",
+                cta: "Conhecer o diretório",
+                to: "/profissionais",
+              },
+              {
+                icon: BriefcaseBusiness,
+                title: "Vagas e oportunidades",
+                description:
+                  "Encontre oportunidades de trabalho na capital. Um espaço para aproximar candidatos de empresas e divulgar novas vagas por área e localização.",
+                cta: "Explorar vagas",
+                to: "/vagas",
+              },
+              {
+                icon: Radar,
+                title: "Radar Paulista",
+                description:
+                  "Fique por dentro do que movimenta São Paulo. Informações, acontecimentos e mudanças relevantes para bairros, empresas e cidadãos.",
+                status: "Seção em desenvolvimento",
+              },
+              {
+                icon: Handshake,
+                title: "Empresas e parcerias",
+                description:
+                  "Sua empresa pode ganhar espaço na Banca Paulista. Conheça possibilidades de divulgação, anúncios de vagas e parcerias institucionais.",
+                status: "Canal comercial ainda não disponível",
+              },
+            ].map(({ icon: Icon, title, description, cta, to, status }) => (
+              <article key={title} className="flex min-h-full flex-col px-5 first:pl-0 last:pr-0">
+                <Icon className="size-6 text-brand-navy" aria-hidden />
+                <h2 className="mt-4 font-serif text-xl text-brand-navy">{title}</h2>
+                <p className="mt-2 text-sm leading-6 text-muted-foreground">{description}</p>
+                {to && cta ? (
+                  <Link
+                    to={to}
+                    className="mt-auto inline-flex min-h-11 items-center gap-2 pt-4 text-sm font-semibold text-brand-navy underline decoration-brand-gold underline-offset-4 hover:text-brand-navy/75 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-navy"
+                  >
+                    {cta} <ArrowRight className="size-4" aria-hidden />
+                  </Link>
+                ) : (
+                  <p className="mt-auto pt-4 text-xs font-medium text-brand-navy/65">{status}</p>
+                )}
+              </article>
+            ))}
+          </div>
         </Container>
       </section>
     </div>
