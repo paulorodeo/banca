@@ -9,6 +9,7 @@ import { delegaciasExtra6 } from "./delegacias-extra-6";
 import { delegaciasLeste, relacionadasLeste } from "./delegacias-leste";
 import { delegaciasNorteCentro, relacionadasNorteCentro } from "./delegacias-norte-centro";
 import { delegaciaParqueBristol, relacionadasParqueBristol } from "./delegacia-parque-bristol";
+import { telefonesPrioritarios } from "./delegacia-telefones";
 
 interface DelegaciaSeed {
   slug: string;
@@ -463,9 +464,14 @@ const base: Delegacia[] = [
   ...delegaciasNorteCentro,
 ].sort((a, b) => ORDEM.indexOf(a.slug) - ORDEM.indexOf(b.slug));
 
-const porSlug = new Map(base.map((dp) => [dp.slug, dp]));
+const baseComTelefones = base.map((dp) => {
+  const telefone = telefonesPrioritarios[dp.unidade.numero];
+  return telefone ? { ...dp, unidade: { ...dp.unidade, ...telefone } } : dp;
+});
 
-export const delegacias: Delegacia[] = base.map((dp) => ({
+const porSlug = new Map(baseComTelefones.map((dp) => [dp.slug, dp]));
+
+export const delegacias: Delegacia[] = baseComTelefones.map((dp) => ({
   ...dp,
   delegaciasRelacionadas: (RELACIONADAS[dp.slug] ?? [])
     .map((slug) => porSlug.get(slug))

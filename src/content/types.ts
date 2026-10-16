@@ -165,6 +165,12 @@ export interface DelegaciaUnidade {
   nomeOficial: string;
   endereco?: string;
   telefone?: string;
+  telefoneFonte?: string;
+  telefoneFonteUrl?: string;
+  telefoneFontePublicadaEm?: string;
+  telefoneVerificadoEm?: string;
+  telefoneStatus?: "historico-pendente" | "confirmado";
+  telefoneTipo?: "unidade" | "central" | "outro serviço";
   horario?: string;
   competencia?: string;
   /** Marca explicitamente conteúdo de desenvolvimento não verificado. */

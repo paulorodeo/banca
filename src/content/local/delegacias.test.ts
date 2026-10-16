@@ -8,10 +8,13 @@ describe("Zonas e arquitetura regional", () => {
   test("cinco zonas com slugs únicos", () => {
     assert.equal(zonas.length, 5);
     assert.equal(new Set(zonas.map((zona) => zona.slug)).size, 5);
-    assert.deepEqual(
-      zonas.map((zona) => zona.slug).sort(),
-      ["centro", "zona-leste", "zona-norte", "zona-oeste", "zona-sul"],
-    );
+    assert.deepEqual(zonas.map((zona) => zona.slug).sort(), [
+      "centro",
+      "zona-leste",
+      "zona-norte",
+      "zona-oeste",
+      "zona-sul",
+    ]);
   });
 
   test("toda região declara uma zona válida", () => {
@@ -99,7 +102,7 @@ describe("25º DP Parelheiros fecha a Zona Sul", () => {
 });
 
 describe("Cobertura territorial de 93 DPs", () => {
-  test("55º e 83º usam zonas, URLs e vínculos reais sem dados operacionais presumidos", () => {
+  test("55º e 83º mantêm zonas e vínculos reais com telefone cadastrado separadamente", () => {
     for (const [numero, zona, regiaoSlug, slug] of [
       ["55", "zona-leste", "parque-sao-rafael", "advogado-criminal-55-dp-parque-sao-rafael"],
       ["83", "zona-sul", "parque-bristol", "advogado-criminal-83-dp-parque-bristol"],
@@ -112,7 +115,12 @@ describe("Cobertura territorial de 93 DPs", () => {
       assert.equal(regiao?.href, dp?.seo.canonicalPath);
       assert.equal(dp?.regiaoSlug, regiaoSlug);
       assert.equal(dp?.unidade.dadosDeDesenvolvimento, true);
-      for (const key of ["endereco", "telefone", "horario", "competencia"] as const)
+      assert.ok(dp?.unidade.telefone);
+      assert.ok(dp?.unidade.telefoneFonte);
+      assert.equal(dp?.unidade.telefoneFontePublicadaEm, "2022-03-24");
+      assert.equal(dp?.unidade.telefoneStatus, "historico-pendente");
+      assert.equal(dp?.unidade.telefoneVerificadoEm, undefined);
+      for (const key of ["endereco", "horario", "competencia"] as const)
         assert.equal(dp?.unidade[key], undefined);
       assert.ok(dp?.delegaciasRelacionadas?.length);
       for (const link of dp?.delegaciasRelacionadas ?? []) {
@@ -134,7 +142,6 @@ describe("Cobertura territorial de 93 DPs", () => {
   });
 });
 
-
 describe("Identidade editorial", () => {
   test("não publica identidade antiga, endereço de escritório ou oferta de triagem", () => {
     const texto = JSON.stringify(delegacias);
@@ -146,6 +153,7 @@ describe("Identidade editorial", () => {
   });
   test("todos os interlinks territoriais possuem destino real", () => {
     const slugs = new Set(delegacias.map((dp) => dp.slug));
-    for (const dp of delegacias) for (const vizinha of dp.delegaciasRelacionadas ?? []) assert.ok(slugs.has(vizinha.slug));
+    for (const dp of delegacias)
+      for (const vizinha of dp.delegaciasRelacionadas ?? []) assert.ok(slugs.has(vizinha.slug));
   });
 });

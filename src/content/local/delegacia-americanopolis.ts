@@ -99,7 +99,7 @@ export const delegaciaAmericanopolis: Delegacia = {
       "titulo": "O 97º Distrito Policial — Americanópolis",
       "paragrafos": [
         "A referência ao 97º Distrito Policial — Americanópolis serve para identificar a unidade mencionada em documentos e facilitar a busca por orientação jurídica.",
-        "Endereço, telefone, horário de atendimento e atribuições da unidade devem ser confirmados nos canais oficiais da Polícia Civil antes de qualquer deslocamento. Informações operacionais não verificadas não são reproduzidas nesta página."
+        "Endereço, horário de atendimento e atribuições da unidade devem ser confirmados nos canais oficiais da Polícia Civil antes de qualquer deslocamento. O telefone informado nesta página aparece separado no bloco de contato e não confirma horário ou outras atribuições."
       ]
     },
     {

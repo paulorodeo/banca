@@ -60,7 +60,7 @@ export const delegaciaParqueBristol: Delegacia = {
       id: "dp83-atendimento",
       pergunta: "Qual é o horário ou telefone do 83º DP?",
       resposta:
-        "O guia não publica dados operacionais sem confirmação atual. Consulte os canais oficiais da Polícia Civil antes de se deslocar.",
+        "O telefone informado para a unidade aparece no bloco de contato desta página. O horário deve ser confirmado nos canais oficiais da Polícia Civil antes de se deslocar.",
     },
     {
       id: "dp83-circunscricao",

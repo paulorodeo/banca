@@ -3,6 +3,7 @@ import { content } from "@/content/repository";
 import type { Delegacia } from "@/content/types";
 import { Container, Hairline, Section } from "@/components/site/primitives";
 import { CtaReservado, PageHero } from "@/components/site/blocks";
+import { DelegaciaTelefone } from "@/components/site/delegacia-telefone";
 import { canonical, delegaciaJsonLd, pageMeta } from "@/lib/seo";
 
 interface Data {
@@ -48,7 +49,6 @@ function DelegaciaPage() {
   const dados = [
     ["Unidade", u.nomeOficial],
     ["Endereço", u.endereco],
-    ["Telefone", u.telefone],
     ["Horário", u.horario],
     ["Competência", u.competencia],
   ].filter(([, v]) => Boolean(v)) as [string, string][];
@@ -155,6 +155,7 @@ function DelegaciaPage() {
             <aside className="surface-panel h-fit rounded-xs p-8">
               <h2 className="text-lg text-ivory">Dados da unidade</h2>
               <Hairline className="my-5 max-w-12" />
+              <DelegaciaTelefone unidade={u} />
               <dl className="space-y-4 text-sm">
                 {dados.map(([label, value]) => (
                   <div key={label}>
@@ -167,8 +168,8 @@ function DelegaciaPage() {
               </dl>
               {u.dadosDeDesenvolvimento && (
                 <p className="mt-6 text-xs leading-relaxed text-muted-foreground">
-                  Informações institucionais em processo de verificação. Confirme os dados junto aos
-                  canais oficiais antes de se deslocar.
+                  As demais informações institucionais estão em processo de verificação. Confirme os
+                  dados junto aos canais oficiais antes de se deslocar.
                 </p>
               )}
             </aside>

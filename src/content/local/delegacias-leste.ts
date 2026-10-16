@@ -125,7 +125,7 @@ export const delegaciasLeste: Delegacia[] = distritosLeste.map((dp) => {
         titulo: `Identificação do ${dp.numero}º DP — ${dp.nome}`,
         paragrafos: [
           `Ao consultar um documento que mencione o ${dp.numero}º DP, confira a numeração e a denominação da unidade, além do número do boletim de ocorrência ou do inquérito. Um nome de bairro em uma mensagem não substitui essa identificação.`,
-          "Endereço, telefone e horário não são reproduzidos neste guia sem confirmação oficial atual. Antes de se deslocar, obtenha essas informações nos canais oficiais da Polícia Civil, independentemente do contato que enviou a mensagem.",
+          "Endereço e horário não são reproduzidos neste guia sem confirmação oficial atual. Quando houver telefone confirmado, ele aparece no bloco de contato da unidade; confirme os demais dados nos canais oficiais da Polícia Civil antes de se deslocar.",
         ],
       },
       {
