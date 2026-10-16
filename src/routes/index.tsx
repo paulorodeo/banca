@@ -13,6 +13,7 @@ import {
   BriefcaseBusiness,
   Radar,
   Handshake,
+  Newspaper,
 } from "lucide-react";
 import { content } from "@/content/repository";
 import { Container } from "@/components/site/primitives";
@@ -228,6 +229,28 @@ function Index() {
             {zonas.map((zona) => (
               <ZoneCardLight key={zona.id} zona={zona} quantidade={zona.quantidade} compact />
             ))}
+          </div>
+        </Container>
+      </section>
+
+      <section className="border-y border-border bg-card py-12 md:py-16">
+        <Container>
+          <HomeHeading
+            eyebrow="Jornalismo e atualidades"
+            title="Notícias"
+            lead="Cobertura de Justiça, instituições, direitos e acontecimentos que impactam a sociedade."
+            to="/noticias"
+            cta="Conhecer a editoria"
+          />
+          <div className="mt-7 flex items-start gap-4 rounded-lg border border-dashed border-brand-navy/25 bg-background p-6 md:p-8">
+            <Newspaper className="size-8 shrink-0 text-gold" aria-hidden />
+            <div>
+              <h3 className="font-serif text-xl text-brand-navy">Cobertura em preparação</h3>
+              <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground">
+                A Banca Paulista está estruturando sua cobertura jornalística. As reportagens serão
+                apresentadas aqui quando estiverem publicadas.
+              </p>
+            </div>
           </div>
         </Container>
       </section>
