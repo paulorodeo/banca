@@ -34,6 +34,7 @@ import { Route as ConteudosIndexRouteImport } from './routes/conteudos.index'
 import { Route as ConteudosSlugRouteImport } from './routes/conteudos.$slug'
 import { Route as DelegaciasIndexRouteImport } from './routes/delegacias.index'
 import { Route as DelegaciasSlugRouteImport } from './routes/delegacias.$slug'
+import { Route as InstituicoesSlugRouteImport } from './routes/instituicoes.$slug'
 import { Route as RegioesIndexRouteImport } from './routes/regioes.index'
 import { Route as RegioesSlugRouteImport } from './routes/regioes.$slug'
 import { Route as ApiPublicTriagemRouteImport } from './routes/api/public/triagem'
@@ -163,6 +164,11 @@ const DelegaciasSlugRoute = DelegaciasSlugRouteImport.update({
   path: '/delegacias/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const InstituicoesSlugRoute = InstituicoesSlugRouteImport.update({
+  id: '/instituicoes/$slug',
+  path: '/instituicoes/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const RegioesIndexRoute = RegioesIndexRouteImport.update({
   id: '/regioes/',
   path: '/regioes/',
@@ -202,6 +208,7 @@ export interface FileRoutesByFullPath {
   '/bairros/$slug': typeof BairrosSlugRoute
   '/conteudos/$slug': typeof ConteudosSlugRoute
   '/delegacias/$slug': typeof DelegaciasSlugRoute
+  '/instituicoes/$slug': typeof InstituicoesSlugRoute
   '/regioes/$slug': typeof RegioesSlugRoute
   '/artigos/': typeof ArtigosIndexRoute
   '/conteudos/': typeof ConteudosIndexRoute
@@ -232,6 +239,7 @@ export interface FileRoutesByTo {
   '/bairros/$slug': typeof BairrosSlugRoute
   '/conteudos/$slug': typeof ConteudosSlugRoute
   '/delegacias/$slug': typeof DelegaciasSlugRoute
+  '/instituicoes/$slug': typeof InstituicoesSlugRoute
   '/regioes/$slug': typeof RegioesSlugRoute
   '/artigos': typeof ArtigosIndexRoute
   '/conteudos': typeof ConteudosIndexRoute
@@ -263,6 +271,7 @@ export interface FileRoutesById {
   '/bairros/$slug': typeof BairrosSlugRoute
   '/conteudos/$slug': typeof ConteudosSlugRoute
   '/delegacias/$slug': typeof DelegaciasSlugRoute
+  '/instituicoes/$slug': typeof InstituicoesSlugRoute
   '/regioes/$slug': typeof RegioesSlugRoute
   '/artigos/': typeof ArtigosIndexRoute
   '/conteudos/': typeof ConteudosIndexRoute
@@ -295,6 +304,7 @@ export interface FileRouteTypes {
     | '/bairros/$slug'
     | '/conteudos/$slug'
     | '/delegacias/$slug'
+    | '/instituicoes/$slug'
     | '/regioes/$slug'
     | '/artigos/'
     | '/conteudos/'
@@ -325,6 +335,7 @@ export interface FileRouteTypes {
     | '/bairros/$slug'
     | '/conteudos/$slug'
     | '/delegacias/$slug'
+    | '/instituicoes/$slug'
     | '/regioes/$slug'
     | '/artigos'
     | '/conteudos'
@@ -355,6 +366,7 @@ export interface FileRouteTypes {
     | '/bairros/$slug'
     | '/conteudos/$slug'
     | '/delegacias/$slug'
+    | '/instituicoes/$slug'
     | '/regioes/$slug'
     | '/artigos/'
     | '/conteudos/'
@@ -386,6 +398,7 @@ export interface RootRouteChildren {
   BairrosSlugRoute: typeof BairrosSlugRoute
   ConteudosSlugRoute: typeof ConteudosSlugRoute
   DelegaciasSlugRoute: typeof DelegaciasSlugRoute
+  InstituicoesSlugRoute: typeof InstituicoesSlugRoute
   RegioesSlugRoute: typeof RegioesSlugRoute
   ArtigosIndexRoute: typeof ArtigosIndexRoute
   ConteudosIndexRoute: typeof ConteudosIndexRoute
@@ -571,6 +584,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DelegaciasSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/instituicoes/$slug': {
+      id: '/instituicoes/$slug'
+      path: '/instituicoes/$slug'
+      fullPath: '/instituicoes/$slug'
+      preLoaderRoute: typeof InstituicoesSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/regioes/': {
       id: '/regioes/'
       path: '/regioes'
@@ -618,6 +638,7 @@ const rootRouteChildren: RootRouteChildren = {
   BairrosSlugRoute: BairrosSlugRoute,
   ConteudosSlugRoute: ConteudosSlugRoute,
   DelegaciasSlugRoute: DelegaciasSlugRoute,
+  InstituicoesSlugRoute: InstituicoesSlugRoute,
   RegioesSlugRoute: RegioesSlugRoute,
   ArtigosIndexRoute: ArtigosIndexRoute,
   ConteudosIndexRoute: ConteudosIndexRoute,

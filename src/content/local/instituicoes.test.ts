@@ -4,9 +4,26 @@ import { content } from "../repository";
 import { instituicoes } from "./instituicoes";
 
 describe("diretório de instituições públicas", () => {
-  test("não publica páginas vazias nem registros ainda não aprovados", async () => {
-    assert.deepEqual(instituicoes, []);
-    assert.deepEqual(await content.listInstitutions(), []);
+  test("publica somente as fichas institucionais aprovadas", async () => {
+    assert.deepEqual(
+      instituicoes.map((institution) => institution.slug),
+      ["gecradi", "gaeco"],
+    );
+    assert.deepEqual(
+      (await content.listInstitutions()).map((institution) => institution.slug),
+      ["gecradi", "gaeco"],
+    );
+    assert.equal((await content.getInstitution("gecradi"))?.sigla, "GECRADI");
+    assert.equal((await content.getInstitution("gaeco"))?.sigla, "GAECO");
     assert.equal(await content.getInstitution("instituicao-nao-cadastrada"), null);
+  });
+
+  test("mantém fontes oficiais e não presume relações territoriais", () => {
+    for (const institution of instituicoes) {
+      assert.equal(institution.categoria, "ministerio-publico");
+      assert.equal(institution.relacoesTerritoriais.length, 0);
+      assert.ok(institution.fontes.every((source) => source.url.startsWith("https://www.mpsp.mp.br/")));
+      assert.ok(institution.fontes.every((source) => source.consultadaEm === "16/10/2026"));
+    }
   });
 });
