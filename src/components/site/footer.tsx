@@ -7,6 +7,7 @@ const footerLinks = [
   { to: "/", label: "Início" },
   { to: "/regioes", label: "Regiões e Bairros" },
   { to: "/delegacias", label: "Delegacias" },
+  { to: "/noticias", label: "Notícias" },
   { to: "/artigos", label: "Artigos" },
   { to: "/profissionais", label: "Profissionais" },
   { to: "/radio", label: "Rádio" },

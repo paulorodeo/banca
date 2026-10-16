@@ -9,6 +9,7 @@ import type { PublicInstitution } from "@/content/types";
 
 const navItems = [
   { to: "/", label: "Início" },
+  { to: "/noticias", label: "Notícias" },
   { to: "/artigos", label: "Artigos" },
   { to: "/regioes", label: "Regiões" },
   { to: "/orgaos", label: "Órgãos e Serviços" },
