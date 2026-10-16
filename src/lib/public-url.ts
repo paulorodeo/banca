@@ -1,4 +1,7 @@
 /** Pure URL policy. Relative head values are resolved by the runtime root context. */
+export const STAGING_SITE_ORIGIN = "https://banca.pjdigital-me.workers.dev";
+export const PRODUCTION_SITE_ORIGIN = "https://bancapaulista.org";
+
 export function publicOrigin(value?: string): string {
   if (!value) throw new Error("PUBLIC_SITE_URL is required for publication");
   const url = new URL(value);
@@ -27,6 +30,10 @@ export function runtimePublicOrigin(env: Record<string, string | undefined>): st
       host.endsWith(".invalid"))
   )
     throw new Error("PUBLIC_SITE_URL must be a public production origin");
+  if (env["DEPLOYMENT_ENV"] === "staging" && origin !== STAGING_SITE_ORIGIN)
+    throw new Error("Staging must use the configured workers.dev origin");
+  if (env["DEPLOYMENT_ENV"] === "production" && origin !== PRODUCTION_SITE_ORIGIN)
+    throw new Error("Production must use the canonical Banca Paulista origin");
   return origin;
 }
 export function absoluteUrl(path: string, origin?: string): string {

@@ -13,7 +13,7 @@ O build injeta também `BUILD_COMMIT`, sem dados sigilosos. Em HTML de homologa�
 
 ## Política SEO
 
-HTML recebe `X-Robots-Tag: noindex, nofollow` e `Cache-Control: no-store`, inclusive erros. O build de homologação também gera a regra global equivalente para respostas/arquivos estáticos. O endereço workers.dev é reconhecido como homologação mesmo sem a flag explícita.
+HTML recebe `X-Robots-Tag: noindex, nofollow` e `Cache-Control: no-store`, inclusive erros. O build aplica noindex às respostas de assets estáticos, mas preserva a política de cache imutável dos arquivos fingerprinted do Nitro; o middleware de respostas aplica `no-store` ao HTML e aos endpoints sujeitos a essa política. O endereço workers.dev é reconhecido como homologação mesmo sem a flag explícita.
 
 `/robots.txt` não anuncia sitemap e permite o rastreamento necessário para os buscadores lerem o header noindex. Isso não é autorização de indexação. Bloquear todo o rastreamento impediria a leitura do noindex: [Google Search Central](https://developers.google.com/search/docs/crawling-indexing/block-indexing).
 

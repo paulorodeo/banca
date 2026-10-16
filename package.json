@@ -11,6 +11,7 @@
     "lint": "eslint .",
     "format": "prettier --write .",
     "build:staging": "DEPLOYMENT_ENV=staging PUBLIC_SITE_URL=https://banca.pjdigital-me.workers.dev BP_BUILD_OUTPUT=.output bun run build",
+    "build:production:check": "DEPLOYMENT_ENV=production PUBLIC_SITE_URL=https://bancapaulista.org BP_BUILD_OUTPUT=.output-production bun run build",
     "deploy:staging": "bun scripts/check-staging-deploy.ts && npx --yes wrangler@4.151.0 deploy --config .output/server/wrangler.json --name banca"
   },
   "dependencies": {

@@ -6,14 +6,18 @@
 // You can pass additional config via defineConfig({ vite: { ... }, etc... }) if needed.
 import type { NitroConfig } from "nitro/types";
 import { execFileSync } from "node:child_process";
+import { resolve } from "node:path";
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
+import { buildProfile } from "./src/lib/deployment-profile";
 
-const stagingBuild = process.env["DEPLOYMENT_ENV"] === "staging";
+const deploymentEnv = process.env["DEPLOYMENT_ENV"];
+const profile = deploymentEnv ? buildProfile(process.env) : undefined;
 const cloudflare = {
   deployConfig: true,
   wrangler: {
     vars: {
       BUILD_COMMIT: execFileSync("git", ["rev-parse", "HEAD"], { encoding: "utf8" }).trim(),
+      ...(profile?.runtimeVars ?? {}),
     },
   },
 } satisfies NonNullable<NitroConfig["cloudflare"]>;
@@ -21,8 +25,20 @@ export default defineConfig({
   nitro: {
     // Retain Nitro's generated entry, assets binding and node compatibility.
     cloudflare,
-    ...(stagingBuild
-      ? { routeRules: { "/**": { headers: { "X-Robots-Tag": "noindex, nofollow" } } } }
+    output: {
+      dir: resolve(
+        process.cwd(),
+        profile?.outputDir ?? process.env["BP_BUILD_OUTPUT"] ?? ".output",
+      ),
+    },
+    ...(profile && Object.keys(profile.routeHeaders).length > 0
+      ? {
+          routeRules: {
+            "/**": {
+              headers: profile.routeHeaders,
+            },
+          },
+        }
       : {}),
   },
   tanstackStart: {

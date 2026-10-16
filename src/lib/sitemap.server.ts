@@ -24,7 +24,7 @@ export async function publicSitemap(env: Record<string, string | undefined>): Pr
     });
     articles.push(...result.docs);
     if (page >= result.totalPages)
-      return sitemapXml(publishedPaths({ delegacias, zonas, bairros, articles }), origin);
+      return sitemapXml(publishedPaths({ delegacias, zonas, bairros, articles }, origin), origin);
   }
   throw new Error("Sitemap publication exceeds supported page bound");
 }
