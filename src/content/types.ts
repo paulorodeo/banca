@@ -10,6 +10,7 @@ export interface SeoConfig {
   title: string;
   description: string;
   canonicalPath: string;
+  ogTitle?: string;
   ogImage?: string;
   noindex?: boolean;
   keywords?: string[];
@@ -197,6 +198,26 @@ export interface ConteudoJuridico {
   regions?: string[];
   delegacias?: string[];
   bairros?: string[];
+}
+
+/** A publicação jornalística permanece local até haver um contrato público de notícias no CMS. */
+export type NoticiaBloco =
+  | { tipo: "paragrafo"; texto: string }
+  | { tipo: "titulo"; texto: string }
+  | { tipo: "lista"; itens: string[] }
+  | { tipo: "tabela"; cabecalho: string[]; linhas: string[][] };
+
+export interface NoticiaEditorial {
+  id: string;
+  slug: string;
+  titulo: string;
+  resumo: string;
+  categoria: string;
+  publicadoEm: string;
+  autoria: string;
+  seo: SeoConfig;
+  blocos: NoticiaBloco[];
+  notas: string[];
 }
 
 export interface DelegaciaUnidade {

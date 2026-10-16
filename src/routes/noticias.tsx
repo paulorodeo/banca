@@ -1,18 +1,12 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { Clock3, Newspaper, Tags } from "lucide-react";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { ArrowRight, Clock3, Tags } from "lucide-react";
 import { Container } from "@/components/site/primitives";
 import { TerritoryHero } from "@/components/site/territory";
+import { noticias } from "@/content/local/noticias";
 import { breadcrumbSchema, canonicalLink, pageMeta } from "@/lib/seo";
 
-const categories = [
-  "Justiça e Tribunais",
-  "Polícia e Segurança",
-  "Ministério Público e Defensoria",
-  "Legislação e Direitos",
-  "Política e Sociedade",
-  "Mercado Jurídico",
-  "Radar territorial e acontecimentos locais",
-] as const;
+const categories = ["Segurança Pública", "Direito Imobiliário e Urbanístico"] as const;
+const orderedNoticias = [...noticias].sort((a, b) => b.publicadoEm.localeCompare(a.publicadoEm));
 
 export const Route = createFileRoute("/noticias")({
   head: () => ({
@@ -20,7 +14,7 @@ export const Route = createFileRoute("/noticias")({
       ...pageMeta({
         title: "Notícias | Banca Paulista",
         description:
-          "Notícias sobre Justiça, segurança pública, direitos, instituições e acontecimentos de São Paulo e do Brasil.",
+          "Notícias sobre segurança pública, direitos, instituições e acontecimentos de São Paulo.",
         path: "/noticias",
       }),
       { name: "robots", content: "noindex, follow" },
@@ -41,7 +35,16 @@ export const Route = createFileRoute("/noticias")({
   component: NoticiasPage,
 });
 
+function date(value: string) {
+  return new Date(`${value}T00:00:00Z`).toLocaleDateString("pt-BR", {
+    dateStyle: "long",
+    timeZone: "UTC",
+  });
+}
+
 function NoticiasPage() {
+  const [featured, ...remaining] = orderedNoticias;
+  if (!featured) return null;
   return (
     <main className="home-light">
       <TerritoryHero
@@ -53,7 +56,6 @@ function NoticiasPage() {
           { name: "Notícias", path: "/noticias" },
         ]}
       />
-
       <section className="py-14 md:py-20">
         <Container>
           <div className="grid gap-8 lg:grid-cols-[1.25fr_0.75fr] lg:items-start">
@@ -61,23 +63,28 @@ function NoticiasPage() {
               <p className="text-xs font-semibold uppercase tracking-[0.16em] text-gold">
                 Em destaque
               </p>
-              <h2 className="mt-3 font-serif text-4xl text-brand-navy">Reportagem principal</h2>
+              <p className="mt-3 text-sm text-muted-foreground">{featured.categoria}</p>
+              <h2 className="mt-2 font-serif text-4xl text-brand-navy">{featured.titulo}</h2>
               <p className="mt-4 max-w-2xl text-sm leading-7 text-muted-foreground">
-                Este espaço receberá a reportagem de maior relevância, com imagem, categoria,
-                manchete, resumo, autoria, data e acesso à publicação completa.
+                {featured.resumo}
               </p>
+              <Link
+                to="/noticias/$slug"
+                params={{ slug: featured.slug }}
+                className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-brand-navy hover:text-gold"
+              >
+                Ler reportagem completa <ArrowRight className="size-4" aria-hidden />
+              </Link>
             </div>
-            <div className="rounded-xl border border-dashed border-brand-navy/25 bg-card p-7 text-center shadow-sm">
-              <Newspaper className="mx-auto size-8 text-gold" aria-hidden />
-              <p className="mt-4 font-serif text-xl text-brand-navy">Destaque em preparação</p>
+            <div className="rounded-xl border border-brand-navy/15 bg-card p-7 shadow-sm">
+              <p className="font-serif text-xl text-brand-navy">{featured.autoria}</p>
               <p className="mt-2 text-sm leading-6 text-muted-foreground">
-                Nenhuma reportagem foi publicada nesta editoria ainda.
+                Publicado em {date(featured.publicadoEm)}
               </p>
             </div>
           </div>
         </Container>
       </section>
-
       <section className="border-y border-border bg-background py-14 md:py-20">
         <Container>
           <div className="flex items-start gap-3">
@@ -101,7 +108,6 @@ function NoticiasPage() {
           </div>
         </Container>
       </section>
-
       <section className="py-14 md:py-20">
         <Container>
           <div className="flex items-start gap-3">
@@ -113,12 +119,27 @@ function NoticiasPage() {
               <h2 className="mt-2 font-serif text-4xl text-brand-navy">Últimas notícias</h2>
             </div>
           </div>
-          <div className="mt-8 rounded-xl border border-dashed border-brand-navy/25 bg-card p-8 text-center shadow-sm md:p-12">
-            <Newspaper className="mx-auto size-9 text-gold" aria-hidden />
-            <p className="mt-5 font-serif text-2xl text-brand-navy">Em preparação.</p>
-            <p className="mx-auto mt-3 max-w-xl text-sm leading-7 text-muted-foreground">
-              A Banca Paulista está estruturando sua cobertura jornalística.
-            </p>
+          <div className="mt-8 grid gap-6 md:grid-cols-2">
+            {remaining.map((noticia) => (
+              <article
+                key={noticia.id}
+                className="rounded-xl border border-brand-navy/15 bg-card p-7 shadow-sm"
+              >
+                <p className="text-xs font-semibold uppercase tracking-[0.14em] text-gold">
+                  {noticia.categoria}
+                </p>
+                <h3 className="mt-3 font-serif text-2xl text-brand-navy">{noticia.titulo}</h3>
+                <p className="mt-4 text-sm leading-7 text-muted-foreground">{noticia.resumo}</p>
+                <p className="mt-5 text-xs text-muted-foreground">{date(noticia.publicadoEm)}</p>
+                <Link
+                  to="/noticias/$slug"
+                  params={{ slug: noticia.slug }}
+                  className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-brand-navy hover:text-gold"
+                >
+                  Ler reportagem completa <ArrowRight className="size-4" aria-hidden />
+                </Link>
+              </article>
+            ))}
           </div>
         </Container>
       </section>

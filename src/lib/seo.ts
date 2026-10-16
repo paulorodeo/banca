@@ -135,6 +135,23 @@ export function articleSchema(input: {
   };
 }
 
+export function newsArticleSchema(input: {
+  titulo: string;
+  resumo: string;
+  path: string;
+  publicadoEm: string;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "NewsArticle",
+    headline: input.titulo,
+    description: input.resumo,
+    url: canonical(input.path),
+    datePublished: input.publicadoEm,
+    publisher: { "@type": "Organization", name: ORG_NAME },
+  };
+}
+
 export function breadcrumbSchema(items: { name: string; path: string }[]) {
   return {
     "@context": "https://schema.org",

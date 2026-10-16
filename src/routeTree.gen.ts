@@ -36,6 +36,7 @@ import { Route as ConteudosSlugRouteImport } from './routes/conteudos.$slug'
 import { Route as DelegaciasIndexRouteImport } from './routes/delegacias.index'
 import { Route as DelegaciasSlugRouteImport } from './routes/delegacias.$slug'
 import { Route as InstituicoesSlugRouteImport } from './routes/instituicoes.$slug'
+import { Route as NoticiasSlugRouteImport } from './routes/noticias.$slug'
 import { Route as OrgaosIndexRouteImport } from './routes/orgaos.index'
 import { Route as RegioesIndexRouteImport } from './routes/regioes.index'
 import { Route as RegioesSlugRouteImport } from './routes/regioes.$slug'
@@ -176,6 +177,11 @@ const InstituicoesSlugRoute = InstituicoesSlugRouteImport.update({
   path: '/instituicoes/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const NoticiasSlugRoute = NoticiasSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => NoticiasRoute,
+} as any)
 const OrgaosIndexRoute = OrgaosIndexRouteImport.update({
   id: '/orgaos/',
   path: '/orgaos/',
@@ -203,7 +209,7 @@ export interface FileRoutesByFullPath {
   '/atendimento-reservado': typeof AtendimentoReservadoRoute
   '/contato': typeof ContatoRoute
   '/integridade-e-etica': typeof IntegridadeEEticaRoute
-  '/noticias': typeof NoticiasRoute
+  '/noticias': typeof NoticiasRouteWithChildren
   '/o-escritorio': typeof OEscritorioRoute
   '/paulo-sinigalia': typeof PauloSinigaliaRoute
   '/plantao-criminal': typeof PlantaoCriminalRoute
@@ -222,6 +228,7 @@ export interface FileRoutesByFullPath {
   '/conteudos/$slug': typeof ConteudosSlugRoute
   '/delegacias/$slug': typeof DelegaciasSlugRoute
   '/instituicoes/$slug': typeof InstituicoesSlugRoute
+  '/noticias/$slug': typeof NoticiasSlugRoute
   '/regioes/$slug': typeof RegioesSlugRoute
   '/artigos/': typeof ArtigosIndexRoute
   '/conteudos/': typeof ConteudosIndexRoute
@@ -236,7 +243,7 @@ export interface FileRoutesByTo {
   '/atendimento-reservado': typeof AtendimentoReservadoRoute
   '/contato': typeof ContatoRoute
   '/integridade-e-etica': typeof IntegridadeEEticaRoute
-  '/noticias': typeof NoticiasRoute
+  '/noticias': typeof NoticiasRouteWithChildren
   '/o-escritorio': typeof OEscritorioRoute
   '/paulo-sinigalia': typeof PauloSinigaliaRoute
   '/plantao-criminal': typeof PlantaoCriminalRoute
@@ -255,6 +262,7 @@ export interface FileRoutesByTo {
   '/conteudos/$slug': typeof ConteudosSlugRoute
   '/delegacias/$slug': typeof DelegaciasSlugRoute
   '/instituicoes/$slug': typeof InstituicoesSlugRoute
+  '/noticias/$slug': typeof NoticiasSlugRoute
   '/regioes/$slug': typeof RegioesSlugRoute
   '/artigos': typeof ArtigosIndexRoute
   '/conteudos': typeof ConteudosIndexRoute
@@ -270,7 +278,7 @@ export interface FileRoutesById {
   '/atendimento-reservado': typeof AtendimentoReservadoRoute
   '/contato': typeof ContatoRoute
   '/integridade-e-etica': typeof IntegridadeEEticaRoute
-  '/noticias': typeof NoticiasRoute
+  '/noticias': typeof NoticiasRouteWithChildren
   '/o-escritorio': typeof OEscritorioRoute
   '/paulo-sinigalia': typeof PauloSinigaliaRoute
   '/plantao-criminal': typeof PlantaoCriminalRoute
@@ -289,6 +297,7 @@ export interface FileRoutesById {
   '/conteudos/$slug': typeof ConteudosSlugRoute
   '/delegacias/$slug': typeof DelegaciasSlugRoute
   '/instituicoes/$slug': typeof InstituicoesSlugRoute
+  '/noticias/$slug': typeof NoticiasSlugRoute
   '/regioes/$slug': typeof RegioesSlugRoute
   '/artigos/': typeof ArtigosIndexRoute
   '/conteudos/': typeof ConteudosIndexRoute
@@ -324,6 +333,7 @@ export interface FileRouteTypes {
     | '/conteudos/$slug'
     | '/delegacias/$slug'
     | '/instituicoes/$slug'
+    | '/noticias/$slug'
     | '/regioes/$slug'
     | '/artigos/'
     | '/conteudos/'
@@ -357,6 +367,7 @@ export interface FileRouteTypes {
     | '/conteudos/$slug'
     | '/delegacias/$slug'
     | '/instituicoes/$slug'
+    | '/noticias/$slug'
     | '/regioes/$slug'
     | '/artigos'
     | '/conteudos'
@@ -390,6 +401,7 @@ export interface FileRouteTypes {
     | '/conteudos/$slug'
     | '/delegacias/$slug'
     | '/instituicoes/$slug'
+    | '/noticias/$slug'
     | '/regioes/$slug'
     | '/artigos/'
     | '/conteudos/'
@@ -405,7 +417,7 @@ export interface RootRouteChildren {
   AtendimentoReservadoRoute: typeof AtendimentoReservadoRoute
   ContatoRoute: typeof ContatoRoute
   IntegridadeEEticaRoute: typeof IntegridadeEEticaRoute
-  NoticiasRoute: typeof NoticiasRoute
+  NoticiasRoute: typeof NoticiasRouteWithChildren
   OEscritorioRoute: typeof OEscritorioRoute
   PauloSinigaliaRoute: typeof PauloSinigaliaRoute
   PlantaoCriminalRoute: typeof PlantaoCriminalRoute
@@ -624,6 +636,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof InstituicoesSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/noticias/$slug': {
+      id: '/noticias/$slug'
+      path: '/$slug'
+      fullPath: '/noticias/$slug'
+      preLoaderRoute: typeof NoticiasSlugRouteImport
+      parentRoute: typeof NoticiasRoute
+    }
     '/orgaos/': {
       id: '/orgaos/'
       path: '/orgaos'
@@ -655,13 +674,25 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface NoticiasRouteChildren {
+  NoticiasSlugRoute: typeof NoticiasSlugRoute
+}
+
+const NoticiasRouteChildren: NoticiasRouteChildren = {
+  NoticiasSlugRoute: NoticiasSlugRoute,
+}
+
+const NoticiasRouteWithChildren = NoticiasRoute._addFileChildren(
+  NoticiasRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AreasDeAtuacaoRoute: AreasDeAtuacaoRoute,
   AtendimentoReservadoRoute: AtendimentoReservadoRoute,
   ContatoRoute: ContatoRoute,
   IntegridadeEEticaRoute: IntegridadeEEticaRoute,
-  NoticiasRoute: NoticiasRoute,
+  NoticiasRoute: NoticiasRouteWithChildren,
   OEscritorioRoute: OEscritorioRoute,
   PauloSinigaliaRoute: PauloSinigaliaRoute,
   PlantaoCriminalRoute: PlantaoCriminalRoute,
