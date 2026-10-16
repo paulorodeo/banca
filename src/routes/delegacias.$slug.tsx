@@ -4,6 +4,8 @@ import type { Delegacia } from "@/content/types";
 import { Container, Hairline, Section } from "@/components/site/primitives";
 import { CtaReservado, PageHero } from "@/components/site/blocks";
 import { DelegaciaTelefone } from "@/components/site/delegacia-telefone";
+import { ProfessionalSidebar } from "@/components/site/territory";
+import { AdPlaceholder } from "@/components/site/ad-placeholder";
 import { canonical, delegaciaJsonLd, pageMeta } from "@/lib/seo";
 
 interface Data {
@@ -152,27 +154,31 @@ function DelegaciaPage() {
                 </article>
               )}
             </div>
-            <aside className="surface-panel h-fit rounded-xs p-8">
-              <h2 className="text-lg text-ivory">Dados da unidade</h2>
-              <Hairline className="my-5 max-w-12" />
-              <DelegaciaTelefone unidade={u} />
-              <dl className="space-y-4 text-sm">
-                {dados.map(([label, value]) => (
-                  <div key={label}>
-                    <dt className="text-xs uppercase tracking-[0.16em] text-muted-foreground">
-                      {label}
-                    </dt>
-                    <dd className="mt-1 text-ivory/80">{value}</dd>
-                  </div>
-                ))}
-              </dl>
-              {u.dadosDeDesenvolvimento && (
-                <p className="mt-6 text-xs leading-relaxed text-muted-foreground">
-                  As demais informações institucionais estão em processo de verificação. Confirme os
-                  dados junto aos canais oficiais antes de se deslocar.
-                </p>
-              )}
-            </aside>
+            <div className="space-y-6">
+              <aside className="surface-panel h-fit rounded-xs p-8">
+                <h2 className="text-lg text-ivory">Dados da unidade</h2>
+                <Hairline className="my-5 max-w-12" />
+                <DelegaciaTelefone unidade={u} />
+                <dl className="space-y-4 text-sm">
+                  {dados.map(([label, value]) => (
+                    <div key={label}>
+                      <dt className="text-xs uppercase tracking-[0.16em] text-muted-foreground">
+                        {label}
+                      </dt>
+                      <dd className="mt-1 text-ivory/80">{value}</dd>
+                    </div>
+                  ))}
+                </dl>
+                {u.dadosDeDesenvolvimento && (
+                  <p className="mt-6 text-xs leading-relaxed text-muted-foreground">
+                    As demais informações institucionais estão em processo de verificação. Confirme
+                    os dados junto aos canais oficiais antes de se deslocar.
+                  </p>
+                )}
+              </aside>
+              <ProfessionalSidebar neighborhoodName={dp.bairros[0] ?? dp.unidade.nomeOficial} />
+              <AdPlaceholder />
+            </div>
           </div>
           {dp.avisoRodape && (
             <p className="mt-14 border-t border-border pt-6 text-xs leading-relaxed text-muted-foreground">
