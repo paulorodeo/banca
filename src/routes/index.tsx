@@ -447,9 +447,9 @@ function Index() {
               },
               {
                 icon: BriefcaseBusiness,
-                title: "Vagas e oportunidades",
+                title: "Vagas",
                 description:
-                  "Encontre oportunidades de trabalho na capital. Um espaço para aproximar candidatos de empresas e divulgar novas vagas por área e localização.",
+                  "Consulte vagas de trabalho divulgadas para São Paulo, organizadas por área e localização.",
                 cta: "Explorar vagas",
                 to: "/vagas",
               },
@@ -462,7 +462,7 @@ function Index() {
               },
               {
                 icon: Handshake,
-                title: "Empresas e parcerias",
+                title: "Negócios & Parcerias",
                 description:
                   "Sua empresa pode ganhar espaço na Banca Paulista. Conheça possibilidades de divulgação, anúncios de vagas e parcerias institucionais.",
                 status: "Canal comercial ainda não disponível",
@@ -470,7 +470,7 @@ function Index() {
             ].map(({ icon: Icon, title, description, cta, to, status }) => (
               <article key={title} className="flex min-h-full flex-col px-5 first:pl-0 last:pr-0">
                 <Icon className="size-5 text-brand-navy" aria-hidden />
-                <h2 className="mt-4 font-serif text-base text-brand-navy">{title}</h2>
+                <h2 className="mt-4 font-serif text-sm text-brand-navy">{title}</h2>
                 <p className="mt-2 text-xs leading-5 text-muted-foreground">{description}</p>
                 {to && cta ? (
                   <Link

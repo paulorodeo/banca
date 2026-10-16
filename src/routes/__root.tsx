@@ -17,6 +17,7 @@ import { SiteFooter } from "@/components/site/footer";
 import { readPublicOrigin } from "@/lib/public-url.functions";
 import { editorialIdentity } from "@/content/local/settings";
 import { organizationSchema } from "@/lib/seo";
+import { MiniRadioPlayer } from "@/features/radio/components/MiniRadioPlayer";
 
 function NotFoundComponent() {
   return (
@@ -159,6 +160,7 @@ function RootComponent() {
         </main>
         <SiteFooter />
       </div>
+      <MiniRadioPlayer />
     </QueryClientProvider>
   );
 }

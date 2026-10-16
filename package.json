@@ -10,7 +10,7 @@
     "preview": "vite preview",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "build:staging": "DEPLOYMENT_ENV=staging PUBLIC_SITE_URL=https://banca.pjdigital-me.workers.dev bun run build",
+    "build:staging": "DEPLOYMENT_ENV=staging PUBLIC_SITE_URL=https://banca.pjdigital-me.workers.dev BP_BUILD_OUTPUT=.output bun run build",
     "deploy:staging": "bun scripts/check-staging-deploy.ts && npx --yes wrangler@4.151.0 deploy --config .output/server/wrangler.json --name banca"
   },
   "dependencies": {
@@ -51,6 +51,7 @@
     "cmdk": "^1.1.1",
     "date-fns": "^4.1.0",
     "embla-carousel-react": "^8.6.0",
+    "hls.js": "^1.7.3",
     "input-otp": "^1.4.2",
     "lucide-react": "^0.575.0",
     "react": "^19.2.0",
