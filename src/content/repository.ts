@@ -13,6 +13,7 @@ import type {
   ConteudoJuridico,
   Delegacia,
   PaginaInstitucional,
+  PublicInstitution,
   Regiao,
   SiteSettings,
   SituacaoJuridica,
@@ -22,6 +23,7 @@ import { areas, situacoes } from "./local/areas";
 import { regioes } from "./local/regioes";
 import { zonas } from "./local/zonas";
 import { delegacias } from "./local/delegacias";
+import { instituicoes } from "./local/instituicoes";
 import { paginas } from "./local/paginas";
 import { autores, siteSettings } from "./local/settings";
 import { bairros } from "./local/bairros";
@@ -44,6 +46,8 @@ export interface ContentRepository {
   getConteudo(slug: string): Promise<ConteudoJuridico | null>;
   listDelegacias(): Promise<Delegacia[]>;
   getDelegacia(slug: string): Promise<Delegacia | null>;
+  listInstitutions(): Promise<PublicInstitution[]>;
+  getInstitution(slug: string): Promise<PublicInstitution | null>;
   getPagina(slug: string): Promise<PaginaInstitucional | null>;
   getAutor(id: string): Promise<Autor | null>;
   listRadarRecords(): Promise<RadarPublicRecord[]>;
@@ -102,6 +106,29 @@ export class LocalContentRepository implements ContentRepository {
   async getDelegacia(slug: string) {
     return find(delegacias, slug);
   }
+  async listInstitutions() {
+    const published = instituicoes.filter(isPublishableInstitution);
+    const canonicals = new Set<string>();
+    const slugs = new Set<string>();
+    for (const institution of published) {
+      if (slugs.has(institution.slug)) {
+        throw new Error(`Duplicate public institution slug: ${institution.slug}`);
+      }
+      if (canonicals.has(institution.seo.canonicalPath)) {
+        throw new Error(`Duplicate public institution canonical: ${institution.seo.canonicalPath}`);
+      }
+      slugs.add(institution.slug);
+      canonicals.add(institution.seo.canonicalPath);
+    }
+    return published;
+  }
+  async getInstitution(slug: string) {
+    return (
+      instituicoes.find(
+        (institution) => institution.slug === slug && isPublishableInstitution(institution),
+      ) ?? null
+    );
+  }
   async getPagina(slug: string) {
     return find(paginas, slug);
   }
@@ -111,6 +138,19 @@ export class LocalContentRepository implements ContentRepository {
   async listRadarRecords() {
     return publicRadarRecords(radarRecords);
   }
+}
+
+function isPublishableInstitution(institution: PublicInstitution) {
+  return (
+    institution.statusEditorial === "publicado" &&
+    Boolean(institution.id.trim()) &&
+    Boolean(institution.slug.trim()) &&
+    Boolean(institution.nomeOficial.trim()) &&
+    Boolean(institution.descricao.trim()) &&
+    institution.fontes.length > 0 &&
+    institution.seo.canonicalPath.startsWith("/") &&
+    !institution.seo.canonicalPath.startsWith("//")
+  );
 }
 
 /** Territorial reads stay local; all article reads cross the server boundary. */

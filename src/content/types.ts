@@ -95,6 +95,46 @@ export type InstitutionCategory =
   | "cartorios-registros"
   | "outras-instituicoes";
 
+/** Cadastro editorial para órgãos, departamentos e unidades públicas. */
+export type PublicInstitutionCategory =
+  | "ministerio-publico"
+  | "policia-civil-especializada"
+  | "defensoria-publica"
+  | "foruns-tribunais"
+  | "direitos-humanos-protecao"
+  | "servicos-registrais-administrativos";
+
+export interface PublicInstitution {
+  id: string;
+  slug: string;
+  /** Nome e URL canônica são únicos por registro, não por bairro relacionado. */
+  nomeOficial: string;
+  sigla?: string;
+  tipo: "orgao" | "departamento" | "unidade-atendimento";
+  categoria: PublicInstitutionCategory;
+  descricao: string;
+  contatos?: {
+    tipo: "telefone" | "email" | "site" | "outro";
+    rotulo: string;
+    valor: string;
+    href?: string;
+  }[];
+  endereco?: {
+    texto: string;
+    fonteUrl?: string;
+  };
+  fontes: { titulo: string; url: string; publicadaEm?: string; consultadaEm?: string }[];
+  statusEditorial: "rascunho" | "revisao" | "publicado";
+  relacoesTerritoriais: {
+    tipoTerritorio: "bairro" | "regiao" | "zona";
+    slugTerritorio: string;
+    relacao: "localizada" | "relacionada";
+    descricao?: string;
+    fonteUrl?: string;
+  }[];
+  seo: SeoConfig;
+}
+
 export interface NeighborhoodInstitutionRelation {
   id: string;
   category: InstitutionCategory;
