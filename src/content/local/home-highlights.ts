@@ -58,6 +58,9 @@ const featuredDistrictSlugs = [
   "advogado-criminal-23-dp-perdizes",
   "advogado-criminal-78-dp-jardins",
   "advogado-27-dp-campo-belo",
+  "advogado-criminal-11-dp-santo-amaro",
+  "advogado-criminal-30-dp-tatuape",
+  "advogado-criminal-9-dp-carandiru",
 ] as const;
 
 const titleBySlug: Record<(typeof featuredDistrictSlugs)[number], string> = {
@@ -66,13 +69,29 @@ const titleBySlug: Record<(typeof featuredDistrictSlugs)[number], string> = {
   "advogado-criminal-23-dp-perdizes": "23º Distrito Policial, Perdizes",
   "advogado-criminal-78-dp-jardins": "78º Distrito Policial, Jardins",
   "advogado-27-dp-campo-belo": "27º DP Campo Belo",
+  "advogado-criminal-11-dp-santo-amaro": "11º Distrito Policial",
+  "advogado-criminal-30-dp-tatuape": "30º Distrito Policial",
+  "advogado-criminal-9-dp-carandiru": "9º Distrito Policial",
 };
 
 export function homeFeaturedDistricts(delegacias: Delegacia[]) {
+  if (new Set(featuredDistrictSlugs).size !== 8) {
+    throw new Error("A seleção editorial da homepage deve conter oito delegacias únicas.");
+  }
   const porSlug = new Map(delegacias.map((guia) => [guia.slug, guia]));
   return featuredDistrictSlugs.map((slug) => {
     const guia = porSlug.get(slug);
     if (!guia) throw new Error(`Guia destacado não publicado: ${slug}`);
-    return { guia, titulo: titleBySlug[slug] };
+    if (guia.seo.canonicalPath !== `/delegacias/${slug}`) {
+      throw new Error(`URL canônica inválida para guia destacado: ${slug}`);
+    }
+    const titulo = titleBySlug[slug];
+    const subtitulo =
+      slug === "advogado-criminal-11-dp-santo-amaro" ||
+      slug === "advogado-criminal-30-dp-tatuape" ||
+      slug === "advogado-criminal-9-dp-carandiru"
+        ? guia.cardSubtitulo
+        : undefined;
+    return { guia, titulo, ...(subtitulo ? { subtitulo } : {}) };
   });
 }

@@ -1,7 +1,6 @@
 import { describe, test } from "node:test";
 import assert from "node:assert/strict";
 import { content } from "../repository";
-import { delegacias } from "./delegacias";
 import { homeFeaturedDistricts, homeNeighborhoodHighlights } from "./home-highlights";
 import { regioes } from "./regioes";
 import { featuredNeighborhoods } from "./visual-media";
@@ -43,18 +42,64 @@ describe("destaques da homepage", () => {
     assert.deepEqual(unresolved, []);
   });
 
-  test("inclui o 27º DP na seleção policial sem alterar seu registro canônico", () => {
-    const destaques = homeFeaturedDistricts(delegacias);
+  test("A homepage deve apresentar exatamente oito delegacias em destaque.", async () => {
+    const catalogo = await content.listDelegacias();
+    const destaques = homeFeaturedDistricts(catalogo);
+    const slugsEsperados = [
+      "advogado-criminal-7-dp-vila-romana",
+      "advogado-14-dp-pinheiros",
+      "advogado-criminal-23-dp-perdizes",
+      "advogado-criminal-78-dp-jardins",
+      "advogado-27-dp-campo-belo",
+      "advogado-criminal-11-dp-santo-amaro",
+      "advogado-criminal-30-dp-tatuape",
+      "advogado-criminal-9-dp-carandiru",
+    ];
+    assert.equal(destaques.length, 8, "a grade não pode voltar a apresentar apenas cinco cards");
+    assert.deepEqual(
+      destaques.map((item) => item.guia.slug),
+      slugsEsperados,
+    );
     assert.deepEqual(
       destaques.map((item) => item.guia.unidade.numero),
-      ["7", "14", "23", "78", "27"],
+      ["7", "14", "23", "78", "27", "11", "30", "9"],
     );
-    const campoBelo = destaques.at(-1)!;
-    assert.equal(campoBelo.titulo, "27º DP Campo Belo");
-    assert.equal(campoBelo.guia.slug, "advogado-27-dp-campo-belo");
-    assert.equal(campoBelo.guia.unidade.nomeOficial, "27º Distrito Policial — Campo Belo");
+    assert.deepEqual(
+      destaques.map((item) =>
+        item.subtitulo ? `${item.titulo} · ${item.subtitulo}` : item.titulo,
+      ),
+      [
+        "7º Distrito Policial, Vila Romana",
+        "14º Distrito Policial de Pinheiros",
+        "23º Distrito Policial, Perdizes",
+        "78º Distrito Policial, Jardins",
+        "27º DP Campo Belo",
+        "11º Distrito Policial · Santo Amaro",
+        "30º Distrito Policial · Tatuapé",
+        "9º Distrito Policial · Carandiru",
+      ],
+    );
+    assert.equal(new Set(destaques.map((item) => item.guia.slug)).size, 8);
+    assert.equal(new Set(destaques.map((item) => item.guia.id)).size, 8);
+    for (const destaque of destaques) {
+      const registro = await content.getDelegacia(destaque.guia.slug);
+      assert.ok(registro, `guia sem resolução no repositório: ${destaque.guia.slug}`);
+      assert.equal(registro.id, destaque.guia.id);
+      assert.equal(destaque.guia.seo.canonicalPath, `/delegacias/${destaque.guia.slug}`);
+      assert.ok(destaque.titulo.startsWith(`${destaque.guia.unidade.numero}º`));
+    }
+    assert.equal(destaques.at(4)?.titulo, "27º DP Campo Belo");
+    assert.equal(destaques.at(4)?.guia.unidade.nomeOficial, "27º Distrito Policial — Campo Belo");
+    assert.equal(destaques.at(5)?.subtitulo, "Santo Amaro");
+    assert.equal(destaques.at(6)?.subtitulo, "Tatuapé");
+    assert.equal(destaques.at(7)?.subtitulo, "Carandiru");
     assert.ok(destaques.every((item) => !/[—–]/.test(item.titulo)));
-    assert.ok(destaques.every((item) => delegacias.some((guia) => guia.slug === item.guia.slug)));
-    assert.equal(delegacias.length, 93);
+    assert.ok(destaques.every((item) => item.guia.seo.canonicalPath.startsWith("/delegacias/")));
+    assert.equal(catalogo.length, 93);
+    assert.throws(
+      () => homeFeaturedDistricts(catalogo.filter((guia) => guia.slug !== slugsEsperados[7])),
+      /Guia destacado não publicado: advogado-criminal-9-dp-carandiru/,
+      "a seleção incompleta deve falhar em vez de reduzir silenciosamente a grade",
+    );
   });
 });

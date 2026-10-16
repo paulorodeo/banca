@@ -30,7 +30,7 @@ interface HomeData {
   artigosErro?: string;
 }
 import { readArticles } from "@/content/articles.functions";
-import { photoCredits, editorialIllustrations } from "@/content/local/visual-media";
+import { editorialIllustrations } from "@/content/local/visual-media";
 import { homeFeaturedDistricts, homeNeighborhoodHighlights } from "@/content/local/home-highlights";
 import { ZoneCardLight } from "@/components/site/territory";
 import { withPublishedGuideCounts } from "@/content/local/zonas";
@@ -293,7 +293,7 @@ function Index() {
             cta="Ver todas as delegacias"
           />
           <div className="mt-7 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {featured.map(({ guia: dp, titulo }) => (
+            {featured.map(({ guia: dp, titulo, subtitulo }) => (
               <Link
                 key={dp.id}
                 to="/delegacias/$slug"
@@ -308,7 +308,9 @@ function Index() {
                   <h3 className="mt-4 font-serif text-xl leading-tight text-brand-navy">
                     {titulo}
                   </h3>
-                  <p className="mt-3 text-xs text-muted-foreground">Guia informativo publicado</p>
+                  <p className="mt-3 text-xs text-muted-foreground">
+                    {subtitulo ? `${subtitulo} · ` : ""}Guia informativo publicado
+                  </p>
                 </div>
                 <ArrowRight className="size-4 shrink-0 text-brand-navy" aria-hidden />
               </Link>
@@ -431,28 +433,6 @@ function Index() {
         </Container>
       </section>
 
-      <section className="py-4">
-        <Container>
-          <details className="photo-credits">
-            <summary>Créditos fotográficos</summary>
-            <p>
-              Recortes e conversões AVIF/WebP das fotografias utilizadas nesta página, sob as
-              licenças indicadas.
-            </p>
-            <ul>
-              {photoCredits.map((photo) => (
-                <li key={photo.name}>
-                  <a href={photo.source}>
-                    {photo.name} — {photo.author}
-                  </a>{" "}
-                  · <a href={photo.licenseUrl}>{photo.license}</a>
-                </li>
-              ))}
-            </ul>
-          </details>
-        </Container>
-      </section>
-
       <section className="home-opportunities border-t border-border py-10 md:py-12">
         <Container>
           <div className="grid gap-y-8 sm:grid-cols-2 lg:grid-cols-4 lg:divide-x lg:divide-border">
@@ -489,13 +469,13 @@ function Index() {
               },
             ].map(({ icon: Icon, title, description, cta, to, status }) => (
               <article key={title} className="flex min-h-full flex-col px-5 first:pl-0 last:pr-0">
-                <Icon className="size-6 text-brand-navy" aria-hidden />
-                <h2 className="mt-4 font-serif text-xl text-brand-navy">{title}</h2>
-                <p className="mt-2 text-sm leading-6 text-muted-foreground">{description}</p>
+                <Icon className="size-5 text-brand-navy" aria-hidden />
+                <h2 className="mt-4 font-serif text-base text-brand-navy">{title}</h2>
+                <p className="mt-2 text-xs leading-5 text-muted-foreground">{description}</p>
                 {to && cta ? (
                   <Link
                     to={to}
-                    className="mt-auto inline-flex min-h-11 items-center gap-2 pt-4 text-sm font-semibold text-brand-navy underline decoration-brand-gold underline-offset-4 hover:text-brand-navy/75 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-navy"
+                    className="mt-auto inline-flex min-h-11 items-center gap-2 pt-4 text-xs font-semibold text-brand-navy underline decoration-brand-gold underline-offset-4 hover:text-brand-navy/75 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-navy"
                   >
                     {cta} <ArrowRight className="size-4" aria-hidden />
                   </Link>
