@@ -21,7 +21,7 @@ const focusableSelector = 'a[href], button:not([disabled]), [tabindex]:not([tabi
 
 export function SiteHeader({ institutions }: { institutions: PublicInstitution[] }) {
   const [open, setOpen] = useState(false);
-  const [highContrast, setHighContrast] = useState(false);
+  const [reducedGlare, setReducedGlare] = useState(false);
   const menuId = useId();
   const homeRef = useRef<HTMLAnchorElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
@@ -41,16 +41,17 @@ export function SiteHeader({ institutions }: { institutions: PublicInstitution[]
   }, []);
 
   useEffect(() => {
-    const savedContrast = window.localStorage.getItem("banca-contrast") === "high";
-    setHighContrast(savedContrast);
-    document.documentElement.dataset.contrast = savedContrast ? "high" : "soft";
+    const savedPreference = window.localStorage.getItem("banca-reduced-glare") === "true";
+    setReducedGlare(savedPreference);
+    document.documentElement.classList.toggle("reduced-glare", savedPreference);
+    delete document.documentElement.dataset.contrast;
   }, []);
 
-  const toggleContrast = () => {
-    const nextContrast = !highContrast;
-    setHighContrast(nextContrast);
-    document.documentElement.dataset.contrast = nextContrast ? "high" : "soft";
-    window.localStorage.setItem("banca-contrast", nextContrast ? "high" : "soft");
+  const toggleReducedGlare = () => {
+    const nextPreference = !reducedGlare;
+    setReducedGlare(nextPreference);
+    document.documentElement.classList.toggle("reduced-glare", nextPreference);
+    window.localStorage.setItem("banca-reduced-glare", String(nextPreference));
   };
 
   useEffect(() => {
@@ -207,10 +208,10 @@ export function SiteHeader({ institutions }: { institutions: PublicInstitution[]
           </a>
           <button
             type="button"
-            onClick={toggleContrast}
-            aria-pressed={highContrast}
-            aria-label={highContrast ? "Usar contraste suave" : "Aumentar contraste"}
-            title={highContrast ? "Usar contraste suave" : "Aumentar contraste"}
+            onClick={toggleReducedGlare}
+            aria-pressed={reducedGlare}
+            aria-label={reducedGlare ? "Usar fundo claro" : "Reduzir claridade do fundo"}
+            title={reducedGlare ? "Usar fundo claro" : "Reduzir claridade do fundo"}
             className="grid size-8 place-items-center rounded-full text-ivory/55 transition-colors hover:bg-white/5 hover:text-gold"
           >
             <Contrast className="size-3.5" aria-hidden />

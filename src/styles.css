@@ -260,8 +260,8 @@
 
 /* Homepage metropolitana: superfícies claras escopadas apenas à home. */
 .home-light {
-  --page-background: oklch(0.952 0.004 255);
-  --page-card: oklch(0.982 0.002 255);
+  --page-background: oklch(0.92 0.006 255);
+  --page-card: oklch(0.96 0.003 255);
   --background: var(--page-background);
   --foreground: oklch(0.22 0.05 260);
   --card: var(--page-card);
@@ -273,15 +273,19 @@
   background: var(--background);
   color: var(--foreground);
 }
-.home-light .bg-white {
-  background-color: var(--card);
-}
-html[data-contrast="high"] .home-light {
-  --page-background: oklch(0.985 0.002 255);
-  --page-card: oklch(1 0 0);
+html.reduced-glare .home-light {
+  --page-background: oklch(0.84 0.008 255);
+  --page-card: oklch(0.9 0.005 255);
   --foreground: oklch(0.16 0.035 260);
-  --muted-foreground: oklch(0.36 0.025 260);
-  --border: oklch(0.78 0.01 260);
+  --muted-foreground: oklch(0.32 0.025 260);
+  --border: oklch(0.7 0.012 260);
+}
+.home-light,
+.home-light [class*="bg-white"] {
+  background-color: var(--page-background);
+}
+.home-light [class*="bg-white"] {
+  background-color: var(--page-card) !important;
 }
 @utility bg-navy {
   background-color: var(--navy);
