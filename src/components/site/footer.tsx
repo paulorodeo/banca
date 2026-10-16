@@ -9,6 +9,7 @@ const footerLinks = [
   { to: "/delegacias", label: "Delegacias" },
   { to: "/artigos", label: "Artigos" },
   { to: "/profissionais", label: "Profissionais" },
+  { to: "/radio", label: "Rádio" },
   { to: "/sobre", label: "Sobre" },
 ] as const;
 

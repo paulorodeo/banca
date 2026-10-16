@@ -18,6 +18,7 @@ import { readPublicOrigin } from "@/lib/public-url.functions";
 import { editorialIdentity } from "@/content/local/settings";
 import { organizationSchema } from "@/lib/seo";
 import { MiniRadioPlayer } from "@/features/radio/components/MiniRadioPlayer";
+import { RadioProvider } from "@/features/radio/components/RadioProvider";
 
 function NotFoundComponent() {
   return (
@@ -146,21 +147,23 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <a
-        href="#conteudo-principal"
-        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:rounded-xs focus:bg-gold focus:px-4 focus:py-2 focus:text-primary-foreground"
-      >
-        Ir para o conteúdo
-      </a>
-      <div className="flex min-h-screen flex-col">
-        <SiteHeader />
-        <main id="conteudo-principal" className="flex-1">
-          {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-          <Outlet />
-        </main>
-        <SiteFooter />
-      </div>
-      <MiniRadioPlayer />
+      <RadioProvider>
+        <a
+          href="#conteudo-principal"
+          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:rounded-xs focus:bg-gold focus:px-4 focus:py-2 focus:text-primary-foreground"
+        >
+          Ir para o conteúdo
+        </a>
+        <div className="flex min-h-screen flex-col">
+          <SiteHeader />
+          <main id="conteudo-principal" className="flex-1">
+            {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+            <Outlet />
+          </main>
+          <SiteFooter />
+        </div>
+        <MiniRadioPlayer />
+      </RadioProvider>
     </QueryClientProvider>
   );
 }

@@ -21,6 +21,7 @@ import { Route as PoliticaDePrivacidadeRouteImport } from './routes/politica-de-
 import { Route as PrivacidadeRouteImport } from './routes/privacidade'
 import { Route as ProfissionaisRouteImport } from './routes/profissionais'
 import { Route as RadarRouteImport } from './routes/radar'
+import { Route as RadioRouteImport } from './routes/radio'
 import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as SobreRouteImport } from './routes/sobre'
@@ -95,6 +96,11 @@ const ProfissionaisRoute = ProfissionaisRouteImport.update({
 const RadarRoute = RadarRouteImport.update({
   id: '/radar',
   path: '/radar',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RadioRoute = RadioRouteImport.update({
+  id: '/radio',
+  path: '/radio',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RobotsDottxtRoute = RobotsDottxtRouteImport.update({
@@ -186,6 +192,7 @@ export interface FileRoutesByFullPath {
   '/privacidade': typeof PrivacidadeRoute
   '/profissionais': typeof ProfissionaisRoute
   '/radar': typeof RadarRoute
+  '/radio': typeof RadioRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/sobre': typeof SobreRoute
@@ -215,6 +222,7 @@ export interface FileRoutesByTo {
   '/privacidade': typeof PrivacidadeRoute
   '/profissionais': typeof ProfissionaisRoute
   '/radar': typeof RadarRoute
+  '/radio': typeof RadioRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/sobre': typeof SobreRoute
@@ -245,6 +253,7 @@ export interface FileRoutesById {
   '/privacidade': typeof PrivacidadeRoute
   '/profissionais': typeof ProfissionaisRoute
   '/radar': typeof RadarRoute
+  '/radio': typeof RadioRoute
   '/robots.txt': typeof RobotsDottxtRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/sobre': typeof SobreRoute
@@ -276,6 +285,7 @@ export interface FileRouteTypes {
     | '/privacidade'
     | '/profissionais'
     | '/radar'
+    | '/radio'
     | '/robots.txt'
     | '/sitemap.xml'
     | '/sobre'
@@ -305,6 +315,7 @@ export interface FileRouteTypes {
     | '/privacidade'
     | '/profissionais'
     | '/radar'
+    | '/radio'
     | '/robots.txt'
     | '/sitemap.xml'
     | '/sobre'
@@ -334,6 +345,7 @@ export interface FileRouteTypes {
     | '/privacidade'
     | '/profissionais'
     | '/radar'
+    | '/radio'
     | '/robots.txt'
     | '/sitemap.xml'
     | '/sobre'
@@ -364,6 +376,7 @@ export interface RootRouteChildren {
   PrivacidadeRoute: typeof PrivacidadeRoute
   ProfissionaisRoute: typeof ProfissionaisRoute
   RadarRoute: typeof RadarRoute
+  RadioRoute: typeof RadioRoute
   RobotsDottxtRoute: typeof RobotsDottxtRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   SobreRoute: typeof SobreRoute
@@ -465,6 +478,13 @@ declare module '@tanstack/react-router' {
       path: '/radar'
       fullPath: '/radar'
       preLoaderRoute: typeof RadarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/radio': {
+      id: '/radio'
+      path: '/radio'
+      fullPath: '/radio'
+      preLoaderRoute: typeof RadioRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/robots.txt': {
@@ -588,6 +608,7 @@ const rootRouteChildren: RootRouteChildren = {
   PrivacidadeRoute: PrivacidadeRoute,
   ProfissionaisRoute: ProfissionaisRoute,
   RadarRoute: RadarRoute,
+  RadioRoute: RadioRoute,
   RobotsDottxtRoute: RobotsDottxtRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   SobreRoute: SobreRoute,
