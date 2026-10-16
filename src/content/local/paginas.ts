@@ -1,5 +1,4 @@
 import type { PaginaInstitucional } from "../types";
-import { editorialIdentity } from "./settings";
 import { politicaIntegridade } from "./integridade";
 import { politicaPrivacidade } from "./privacidade";
 
@@ -285,43 +284,97 @@ export const paginas: PaginaInstitucional[] = [
     id: "pagina-sobre",
     slug: "sobre",
     titulo: "Sobre a Banca Paulista",
-    subtitulo: "Informação editorial e contexto territorial sobre defesa criminal em São Paulo.",
+    subtitulo: "Informação, Justiça e Sociedade.",
     seo: {
-      title: "Sobre a Banca Paulista | Banca Paulista",
+      title: "Sobre a Banca Paulista | Informação, Justiça e Sociedade",
       description:
-        "Informação editorial e contexto territorial sobre defesa criminal em São Paulo.",
+        "Conheça a Banca Paulista, portal independente de notícias, artigos, informação jurídica, órgãos públicos, oportunidades profissionais e inteligência.",
       canonicalPath: "/sobre",
     },
+    introducao: [
+      "A Banca Paulista é um portal editorial independente dedicado à informação jurídica, à cobertura jornalística, às instituições públicas e aos acontecimentos que impactam a sociedade.",
+      "Reunimos notícias, análises, artigos, guias territoriais, informações institucionais e oportunidades profissionais em um ambiente voltado ao acesso à informação, ao debate público e à compreensão do universo jurídico brasileiro.",
+    ],
+    indice: [
+      ["identidade", "Nossa identidade"],
+      ["jornalismo", "Jornalismo, notícias e opinião"],
+      ["institucional-territorial", "Informação institucional e territorial"],
+      ["profissionais-oportunidades", "Profissionais e oportunidades"],
+      ["radar", "Radar Paulista"],
+      ["independencia", "Independência, transparência e responsabilidade"],
+      ["evolucao", "Evolução do projeto"],
+    ].map(([id, rotulo]) => ({ id: id!, rotulo: rotulo! })),
     blocos: [
       {
-        titulo: "Nossa proposta",
+        titulo: "Nossa identidade",
         paragrafos: [
-          editorialIdentity.description,
-          editorialIdentity.disclaimer,
-          "O projeto é administrado por um profissional de tecnologia e SEO, não advogado. Na fase atual, não constitui escritório ou sociedade de advogados e não oferece representação jurídica.",
+          "A Banca Paulista é um portal editorial independente, com origem na cobertura jurídica e territorial de São Paulo e expansão gradual para conteúdos de interesse nacional.",
+          "O portal preserva o compromisso com informação documentada, contextualização, transparência e fontes verificáveis. Cada publicação deve deixar claros seu contexto, sua natureza editorial e os limites das informações apresentadas.",
         ],
       },
       {
-        titulo: "São Paulo como referência",
+        titulo: "Jornalismo, notícias e opinião",
         paragrafos: [
-          "As páginas são organizadas em Centro, Zona Norte, Zona Leste, Zona Sul e Zona Oeste. A cobertura editorial cresce de forma gradual, preservando contexto local e links entre unidades próximas.",
-          "Bairros e zonas ajudam a navegar pelo conteúdo; não definem circunscrição policial, sede física ou disponibilidade de profissional.",
+          "A proposta jornalística da Banca Paulista abrange notícias e reportagens, cobertura de Justiça e segurança pública, instituições e políticas públicas, legislação e direitos, análises jurídicas e artigos e opiniões assinadas.",
+          "A linha editorial pode apresentar interpretações e posicionamentos próprios. Para uma leitura transparente, o portal busca distinguir notícia factual, análise, opinião e conteúdo patrocinado.",
+          "A expansão de colunas e colaborações é uma iniciativa em desenvolvimento. A autoria e a natureza de cada contribuição serão identificadas quando publicadas.",
+        ],
+        links: [{ rotulo: "Artigos", href: "/artigos" }],
+      },
+      {
+        titulo: "Informação institucional e territorial",
+        paragrafos: [
+          "O diretório Órgãos e Serviços reúne referências editoriais sobre Polícia Civil, Ministério Público, Defensoria Pública, Judiciário e outras instituições e serviços de interesse público.",
+          "Os guias são independentes e procuram fundamentar as relações territoriais apresentadas. A localização física de uma unidade, por si só, não comprova competência institucional, jurisdição, circunscrição ou área de atendimento.",
+          "Os guias de delegacias e a cobertura das cinco regiões da capital permanecem como referências importantes para a navegação e a contextualização local.",
+        ],
+        links: [
+          { rotulo: "Órgãos e Serviços", href: "/orgaos" },
+          { rotulo: "Regiões e Bairros", href: "/regioes" },
         ],
       },
       {
-        titulo: "Independência e responsabilidade editorial",
+        titulo: "Profissionais e oportunidades",
         paragrafos: [
-          "O portal não possui vínculo com delegacias, Polícia Civil, tribunais ou órgãos públicos. Informações operacionais devem ser confirmadas em fontes oficiais.",
-          "Publicações informativas não são pareceres nem orientação individual. Textos assinados serão atribuídos somente a colaboradores identificados, com autorização. Materiais herdados cuja autoria ou autorização ainda não foi confirmada permanecem fora de publicação.",
+          "O diretório de pessoas e profissionais separa representantes institucionais de profissionais independentes. A publicação de um perfil não constitui recomendação, indicação de disponibilidade ou vínculo profissional presumido com a Banca Paulista.",
+          "A página de vagas é dedicada à divulgação editorial de oportunidades profissionais e estágios, inclusive fora de São Paulo. A Banca Paulista não seleciona advogados, não recebe causas, não representa empregadores e não conduz processos seletivos.",
+          "A participação de profissionais independentes depende de critérios próprios de verificação e publicação; a existência desse espaço não afirma que haja profissionais independentes participantes publicados.",
+        ],
+        links: [
+          { rotulo: "Profissionais", href: "/profissionais" },
+          { rotulo: "Vagas", href: "/vagas" },
         ],
       },
       {
-        titulo: "Participação profissional futura",
+        titulo: "Radar Paulista",
         paragrafos: [
-          "Profissionais poderão ser apresentados após confirmação de identidade, inscrição profissional, consentimento e avaliação do modelo de participação. Não há profissionais participantes publicados no momento.",
-          "Eventual assistência e contratação deverão ocorrer diretamente com o profissional identificado, sem confundir contato editorial com consulta jurídica.",
+          "O Radar Paulista é um produto de inteligência e informação em desenvolvimento, separado das editorias de notícias do portal.",
+          "O projeto prevê clipping temático, monitoramento de fontes institucionais, bases de dados e APIs autorizadas, relatórios de inteligência, alertas e acompanhamento de temas. Também poderá oferecer conteúdo público de apresentação e acesso integral mediante assinatura.",
+          "Assinaturas, pagamentos, APIs, painéis de monitoramento e demais recursos do Radar não estão operacionais nesta fase.",
         ],
       },
+      {
+        titulo: "Independência, transparência e responsabilidade",
+        paragrafos: [
+          "A Banca Paulista não é escritório nem sociedade de advocacia, não presta atendimento jurídico direto, não representa órgãos públicos e não possui vínculo institucional presumido com autoridades ou entidades mencionadas.",
+          "Conteúdos editoriais não substituem orientação profissional individualizada. A publicação de informações não constitui endosso a pessoas ou instituições, e informações operacionais devem ser confirmadas em fontes oficiais.",
+          "O portal assume o compromisso de apurar informações, utilizar fontes identificáveis quando pertinentes, distinguir fatos e opiniões, tratar correções editoriais de forma responsável e dar transparência à publicidade e aos conteúdos patrocinados.",
+          "A Banca Paulista poderá manter linha editorial própria e publicar opiniões críticas, respeitando a responsabilidade sobre alegações factuais e os direitos de terceiros.",
+        ],
+        links: [{ rotulo: "Contato Editorial", href: "/contato" }],
+      },
+      {
+        titulo: "Evolução do projeto",
+        paragrafos: [
+          "A Banca Paulista é um ecossistema editorial em desenvolvimento contínuo. O projeto prevê ampliar a cobertura de notícias, as contribuições editoriais, as informações institucionais, os serviços de informação e as frentes de inteligência.",
+          "Recursos já publicados convivem com iniciativas futuras. Cada nova frente será apresentada de acordo com sua disponibilidade efetiva, sem antecipar como operacionais serviços ou produtos ainda em desenvolvimento.",
+        ],
+      },
+    ],
+    linksRelacionados: [
+      { rotulo: "Termos de Uso e Política Editorial", href: "/termos-de-uso" },
+      { rotulo: "Integridade e Ética", href: "/integridade-e-etica" },
+      { rotulo: "Contato Editorial", href: "/contato" },
     ],
   },
   {
