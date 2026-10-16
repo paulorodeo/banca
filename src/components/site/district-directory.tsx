@@ -1,8 +1,7 @@
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { Link } from "@tanstack/react-router";
-import { ArrowRight, Building2, MapPin, Search } from "lucide-react";
+import { ArrowRight, Building2, MapPin } from "lucide-react";
 import type { Delegacia, Regiao, Zona } from "@/content/types";
-import { cn } from "@/lib/utils";
 
 const normalizeSearch = (value: string) =>
   value
@@ -15,15 +14,17 @@ export function DistrictDirectory({
   delegacias,
   regioes,
   zonas,
-  initialQuery = "",
+  query,
+  zone,
+  onClear,
 }: {
   delegacias: Delegacia[];
   regioes: Regiao[];
   zonas: Zona[];
-  initialQuery?: string;
+  query: string;
+  zone: string;
+  onClear: () => void;
 }) {
-  const [query, setQuery] = useState(initialQuery);
-  const [zone, setZone] = useState("todas");
   const regionBySlug = useMemo(
     () => new Map(regioes.map((region) => [region.slug, region])),
     [regioes],
@@ -49,45 +50,10 @@ export function DistrictDirectory({
   }, [delegacias, query, regionBySlug, zone]);
   return (
     <div>
-      <div className="directory-controls rounded-xl border border-border bg-card p-4 shadow-sm">
-        <label className="relative block">
-          <span className="sr-only">Buscar delegacia, bairro ou número do DP</span>
-          <Search
-            className="absolute left-4 top-1/2 size-5 -translate-y-1/2 text-brand-navy"
-            aria-hidden
-          />
-          <input
-            type="search"
-            value={query}
-            onChange={(event) => setQuery(event.target.value)}
-            placeholder="Buscar delegacia, bairro ou número do DP"
-            className="h-13 w-full rounded-md border border-input bg-background pl-12 pr-4 text-sm text-foreground"
-          />
-        </label>
-        <div
-          className="mt-4 flex flex-wrap gap-2"
-          role="group"
-          aria-label="Filtrar delegacias por zona"
-        >
-          {[{ slug: "todas", nome: "Todas as zonas" }, ...zonas].map((item) => (
-            <button
-              key={item.slug}
-              type="button"
-              onClick={() => setZone(item.slug)}
-              aria-pressed={zone === item.slug}
-              className={cn(
-                "rounded-full border px-4 py-2 text-xs font-semibold transition-colors",
-                zone === item.slug
-                  ? "border-brand-navy bg-brand-navy text-ivory"
-                  : "border-border text-brand-navy hover:border-gold",
-              )}
-            >
-              {item.nome}
-            </button>
-          ))}
-        </div>
-      </div>
-      <div className="my-7 flex flex-wrap items-end justify-between gap-3">
+      <div
+        id="district-results"
+        className="my-7 flex scroll-mt-6 flex-wrap items-end justify-between gap-3"
+      >
         <h2 className="font-serif text-3xl text-brand-navy">Guias de delegacias</h2>
         <p role="status" aria-live="polite" className="text-xs text-muted-foreground">
           {visible.length} {visible.length === 1 ? "unidade encontrada" : "unidades encontradas"}
@@ -151,10 +117,7 @@ export function DistrictDirectory({
           <button
             type="button"
             className="mt-4 text-sm font-semibold text-brand-navy underline"
-            onClick={() => {
-              setQuery("");
-              setZone("todas");
-            }}
+            onClick={onClear}
           >
             Limpar busca e filtros
           </button>
