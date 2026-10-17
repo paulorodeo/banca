@@ -20,6 +20,7 @@ export function MiniRadioPlayer() {
     playing,
     loading,
     error,
+    playbackBlocked,
     volume,
     muted,
     selectStation,
@@ -134,7 +135,12 @@ export function MiniRadioPlayer() {
           )}
           {error && (
             <p role="status" className="mb-2 text-xs text-[#e9b6a9]">
-              Não foi possível reproduzir esta emissora.
+              A transmissão não respondeu. Verifique a conexão e tente novamente.
+            </p>
+          )}
+          {playbackBlocked && (
+            <p role="status" className="mb-2 text-xs text-[#F4F1EB]/75">
+              O navegador bloqueou a reprodução. Toque em reproduzir para tentar novamente.
             </p>
           )}
           <div className="flex items-center gap-3">

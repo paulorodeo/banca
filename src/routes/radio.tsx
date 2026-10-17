@@ -1,12 +1,22 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ArrowRight, LoaderCircle, Pause, Play, Volume2, VolumeX } from "lucide-react";
+import { useState } from "react";
+import {
+  ArrowRight,
+  Check,
+  Copy,
+  ExternalLink,
+  LoaderCircle,
+  Pause,
+  Play,
+  Volume2,
+  VolumeX,
+} from "lucide-react";
 import { Container } from "@/components/site/primitives";
 import { radioStations } from "@/features/radio/data/stations";
 import { useRadioController } from "@/features/radio/components/RadioProvider";
 import { breadcrumbSchema, canonical, canonicalLink, pageMeta } from "@/lib/seo";
 
 const PATH = "/radio";
-const bancaStation = radioStations[0]!;
 
 export const Route = createFileRoute("/radio")({
   head: () => ({
@@ -49,6 +59,7 @@ function RadioPage() {
     playing,
     loading,
     error,
+    playbackBlocked,
     volume,
     muted,
     nowPlaying,
@@ -57,8 +68,18 @@ function RadioPage() {
     toggleMute,
     selectStation,
   } = useRadioController();
+  const [copyStatus, setCopyStatus] = useState<{ url: string; copied: boolean } | null>(null);
   const track = nowPlaying?.title && nowPlaying.artist ? nowPlaying.title : station.name;
-  const artist = nowPlaying?.title && nowPlaying.artist ? nowPlaying.artist : bancaStation.subtitle;
+  const artist = nowPlaying?.title && nowPlaying.artist ? nowPlaying.artist : station.subtitle;
+  const copyStreamLink = async (url: string) => {
+    try {
+      if (!navigator.clipboard?.writeText) throw new Error("Clipboard indisponível");
+      await navigator.clipboard.writeText(url);
+      setCopyStatus({ url, copied: true });
+    } catch {
+      setCopyStatus({ url, copied: false });
+    }
+  };
 
   return (
     <div className="bg-[#F4F1EB] text-[#101B2B]">
@@ -146,7 +167,12 @@ function RadioPage() {
             </div>
             {error && (
               <p role="status" className="mt-4 text-xs text-[#edb5a8]">
-                Não foi possível reproduzir esta emissora.
+                A transmissão não respondeu. Verifique a conexão e tente novamente.
+              </p>
+            )}
+            {playbackBlocked && (
+              <p role="status" className="mt-4 text-xs text-[#F4F1EB]/75">
+                O navegador bloqueou a reprodução. Pressione play para tentar novamente.
               </p>
             )}
             <div className="mt-7 flex items-center gap-4 border-t border-white/10 pt-5">
@@ -307,6 +333,101 @@ function RadioPage() {
                   >
                     Ouvir rádio <ArrowRight size={15} aria-hidden />
                   </button>
+                </article>
+              ))}
+          </div>
+        </Container>
+      </section>
+
+      <section className="border-t border-[#101B2B]/10 bg-white py-14 md:py-20">
+        <Container>
+          <p className="text-[0.65rem] font-semibold tracking-[0.2em] text-[#9B7940]">
+            ACESSO DIRETO
+          </p>
+          <h2 className="mt-3 font-serif text-3xl font-bold text-[#061E30] md:text-4xl">
+            Links de transmissão e agregadores
+          </h2>
+          <p className="mt-4 max-w-3xl text-sm leading-7 text-[#263746]/80 md:text-base">
+            Ouça nossas rádios diretamente no navegador ou utilize os endereços oficiais em
+            aplicativos de áudio, agregadores e players compatíveis com transmissões online.
+          </p>
+          <p className="mt-2 text-sm text-[#52616D]">
+            As playlists M3U e PLS podem ser abertas em aplicativos compatíveis, como VLC e outros
+            players de rádio.
+          </p>
+
+          <div className="mt-8 grid gap-4 lg:grid-cols-3">
+            {radioStations
+              .filter((item) => item.publicLinks?.length)
+              .map((item) => (
+                <article
+                  key={item.id}
+                  className="rounded-xl border border-[#061E30]/10 bg-[#F8F8F6] p-5"
+                >
+                  <h3 className="font-serif text-xl font-bold text-[#061E30]">
+                    {item.id === "banca-digital"
+                      ? "Rádio Banca Digital"
+                      : item.id === "radio-agronejo"
+                        ? "Rádio Agronejo"
+                        : "Rádio Fazenda Rodeo"}
+                  </h3>
+                  <p className="mt-1 text-sm text-[#52616D]">{item.subtitle}</p>
+                  <ul className="mt-4 space-y-2">
+                    {item.publicLinks?.map((link) => {
+                      const key = `${item.id}:${link.format}`;
+                      const linkName =
+                        link.format === "MP3" && link.bitrate ? `MP3 ${link.bitrate}` : link.format;
+                      const openLabel =
+                        link.format === "MP3"
+                          ? "Abrir transmissão MP3"
+                          : link.format === "HLS"
+                            ? "Abrir transmissão HLS"
+                            : `Abrir playlist ${link.format}`;
+                      const copyLabel = `Copiar link ${link.format}`;
+
+                      return (
+                        <li
+                          key={key}
+                          className="flex min-w-0 items-center justify-between gap-2 border-t border-[#061E30]/10 pt-2 first:border-0 first:pt-0"
+                        >
+                          <span className="shrink-0 text-xs font-bold text-[#91652B]">
+                            {linkName}
+                          </span>
+                          <div className="flex min-w-0 items-center gap-1">
+                            <a
+                              href={link.url}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="inline-flex min-h-10 items-center gap-1 rounded px-2 text-xs font-semibold text-[#061E30] hover:bg-[#061E30]/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#B28341]"
+                            >
+                              <ExternalLink size={14} aria-hidden />
+                              <span className="sr-only sm:not-sr-only">{openLabel}</span>
+                            </a>
+                            <button
+                              type="button"
+                              onClick={() => void copyStreamLink(link.url)}
+                              aria-label={copyLabel}
+                              title={copyLabel}
+                              className="inline-flex size-10 shrink-0 items-center justify-center rounded text-[#061E30] hover:bg-[#061E30]/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#B28341]"
+                            >
+                              {copyStatus?.url === link.url && copyStatus.copied ? (
+                                <Check size={16} aria-hidden />
+                              ) : (
+                                <Copy size={16} aria-hidden />
+                              )}
+                            </button>
+                          </div>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                  {copyStatus && item.publicLinks?.some((link) => link.url === copyStatus.url) && (
+                    <p role="status" className="mt-3 text-xs text-[#52616D]">
+                      {copyStatus.copied
+                        ? "Link copiado para a área de transferência."
+                        : "Não foi possível copiar. Abra o endereço para copiá-lo pelo aplicativo."}
+                    </p>
+                  )}
                 </article>
               ))}
           </div>
