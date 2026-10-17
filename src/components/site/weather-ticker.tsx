@@ -60,39 +60,71 @@ export function useWeather() {
 }
 
 export function WeatherTicker() {
-  // Placeholder também no SSR, evitando divergência de hidratação.
-  const [clock, setClock] = useState("--:--");
+  // O mesmo relógio alimenta data e hora; só é inicializado no cliente para
+  // manter a saída SSR estável e atualizar a data também na virada do dia.
+  const [clock, setClock] = useState<{ date: string; time: string; iso: string } | null>(null);
   const { data } = useWeather();
   useEffect(() => {
-    const tick = () =>
-      setClock(
-        new Intl.DateTimeFormat("pt-BR", {
-          timeZone: "America/Sao_Paulo",
-          hour: "2-digit",
-          minute: "2-digit",
-          hour12: false,
-        }).format(new Date()),
-      );
+    const dateFormatter = new Intl.DateTimeFormat("pt-BR", {
+      timeZone: "America/Sao_Paulo",
+      weekday: "long",
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    });
+    const timeFormatter = new Intl.DateTimeFormat("pt-BR", {
+      timeZone: "America/Sao_Paulo",
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: false,
+    });
+    const tick = () => {
+      const now = new Date();
+      setClock({
+        date: dateFormatter.format(now),
+        time: timeFormatter.format(now),
+        iso: now.toISOString(),
+      });
+    };
     tick();
     const id = window.setInterval(tick, 60_000);
     return () => window.clearInterval(id);
   }, []);
+  const time = clock?.time ?? "--:--";
+  const weather = data ? `${Math.round(data.tempC)} graus, ${data.label}` : "Tempo indisponível";
   return (
     <Link
       to="/previsao-do-tempo"
-      aria-label={`Ver previsão do tempo em São Paulo. Hora: ${clock}. ${data ? `${Math.round(data.tempC)} graus, ${data.label}` : "Tempo indisponível"}.`}
-      className="inline-flex min-h-8 items-center gap-2 rounded-sm text-xs font-semibold text-ivory hover:text-gold focus-visible:outline-2 focus-visible:outline-gold"
+      aria-label={`Ver previsão do tempo em São Paulo. ${clock ? `${clock.date}, ${time}` : `Hora ${time}`}. ${weather}.`}
+      className="inline-flex min-h-8 max-w-full min-w-0 flex-wrap items-center gap-x-2 gap-y-1 rounded-sm text-xs font-semibold text-ivory hover:text-gold focus-visible:outline-2 focus-visible:outline-gold"
     >
-      <MapPin className="size-3.5 text-gold" aria-hidden />
-      <span>São Paulo</span>
-      <span className="inline-flex items-center gap-1 text-ivory/90">
+      <MapPin className="size-3.5 shrink-0 text-gold" aria-hidden />
+      <span className="whitespace-nowrap">São Paulo</span>
+      <span aria-hidden="true" className="text-gold/80">
+        ·
+      </span>
+      {clock ? (
+        <time dateTime={clock.iso} className="whitespace-nowrap text-ivory/95">
+          {clock.date}
+        </time>
+      ) : (
+        <span className="whitespace-nowrap text-ivory/75">Data local</span>
+      )}
+      <span aria-hidden="true" className="text-gold/80">
+        ·
+      </span>
+      <span className="inline-flex shrink-0 items-center gap-1 text-ivory/95">
         <Clock3 className="size-3.5 text-gold" aria-hidden />
-        {clock}
+        {time}
+      </span>
+      <span aria-hidden="true" className="text-gold/80">
+        ·
       </span>
       {data ? (
-        <span className="inline-flex items-center gap-1.5" title={data.label}>
+        <span className="inline-flex min-w-0 items-center gap-1.5" title={data.label}>
           <WeatherIcon kind={data.kind} className="size-4 text-gold" />
-          {Math.round(data.tempC)}°C
+          <span className="whitespace-nowrap">{Math.round(data.tempC)}°C</span>
+          <span className="truncate">{data.label}</span>
         </span>
       ) : (
         <span className="inline-flex items-center gap-1 text-ivory/70">
