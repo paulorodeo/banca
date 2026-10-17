@@ -7,6 +7,15 @@ type HeadlineContext = "zona" | "bairro" | "instituicao";
 
 const normalized = (value: string) => value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
 
+function relationsOf(value: unknown) {
+  if (Array.isArray(value)) return value;
+  if (value && typeof value === "object") {
+    const legacy = value as { territorios?: unknown[]; instituicoes?: unknown[] };
+    return [...(legacy.territorios ?? []), ...(legacy.instituicoes ?? [])];
+  }
+  return [];
+}
+
 function formatDate(value: string) {
   return new Date(`${value}T00:00:00Z`).toLocaleDateString("pt-BR", { dateStyle: "long", timeZone: "UTC" });
 }
@@ -14,19 +23,27 @@ function formatDate(value: string) {
 export function ContextualNewsSection({
   contexts,
   headlineContext,
+  maxItems = 12,
 }: {
   contexts: string[];
   headlineContext: HeadlineContext;
+  maxItems?: number;
 }) {
   const names = new Set(contexts.map(normalized));
   const items = noticias
     .filter(
       (noticia) =>
-        Array.isArray(noticia.relacionamentos) &&
-        noticia.relacionamentos.some((relation) => names.has(normalized(relation.nome))),
+        relationsOf(noticia.relacionamentos).some(
+          (relation) =>
+            typeof relation === "object" &&
+            relation !== null &&
+            "nome" in relation &&
+            typeof relation.nome === "string" &&
+            names.has(normalized(relation.nome)),
+        ),
     )
     .sort((a, b) => b.publicadoEm.localeCompare(a.publicadoEm))
-    .slice(0, 12);
+    .slice(0, maxItems);
 
   if (!items.length) return null;
   const [featured, ...remaining] = items;

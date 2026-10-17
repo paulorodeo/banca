@@ -604,6 +604,10 @@ O temporal deixou uma questão que ultrapassa a ocorrência pontual: como prepar
       "Fonte principal: Agência de Notícias da Polícia Militar do Estado de São Paulo, publicação de 15 de outubro de 2026, às 10h33.",
       "Nota editorial: As informações sobre prisões, apreensões e objetos recuperados são atribuídas à Polícia Militar. As pessoas envolvidas permanecem amparadas pela presunção de inocência, e a responsabilização depende dos procedimentos legais cabíveis.",
     ],
+    relacionamentos: [
+      { nome: "Zona Sul", tipo: "territorio", relacao: "regional" },
+      { nome: "89º Distrito Policial — Portal do Morumbi", tipo: "instituicao", relacao: "administrativo" },
+    ],
   },
   {
     id: "noticia-paraisopolis-mochila-oito-tipos-drogas",
@@ -779,6 +783,7 @@ O temporal deixou uma questão que ultrapassa a ocorrência pontual: como prepar
       "Referência legislativa: Lei Federal nº 11.343/2006, especialmente artigo 33.",
       "Nota editorial: A notícia foi elaborada com base nas informações divulgadas oficialmente pela Polícia Militar. Não há confirmação pública de prisão dos suspeitos mencionados. Eventuais responsabilidades criminais dependem de apuração e do devido processo legal.",
     ],
+    relacionamentos: [{ nome: "Zona Sul", tipo: "territorio", relacao: "regional" }],
   },
   {
     id: "noticia-titulos-propriedade-capela-do-socorro",
@@ -1036,6 +1041,7 @@ O temporal deixou uma questão que ultrapassa a ocorrência pontual: como prepar
       "Referências jurídicas: Código Civil, especialmente artigo 1.245; Lei Federal nº 13.465/2017, referente à regularização fundiária urbana.",
       "Nota editorial: A entrega de 3.353 títulos foi anunciada para 16 de outubro de 2026. Esta versão não afirma que a cerimônia já ocorreu. A efetivação deve ser confirmada com a Prefeitura em atualização posterior.",
     ],
+    relacionamentos: [{ nome: "Zona Sul", tipo: "territorio", relacao: "regional" }],
   },
   {
     id: "noticia-invasao-mansao-matsunaga-alto-de-pinheiros",
@@ -1142,6 +1148,7 @@ O temporal deixou uma questão que ultrapassa a ocorrência pontual: como prepar
     notas: [
       "Nota editorial: Relatos iniciais divergiram sobre o número total de reféns. Esta reportagem utiliza a identificação de três funcionários descrita na cobertura baseada no boletim de ocorrência divulgado em 16 de outubro de 2026.",
     ],
+    relacionamentos: [{ nome: "Zona Oeste", tipo: "territorio", relacao: "regional" }],
   },
   {
     id: "noticia-bosque-salesianos-alto-da-lapa",
@@ -1257,6 +1264,7 @@ O temporal deixou uma questão que ultrapassa a ocorrência pontual: como prepar
       },
     ],
     notas: [],
+    relacionamentos: [{ nome: "Zona Oeste", tipo: "territorio", relacao: "regional" }],
   },
   {
     id: "noticia-investimentos-zona-oeste-lapa",
@@ -1378,6 +1386,7 @@ O temporal deixou uma questão que ultrapassa a ocorrência pontual: como prepar
     notas: [
       "Nota de apuração: Os valores, capacidades, cronogramas e resultados apresentados correspondem às informações oficiais divulgadas em agosto de 2026.",
     ],
+    relacionamentos: [{ nome: "Zona Oeste", tipo: "territorio", relacao: "regional" }],
   },
   ...noticiasZonaNorte,
   ...noticiasZonaLeste,

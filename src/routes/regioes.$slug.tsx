@@ -5,6 +5,7 @@ import type { Bairro, Delegacia, Regiao, Zona } from "@/content/types";
 import { artigoDaZona } from "@/content/local/zonas";
 import { featuredNeighborhoods, zonePhotography } from "@/content/local/visual-media";
 import { Container } from "@/components/site/primitives";
+import { ContextualNewsSection } from "@/components/site/contextual-news-section";
 import { ProfessionalSidebar, TerritoryHero } from "@/components/site/territory";
 import { breadcrumbSchema, canonicalLink, pageMeta } from "@/lib/seo";
 
@@ -163,6 +164,11 @@ function ZonaPage() {
           { name: zona.nome, path: `/regioes/${zona.slug}` },
         ]}
         {...(heroImage ? { image: heroImage } : {})}
+      />
+      <ContextualNewsSection
+        contexts={[zona.nome, ...(zona.slug === "centro" ? ["Centro de São Paulo"] : [])]}
+        headlineContext="zona"
+        maxItems={3}
       />
 
       {zona.slug === "zona-oeste" ? (
