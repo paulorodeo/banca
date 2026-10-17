@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AreasDeAtuacaoRouteImport } from './routes/areas-de-atuacao'
 import { Route as AtendimentoReservadoRouteImport } from './routes/atendimento-reservado'
+import { Route as AtomDotxmlRouteImport } from './routes/atom[.]xml'
 import { Route as ContatoRouteImport } from './routes/contato'
 import { Route as IntegridadeEEticaRouteImport } from './routes/integridade-e-etica'
 import { Route as NoticiasRouteImport } from './routes/noticias'
@@ -25,6 +26,7 @@ import { Route as ProfissionaisRouteImport } from './routes/profissionais'
 import { Route as RadarRouteImport } from './routes/radar'
 import { Route as RadioRouteImport } from './routes/radio'
 import { Route as RobotsDottxtRouteImport } from './routes/robots[.]txt'
+import { Route as RssDotxmlRouteImport } from './routes/rss[.]xml'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as SobreRouteImport } from './routes/sobre'
 import { Route as TermosDeUsoRouteImport } from './routes/termos-de-uso'
@@ -58,6 +60,11 @@ const AreasDeAtuacaoRoute = AreasDeAtuacaoRouteImport.update({
 const AtendimentoReservadoRoute = AtendimentoReservadoRouteImport.update({
   id: '/atendimento-reservado',
   path: '/atendimento-reservado',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AtomDotxmlRoute = AtomDotxmlRouteImport.update({
+  id: '/atom.xml',
+  path: '/atom.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContatoRoute = ContatoRouteImport.update({
@@ -123,6 +130,11 @@ const RadioRoute = RadioRouteImport.update({
 const RobotsDottxtRoute = RobotsDottxtRouteImport.update({
   id: '/robots.txt',
   path: '/robots.txt',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RssDotxmlRoute = RssDotxmlRouteImport.update({
+  id: '/rss.xml',
+  path: '/rss.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
@@ -225,6 +237,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/areas-de-atuacao': typeof AreasDeAtuacaoRoute
   '/atendimento-reservado': typeof AtendimentoReservadoRoute
+  '/atom.xml': typeof AtomDotxmlRoute
   '/contato': typeof ContatoRoute
   '/integridade-e-etica': typeof IntegridadeEEticaRoute
   '/noticias': typeof NoticiasRouteWithChildren
@@ -238,6 +251,7 @@ export interface FileRoutesByFullPath {
   '/radar': typeof RadarRoute
   '/radio': typeof RadioRoute
   '/robots.txt': typeof RobotsDottxtRoute
+  '/rss.xml': typeof RssDotxmlRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/sobre': typeof SobreRoute
   '/termos-de-uso': typeof TermosDeUsoRoute
@@ -262,6 +276,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/areas-de-atuacao': typeof AreasDeAtuacaoRoute
   '/atendimento-reservado': typeof AtendimentoReservadoRoute
+  '/atom.xml': typeof AtomDotxmlRoute
   '/contato': typeof ContatoRoute
   '/integridade-e-etica': typeof IntegridadeEEticaRoute
   '/o-escritorio': typeof OEscritorioRoute
@@ -274,6 +289,7 @@ export interface FileRoutesByTo {
   '/radar': typeof RadarRoute
   '/radio': typeof RadioRoute
   '/robots.txt': typeof RobotsDottxtRoute
+  '/rss.xml': typeof RssDotxmlRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/sobre': typeof SobreRoute
   '/termos-de-uso': typeof TermosDeUsoRoute
@@ -299,6 +315,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/areas-de-atuacao': typeof AreasDeAtuacaoRoute
   '/atendimento-reservado': typeof AtendimentoReservadoRoute
+  '/atom.xml': typeof AtomDotxmlRoute
   '/contato': typeof ContatoRoute
   '/integridade-e-etica': typeof IntegridadeEEticaRoute
   '/noticias': typeof NoticiasRouteWithChildren
@@ -312,6 +329,7 @@ export interface FileRoutesById {
   '/radar': typeof RadarRoute
   '/radio': typeof RadioRoute
   '/robots.txt': typeof RobotsDottxtRoute
+  '/rss.xml': typeof RssDotxmlRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/sobre': typeof SobreRoute
   '/termos-de-uso': typeof TermosDeUsoRoute
@@ -338,6 +356,7 @@ export interface FileRouteTypes {
     | '/'
     | '/areas-de-atuacao'
     | '/atendimento-reservado'
+    | '/atom.xml'
     | '/contato'
     | '/integridade-e-etica'
     | '/noticias'
@@ -351,6 +370,7 @@ export interface FileRouteTypes {
     | '/radar'
     | '/radio'
     | '/robots.txt'
+    | '/rss.xml'
     | '/sitemap.xml'
     | '/sobre'
     | '/termos-de-uso'
@@ -375,6 +395,7 @@ export interface FileRouteTypes {
     | '/'
     | '/areas-de-atuacao'
     | '/atendimento-reservado'
+    | '/atom.xml'
     | '/contato'
     | '/integridade-e-etica'
     | '/o-escritorio'
@@ -387,6 +408,7 @@ export interface FileRouteTypes {
     | '/radar'
     | '/radio'
     | '/robots.txt'
+    | '/rss.xml'
     | '/sitemap.xml'
     | '/sobre'
     | '/termos-de-uso'
@@ -411,6 +433,7 @@ export interface FileRouteTypes {
     | '/'
     | '/areas-de-atuacao'
     | '/atendimento-reservado'
+    | '/atom.xml'
     | '/contato'
     | '/integridade-e-etica'
     | '/noticias'
@@ -424,6 +447,7 @@ export interface FileRouteTypes {
     | '/radar'
     | '/radio'
     | '/robots.txt'
+    | '/rss.xml'
     | '/sitemap.xml'
     | '/sobre'
     | '/termos-de-uso'
@@ -449,6 +473,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AreasDeAtuacaoRoute: typeof AreasDeAtuacaoRoute
   AtendimentoReservadoRoute: typeof AtendimentoReservadoRoute
+  AtomDotxmlRoute: typeof AtomDotxmlRoute
   ContatoRoute: typeof ContatoRoute
   IntegridadeEEticaRoute: typeof IntegridadeEEticaRoute
   NoticiasRoute: typeof NoticiasRouteWithChildren
@@ -462,6 +487,7 @@ export interface RootRouteChildren {
   RadarRoute: typeof RadarRoute
   RadioRoute: typeof RadioRoute
   RobotsDottxtRoute: typeof RobotsDottxtRoute
+  RssDotxmlRoute: typeof RssDotxmlRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   SobreRoute: typeof SobreRoute
   TermosDeUsoRoute: typeof TermosDeUsoRoute
@@ -502,6 +528,13 @@ declare module '@tanstack/react-router' {
       path: '/atendimento-reservado'
       fullPath: '/atendimento-reservado'
       preLoaderRoute: typeof AtendimentoReservadoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/atom.xml': {
+      id: '/atom.xml'
+      path: '/atom.xml'
+      fullPath: '/atom.xml'
+      preLoaderRoute: typeof AtomDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contato': {
@@ -593,6 +626,13 @@ declare module '@tanstack/react-router' {
       path: '/robots.txt'
       fullPath: '/robots.txt'
       preLoaderRoute: typeof RobotsDottxtRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/rss.xml': {
+      id: '/rss.xml'
+      path: '/rss.xml'
+      fullPath: '/rss.xml'
+      preLoaderRoute: typeof RssDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/sitemap.xml': {
@@ -749,6 +789,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AreasDeAtuacaoRoute: AreasDeAtuacaoRoute,
   AtendimentoReservadoRoute: AtendimentoReservadoRoute,
+  AtomDotxmlRoute: AtomDotxmlRoute,
   ContatoRoute: ContatoRoute,
   IntegridadeEEticaRoute: IntegridadeEEticaRoute,
   NoticiasRoute: NoticiasRouteWithChildren,
@@ -762,6 +803,7 @@ const rootRouteChildren: RootRouteChildren = {
   RadarRoute: RadarRoute,
   RadioRoute: RadioRoute,
   RobotsDottxtRoute: RobotsDottxtRoute,
+  RssDotxmlRoute: RssDotxmlRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   SobreRoute: SobreRoute,
   TermosDeUsoRoute: TermosDeUsoRoute,

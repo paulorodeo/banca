@@ -14,7 +14,25 @@ import {
 import { noticias } from "@/content/local/noticias";
 
 const orderedNoticias = [...noticias].sort((a, b) => b.publicadoEm.localeCompare(a.publicadoEm));
-export const Route = createFileRoute("/noticias")({ component: NoticiasLayout });
+export const Route = createFileRoute("/noticias")({
+  head: () => ({
+    links: [
+      {
+        rel: "alternate",
+        type: "application/rss+xml",
+        title: "Banca Paulista — RSS",
+        href: "/rss.xml",
+      },
+      {
+        rel: "alternate",
+        type: "application/atom+xml",
+        title: "Banca Paulista — Atom",
+        href: "/atom.xml",
+      },
+    ],
+  }),
+  component: NoticiasLayout,
+});
 
 function NoticiasLayout() {
   return (

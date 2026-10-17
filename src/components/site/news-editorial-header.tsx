@@ -1,5 +1,5 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { ChevronDown, House, Search } from "lucide-react";
+import { ChevronDown, House, Rss, Search } from "lucide-react";
 import { Brand } from "@/components/site/brand";
 import { Container } from "@/components/site/primitives";
 import { WeatherTicker } from "@/components/site/weather-ticker";
@@ -125,6 +125,14 @@ export function NewsEditorialHeader() {
               ))}
             </div>
           </details>
+          <a
+            href="/rss.xml"
+            aria-label="Assinar feed RSS das notícias da Banca Paulista"
+            title="Feed RSS das notícias"
+            className="inline-flex size-9 shrink-0 items-center justify-center rounded-sm text-gold/90 transition-colors hover:bg-white/5 hover:text-gold focus-visible:outline-2 focus-visible:outline-gold"
+          >
+            <Rss className="size-[1.05rem]" aria-hidden />
+          </a>
         </Container>
       </nav>
     </header>
