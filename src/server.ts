@@ -10,6 +10,10 @@ type ServerEntry = {
 
 type RuntimeEnv = Record<string, string | undefined>;
 
+function runtimeEnv(env: unknown): RuntimeEnv {
+  return env && typeof env === "object" ? (env as RuntimeEnv) : process.env;
+}
+
 let serverEntryPromise: Promise<ServerEntry> | undefined;
 
 async function getServerEntry(): Promise<ServerEntry> {
@@ -52,7 +56,7 @@ export default {
     try {
       const handler = await getServerEntry();
       const response = await handler.fetch(request, env, ctx);
-      return environmentResponse(await normalizeCatastrophicSsrResponse(response), env as RuntimeEnv);
+      return environmentResponse(await normalizeCatastrophicSsrResponse(response), runtimeEnv(env));
     } catch (error) {
       console.error(error);
       return environmentResponse(
@@ -60,7 +64,7 @@ export default {
           status: 500,
           headers: { "content-type": "text/html; charset=utf-8" },
         }),
-        env as RuntimeEnv,
+        runtimeEnv(env),
       );
     }
   },
