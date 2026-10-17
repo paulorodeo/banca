@@ -382,7 +382,11 @@ export const noticiasZonaNorte: NoticiaEditorial[] = [
           ["Jardim Joana D'Arc", "57"], ["Acesso São Gabriel com Rua Projetada", "34"], ["Núcleo João Rios", "4"], ["Total", "2.846"],
         ],
       },
-      { tipo: "markdown", texto: "## Famílias esperaram até 28 anos para receber documentos" + regularizacao.split("## Famílias esperaram até 28 anos para receber documentos")[1] },
+      {
+        tipo: "markdown",
+        texto:
+          "O Jardim Flor de Maio representa aproximadamente 58,4% dos imóveis contemplados nessa etapa da regularização fundiária. O Jardim Estrela Dalva responde por cerca de 15,2%, enquanto o Jardim Corisco concentra aproximadamente 8,8%. Juntos, esses três núcleos representam mais de 82% das unidades regularizadas na operação.\n\nA relação se refere aos núcleos habitacionais incluídos no processo anunciado em setembro de 2026, e não a todas as residências existentes nos respectivos bairros. O fato de um imóvel estar localizado em uma dessas comunidades não significa, por si só, que ele tenha sido incluído no procedimento. Para confirmar a situação de uma residência específica, é necessário verificar os registros e documentos correspondentes à unidade.\n\n## Famílias esperaram até 28 anos para receber documentos" + regularizacao.split("## Famílias esperaram até 28 anos para receber documentos")[1],
+      },
     ],
     notas: ["A relação dos nove núcleos permite identificar as localidades atendidas, mas não substitui uma consulta individual à documentação do imóvel."],
     manchetesContextuais: { zona: "2.846 imóveis ganham documentação gratuita na Zona Norte; Jardim Flor de Maio lidera lista", bairro: "Jaçanã e Tremembé: veja os nove núcleos habitacionais contemplados com títulos de propriedade", instituicao: "Prefeitura regulariza 2.846 imóveis e alcança marca de 100 mil documentos de propriedade em São Paulo" },
