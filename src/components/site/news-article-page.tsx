@@ -415,12 +415,12 @@ function NewsCard({ item }: { item: NoticiaEditorial }) {
       <Link
         to="/noticias/$slug"
         params={{ slug: item.slug }}
-        className="group grid grid-cols-[5.5rem_minmax(0,1fr)] items-start gap-3"
+        className="group grid grid-cols-[minmax(8rem,9rem)_minmax(0,1fr)] items-start gap-3"
       >
         <NewsImage
           image={item.imagem}
           className="aspect-[4/3] w-full object-cover"
-          fallbackClassName="bg-[#f8f8f6] object-contain p-1.5"
+          fallbackClassName="bg-[#f8f8f6] object-contain! p-1.5"
         />
         <span className="min-w-0">
           <span className="block text-[0.62rem] font-bold uppercase leading-4 tracking-[0.06em] text-[#91652b]">
@@ -502,7 +502,7 @@ function RelatedNews({ noticia }: { noticia: NoticiaEditorial }) {
             </button>
           </nav>
         ) : null}
-        <div className="mt-5 grid grid-cols-1 gap-x-5 gap-y-4 sm:grid-cols-2 xl:grid-cols-4">
+        <div className="mt-5 grid grid-cols-1 gap-x-5 gap-y-4 md:grid-cols-2 xl:grid-cols-4">
           {items.slice(0, 4).map((item) => (
             <NewsCard key={item.id} item={item} />
           ))}
@@ -564,12 +564,12 @@ function ArticleSidebar({ noticia }: { noticia: NoticiaEditorial }) {
                 <Link
                   to="/noticias/$slug"
                   params={{ slug: item.slug }}
-                  className="group grid grid-cols-[5.25rem_minmax(0,1fr)] items-start gap-3"
+                  className="group grid grid-cols-[minmax(7rem,7.5rem)_minmax(0,1fr)] items-start gap-3"
                 >
                   <NewsImage
                     image={item.imagem}
                     className="aspect-[4/3] w-full object-cover"
-                    fallbackClassName="bg-[#f8f8f6] object-contain p-1.5"
+                    fallbackClassName="bg-[#f8f8f6] object-contain! p-1.5"
                   />
                   <div className="min-w-0">
                     <p className="text-[0.64rem] font-bold uppercase leading-4 tracking-wide text-[#91652b]">
