@@ -68,7 +68,7 @@ export function NewsEditorialHeader() {
         className="relative z-20 border-b-2 border-gold/70 bg-brand-navy text-ivory shadow-[0_8px_18px_-16px_rgba(6,30,48,0.8)]"
         aria-label="Navegação de Notícias"
       >
-        <Container className="flex flex-wrap items-center justify-center gap-x-3 gap-y-0.5 py-1 sm:justify-start sm:gap-x-4 lg:min-h-12 lg:flex-nowrap lg:justify-between lg:gap-x-3 lg:py-0">
+        <Container className="flex flex-wrap items-center justify-center gap-x-3 gap-y-0.5 py-1 sm:justify-start sm:gap-x-4 xl:min-h-12 xl:flex-nowrap xl:justify-between xl:gap-x-3 xl:py-0">
           <Link
             to="/"
             aria-label="Página inicial"
@@ -129,9 +129,10 @@ export function NewsEditorialHeader() {
             href="/rss.xml"
             aria-label="Assinar feed RSS das notícias da Banca Paulista"
             title="Feed RSS das notícias"
-            className="inline-flex size-9 shrink-0 items-center justify-center rounded-sm text-gold/90 transition-colors hover:bg-white/5 hover:text-gold focus-visible:outline-2 focus-visible:outline-gold"
+            className="ml-auto inline-flex min-h-11 min-w-11 shrink-0 items-center justify-center gap-2 rounded-sm border-l border-white/20 px-3 text-gold transition-colors hover:bg-white/5 hover:text-[#cca260] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold xl:ml-0"
           >
             <Rss className="size-[1.05rem]" aria-hidden />
+            <span className="hidden text-xs font-bold tracking-wide xl:inline">RSS</span>
           </a>
         </Container>
       </nav>
