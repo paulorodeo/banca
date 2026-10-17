@@ -405,6 +405,35 @@ html.reduced-glare .home-light {
   --gold: var(--brand-gold);
 }
 
+/* Página jornalística: paleta local, sem alterar as páginas institucionais. */
+.noticias-editorial {
+  --brand-navy: #061e30;
+  --brand-navy-soft: #102c43;
+  --brand-gold: #b28341;
+  --gold: #91652b;
+  --gold-light: #cca260;
+  --page-background: #ffffff;
+  --page-card: #ffffff;
+  --background: #ffffff;
+  --foreground: #152638;
+  --card: #ffffff;
+  --card-foreground: #152638;
+  --muted-foreground: #475569;
+  --border: color-mix(in srgb, #061e30 16%, transparent);
+  --navy: #061e30;
+  --navy-foreground: #ffffff;
+  --gold-accent: #b28341;
+  background-color: #ffffff;
+  color: #152638;
+}
+.noticias-editorial,
+.noticias-editorial [class*="bg-white"] {
+  background-color: #ffffff !important;
+}
+.noticias-editorial .bg-brand-navy {
+  --gold: #cca260;
+}
+
 /* Duas fotografias, 7 s de permanência e 1,5 s de transição por imagem. */
 .hero-second-image {
   opacity: 0;

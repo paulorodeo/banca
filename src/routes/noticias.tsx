@@ -76,7 +76,7 @@ export function NoticiasPage() {
   const artigosEmDestaque = conteudos.filter((item) => item.status === "publicado").slice(0, 3);
 
   return (
-    <main className="home-light bg-white font-sans text-brand-navy">
+    <main className="home-light noticias-editorial bg-white font-sans text-brand-navy">
       <section className="border-b border-brand-navy/10 bg-brand-navy text-ivory">
         <Container className="flex min-h-8 items-center justify-between gap-4 py-1.5 text-[0.62rem] font-medium">
           <span className="hidden sm:inline">Jornalismo independente sobre São Paulo</span>
@@ -343,7 +343,7 @@ function SideHeadline({ item }: { item: (typeof noticias)[number] }) {
     <article className="group grid grid-cols-[7.25rem_1fr] gap-4 py-4 first:pt-0 last:pb-0 sm:grid-cols-[8.25rem_1fr] xl:min-h-[8.55rem]">
       <NewsImage image={item.imagem} className="aspect-[4/3] size-full object-cover" />
       <div className="pr-1">
-        <p className="text-[0.68rem] font-extrabold uppercase tracking-[0.08em] text-[#aa7425]">
+        <p className="text-[0.68rem] font-extrabold uppercase tracking-[0.08em] text-gold">
           {item.categoria}
         </p>
         <h2 className="mt-1 font-[Georgia,serif] text-[1.06rem] font-bold leading-[1.14] tracking-[-0.01em] text-brand-navy md:text-[1.16rem]">
@@ -383,7 +383,7 @@ function NewsCard({ item }: { item: (typeof noticias)[number] }) {
   return (
     <article className="group border-b border-brand-navy/15 pb-6">
       <NewsImage image={item.imagem} className="aspect-[16/10] w-full object-cover" />
-      <p className="mt-4 text-[0.68rem] font-extrabold uppercase tracking-[0.08em] text-[#aa7425]">
+      <p className="mt-4 text-[0.68rem] font-extrabold uppercase tracking-[0.08em] text-gold">
         {item.categoria}
       </p>
       <h3 className="mt-2 font-[Georgia,serif] text-[1.25rem] font-bold leading-[1.14] tracking-[-0.012em] text-brand-navy">
