@@ -1,5 +1,6 @@
 import type { NoticiaEditorial } from "../types";
 import { noticiasZonaNorte } from "./noticias-zona-norte";
+import { noticiasZonaLeste } from "./noticias-zona-leste";
 
 export const noticias: NoticiaEditorial[] = [
   {
@@ -939,4 +940,5 @@ export const noticias: NoticiaEditorial[] = [
     ],
   },
   ...noticiasZonaNorte,
+  ...noticiasZonaLeste,
 ];
