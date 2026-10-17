@@ -1,6 +1,7 @@
 import { describe, expect, it, mock } from "bun:test";
 import { createWeatherService, type WeatherCache } from "./weather-service.server";
 import type { WeatherSnapshot } from "./weather-model";
+import { WeatherProviderError } from "./weather-provider.server";
 
 function cache(): WeatherCache {
   const values = new Map<string, string>();
@@ -36,6 +37,33 @@ describe("weather shared cache", () => {
     expect(response.status).toBe(503);
     expect(await response.json()).toEqual({ error: "weather_not_configured" });
     expect(provider).not.toHaveBeenCalled();
+  });
+  it("uses the reserve only after an eligible primary failure", async () => {
+    const primaryWorks = mock(async (key: string) => {
+      if (key !== "primary") throw new Error("unexpected reserve request");
+      return { provider: "WeatherAPI.com", tempC: 20 } as WeatherSnapshot;
+    });
+    const env = { WEATHERAPI_KEY: "primary", WEATHERAPI_FALLBACK_KEY: "reserve" };
+    expect((await createWeatherService(primaryWorks)(env)).status).toBe(200);
+    expect(primaryWorks).toHaveBeenCalledTimes(1);
+
+    const primaryFails = mock(async (key: string) => {
+      if (key === "primary") throw new WeatherProviderError("unavailable", true);
+      return { provider: "WeatherAPI.com", tempC: 18 } as WeatherSnapshot;
+    });
+    expect((await createWeatherService(primaryFails)({ ...env, WEATHER_CACHE: cache() })).status).toBe(200);
+    expect(primaryFails.mock.calls.map(([key]) => key)).toEqual(["primary", "reserve"]);
+  });
+  it("does not use the reserve to bypass a non-eligible provider restriction", async () => {
+    const provider = mock(async () => {
+      throw new WeatherProviderError("quota_reached", false);
+    });
+    const response = await createWeatherService(provider)({
+      WEATHERAPI_KEY: "primary",
+      WEATHERAPI_FALLBACK_KEY: "reserve",
+    });
+    expect(response.status).toBe(503);
+    expect(provider).toHaveBeenCalledTimes(1);
   });
   it("shares failures briefly without exposing upstream details", async () => {
     const provider = mock(async () => {

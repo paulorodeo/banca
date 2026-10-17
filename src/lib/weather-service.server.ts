@@ -1,5 +1,5 @@
 import type { WeatherSnapshot } from "./weather-model";
-import { fetchWeatherApi } from "./weather-provider.server";
+import { fetchWeatherApi, WeatherProviderError } from "./weather-provider.server";
 
 export interface WeatherCache {
   get(key: string): Promise<string | null>;
@@ -7,6 +7,7 @@ export interface WeatherCache {
 }
 export type WeatherEnv = {
   WEATHERAPI_KEY?: string;
+  WEATHERAPI_FALLBACK_KEY?: string;
   WEATHER_CACHE?: WeatherCache;
   DEPLOYMENT_ENV?: string;
 };
@@ -31,7 +32,19 @@ export function createWeatherService(provider = fetchWeatherApi, now = Date.now)
         return entry;
     }
     try {
-      const data = await provider(env.WEATHERAPI_KEY);
+      let data: WeatherSnapshot;
+      try {
+        data = await provider(env.WEATHERAPI_KEY);
+      } catch (error) {
+        const canUseFallback =
+          env.WEATHERAPI_FALLBACK_KEY &&
+          env.WEATHERAPI_FALLBACK_KEY !== env.WEATHERAPI_KEY &&
+          error instanceof WeatherProviderError &&
+          error.fallbackEligible;
+        if (!canUseFallback) throw error;
+        // One request per credential at most. Do not retry or cascade past the reserve key.
+        data = await provider(env.WEATHERAPI_FALLBACK_KEY);
+      }
       const entry = { expiresAt: now() + TTL * 1000, data };
       await env.WEATHER_CACHE?.put(CACHE_KEY, JSON.stringify(entry), { expirationTtl: TTL });
       return entry;

@@ -6,9 +6,10 @@ O relógio usa `Intl.DateTimeFormat` com `America/Sao_Paulo`, sem API externa.
 
 ## Configuração
 
-`WEATHERAPI_KEY` é um secret de servidor. Na homologação, configure-o no Worker
-`banca` pelo painel ou pelo comando interativo `wrangler secret put WEATHERAPI_KEY`.
-Nunca use prefixos `VITE_` ou `PUBLIC_`, nem versionamento da chave. Sem a chave,
+`WEATHERAPI_KEY` e `WEATHERAPI_FALLBACK_KEY` são secrets de servidor. Na homologação,
+configure-os interativamente no Worker `banca` usando `wrangler secret put` para
+cada nome. Para localhost em `bun run dev`, mantenha ambos em `.env.local`, arquivo
+já ignorado pelo Git. Nunca use prefixos `VITE_` ou `PUBLIC_`, nem versionamento das chaves. Sem a principal,
 o endpoint devolve HTTP 503 com `weather_not_configured`; a página explica a
 indisponibilidade e não apresenta dados simulados.
 
@@ -24,6 +25,9 @@ KV tem consistência eventual: misses simultâneos em localidades distintas pode
 gerar mais de uma consulta, sem garantia de limite global estrito. Falhas do
 provedor ficam em cache por 60 segundos; dados expirados não são apresentados.
 O cache armazena somente o snapshot normalizado, nunca a chave ou URL do provedor.
+Uma falha de rede, erro 5xx, HTTP 429 ou erro de chave inválida 2006 permite uma
+única tentativa com a reserva. Erros de cota mensal (2007), chave desabilitada
+(2008) e restrições de plano não são contornados pela chave reserva.
 
 `weather-provider.server.ts` isola WeatherAPI da interface. O contrato público
 fica em `weather-model.ts`, com validação da resposta antes de armazenamento.

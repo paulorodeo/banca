@@ -8,9 +8,16 @@ import type { NitroConfig } from "nitro/types";
 import { execFileSync } from "node:child_process";
 import { resolve } from "node:path";
 import { defineConfig } from "@lovable.dev/vite-tanstack-config";
+import { loadEnv } from "vite";
 import { buildProfile } from "./src/lib/deployment-profile";
 
 const deploymentEnv = process.env["DEPLOYMENT_ENV"];
+if (!deploymentEnv) {
+  const localSecrets = loadEnv("development", process.cwd(), "");
+  for (const name of ["WEATHERAPI_KEY", "WEATHERAPI_FALLBACK_KEY"] as const) {
+    if (!process.env[name] && localSecrets[name]) process.env[name] = localSecrets[name];
+  }
+}
 const profile = deploymentEnv ? buildProfile(process.env) : undefined;
 const cloudflare = {
   deployConfig: true,
