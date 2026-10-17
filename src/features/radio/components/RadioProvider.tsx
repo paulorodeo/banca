@@ -41,7 +41,7 @@ export function useRadioController() {
 export function RadioProvider({ children }: { children: ReactNode }) {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const hlsRef = useRef<{ destroy: () => void } | null>(null);
-  const attemptRef = useRef<{ id: number; source: "primary" | "hls" } | null>(null);
+  const attemptRef = useRef<{ id: number; source: "primary" | "fallback" } | null>(null);
   const mediaErrorHandlerRef = useRef<() => void>(() => undefined);
   const stationRef = useRef<RadioStation>(radioStations[0]!);
   const playingRef = useRef(false);
@@ -165,8 +165,12 @@ export function RadioProvider({ children }: { children: ReactNode }) {
       audio.load();
     };
 
-    let loadHlsFallback = () => undefined;
-    const play = async (source: "primary" | "hls") => {
+    let loadMp3Fallback = () => undefined;
+    const failAttempt = (source: "primary" | "fallback") => {
+      if (source === "primary" && selected.mp3Fallback) loadMp3Fallback();
+      else setFailure();
+    };
+    const play = async (source: "primary" | "fallback") => {
       if (requestId !== requestRef.current) return;
       try {
         await audio.play();
@@ -179,18 +183,14 @@ export function RadioProvider({ children }: { children: ReactNode }) {
           setPlaybackBlocked(true);
           return;
         }
-        if (source === "primary" && selected.hlsFallback) {
-          void loadHlsFallback();
-        } else {
-          setFailure();
-        }
+        failAttempt(source);
       }
     };
 
     let fallbackAttempted = false;
-    const loadHls = async (url: string) => {
+    const loadHls = async (url: string, source: "primary" | "fallback") => {
       if (requestId !== requestRef.current) return;
-      attemptRef.current = { id: requestId, source: "hls" };
+      attemptRef.current = { id: requestId, source };
       mediaErrorHandlerRef.current = () => undefined;
       loadingRef.current = true;
       playingRef.current = false;
@@ -201,12 +201,12 @@ export function RadioProvider({ children }: { children: ReactNode }) {
       audio.pause();
       audio.removeAttribute("src");
       audio.load();
-      mediaErrorHandlerRef.current = setFailure;
+      mediaErrorHandlerRef.current = () => failAttempt(source);
 
       if (audio.canPlayType("application/vnd.apple.mpegurl")) {
         audio.src = url;
         audio.load();
-        await play("hls");
+        await play(source);
         return;
       }
 
@@ -214,7 +214,7 @@ export function RadioProvider({ children }: { children: ReactNode }) {
       try {
         Hls = (await import("hls.js")).default;
       } catch {
-        setFailure();
+        failAttempt(source);
         return;
       }
       if (requestId !== requestRef.current) return;
@@ -222,44 +222,49 @@ export function RadioProvider({ children }: { children: ReactNode }) {
         try {
           const hls = new Hls({ enableWorker: true, lowLatencyMode: true });
           hlsRef.current = hls;
-          hls.on(Hls.Events.MANIFEST_PARSED, () => void play("hls"));
+          hls.on(Hls.Events.MANIFEST_PARSED, () => void play(source));
           hls.on(Hls.Events.ERROR, (_event, data) => {
             if (!data.fatal || requestId !== requestRef.current) return;
             hls.destroy();
             hlsRef.current = null;
-            setFailure();
+            failAttempt(source);
           });
           hls.loadSource(url);
           hls.attachMedia(audio);
         } catch {
-          setFailure();
+          failAttempt(source);
         }
         return;
       }
-      setFailure();
+      failAttempt(source);
     };
 
-    loadHlsFallback = () => {
-      if (requestId !== requestRef.current || fallbackAttempted || !selected.hlsFallback) return;
+    loadMp3Fallback = () => {
+      if (requestId !== requestRef.current || fallbackAttempted || !selected.mp3Fallback) return;
       fallbackAttempted = true;
-      void loadHls(selected.hlsFallback);
+      attemptRef.current = { id: requestId, source: "fallback" };
+      mediaErrorHandlerRef.current = setFailure;
+      hlsRef.current?.destroy();
+      hlsRef.current = null;
+      audio.pause();
+      audio.removeAttribute("src");
+      audio.load();
+      audio.src = selected.mp3Fallback;
+      audio.load();
+      void play("fallback");
     };
 
     mediaErrorHandlerRef.current = () => {
       if (requestId !== requestRef.current) return;
       const activeAttempt = attemptRef.current;
       if (activeAttempt?.id !== requestId) return;
-      if (activeAttempt.source === "primary" && selected.hlsFallback) {
-        loadHlsFallback();
-      } else {
-        setFailure();
-      }
+      failAttempt(activeAttempt.source);
     };
 
     const primaryIsHls = selected.hls === true;
-    attemptRef.current = { id: requestId, source: primaryIsHls ? "hls" : "primary" };
+    attemptRef.current = { id: requestId, source: "primary" };
     if (primaryIsHls) {
-      await loadHls(selected.stream);
+      await loadHls(selected.stream, "primary");
     } else {
       audio.src = selected.stream;
       audio.load();

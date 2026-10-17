@@ -4,7 +4,7 @@ export interface RadioStation {
   subtitle: string;
   stream: string;
   hls?: boolean;
-  hlsFallback?: string;
+  mp3Fallback?: string;
   publicLinks?: RadioPublicLink[];
 }
 
@@ -19,9 +19,11 @@ export const radioStations: RadioStation[] = [
     id: "banca-digital",
     name: "Banca Digital",
     subtitle: "Smooth Jazz & Soft Rock",
-    stream: "https://live.fazenda.rodeo/listen/bancadigital/radio.mp3",
-    hlsFallback: "https://live.fazenda.rodeo/hls/bancadigital/live.m3u8",
+    stream: "https://live.fazenda.rodeo/hls/bancadigital/live.m3u8",
+    hls: true,
+    mp3Fallback: "https://live.fazenda.rodeo/listen/bancadigital/radio.mp3",
     publicLinks: [
+      { format: "HLS", url: "https://live.fazenda.rodeo/hls/bancadigital/live.m3u8" },
       {
         format: "MP3",
         bitrate: "192 kbps",
@@ -35,15 +37,16 @@ export const radioStations: RadioStation[] = [
     id: "fazenda-country",
     name: "Fazenda Rodeo Country",
     subtitle: "Country Music",
-    stream: "https://live.fazenda.rodeo/listen/country/radio.mp3",
-    hlsFallback: "https://live.fazenda.rodeo/hls/country/live.m3u8",
+    stream: "https://live.fazenda.rodeo/hls/country/live.m3u8",
+    hls: true,
+    mp3Fallback: "https://live.fazenda.rodeo/listen/country/radio.mp3",
     publicLinks: [
+      { format: "HLS", url: "https://live.fazenda.rodeo/hls/country/live.m3u8" },
       {
         format: "MP3",
         bitrate: "192 kbps",
         url: "https://live.fazenda.rodeo/listen/country/radio.mp3",
       },
-      { format: "HLS", url: "https://live.fazenda.rodeo/hls/country/live.m3u8" },
       { format: "M3U", url: "https://live.fazenda.rodeo/public/country/playlist.m3u" },
       { format: "PLS", url: "https://live.fazenda.rodeo/public/country/playlist.pls" },
     ],
@@ -52,15 +55,16 @@ export const radioStations: RadioStation[] = [
     id: "radio-agronejo",
     name: "Rádio Agronejo",
     subtitle: "Sertanejo & Agronejo",
-    stream: "https://live.fazenda.rodeo/listen/sertanejo/radio.mp3",
-    hlsFallback: "https://live.fazenda.rodeo/hls/sertanejo/live.m3u8",
+    stream: "https://live.fazenda.rodeo/hls/sertanejo/live.m3u8",
+    hls: true,
+    mp3Fallback: "https://live.fazenda.rodeo/listen/sertanejo/radio.mp3",
     publicLinks: [
+      { format: "HLS", url: "https://live.fazenda.rodeo/hls/sertanejo/live.m3u8" },
       {
         format: "MP3",
         bitrate: "192 kbps",
         url: "https://live.fazenda.rodeo/listen/sertanejo/radio.mp3",
       },
-      { format: "HLS", url: "https://live.fazenda.rodeo/hls/sertanejo/live.m3u8" },
       { format: "M3U", url: "https://live.fazenda.rodeo/public/sertanejo/playlist.m3u" },
       { format: "PLS", url: "https://live.fazenda.rodeo/public/sertanejo/playlist.pls" },
     ],

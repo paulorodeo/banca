@@ -13,46 +13,46 @@ test("radio has one default station and seven unique, usable stream records", ()
   }
 });
 
-test("the three owned stations prioritize MP3 and publish their official formats", () => {
+test("the three owned stations prioritize HLS and publish their official formats", () => {
   const banca = radioStations.find((station) => station.id === "banca-digital")!;
   const agronejo = radioStations.find((station) => station.id === "radio-agronejo")!;
   const country = radioStations.find((station) => station.id === "fazenda-country")!;
 
-  assert.equal(banca.stream, "https://live.fazenda.rodeo/listen/bancadigital/radio.mp3");
-  assert.equal(banca.hlsFallback, "https://live.fazenda.rodeo/hls/bancadigital/live.m3u8");
+  assert.equal(banca.stream, "https://live.fazenda.rodeo/hls/bancadigital/live.m3u8");
+  assert.equal(banca.hls, true);
+  assert.equal(banca.mp3Fallback, "https://live.fazenda.rodeo/listen/bancadigital/radio.mp3");
   assert.deepEqual(
     banca.publicLinks?.map((link) => link.format),
-    ["MP3", "M3U", "PLS"],
+    ["HLS", "MP3", "M3U", "PLS"],
   );
-  assert.equal(banca.publicLinks?.find((link) => link.format === "MP3")?.url, banca.stream);
-  assert.equal(
-    banca.publicLinks?.some((link) => link.format === "HLS"),
-    false,
-  );
+  assert.equal(banca.publicLinks?.find((link) => link.format === "MP3")?.url, banca.mp3Fallback);
+  assert.equal(banca.publicLinks?.find((link) => link.format === "HLS")?.url, banca.stream);
 
-  assert.equal(agronejo.stream, "https://live.fazenda.rodeo/listen/sertanejo/radio.mp3");
-  assert.equal(agronejo.hlsFallback, "https://live.fazenda.rodeo/hls/sertanejo/live.m3u8");
+  assert.equal(agronejo.stream, "https://live.fazenda.rodeo/hls/sertanejo/live.m3u8");
+  assert.equal(agronejo.hls, true);
+  assert.equal(agronejo.mp3Fallback, "https://live.fazenda.rodeo/listen/sertanejo/radio.mp3");
   assert.deepEqual(
     agronejo.publicLinks?.map((link) => link.format),
-    ["MP3", "HLS", "M3U", "PLS"],
+    ["HLS", "MP3", "M3U", "PLS"],
   );
-  assert.equal(agronejo.publicLinks?.find((link) => link.format === "MP3")?.url, agronejo.stream);
   assert.equal(
-    agronejo.publicLinks?.find((link) => link.format === "HLS")?.url,
-    agronejo.hlsFallback,
+    agronejo.publicLinks?.find((link) => link.format === "MP3")?.url,
+    agronejo.mp3Fallback,
   );
+  assert.equal(agronejo.publicLinks?.find((link) => link.format === "HLS")?.url, agronejo.stream);
 
-  assert.equal(country.stream, "https://live.fazenda.rodeo/listen/country/radio.mp3");
-  assert.equal(country.hlsFallback, "https://live.fazenda.rodeo/hls/country/live.m3u8");
+  assert.equal(country.stream, "https://live.fazenda.rodeo/hls/country/live.m3u8");
+  assert.equal(country.hls, true);
+  assert.equal(country.mp3Fallback, "https://live.fazenda.rodeo/listen/country/radio.mp3");
   assert.deepEqual(
     country.publicLinks?.map((link) => link.format),
-    ["MP3", "HLS", "M3U", "PLS"],
+    ["HLS", "MP3", "M3U", "PLS"],
   );
-  assert.equal(country.publicLinks?.find((link) => link.format === "MP3")?.url, country.stream);
   assert.equal(
-    country.publicLinks?.find((link) => link.format === "HLS")?.url,
-    country.hlsFallback,
+    country.publicLinks?.find((link) => link.format === "MP3")?.url,
+    country.mp3Fallback,
   );
+  assert.equal(country.publicLinks?.find((link) => link.format === "HLS")?.url, country.stream);
 
   for (const station of [banca, agronejo, country]) {
     assert.equal(
