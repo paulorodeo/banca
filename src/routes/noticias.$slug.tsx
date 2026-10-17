@@ -28,7 +28,7 @@ export const Route = createFileRoute("/noticias/$slug")({
           path: noticia.seo.canonicalPath,
           type: "article",
         }).map((meta) =>
-          noticia.seo.ogTitle && (meta.property === "og:title" || meta.name === "twitter:title")
+          noticia.seo.ogTitle && (meta["property"] === "og:title" || meta["name"] === "twitter:title")
             ? { ...meta, content: noticia.seo.ogTitle }
             : meta,
         ),
@@ -47,6 +47,7 @@ export const Route = createFileRoute("/noticias/$slug")({
               resumo: noticia.resumo,
               path: noticia.seo.canonicalPath,
               publicadoEm: noticia.publicadoEm,
+              autoria: noticia.autoria,
             }),
           ),
         },
@@ -111,6 +112,19 @@ function NoticiaBlocoView({ bloco }: { bloco: NoticiaBloco }) {
         </table>
       </div>
     );
+  if (bloco.tipo === "markdown")
+    return (
+      <div className="space-y-5">
+        {bloco.texto.split("\n\n").map((part, index) => {
+          const lines = part.split("\n");
+          if (part.startsWith("## "))
+            return <h2 key={index} className="pt-4 font-serif text-3xl text-brand-navy">{part.slice(3)}</h2>;
+          if (lines.every((line) => line.startsWith("- ")))
+            return <ul key={index} className="list-disc space-y-2 pl-6 text-base leading-relaxed text-muted-foreground">{lines.map((line) => <li key={line}>{line.slice(2)}</li>)}</ul>;
+          return <p key={index} className="whitespace-pre-line text-base leading-relaxed text-muted-foreground">{part}</p>;
+        })}
+      </div>
+    );
   return <p className="text-base leading-relaxed text-muted-foreground">{bloco.texto}</p>;
 }
 
@@ -144,6 +158,16 @@ function NoticiaPage() {
               {noticia.notas.map((nota) => (
                 <p key={nota}>{nota}</p>
               ))}
+              {noticia.fontes?.length ? (
+                <div className="space-y-2 pt-3">
+                  <p className="font-semibold text-brand-navy">Fontes e referências</p>
+                  <ul className="list-disc space-y-1 pl-5">
+                    {noticia.fontes.map((fonte) => (
+                      <li key={fonte.url}><a className="underline underline-offset-4" href={fonte.url} rel="noreferrer" target="_blank">{fonte.titulo}</a></li>
+                    ))}
+                  </ul>
+                </div>
+              ) : null}
             </footer>
           </article>
         </Container>

@@ -140,6 +140,7 @@ export function newsArticleSchema(input: {
   resumo: string;
   path: string;
   publicadoEm: string;
+  autoria?: string;
 }) {
   return {
     "@context": "https://schema.org",
@@ -148,6 +149,7 @@ export function newsArticleSchema(input: {
     description: input.resumo,
     url: canonical(input.path),
     datePublished: input.publicadoEm,
+    ...(input.autoria ? { author: { "@type": "Organization", name: input.autoria } } : {}),
     publisher: { "@type": "Organization", name: ORG_NAME },
   };
 }

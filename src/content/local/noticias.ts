@@ -1,4 +1,5 @@
 import type { NoticiaEditorial } from "../types";
+import { noticiasZonaNorte } from "./noticias-zona-norte";
 
 export const noticias: NoticiaEditorial[] = [
   {
@@ -937,4 +938,5 @@ export const noticias: NoticiaEditorial[] = [
       "Nota de apuração: Os valores, capacidades, cronogramas e resultados apresentados correspondem às informações oficiais divulgadas em agosto de 2026.",
     ],
   },
+  ...noticiasZonaNorte,
 ];

@@ -205,7 +205,20 @@ export type NoticiaBloco =
   | { tipo: "paragrafo"; texto: string }
   | { tipo: "titulo"; texto: string }
   | { tipo: "lista"; itens: string[] }
-  | { tipo: "tabela"; cabecalho: string[]; linhas: string[][] };
+  | { tipo: "tabela"; cabecalho: string[]; linhas: string[][] }
+  /** Markdown editorial local, renderizado pelo mesmo template público de notícia. */
+  | { tipo: "markdown"; texto: string };
+
+export interface NoticiaRelacionamento {
+  nome: string;
+  tipo: "territorio" | "instituicao";
+  relacao: "direto" | "regional" | "administrativo" | "informativo";
+}
+
+export interface NoticiaFonte {
+  titulo: string;
+  url: string;
+}
 
 export interface NoticiaEditorial {
   id: string;
@@ -218,6 +231,11 @@ export interface NoticiaEditorial {
   seo: SeoConfig;
   blocos: NoticiaBloco[];
   notas: string[];
+  /** Variações para futuros cards contextuais; nunca criam outra URL. */
+  manchetesContextuais?: { zona?: string; bairro?: string; instituicao?: string };
+  tags?: string[];
+  relacionamentos?: NoticiaRelacionamento[];
+  fontes?: NoticiaFonte[];
 }
 
 export interface DelegaciaUnidade {
