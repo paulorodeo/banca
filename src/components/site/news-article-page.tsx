@@ -2,13 +2,17 @@ import { Link } from "@tanstack/react-router";
 import { useState } from "react";
 import {
   ArrowRight,
+  Building2,
   CalendarDays,
   Clock3,
-  Copy,
+  Facebook,
   FileText,
+  Linkedin,
   Link2,
-  MapPin,
+  Mail,
+  MessageCircle,
   Share2,
+  X as XIcon,
 } from "lucide-react";
 import { conteudos } from "@/content/local/artigos-editoriais";
 import { bairros } from "@/content/local/bairros";
@@ -59,6 +63,18 @@ function relatedItemsForNames(item: NoticiaEditorial, names: string[]) {
       ),
     )
     .sort((a, b) => b.publicadoEm.localeCompare(a.publicadoEm));
+}
+
+function territoryDestination(name: string): { href: string; label: string } | undefined {
+  const key = normalize(name);
+  const bairro = bairros.find(
+    (item) => item.status === "publicado" && normalize(item.nome) === key,
+  );
+  if (bairro) return { href: `/bairros/${bairro.slug}`, label: `Ver todas em ${bairro.nome}` };
+
+  const canonicalKey = key === "centro de sao paulo" || key === "centro sp" ? "centro" : key;
+  const zona = zonas.find((item) => normalize(item.nome) === canonicalKey);
+  if (zona) return { href: `/regioes/${zona.slug}`, label: `Ver todas em ${zona.nome}` };
 }
 
 function relatedFilters(item: NoticiaEditorial): RelatedFilter[] {
@@ -267,16 +283,18 @@ function NoticiaBlocoView({ bloco }: { bloco: NoticiaBloco }) {
 
 function ShareActions({ title }: { title: string }) {
   const [copied, setCopied] = useState(false);
-  const shareTo = (network: "whatsapp" | "facebook" | "x") => {
+  const shareTo = (network: "linkedin" | "facebook" | "whatsapp" | "x") => {
     const currentUrl =
       document.querySelector<HTMLLinkElement>('link[rel="canonical"]')?.href ??
       window.location.href;
     const shareUrl =
-      network === "whatsapp"
-        ? `https://api.whatsapp.com/send?text=${encodeURIComponent(`${title} ${currentUrl}`)}`
-        : network === "facebook"
-          ? `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentUrl)}`
-          : `https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(currentUrl)}`;
+      network === "linkedin"
+        ? `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(currentUrl)}`
+        : network === "whatsapp"
+          ? `https://api.whatsapp.com/send?text=${encodeURIComponent(`${title} ${currentUrl}`)}`
+          : network === "facebook"
+            ? `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(currentUrl)}`
+            : `https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(currentUrl)}`;
     window.open(shareUrl, "_blank", "noopener,noreferrer,width=640,height=520");
   };
   const copyLink = async () => {
@@ -292,26 +310,57 @@ function ShareActions({ title }: { title: string }) {
     }
   };
   return (
-    <div className="flex flex-wrap items-center gap-2" aria-label="Compartilhar reportagem">
-      <span className="mr-1 inline-flex items-center gap-2 text-xs font-bold text-[#102c43]">
-        <Share2 className="size-4 text-[#91652b]" aria-hidden /> Compartilhar:
+    <div
+      className="flex flex-wrap items-center gap-x-3 gap-y-2"
+      aria-label="Compartilhar reportagem"
+    >
+      <span className="inline-flex items-center gap-2 text-sm font-semibold text-[#102c43]">
+        <Share2 className="size-[1.05rem] text-[#52616d]" aria-hidden /> Compartilhar:
       </span>
-      {(["whatsapp", "facebook", "x"] as const).map((network) => (
-        <button
-          key={network}
-          type="button"
-          onClick={() => shareTo(network)}
-          className="rounded-sm border border-[#d9e0e5] px-2.5 py-1.5 text-xs font-semibold capitalize text-[#102c43] hover:border-[#b28341] hover:text-[#76501f] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#b28341]"
-        >
-          {network === "x" ? "X" : network === "whatsapp" ? "WhatsApp" : "Facebook"}
-        </button>
-      ))}
+      <button
+        type="button"
+        onClick={() => shareTo("linkedin")}
+        className="inline-flex size-8 items-center justify-center rounded-full text-[#0a66c2] transition hover:bg-[#f8f8f6] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#b28341]"
+        aria-label="Compartilhar no LinkedIn"
+        title="LinkedIn"
+      >
+        <Linkedin className="size-[1.15rem]" aria-hidden />
+      </button>
+      <button
+        type="button"
+        onClick={() => shareTo("facebook")}
+        className="inline-flex size-8 items-center justify-center rounded-full text-[#1877f2] transition hover:bg-[#f8f8f6] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#b28341]"
+        aria-label="Compartilhar no Facebook"
+        title="Facebook"
+      >
+        <Facebook className="size-[1.15rem]" aria-hidden />
+      </button>
+      <button
+        type="button"
+        onClick={() => shareTo("whatsapp")}
+        className="inline-flex size-8 items-center justify-center rounded-full text-[#25d366] transition hover:bg-[#f8f8f6] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#b28341]"
+        aria-label="Compartilhar no WhatsApp"
+        title="WhatsApp"
+      >
+        <MessageCircle className="size-[1.15rem]" aria-hidden />
+      </button>
+      <button
+        type="button"
+        onClick={() => shareTo("x")}
+        className="inline-flex size-8 items-center justify-center rounded-full text-[#061e30] transition hover:bg-[#f8f8f6] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#b28341]"
+        aria-label="Compartilhar no X"
+        title="X"
+      >
+        <XIcon className="size-[1.05rem]" aria-hidden />
+      </button>
       <button
         type="button"
         onClick={() => void copyLink()}
-        className="inline-flex items-center gap-1.5 rounded-sm border border-[#d9e0e5] px-2.5 py-1.5 text-xs font-semibold text-[#102c43] hover:border-[#b28341] hover:text-[#76501f] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#b28341]"
+        className="inline-flex size-8 items-center justify-center rounded-full text-[#52616d] transition hover:bg-[#f8f8f6] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#b28341]"
+        aria-label={copied ? "Link copiado" : "Copiar link canônico"}
+        title={copied ? "Link copiado" : "Copiar link"}
       >
-        <Copy className="size-3.5" aria-hidden /> {copied ? "Link copiado" : "Copiar link"}
+        <Link2 className="size-[1.1rem]" aria-hidden />
       </button>
       <span className="sr-only" role="status" aria-live="polite">
         {copied ? "Link copiado para a área de transferência." : ""}
@@ -320,9 +369,49 @@ function ShareActions({ title }: { title: string }) {
   );
 }
 
+function ArticleByline({ noticia, readTime }: { noticia: NoticiaEditorial; readTime: number }) {
+  const role = noticia.autoria === "Redação Banca Paulista" ? "Redação" : undefined;
+  return (
+    <div className="border-y border-[#d9e0e5] py-3">
+      <div className="flex flex-wrap items-center gap-x-4 gap-y-3 text-sm text-[#52616d]">
+        <div className="flex min-w-40 items-center gap-2.5">
+          <span
+            className="flex size-11 shrink-0 items-center justify-center rounded-full border border-[#d9e0e5] bg-[#f8f8f6] text-[#91652b]"
+            aria-label="Identidade editorial Banca Paulista"
+          >
+            <Building2 className="size-5" aria-hidden />
+          </span>
+          <span className="min-w-0 leading-tight">
+            <span className="block font-bold text-[#152638]">{noticia.autoria}</span>
+            {role ? <span className="mt-1 block text-xs text-[#52616d]">{role}</span> : null}
+          </span>
+        </div>
+        <span className="hidden h-9 w-px bg-[#d9e0e5] md:block" aria-hidden="true" />
+        <div className="inline-flex min-w-0 items-start gap-2">
+          <CalendarDays className="mt-0.5 size-[1.1rem] shrink-0 text-[#b28341]" aria-hidden />
+          <span>
+            Publicado em{" "}
+            <time dateTime={noticia.publicadoEm}>{formatDate(noticia.publicadoEm)}</time>
+          </span>
+        </div>
+        <span className="hidden h-9 w-px bg-[#d9e0e5] md:block" aria-hidden="true" />
+        <div className="inline-flex items-center gap-2 text-[#263746]">
+          <Clock3 className="size-[1.1rem] shrink-0 text-[#b28341]" aria-hidden />
+          <span>
+            {readTime} min <span className="md:block">de leitura</span>
+          </span>
+        </div>
+      </div>
+      <div className="mt-3 border-t border-[#e5e9ec] pt-2.5">
+        <ShareActions title={noticia.titulo} />
+      </div>
+    </div>
+  );
+}
+
 function NewsCard({ item }: { item: NoticiaEditorial }) {
   return (
-    <article className="max-w-[26rem] min-w-0 border-t border-[#d9e0e5] pt-3">
+    <article className="min-w-0 border-t border-[#d9e0e5] pt-3">
       <Link
         to="/noticias/$slug"
         params={{ slug: item.slug }}
@@ -375,12 +464,15 @@ function RelatedNews({ noticia }: { noticia: NoticiaEditorial }) {
             <p className="text-xs font-bold uppercase tracking-[0.15em] text-[#91652b]">
               Cobertura relacionada
             </p>
-            <h2
-              id="mais-noticias-title"
-              className="mt-2 font-[Georgia,serif] text-2xl font-bold text-[#061e30] md:text-[1.75rem]"
-            >
-              Mais notícias da região
-            </h2>
+            <div className="mt-2 flex items-center gap-3">
+              <h2
+                id="mais-noticias-title"
+                className="font-[Georgia,serif] text-2xl font-bold text-[#061e30] md:text-[1.75rem]"
+              >
+                Mais notícias da região
+              </h2>
+              <span className="h-px w-12 bg-[#b28341]" aria-hidden="true" />
+            </div>
           </div>
           <ArrowRight className="mb-1 size-5 text-[#b28341]" aria-hidden />
         </div>
@@ -426,7 +518,8 @@ function ArticleSidebar({ noticia }: { noticia: NoticiaEditorial }) {
     .map((relation) => ({ relation, items: relatedItemsForNames(noticia, [relation.nome]) }))
     .filter(({ items }) => items.length > 0);
   const focus = available.find(({ relation }) => !/^zona\s/i.test(relation.nome)) ?? available[0];
-  const articles = conteudos.filter((article) => article.status === "publicado").slice(0, 3);
+  const focusDestination = focus ? territoryDestination(focus.relation.nome) : undefined;
+  const articles = conteudos.filter((article) => article.status === "publicado").slice(0, 2);
   return (
     <aside className="space-y-8" aria-label="Conteúdo relacionado">
       <section
@@ -455,7 +548,15 @@ function ArticleSidebar({ noticia }: { noticia: NoticiaEditorial }) {
                 Mais sobre {focus.relation.nome}
               </h2>
             </div>
-            <MapPin className="mb-1 size-4 shrink-0 text-[#b28341]" aria-hidden />
+            {focusDestination ? (
+              <a
+                href={focusDestination.href}
+                className="mb-1 inline-flex shrink-0 items-center gap-1 text-xs font-semibold text-[#102c43] hover:text-[#91652b]"
+                aria-label={`Ver todas as notícias relacionadas a ${focus.relation.nome}`}
+              >
+                Ver todas <ArrowRight className="size-3.5 text-[#b28341]" aria-hidden />
+              </a>
+            ) : null}
           </div>
           <div className="divide-y divide-[#dfe4e8]">
             {focus.items.slice(0, 4).map((item) => (
@@ -515,30 +616,79 @@ function ArticleSidebar({ noticia }: { noticia: NoticiaEditorial }) {
           </div>
           <div className="divide-y divide-[#d9e0e5]">
             {articles.map((article) => (
-              <article key={article.id} className="py-3.5">
-                <Link to="/artigos/$slug" params={{ slug: article.slug }} className="group">
-                  <p className="text-[0.62rem] font-bold uppercase tracking-wide text-[#91652b]">
-                    {article.categoria}
-                  </p>
-                  <h3 className="mt-1 font-[Georgia,serif] text-[0.95rem] font-bold leading-snug text-[#102c43] group-hover:text-[#76501f]">
-                    {article.titulo}
-                  </h3>
-                  <p className="mt-1.5 text-[0.78rem] leading-[1.55] text-[#52616d]">
-                    {article.resumo}
-                  </p>
+              <article key={article.id} className="py-3 last:pb-0">
+                <Link
+                  to="/artigos/$slug"
+                  params={{ slug: article.slug }}
+                  className="group grid grid-cols-[3.25rem_minmax(0,1fr)] items-center gap-3"
+                >
+                  <span className="flex size-12 items-center justify-center rounded-full border border-[#d9e0e5] bg-[#f8f8f6] text-[#91652b]">
+                    <FileText className="size-5" aria-hidden />
+                  </span>
+                  <span className="min-w-0">
+                    <span className="block text-[0.62rem] font-bold uppercase tracking-wide text-[#91652b]">
+                      {article.categoria}
+                    </span>
+                    <span className="mt-1 block font-[Georgia,serif] text-[0.95rem] font-bold leading-snug text-[#102c43] group-hover:text-[#76501f]">
+                      {article.titulo}
+                    </span>
+                    <time
+                      dateTime={article.publicadoEm}
+                      className="mt-1.5 inline-flex items-center gap-1.5 text-[0.7rem] text-[#52616d]"
+                    >
+                      <CalendarDays className="size-3.5 text-[#91652b]" aria-hidden />
+                      {formatDate(article.publicadoEm)}
+                    </time>
+                  </span>
                 </Link>
               </article>
             ))}
           </div>
         </section>
       ) : null}
+
+      <section className="bg-[#061e30] p-5 text-white" aria-labelledby="newsletter-title">
+        <div className="flex items-center gap-3">
+          <Mail className="size-11 shrink-0 text-[#cca260]" strokeWidth={1.5} aria-hidden />
+          <h2
+            id="newsletter-title"
+            className="font-[Georgia,serif] text-[1.3rem] font-bold leading-[1.12] text-white"
+          >
+            Acompanhe a Banca Paulista
+          </h2>
+        </div>
+        <p className="mt-4 text-sm leading-[1.55] text-white/90">
+          Novidades editoriais e informações relevantes sobre São Paulo.
+        </p>
+        <div className="mt-4 space-y-2.5">
+          <label htmlFor="newsletter-email-unavailable" className="sr-only">
+            E-mail para newsletter
+          </label>
+          <input
+            id="newsletter-email-unavailable"
+            type="email"
+            placeholder="Seu melhor e-mail"
+            disabled
+            className="min-h-11 w-full border border-[#d9e0e5] bg-white px-3 text-sm text-[#263746] placeholder:text-[#657580] disabled:cursor-not-allowed"
+          />
+          <button
+            type="button"
+            disabled
+            className="min-h-11 w-full border border-[#b28341] bg-[#cca260] px-4 text-sm font-bold text-[#061e30] disabled:cursor-not-allowed"
+          >
+            Inscrições em breve
+          </button>
+        </div>
+        <p className="mt-3 text-[0.7rem] leading-[1.45] text-white/75">
+          A integração de inscrições ainda não está disponível; nenhum e-mail é coletado.
+        </p>
+      </section>
     </aside>
   );
 }
 
 export function NewsArticlePage({ noticia }: { noticia: NoticiaEditorial }) {
   const readTime = readingMinutes(noticia);
-  const publishedDate = formatDate(noticia.publicadoEm);
   const displayedRelations = territoriesOf(noticia);
   return (
     <div className="bg-white text-[#152638]">
@@ -576,18 +726,8 @@ export function NewsArticlePage({ noticia }: { noticia: NoticiaEditorial }) {
             <p className="mt-4 max-w-4xl font-[Georgia,serif] text-lg leading-[1.45] text-[#263746] sm:text-xl xl:text-[1.35rem]">
               {noticia.resumo}
             </p>
-            <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-3 border-y border-[#d9e0e5] py-3 text-xs text-[#52616d] sm:text-sm">
-              <span className="min-w-0 font-semibold text-[#102c43]">{noticia.autoria}</span>
-              <span className="inline-flex items-center gap-1.5">
-                <CalendarDays className="size-4 text-[#91652b]" aria-hidden /> Publicado em{" "}
-                <time dateTime={noticia.publicadoEm}>{publishedDate}</time>
-              </span>
-              <span className="inline-flex items-center gap-1.5">
-                <Clock3 className="size-4 text-[#91652b]" aria-hidden /> {readTime} min de leitura
-              </span>
-            </div>
-            <div className="py-4">
-              <ShareActions title={noticia.titulo} />
+            <div className="mt-5">
+              <ArticleByline noticia={noticia} readTime={readTime} />
             </div>
             <figure className="mt-2">
               <NewsImage

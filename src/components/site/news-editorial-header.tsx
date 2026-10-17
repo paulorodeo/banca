@@ -1,5 +1,5 @@
-import { Link } from "@tanstack/react-router";
-import { ChevronDown, Search } from "lucide-react";
+import { Link, useRouterState } from "@tanstack/react-router";
+import { ChevronDown, House, Search } from "lucide-react";
 import { Brand } from "@/components/site/brand";
 import { Container } from "@/components/site/primitives";
 import { WeatherTicker } from "@/components/site/weather-ticker";
@@ -22,6 +22,12 @@ const regionLinks = [
 
 /** Masthead compartilhado entre o índice jornalístico e as reportagens. */
 export function NewsEditorialHeader() {
+  const isRegionActive = useRouterState({
+    select: (state) => state.location.pathname.startsWith("/regioes/"),
+  });
+  const navClass = ({ isActive }: { isActive: boolean }) =>
+    `inline-flex min-h-12 items-center border-b-2 px-2 py-2 text-[0.8rem] font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-gold ${isActive ? "border-gold text-gold" : "border-transparent text-ivory/90 hover:border-gold/70 hover:text-gold"}`;
+
   return (
     <header className="w-full">
       <div className="border-b border-white/10 bg-brand-navy text-ivory">
@@ -62,42 +68,30 @@ export function NewsEditorialHeader() {
         className="relative z-20 border-b-2 border-gold/70 bg-brand-navy text-ivory shadow-[0_8px_18px_-16px_rgba(6,30,48,0.8)]"
         aria-label="Navegação de Notícias"
       >
-        <Container className="flex flex-wrap items-center justify-center gap-x-5 gap-y-0.5 py-1 text-xs font-bold sm:justify-start sm:gap-x-6 lg:min-h-12 lg:flex-nowrap lg:justify-between lg:gap-x-7 lg:py-0">
+        <Container className="flex flex-wrap items-center justify-center gap-x-3 gap-y-0.5 py-1 sm:justify-start sm:gap-x-4 lg:min-h-12 lg:flex-nowrap lg:justify-between lg:gap-x-3 lg:py-0">
           <Link
-            to="/noticias"
-            activeProps={{ className: "text-gold" }}
-            className="inline-flex min-h-10 items-center border-b-2 border-transparent py-2 text-gold transition-colors hover:border-gold/70 focus-visible:outline-2 focus-visible:outline-gold lg:min-h-12"
+            to="/"
+            aria-label="Página inicial"
+            className="rounded-sm text-ivory/90 hover:text-gold"
           >
+            <House className="size-[1.05rem]" aria-hidden />
+          </Link>
+          <Link to="/noticias" className={navClass}>
             Notícias
           </Link>
-          <Link
-            to="/artigos"
-            className="inline-flex min-h-10 items-center border-b-2 border-transparent py-2 text-ivory/90 transition-colors hover:border-gold/70 hover:text-gold focus-visible:outline-2 focus-visible:outline-gold lg:min-h-12"
-          >
+          <Link to="/artigos" className={navClass}>
             Artigos
           </Link>
-          <Link
-            to="/previsao-do-tempo"
-            className="inline-flex min-h-10 items-center border-b-2 border-transparent py-2 text-ivory/90 transition-colors hover:border-gold/70 hover:text-gold focus-visible:outline-2 focus-visible:outline-gold lg:min-h-12"
-          >
+          <Link to="/previsao-do-tempo" className={navClass}>
             Previsão do Tempo
           </Link>
-          <Link
-            to="/radio"
-            className="inline-flex min-h-10 items-center border-b-2 border-transparent py-2 text-ivory/90 transition-colors hover:border-gold/70 hover:text-gold focus-visible:outline-2 focus-visible:outline-gold lg:min-h-12"
-          >
+          <Link to="/radio" className={navClass}>
             Rádio
           </Link>
-          <Link
-            to="/delegacias"
-            className="inline-flex min-h-10 items-center border-b-2 border-transparent py-2 text-ivory/90 transition-colors hover:border-gold/70 hover:text-gold focus-visible:outline-2 focus-visible:outline-gold lg:min-h-12"
-          >
+          <Link to="/delegacias" className={navClass}>
             Delegacias
           </Link>
-          <Link
-            to="/orgaos"
-            className="inline-flex min-h-10 items-center border-b-2 border-transparent py-2 text-ivory/90 transition-colors hover:border-gold/70 hover:text-gold focus-visible:outline-2 focus-visible:outline-gold lg:min-h-12"
-          >
+          <Link to="/orgaos" className={navClass}>
             Órgãos e Serviços
           </Link>
           <details
@@ -110,7 +104,9 @@ export function NewsEditorialHeader() {
               }
             }}
           >
-            <summary className="flex min-h-10 cursor-pointer list-none items-center gap-1 border-b-2 border-transparent py-2 text-ivory/90 transition-colors hover:border-gold/70 hover:text-gold focus-visible:outline-2 focus-visible:outline-gold lg:min-h-12">
+            <summary
+              className={`flex min-h-12 cursor-pointer list-none items-center gap-1 border-b-2 px-2 py-2 text-[0.8rem] font-semibold transition-colors hover:border-gold/70 hover:text-gold focus-visible:outline-2 focus-visible:outline-gold ${isRegionActive ? "border-gold text-gold" : "border-transparent text-ivory/90"}`}
+            >
               Regiões
               <ChevronDown
                 className="size-3 transition-transform group-open:rotate-180"
