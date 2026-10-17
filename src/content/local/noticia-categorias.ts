@@ -4,6 +4,7 @@ import {
   BriefcaseBusiness,
   Building2,
   Gavel,
+  House,
   Landmark,
   Scale,
   ShieldCheck,
