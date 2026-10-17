@@ -153,8 +153,11 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient, institutions = [] } = Route.useRouteContext();
-  const isNewsIndex = useRouterState({
-    select: (state) => state.location.pathname.replace(/\/+$/, "") === "/noticias",
+  const isJournalismRoute = useRouterState({
+    select: (state) => {
+      const pathname = state.location.pathname.replace(/\/+$/, "");
+      return pathname === "/noticias" || pathname.startsWith("/noticias/");
+    },
   });
 
   return (
@@ -167,7 +170,7 @@ function RootComponent() {
           Ir para o conteúdo
         </a>
         <div className="flex min-h-screen flex-col">
-          {!isNewsIndex ? (
+          {!isJournalismRoute ? (
             <>
               <div className="bg-brand-navy text-ivory">
                 <Container className="flex min-h-8 items-center justify-end">
