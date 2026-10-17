@@ -8,6 +8,8 @@ type ServerEntry = {
   fetch: (request: Request, env: unknown, ctx: unknown) => Promise<Response> | Response;
 };
 
+type RuntimeEnv = Record<string, string | undefined>;
+
 let serverEntryPromise: Promise<ServerEntry> | undefined;
 
 async function getServerEntry(): Promise<ServerEntry> {
@@ -50,7 +52,7 @@ export default {
     try {
       const handler = await getServerEntry();
       const response = await handler.fetch(request, env, ctx);
-      return environmentResponse(await normalizeCatastrophicSsrResponse(response), process.env);
+      return environmentResponse(await normalizeCatastrophicSsrResponse(response), env as RuntimeEnv);
     } catch (error) {
       console.error(error);
       return environmentResponse(
@@ -58,7 +60,7 @@ export default {
           status: 500,
           headers: { "content-type": "text/html; charset=utf-8" },
         }),
-        process.env,
+        env as RuntimeEnv,
       );
     }
   },

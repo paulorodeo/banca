@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
 import { existsSync, readFileSync } from "node:fs";
 import { resolve } from "node:path";
+import { environmentResponse } from "../src/lib/indexing";
 const root = resolve(import.meta.dirname, "..");
 const git = (...args: string[]) =>
   execFileSync("git", args, { cwd: root, encoding: "utf8" }).trim();
@@ -18,9 +19,10 @@ assert(
   "Domain routes and Cron are outside scope",
 );
 assert(existsSync(resolve(root, ".output/server", config.main)));
-assert(
-  readFileSync(resolve(root, ".output/public/_headers"), "utf8").includes(
-    "X-Robots-Tag: noindex, nofollow",
-  ),
+const stagingHtml = environmentResponse(
+  new Response("<!doctype html>", { headers: { "content-type": "text/html; charset=utf-8" } }),
+  config.vars,
 );
+assert.equal(stagingHtml.headers.get("X-Robots-Tag"), "noindex, nofollow");
+assert.equal(stagingHtml.headers.get("Cache-Control"), "no-store");
 console.log(`Homologação validada: banca · ${config.vars.BUILD_COMMIT}`);
