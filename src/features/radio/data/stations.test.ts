@@ -74,6 +74,7 @@ test("external stations retain their existing stream types and URLs", () => {
   );
   assert.equal(
     radioStations.find((station) => station.id === "cbn-sp")?.stream,
-    "https://stream.sgr.globo.com/hls/aCBNSP/aCBNSP.m3u8",
+    "https://playerservices.streamtheworld.com/api/livestream-redirect/CBN_SPAAC.aac?dist=radioscombr",
   );
+  assert.equal(radioStations.find((station) => station.id === "cbn-sp")?.hls, undefined);
 });

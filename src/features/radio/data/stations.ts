@@ -90,7 +90,7 @@ export const radioStations: RadioStation[] = [
     id: "cbn-sp",
     name: "CBN São Paulo",
     subtitle: "Jornalismo e informação",
-    stream: "https://stream.sgr.globo.com/hls/aCBNSP/aCBNSP.m3u8",
-    hls: true,
+    stream:
+      "https://playerservices.streamtheworld.com/api/livestream-redirect/CBN_SPAAC.aac?dist=radioscombr",
   },
 ];
