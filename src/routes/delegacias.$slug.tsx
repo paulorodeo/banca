@@ -6,6 +6,7 @@ import { CtaReservado, PageHero } from "@/components/site/blocks";
 import { DelegaciaTelefone } from "@/components/site/delegacia-telefone";
 import { ProfessionalSidebar } from "@/components/site/territory";
 import { AdPlaceholder } from "@/components/site/ad-placeholder";
+import { ContextualNewsSection } from "@/components/site/contextual-news-section";
 import { canonical, delegaciaJsonLd, pageMeta } from "@/lib/seo";
 
 interface Data {
@@ -66,6 +67,10 @@ function DelegaciaPage() {
           { name: "Delegacias", path: "/delegacias" },
           { name: dp.h1, path: dp.seo.canonicalPath },
         ]}
+      />
+      <ContextualNewsSection
+        contexts={[dp.unidade.nomeOficial, dp.h1]}
+        headlineContext="instituicao"
       />
       <Section>
         <Container>

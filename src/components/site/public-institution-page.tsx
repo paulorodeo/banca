@@ -3,6 +3,7 @@ import type { PublicInstitution } from "@/content/types";
 import { AdPlaceholder } from "./ad-placeholder";
 import { type Crumb } from "./breadcrumbs";
 import { PageHero } from "./blocks";
+import { ContextualNewsSection } from "./contextual-news-section";
 import { Container, Section } from "./primitives";
 import { ProfessionalSidebar } from "./territory";
 
@@ -43,6 +44,10 @@ export function PublicInstitutionPage({
         title={institution.nomeOficial}
         lead={institution.descricao}
         crumbs={crumbs}
+      />
+      <ContextualNewsSection
+        contexts={[institution.nomeOficial, institution.sigla ?? ""]}
+        headlineContext="instituicao"
       />
       <Section>
         <Container className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_19rem] lg:gap-14">

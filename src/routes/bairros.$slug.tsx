@@ -3,6 +3,7 @@ import { ArrowRight, CheckCircle2, ExternalLink, MapPin } from "lucide-react";
 import { content } from "@/content/repository";
 import type { Bairro, ConteudoJuridico, Zona } from "@/content/types";
 import { Container } from "@/components/site/primitives";
+import { ContextualNewsSection } from "@/components/site/contextual-news-section";
 import {
   InstitutionDirectory,
   type NeighborhoodInstitution,
@@ -108,6 +109,7 @@ function NeighborhoodPage() {
           { name: bairro.nome, path: bairro.seo.canonicalPath },
         ]}
       />
+      <ContextualNewsSection contexts={[bairro.nome]} headlineContext="bairro" />
 
       <section className="bg-card py-14 md:py-20">
         <Container>
