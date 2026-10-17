@@ -19,6 +19,7 @@ import { Route as OEscritorioRouteImport } from './routes/o-escritorio'
 import { Route as PauloSinigaliaRouteImport } from './routes/paulo-sinigalia'
 import { Route as PlantaoCriminalRouteImport } from './routes/plantao-criminal'
 import { Route as PoliticaDePrivacidadeRouteImport } from './routes/politica-de-privacidade'
+import { Route as PrevisaoDoTempoRouteImport } from './routes/previsao-do-tempo'
 import { Route as PrivacidadeRouteImport } from './routes/privacidade'
 import { Route as ProfissionaisRouteImport } from './routes/profissionais'
 import { Route as RadarRouteImport } from './routes/radar'
@@ -41,6 +42,7 @@ import { Route as NoticiasSlugRouteImport } from './routes/noticias.$slug'
 import { Route as OrgaosIndexRouteImport } from './routes/orgaos.index'
 import { Route as RegioesIndexRouteImport } from './routes/regioes.index'
 import { Route as RegioesSlugRouteImport } from './routes/regioes.$slug'
+import { Route as ApiPublicTempoRouteImport } from './routes/api/public/tempo'
 import { Route as ApiPublicTriagemRouteImport } from './routes/api/public/triagem'
 
 const IndexRoute = IndexRouteImport.update({
@@ -91,6 +93,11 @@ const PlantaoCriminalRoute = PlantaoCriminalRouteImport.update({
 const PoliticaDePrivacidadeRoute = PoliticaDePrivacidadeRouteImport.update({
   id: '/politica-de-privacidade',
   path: '/politica-de-privacidade',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrevisaoDoTempoRoute = PrevisaoDoTempoRouteImport.update({
+  id: '/previsao-do-tempo',
+  path: '/previsao-do-tempo',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PrivacidadeRoute = PrivacidadeRouteImport.update({
@@ -203,6 +210,11 @@ const RegioesSlugRoute = RegioesSlugRouteImport.update({
   path: '/regioes/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicTempoRoute = ApiPublicTempoRouteImport.update({
+  id: '/api/public/tempo',
+  path: '/api/public/tempo',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiPublicTriagemRoute = ApiPublicTriagemRouteImport.update({
   id: '/api/public/triagem',
   path: '/api/public/triagem',
@@ -220,6 +232,7 @@ export interface FileRoutesByFullPath {
   '/paulo-sinigalia': typeof PauloSinigaliaRoute
   '/plantao-criminal': typeof PlantaoCriminalRoute
   '/politica-de-privacidade': typeof PoliticaDePrivacidadeRoute
+  '/previsao-do-tempo': typeof PrevisaoDoTempoRoute
   '/privacidade': typeof PrivacidadeRoute
   '/profissionais': typeof ProfissionaisRoute
   '/radar': typeof RadarRoute
@@ -242,6 +255,7 @@ export interface FileRoutesByFullPath {
   '/noticias/': typeof NoticiasIndexRoute
   '/orgaos/': typeof OrgaosIndexRoute
   '/regioes/': typeof RegioesIndexRoute
+  '/api/public/tempo': typeof ApiPublicTempoRoute
   '/api/public/triagem': typeof ApiPublicTriagemRoute
 }
 export interface FileRoutesByTo {
@@ -254,6 +268,7 @@ export interface FileRoutesByTo {
   '/paulo-sinigalia': typeof PauloSinigaliaRoute
   '/plantao-criminal': typeof PlantaoCriminalRoute
   '/politica-de-privacidade': typeof PoliticaDePrivacidadeRoute
+  '/previsao-do-tempo': typeof PrevisaoDoTempoRoute
   '/privacidade': typeof PrivacidadeRoute
   '/profissionais': typeof ProfissionaisRoute
   '/radar': typeof RadarRoute
@@ -276,6 +291,7 @@ export interface FileRoutesByTo {
   '/noticias': typeof NoticiasIndexRoute
   '/orgaos': typeof OrgaosIndexRoute
   '/regioes': typeof RegioesIndexRoute
+  '/api/public/tempo': typeof ApiPublicTempoRoute
   '/api/public/triagem': typeof ApiPublicTriagemRoute
 }
 export interface FileRoutesById {
@@ -290,6 +306,7 @@ export interface FileRoutesById {
   '/paulo-sinigalia': typeof PauloSinigaliaRoute
   '/plantao-criminal': typeof PlantaoCriminalRoute
   '/politica-de-privacidade': typeof PoliticaDePrivacidadeRoute
+  '/previsao-do-tempo': typeof PrevisaoDoTempoRoute
   '/privacidade': typeof PrivacidadeRoute
   '/profissionais': typeof ProfissionaisRoute
   '/radar': typeof RadarRoute
@@ -312,6 +329,7 @@ export interface FileRoutesById {
   '/noticias/': typeof NoticiasIndexRoute
   '/orgaos/': typeof OrgaosIndexRoute
   '/regioes/': typeof RegioesIndexRoute
+  '/api/public/tempo': typeof ApiPublicTempoRoute
   '/api/public/triagem': typeof ApiPublicTriagemRoute
 }
 export interface FileRouteTypes {
@@ -327,6 +345,7 @@ export interface FileRouteTypes {
     | '/paulo-sinigalia'
     | '/plantao-criminal'
     | '/politica-de-privacidade'
+    | '/previsao-do-tempo'
     | '/privacidade'
     | '/profissionais'
     | '/radar'
@@ -349,6 +368,7 @@ export interface FileRouteTypes {
     | '/noticias/'
     | '/orgaos/'
     | '/regioes/'
+    | '/api/public/tempo'
     | '/api/public/triagem'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -361,6 +381,7 @@ export interface FileRouteTypes {
     | '/paulo-sinigalia'
     | '/plantao-criminal'
     | '/politica-de-privacidade'
+    | '/previsao-do-tempo'
     | '/privacidade'
     | '/profissionais'
     | '/radar'
@@ -383,6 +404,7 @@ export interface FileRouteTypes {
     | '/noticias'
     | '/orgaos'
     | '/regioes'
+    | '/api/public/tempo'
     | '/api/public/triagem'
   id:
     | '__root__'
@@ -396,6 +418,7 @@ export interface FileRouteTypes {
     | '/paulo-sinigalia'
     | '/plantao-criminal'
     | '/politica-de-privacidade'
+    | '/previsao-do-tempo'
     | '/privacidade'
     | '/profissionais'
     | '/radar'
@@ -418,6 +441,7 @@ export interface FileRouteTypes {
     | '/noticias/'
     | '/orgaos/'
     | '/regioes/'
+    | '/api/public/tempo'
     | '/api/public/triagem'
   fileRoutesById: FileRoutesById
 }
@@ -432,6 +456,7 @@ export interface RootRouteChildren {
   PauloSinigaliaRoute: typeof PauloSinigaliaRoute
   PlantaoCriminalRoute: typeof PlantaoCriminalRoute
   PoliticaDePrivacidadeRoute: typeof PoliticaDePrivacidadeRoute
+  PrevisaoDoTempoRoute: typeof PrevisaoDoTempoRoute
   PrivacidadeRoute: typeof PrivacidadeRoute
   ProfissionaisRoute: typeof ProfissionaisRoute
   RadarRoute: typeof RadarRoute
@@ -452,6 +477,7 @@ export interface RootRouteChildren {
   DelegaciasIndexRoute: typeof DelegaciasIndexRoute
   OrgaosIndexRoute: typeof OrgaosIndexRoute
   RegioesIndexRoute: typeof RegioesIndexRoute
+  ApiPublicTempoRoute: typeof ApiPublicTempoRoute
   ApiPublicTriagemRoute: typeof ApiPublicTriagemRoute
 }
 
@@ -525,6 +551,13 @@ declare module '@tanstack/react-router' {
       path: '/politica-de-privacidade'
       fullPath: '/politica-de-privacidade'
       preLoaderRoute: typeof PoliticaDePrivacidadeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/previsao-do-tempo': {
+      id: '/previsao-do-tempo'
+      path: '/previsao-do-tempo'
+      fullPath: '/previsao-do-tempo'
+      preLoaderRoute: typeof PrevisaoDoTempoRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/privacidade': {
@@ -681,6 +714,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RegioesSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/tempo': {
+      id: '/api/public/tempo'
+      path: '/api/public/tempo'
+      fullPath: '/api/public/tempo'
+      preLoaderRoute: typeof ApiPublicTempoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/public/triagem': {
       id: '/api/public/triagem'
       path: '/api/public/triagem'
@@ -716,6 +756,7 @@ const rootRouteChildren: RootRouteChildren = {
   PauloSinigaliaRoute: PauloSinigaliaRoute,
   PlantaoCriminalRoute: PlantaoCriminalRoute,
   PoliticaDePrivacidadeRoute: PoliticaDePrivacidadeRoute,
+  PrevisaoDoTempoRoute: PrevisaoDoTempoRoute,
   PrivacidadeRoute: PrivacidadeRoute,
   ProfissionaisRoute: ProfissionaisRoute,
   RadarRoute: RadarRoute,
@@ -736,6 +777,7 @@ const rootRouteChildren: RootRouteChildren = {
   DelegaciasIndexRoute: DelegaciasIndexRoute,
   OrgaosIndexRoute: OrgaosIndexRoute,
   RegioesIndexRoute: RegioesIndexRoute,
+  ApiPublicTempoRoute: ApiPublicTempoRoute,
   ApiPublicTriagemRoute: ApiPublicTriagemRoute,
 }
 export const routeTree = rootRouteImport

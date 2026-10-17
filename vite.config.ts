@@ -15,6 +15,7 @@ const profile = deploymentEnv ? buildProfile(process.env) : undefined;
 const cloudflare = {
   deployConfig: true,
   wrangler: {
+    ...(deploymentEnv === "staging" ? { kv_namespaces: [{ binding: "WEATHER_CACHE", id: "2ea1635b66af4cdfa4523a6564a7f779" }] } : {}),
     vars: {
       BUILD_COMMIT: execFileSync("git", ["rev-parse", "HEAD"], { encoding: "utf8" }).trim(),
       ...(profile?.runtimeVars ?? {}),

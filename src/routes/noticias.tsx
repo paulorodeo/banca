@@ -185,6 +185,17 @@ export function NoticiasPage({ categoriaSlug }: { categoriaSlug?: string }) {
                 ) : null}
               </div>
               <aside className="space-y-6" aria-label="Curadoria editorial">
+                <section className="border border-brand-navy/15 bg-white p-4" aria-label="Clima & Radar em São Paulo">
+                  <h2 className="mb-3 font-[Georgia,serif] text-xl font-bold text-brand-navy">Tempo em São Paulo</h2>
+                  <iframe
+                    src="https://api.wo-cloud.com/content/widget/?geoObjectKey=3705599&language=pt&region=BR&timeFormat=HH:mm&windUnit=kmh&systemOfMeasurement=metric&temperatureUnit=celsius"
+                    title="Clima & Radar — previsão do tempo em São Paulo"
+                    loading="lazy" width="290" height="318"
+                    className="block h-[318px] w-full border-0"
+                    referrerPolicy="strict-origin-when-cross-origin"
+                  />
+                  <a href="https://www.climaeradar.com.br/previsao-tempo/sao-paulo/3705599" target="_blank" rel="noopener noreferrer" className="mt-3 block text-xs font-semibold underline">Fonte: Clima & Radar</a>
+                </section>
                 <section className="bg-brand-navy p-6 text-ivory shadow-[0_14px_35px_-26px_rgba(3,26,47,0.9)]">
                   <div className="flex items-center gap-3">
                     <TrendingUp className="size-6 text-gold" strokeWidth={1.8} aria-hidden />

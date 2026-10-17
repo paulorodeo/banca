@@ -13,6 +13,8 @@ import { useEffect, type ReactNode } from "react";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { SiteHeader } from "@/components/site/header";
+import { WeatherTicker } from "@/components/site/weather-ticker";
+import { Container } from "@/components/site/primitives";
 import { SiteFooter } from "@/components/site/footer";
 import { readPublicOrigin } from "@/lib/public-url.functions";
 import { editorialIdentity } from "@/content/local/settings";
@@ -161,6 +163,9 @@ function RootComponent() {
           Ir para o conteúdo
         </a>
         <div className="flex min-h-screen flex-col">
+          <div className="bg-brand-navy text-ivory">
+            <Container className="flex min-h-8 items-center justify-end"><WeatherTicker /></Container>
+          </div>
           <SiteHeader institutions={institutions} />
           <main id="conteudo-principal" className="flex-1">
             {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
