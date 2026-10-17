@@ -3,6 +3,7 @@ import { useRef } from "react";
 import {
   ArrowRight,
   BookOpenText,
+  ChevronDown,
   ChevronLeft,
   ChevronRight,
   Search,
@@ -11,6 +12,7 @@ import {
 import { Brand } from "@/components/site/brand";
 import { NewsImage } from "@/components/site/news-image";
 import { Container } from "@/components/site/primitives";
+import { WeatherTicker } from "@/components/site/weather-ticker";
 import { conteudos } from "@/content/local/artigos-editoriais";
 import {
   categoriaNoticiaPorId,
@@ -21,6 +23,20 @@ import {
 import { noticias } from "@/content/local/noticias";
 
 const orderedNoticias = [...noticias].sort((a, b) => b.publicadoEm.localeCompare(a.publicadoEm));
+const portalLinks = [
+  { to: "/", label: "Início" },
+  { to: "/profissionais", label: "Profissionais" },
+  { to: "/vagas", label: "Vagas" },
+  { to: "/sobre", label: "Sobre" },
+  { to: "/contato", label: "Contato" },
+] as const;
+const regionLinks = [
+  { to: "/regioes/centro", label: "Centro" },
+  { to: "/regioes/zona-sul", label: "Zona Sul" },
+  { to: "/regioes/zona-oeste", label: "Zona Oeste" },
+  { to: "/regioes/zona-leste", label: "Zona Leste" },
+  { to: "/regioes/zona-norte", label: "Zona Norte" },
+] as const;
 
 export const Route = createFileRoute("/noticias")({ component: Outlet });
 
@@ -50,51 +66,115 @@ export function NoticiasPage({ categoriaSlug }: { categoriaSlug?: string }) {
 
   return (
     <main className="home-light noticias-editorial bg-white font-sans text-brand-navy">
-      <section className="border-b border-brand-navy/10 bg-brand-navy text-ivory">
-        <Container className="flex min-h-8 items-center justify-between gap-4 py-1.5 text-[0.62rem] font-medium">
-          <span className="hidden sm:inline">Jornalismo independente sobre São Paulo</span>
-          <span className="sm:hidden">Banca Paulista · Notícias</span>
-          <Link to="/sobre" className="rounded-sm text-ivory/75 transition-colors hover:text-gold">
-            Conheça a Banca Paulista
-          </Link>
-        </Container>
-      </section>
-      <section className="border-b border-brand-navy/10 bg-white">
-        <Container className="flex min-h-28 flex-wrap items-center justify-between gap-5 py-5 md:min-h-36">
-          <Link to="/" aria-label="Banca Paulista — início" className="rounded-sm">
-            <Brand scheme="light" size="large" />
-          </Link>
-          <Link
-            to="/orgaos"
-            className="inline-flex min-h-10 items-center gap-3 border border-brand-navy/20 bg-white px-4 text-xs font-semibold text-brand-navy/75 transition-colors hover:border-gold hover:text-brand-navy"
-          >
-            <Search className="size-4 text-gold" aria-hidden />
-            Buscar órgãos e serviços
-          </Link>
-        </Container>
-      </section>
-      <nav
-        className="border-b border-gold/30 bg-brand-navy text-ivory"
-        aria-label="Navegação editorial"
-      >
-        <Container className="flex min-h-11 items-center gap-6 overflow-x-auto whitespace-nowrap text-xs font-semibold">
-          <Link to="/noticias" className="border-b-2 border-gold py-3 text-gold">
-            Notícias
-          </Link>
-          <Link to="/artigos" className="py-3 text-ivory/80 hover:text-gold">
-            Artigos
-          </Link>
-          <Link to="/regioes" className="py-3 text-ivory/80 hover:text-gold">
-            Regiões
-          </Link>
-          <Link to="/orgaos" className="py-3 text-ivory/80 hover:text-gold">
-            Órgãos e serviços
-          </Link>
-          <Link to="/sobre" className="py-3 text-ivory/80 hover:text-gold">
-            Sobre
-          </Link>
-        </Container>
-      </nav>
+      <header className="w-full">
+        <div className="border-b border-white/10 bg-brand-navy text-ivory">
+          <Container className="flex flex-wrap items-center justify-between gap-x-5 gap-y-1 py-1.5">
+            <nav aria-label="Navegação do portal">
+              <ul className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs font-semibold text-ivory/85 sm:gap-x-5">
+                {portalLinks.map((item) => (
+                  <li key={item.to}>
+                    <Link
+                      to={item.to}
+                      className="rounded-sm transition-colors hover:text-gold focus-visible:outline-2 focus-visible:outline-gold"
+                    >
+                      {item.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+            <WeatherTicker />
+          </Container>
+        </div>
+        <div className="border-b border-brand-navy/10 bg-white">
+          <Container className="flex min-h-28 flex-wrap items-center justify-between gap-4 py-4 md:min-h-32 md:gap-6">
+            <Link to="/noticias" aria-label="Banca Paulista — Notícias" className="rounded-sm">
+              <Brand scheme="light" size="large" />
+            </Link>
+            <Link
+              to="/orgaos"
+              aria-label="Consultar órgãos e serviços"
+              className="inline-flex min-h-11 items-center gap-2 border border-brand-navy/20 bg-white px-3 text-xs font-bold text-brand-navy transition-colors hover:border-gold hover:bg-[#f8f8f6] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold sm:px-4"
+            >
+              <Search className="size-4 text-gold" aria-hidden />
+              <span>Consultar órgãos e serviços</span>
+            </Link>
+          </Container>
+        </div>
+        <nav
+          className="relative z-20 border-b-2 border-gold/70 bg-brand-navy text-ivory shadow-[0_8px_18px_-16px_rgba(6,30,48,0.8)]"
+          aria-label="Navegação de Notícias"
+        >
+          <Container className="flex flex-wrap items-center justify-center gap-x-5 gap-y-0.5 py-1 text-xs font-bold sm:justify-start sm:gap-x-6 lg:min-h-12 lg:flex-nowrap lg:justify-between lg:gap-x-7 lg:py-0">
+            <Link
+              to="/noticias"
+              activeProps={{ className: "text-gold" }}
+              className="inline-flex min-h-10 items-center border-b-2 border-transparent py-2 text-gold transition-colors hover:border-gold/70 focus-visible:outline-2 focus-visible:outline-gold lg:min-h-12"
+            >
+              Notícias
+            </Link>
+            <Link
+              to="/artigos"
+              className="inline-flex min-h-10 items-center border-b-2 border-transparent py-2 text-ivory/90 transition-colors hover:border-gold/70 hover:text-gold focus-visible:outline-2 focus-visible:outline-gold lg:min-h-12"
+            >
+              Artigos
+            </Link>
+            <Link
+              to="/previsao-do-tempo"
+              className="inline-flex min-h-10 items-center border-b-2 border-transparent py-2 text-ivory/90 transition-colors hover:border-gold/70 hover:text-gold focus-visible:outline-2 focus-visible:outline-gold lg:min-h-12"
+            >
+              Previsão do Tempo
+            </Link>
+            <Link
+              to="/radio"
+              className="inline-flex min-h-10 items-center border-b-2 border-transparent py-2 text-ivory/90 transition-colors hover:border-gold/70 hover:text-gold focus-visible:outline-2 focus-visible:outline-gold lg:min-h-12"
+            >
+              Rádio
+            </Link>
+            <Link
+              to="/delegacias"
+              className="inline-flex min-h-10 items-center border-b-2 border-transparent py-2 text-ivory/90 transition-colors hover:border-gold/70 hover:text-gold focus-visible:outline-2 focus-visible:outline-gold lg:min-h-12"
+            >
+              Delegacias
+            </Link>
+            <Link
+              to="/orgaos"
+              className="inline-flex min-h-10 items-center border-b-2 border-transparent py-2 text-ivory/90 transition-colors hover:border-gold/70 hover:text-gold focus-visible:outline-2 focus-visible:outline-gold lg:min-h-12"
+            >
+              Órgãos e Serviços
+            </Link>
+            <details
+              className="group relative"
+              onKeyDown={(event) => {
+                if (event.key === "Escape") {
+                  event.preventDefault();
+                  event.currentTarget.open = false;
+                  event.currentTarget.querySelector("summary")?.focus();
+                }
+              }}
+            >
+              <summary className="flex min-h-10 cursor-pointer list-none items-center gap-1 border-b-2 border-transparent py-2 text-ivory/90 transition-colors hover:border-gold/70 hover:text-gold focus-visible:outline-2 focus-visible:outline-gold lg:min-h-12">
+                Regiões
+                <ChevronDown
+                  className="size-3 transition-transform group-open:rotate-180"
+                  aria-hidden
+                />
+              </summary>
+              <div className="absolute right-0 top-full z-30 mt-0.5 grid min-w-48 gap-1 border border-gold/30 bg-brand-navy p-2 shadow-xl sm:left-0 sm:right-auto">
+                {regionLinks.map((item) => (
+                  <Link
+                    key={item.to}
+                    to={item.to}
+                    className="rounded-sm px-3 py-2.5 text-sm font-semibold text-ivory/90 transition-colors hover:bg-white/5 hover:text-gold focus-visible:outline-2 focus-visible:outline-gold"
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+              </div>
+            </details>
+          </Container>
+        </nav>
+      </header>
 
       {!categoriaSelecionada ? (
         <section className="bg-white py-7 md:py-8">

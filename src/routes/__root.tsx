@@ -4,6 +4,7 @@ import {
   Outlet,
   Link,
   createRootRouteWithContext,
+  useRouterState,
   useRouter,
   HeadContent,
   Scripts,
@@ -152,6 +153,9 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient, institutions = [] } = Route.useRouteContext();
+  const isNewsIndex = useRouterState({
+    select: (state) => state.location.pathname.replace(/\/+$/, "") === "/noticias",
+  });
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -163,10 +167,16 @@ function RootComponent() {
           Ir para o conteúdo
         </a>
         <div className="flex min-h-screen flex-col">
-          <div className="bg-brand-navy text-ivory">
-            <Container className="flex min-h-8 items-center justify-end"><WeatherTicker /></Container>
-          </div>
-          <SiteHeader institutions={institutions} />
+          {!isNewsIndex ? (
+            <>
+              <div className="bg-brand-navy text-ivory">
+                <Container className="flex min-h-8 items-center justify-end">
+                  <WeatherTicker />
+                </Container>
+              </div>
+              <SiteHeader institutions={institutions} />
+            </>
+          ) : null}
           <main id="conteudo-principal" className="flex-1">
             {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
             <Outlet />
