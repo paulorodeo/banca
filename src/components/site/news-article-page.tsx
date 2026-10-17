@@ -158,7 +158,7 @@ function inlineMarkdown(text: string) {
 function NoticiaBlocoView({ bloco }: { bloco: NoticiaBloco }) {
   if (bloco.tipo === "titulo")
     return (
-      <h2 className="pt-5 font-serif text-[1.75rem] font-bold leading-tight text-[#061e30] md:text-3xl">
+      <h2 className="pt-5 font-[Georgia,serif] text-[1.65rem] font-bold leading-tight text-[#061e30] md:text-[1.9rem]">
         {bloco.texto}
       </h2>
     );
@@ -209,7 +209,7 @@ function NoticiaBlocoView({ bloco }: { bloco: NoticiaBloco }) {
             return (
               <h3
                 key={index}
-                className="pt-3 font-serif text-2xl font-bold leading-tight text-[#061e30]"
+                className="pt-3 font-[Georgia,serif] text-xl font-bold leading-tight text-[#061e30] md:text-[1.35rem]"
               >
                 {part.slice(4)}
               </h3>
@@ -218,7 +218,7 @@ function NoticiaBlocoView({ bloco }: { bloco: NoticiaBloco }) {
             return (
               <h2
                 key={index}
-                className="pt-5 font-serif text-[1.75rem] font-bold leading-tight text-[#061e30] md:text-3xl"
+                className="pt-5 font-[Georgia,serif] text-[1.65rem] font-bold leading-tight text-[#061e30] md:text-[1.9rem]"
               >
                 {part.slice(3)}
               </h2>
@@ -235,7 +235,7 @@ function NoticiaBlocoView({ bloco }: { bloco: NoticiaBloco }) {
             return (
               <blockquote
                 key={index}
-                className="relative border-l-4 border-[#b28341] py-3 pl-6 pr-4 font-serif text-xl italic leading-relaxed text-[#102c43]"
+                className="relative border-l-4 border-[#b28341] py-3 pl-6 pr-4 font-[Georgia,serif] text-lg italic leading-relaxed text-[#102c43] md:text-xl"
               >
                 <span
                   aria-hidden="true"
@@ -320,23 +320,33 @@ function ShareActions({ title }: { title: string }) {
   );
 }
 
-function NewsCard({ item, compact = false }: { item: NoticiaEditorial; compact?: boolean }) {
+function NewsCard({ item }: { item: NoticiaEditorial }) {
   return (
-    <article className="min-w-0 border-t border-[#d9e0e5] pt-3">
-      <Link to="/noticias/$slug" params={{ slug: item.slug }} className="group block">
+    <article className="max-w-[26rem] min-w-0 border-t border-[#d9e0e5] pt-3">
+      <Link
+        to="/noticias/$slug"
+        params={{ slug: item.slug }}
+        className="group grid grid-cols-[5.5rem_minmax(0,1fr)] items-start gap-3"
+      >
         <NewsImage
           image={item.imagem}
-          className={`${compact ? "aspect-[16/9]" : "aspect-[4/3]"} w-full object-cover`}
+          className="aspect-[4/3] w-full object-cover"
+          fallbackClassName="bg-[#f8f8f6] object-contain p-1.5"
         />
-        <p className="mt-3 text-[0.65rem] font-bold uppercase tracking-[0.08em] text-[#91652b]">
-          {item.categoria}
-        </p>
-        <h3 className="mt-1 font-serif text-lg font-bold leading-snug text-[#061e30] group-hover:text-[#76501f]">
-          {item.manchetesContextuais?.bairro ?? item.titulo}
-        </h3>
-        <time dateTime={item.publicadoEm} className="mt-2 block text-xs text-[#52616d]">
-          {formatDate(item.publicadoEm)}
-        </time>
+        <span className="min-w-0">
+          <span className="block text-[0.62rem] font-bold uppercase leading-4 tracking-[0.06em] text-[#91652b]">
+            {item.categoria}
+          </span>
+          <span className="mt-1 block font-[Georgia,serif] text-[0.9rem] font-bold leading-[1.22] text-[#061e30] group-hover:text-[#76501f]">
+            {item.manchetesContextuais?.bairro ?? item.titulo}
+          </span>
+          <time
+            dateTime={item.publicadoEm}
+            className="mt-2 block text-[0.68rem] leading-4 text-[#52616d]"
+          >
+            {formatDate(item.publicadoEm)}
+          </time>
+        </span>
       </Link>
     </article>
   );
@@ -356,7 +366,7 @@ function RelatedNews({ noticia }: { noticia: NoticiaEditorial }) {
   if (!items.length) return null;
   return (
     <section
-      className="border-t border-[#d8e0e5] py-9 md:py-12"
+      className="border-t border-[#d8e0e5] py-7 md:py-9"
       aria-labelledby="mais-noticias-title"
     >
       <Container>
@@ -367,7 +377,7 @@ function RelatedNews({ noticia }: { noticia: NoticiaEditorial }) {
             </p>
             <h2
               id="mais-noticias-title"
-              className="mt-2 font-serif text-3xl font-bold text-[#061e30]"
+              className="mt-2 font-[Georgia,serif] text-2xl font-bold text-[#061e30] md:text-[1.75rem]"
             >
               Mais notícias da região
             </h2>
@@ -400,9 +410,9 @@ function RelatedNews({ noticia }: { noticia: NoticiaEditorial }) {
             </button>
           </nav>
         ) : null}
-        <div className="mt-6 grid gap-x-5 gap-y-7 sm:grid-cols-2 lg:grid-cols-4">
-          {items.slice(0, 4).map((item, index) => (
-            <NewsCard key={item.id} item={item} compact={index > 0} />
+        <div className="mt-5 grid grid-cols-1 gap-x-5 gap-y-4 sm:grid-cols-2 xl:grid-cols-4">
+          {items.slice(0, 4).map((item) => (
+            <NewsCard key={item.id} item={item} />
           ))}
         </div>
       </Container>
@@ -420,12 +430,12 @@ function ArticleSidebar({ noticia }: { noticia: NoticiaEditorial }) {
   return (
     <aside className="space-y-8" aria-label="Conteúdo relacionado">
       <section
-        className="border border-[#dfe4e8] bg-[#f3f5f6] p-3"
+        className="border border-[#dfe4e8] bg-white p-2.5"
         aria-label="Espaço reservado para publicidade"
       >
         <p className="mb-2 text-[0.65rem] uppercase tracking-wide text-[#63717c]">Publicidade</p>
-        <div className="flex aspect-[6/5] flex-col items-center justify-center border border-dashed border-[#bfc9cf] bg-[#e9edef] text-center text-sm text-[#657580]">
-          <span className="font-semibold">Espaço reservado</span>
+        <div className="flex aspect-[3/2] flex-col items-center justify-center border border-dashed border-[#c8d0d5] bg-[#f8f8f6] text-center text-sm text-[#52616d]">
+          <span className="font-semibold text-[#263746]">Espaço reservado</span>
           <span className="mt-1 text-xs">Anúncios não exibidos</span>
         </div>
       </section>
@@ -433,33 +443,43 @@ function ArticleSidebar({ noticia }: { noticia: NoticiaEditorial }) {
       {focus ? (
         <section aria-labelledby="mais-sobre-title">
           <div className="flex items-end justify-between gap-2 border-b border-[#d9e0e5] pb-2">
-            <h2
-              id="mais-sobre-title"
-              className="font-serif text-2xl font-bold leading-tight text-[#061e30]"
-            >
-              Mais sobre {focus.relation.nome}
-            </h2>
+            <div>
+              <div className="mb-2 flex items-center gap-2" aria-hidden="true">
+                <span className="h-px w-10 bg-[#b28341]" />
+                <span className="h-px w-7 bg-[#061e30]" />
+              </div>
+              <h2
+                id="mais-sobre-title"
+                className="font-[Georgia,serif] text-xl font-bold leading-tight text-[#061e30]"
+              >
+                Mais sobre {focus.relation.nome}
+              </h2>
+            </div>
             <MapPin className="mb-1 size-4 shrink-0 text-[#b28341]" aria-hidden />
           </div>
-          <div className="space-y-4">
+          <div className="divide-y divide-[#dfe4e8]">
             {focus.items.slice(0, 4).map((item) => (
-              <article key={item.id} className="border-b border-[#d9e0e5] py-4 last:border-0">
+              <article key={item.id} className="py-3.5 last:pb-0">
                 <Link
                   to="/noticias/$slug"
                   params={{ slug: item.slug }}
-                  className="group grid grid-cols-[6.5rem_minmax(0,1fr)] gap-3"
+                  className="group grid grid-cols-[5.25rem_minmax(0,1fr)] items-start gap-3"
                 >
-                  <NewsImage image={item.imagem} className="aspect-[4/3] w-full object-cover" />
+                  <NewsImage
+                    image={item.imagem}
+                    className="aspect-[4/3] w-full object-cover"
+                    fallbackClassName="bg-[#f8f8f6] object-contain p-1.5"
+                  />
                   <div className="min-w-0">
-                    <p className="text-[0.62rem] font-bold uppercase tracking-wide text-[#91652b]">
+                    <p className="text-[0.64rem] font-bold uppercase leading-4 tracking-wide text-[#91652b]">
                       {item.categoria}
                     </p>
-                    <h3 className="mt-1 font-serif text-[0.98rem] font-bold leading-[1.2] text-[#102c43] group-hover:text-[#76501f]">
+                    <h3 className="mt-1 font-[Georgia,serif] text-[0.9rem] font-bold leading-[1.24] text-[#102c43] group-hover:text-[#76501f]">
                       {item.manchetesContextuais?.bairro ?? item.titulo}
                     </h3>
                     <time
                       dateTime={item.publicadoEm}
-                      className="mt-2 block text-[0.68rem] text-[#52616d]"
+                      className="mt-1.5 block text-[0.7rem] leading-4 text-[#52616d]"
                     >
                       {formatDate(item.publicadoEm)}
                     </time>
@@ -474,12 +494,18 @@ function ArticleSidebar({ noticia }: { noticia: NoticiaEditorial }) {
       {articles.length ? (
         <section aria-labelledby="sidebar-articles-title">
           <div className="flex items-end justify-between border-b border-[#d9e0e5] pb-2">
-            <h2
-              id="sidebar-articles-title"
-              className="font-serif text-2xl font-bold text-[#061e30]"
-            >
-              Artigos
-            </h2>
+            <div>
+              <div className="mb-2 flex items-center gap-2" aria-hidden="true">
+                <span className="h-px w-10 bg-[#b28341]" />
+                <span className="h-px w-7 bg-[#061e30]" />
+              </div>
+              <h2
+                id="sidebar-articles-title"
+                className="font-[Georgia,serif] text-xl font-bold text-[#061e30]"
+              >
+                Artigos
+              </h2>
+            </div>
             <Link
               to="/artigos"
               className="text-xs font-semibold text-[#76501f] underline underline-offset-4"
@@ -489,15 +515,17 @@ function ArticleSidebar({ noticia }: { noticia: NoticiaEditorial }) {
           </div>
           <div className="divide-y divide-[#d9e0e5]">
             {articles.map((article) => (
-              <article key={article.id} className="py-4">
+              <article key={article.id} className="py-3.5">
                 <Link to="/artigos/$slug" params={{ slug: article.slug }} className="group">
                   <p className="text-[0.62rem] font-bold uppercase tracking-wide text-[#91652b]">
                     {article.categoria}
                   </p>
-                  <h3 className="mt-1 font-serif text-base font-bold leading-snug text-[#102c43] group-hover:text-[#76501f]">
+                  <h3 className="mt-1 font-[Georgia,serif] text-[0.95rem] font-bold leading-snug text-[#102c43] group-hover:text-[#76501f]">
                     {article.titulo}
                   </h3>
-                  <p className="mt-1.5 text-xs leading-5 text-[#52616d]">{article.resumo}</p>
+                  <p className="mt-1.5 text-[0.78rem] leading-[1.55] text-[#52616d]">
+                    {article.resumo}
+                  </p>
                 </Link>
               </article>
             ))}
@@ -534,18 +562,18 @@ export function NewsArticlePage({ noticia }: { noticia: NoticiaEditorial }) {
             </li>
           </ol>
         </nav>
-        <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,2fr)_minmax(17rem,0.92fr)] lg:gap-7 xl:gap-8">
+        <div className="grid items-start gap-8 min-[900px]:grid-cols-[minmax(0,2fr)_minmax(17rem,0.92fr)] min-[900px]:gap-7 xl:gap-8">
           <article className="min-w-0" aria-labelledby="news-article-title">
             <p className="text-xs font-bold uppercase tracking-[0.11em] text-[#91652b] md:text-sm">
               {noticia.categoria}
             </p>
             <h1
               id="news-article-title"
-              className="mt-3 max-w-4xl font-[Georgia,serif] text-[2rem] font-bold leading-[1.08] tracking-[-0.02em] text-[#061e30] sm:text-[2.45rem] lg:text-[2.8rem]"
+              className="mt-3 max-w-4xl font-[Georgia,serif] text-[1.9rem] font-bold leading-[1.08] tracking-[-0.02em] text-[#061e30] sm:text-[2.1rem] min-[900px]:text-[2.25rem] xl:text-[2.7rem]"
             >
               {noticia.titulo}
             </h1>
-            <p className="mt-4 max-w-4xl font-serif text-xl leading-[1.42] text-[#263746] md:text-[1.4rem]">
+            <p className="mt-4 max-w-4xl font-[Georgia,serif] text-lg leading-[1.45] text-[#263746] sm:text-xl xl:text-[1.35rem]">
               {noticia.resumo}
             </p>
             <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-3 border-y border-[#d9e0e5] py-3 text-xs text-[#52616d] sm:text-sm">
@@ -574,7 +602,7 @@ export function NewsArticlePage({ noticia }: { noticia: NoticiaEditorial }) {
                 </figcaption>
               ) : null}
             </figure>
-            <div className="mt-7 space-y-6">
+            <div className="mt-7 space-y-5">
               {noticia.blocos.map((bloco, index) => (
                 <NoticiaBlocoView key={`${bloco.tipo}-${index}`} bloco={bloco} />
               ))}
@@ -594,7 +622,7 @@ export function NewsArticlePage({ noticia }: { noticia: NoticiaEditorial }) {
                 >
                   <h2
                     id="sources-title"
-                    className="flex items-center gap-2 font-serif text-xl font-bold text-[#061e30]"
+                    className="flex items-center gap-2 font-[Georgia,serif] text-xl font-bold text-[#061e30]"
                   >
                     <FileText className="size-5 text-[#91652b]" aria-hidden /> Fontes consultadas
                   </h2>

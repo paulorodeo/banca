@@ -5,11 +5,13 @@ import type { Media } from "@/content/types";
 export function NewsImage({
   image,
   className,
+  fallbackClassName,
   loading = "lazy",
   fetchPriority,
 }: {
   image?: Media;
   className?: string;
+  fallbackClassName?: string;
   loading?: "eager" | "lazy";
   fetchPriority?: "high" | "low" | "auto";
 }) {
@@ -40,7 +42,7 @@ export function NewsImage({
         loading={loading}
         fetchPriority={fetchPriority}
         decoding="async"
-        className={className}
+        className={[className, fallbackClassName].filter(Boolean).join(" ")}
         onError={(event) => {
           event.currentTarget.onerror = null;
           event.currentTarget.hidden = true;
