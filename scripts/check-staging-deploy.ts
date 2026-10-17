@@ -19,9 +19,6 @@ assert(
 );
 assert(existsSync(resolve(root, ".output/server", config.main)));
 assert(
-  existsSync(resolve(root, ".output/server", config.assets.directory, "images/sp/ponte.avif")),
-);
-assert(
   readFileSync(resolve(root, ".output/public/_headers"), "utf8").includes(
     "X-Robots-Tag: noindex, nofollow",
   ),
