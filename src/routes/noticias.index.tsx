@@ -1,8 +1,17 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { NoticiasPage } from "./noticias";
+import { encontraCategoriaNoticia } from "@/content/local/noticia-categorias";
 import { breadcrumbSchema, canonicalLink, pageMeta } from "@/lib/seo";
 
+type NoticiasSearch = {
+  categoria?: string;
+};
+
 export const Route = createFileRoute("/noticias/")({
+  validateSearch: (search): NoticiasSearch => {
+    const categoria = typeof search.categoria === "string" ? search.categoria : undefined;
+    return categoria && encontraCategoriaNoticia(categoria) ? { categoria } : {};
+  },
   head: () => ({
     meta: [
       ...pageMeta({
@@ -26,5 +35,10 @@ export const Route = createFileRoute("/noticias/")({
       },
     ],
   }),
-  component: NoticiasPage,
+  component: NoticiasIndexPage,
 });
+
+function NoticiasIndexPage() {
+  const { categoria } = Route.useSearch();
+  return <NoticiasPage categoriaSlug={categoria} />;
+}

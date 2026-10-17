@@ -1,4 +1,4 @@
-import { createFileRoute, Link, Outlet, useRouterState } from "@tanstack/react-router";
+import { createFileRoute, Link, Outlet } from "@tanstack/react-router";
 import { useRef } from "react";
 import {
   ArrowRight,
@@ -33,13 +33,7 @@ function date(value: string) {
   });
 }
 
-export function NoticiasPage() {
-  const categoriaSlug = useRouterState({
-    select: (state) => {
-      const categoria = (state.location.search as { categoria?: unknown } | undefined)?.categoria;
-      return typeof categoria === "string" ? categoria : undefined;
-    },
-  });
+export function NoticiasPage({ categoriaSlug }: { categoriaSlug?: string }) {
   const categoriaSelecionada = encontraCategoriaNoticia(categoriaSlug);
   const [featured, ...afterFeatured] = orderedNoticias;
   if (!featured) return null;
