@@ -1,4 +1,4 @@
-import { createFileRoute, Link, Outlet } from "@tanstack/react-router";
+import { createFileRoute, Link, Outlet, useRouterState } from "@tanstack/react-router";
 import { useRef } from "react";
 import {
   ArrowRight,
@@ -22,13 +22,7 @@ import { noticias } from "@/content/local/noticias";
 
 const orderedNoticias = [...noticias].sort((a, b) => b.publicadoEm.localeCompare(a.publicadoEm));
 
-export const Route = createFileRoute("/noticias")({
-  validateSearch: (search): { categoria?: string } => {
-    const categoria = typeof search.categoria === "string" ? search.categoria : undefined;
-    return encontraCategoriaNoticia(categoria) ? { categoria } : {};
-  },
-  component: Outlet,
-});
+export const Route = createFileRoute("/noticias")({ component: Outlet });
 
 function date(value: string) {
   return new Date(`${value}T00:00:00Z`).toLocaleDateString("pt-BR", {
@@ -40,7 +34,10 @@ function date(value: string) {
 }
 
 export function NoticiasPage() {
-  const { categoria: categoriaSlug } = Route.useSearch();
+  const categoriaSlug = useRouterState({
+    select: (state) =>
+      typeof state.location.search.categoria === "string" ? state.location.search.categoria : undefined,
+  });
   const categoriaSelecionada = encontraCategoriaNoticia(categoriaSlug);
   const [featured, ...afterFeatured] = orderedNoticias;
   if (!featured) return null;
