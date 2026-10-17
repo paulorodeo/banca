@@ -8,6 +8,13 @@ export const editorialIdentity = {
   socialImage: "/images/sp/banca-paulista-social.png",
 } as const;
 
+/** Imagens institucionais usadas exclusivamente quando uma notícia não possui fotografia própria. */
+export const noticiaFallback = {
+  avif: "/images/sp/banca-paulista-news-fallback.avif",
+  webp: "/images/sp/banca-paulista-news-fallback.webp",
+  alt: "Imagem editorial de fallback da Banca Paulista",
+} as const;
+
 export const marca = {
   completo: editorialIdentity.name,
   abreviado: editorialIdentity.name,

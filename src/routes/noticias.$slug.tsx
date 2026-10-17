@@ -1,7 +1,9 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
 import { PageHero } from "@/components/site/blocks";
+import { NewsImage } from "@/components/site/news-image";
 import { Container, Hairline, Section } from "@/components/site/primitives";
 import { noticias } from "@/content/local/noticias";
+import { noticiaFallback } from "@/content/local/settings";
 import type { NoticiaBloco } from "@/content/types";
 import { breadcrumbSchema, canonicalLink, newsArticleSchema, pageMeta } from "@/lib/seo";
 
@@ -27,6 +29,10 @@ export const Route = createFileRoute("/noticias/$slug")({
           description: noticia.seo.description,
           path: noticia.seo.canonicalPath,
           type: "article",
+          image: noticia.imagem?.url ?? noticiaFallback.webp,
+          imageMetadata: noticia.imagem
+            ? { width: noticia.imagem.width, height: noticia.imagem.height, alt: noticia.imagem.alt }
+            : { alt: noticiaFallback.alt },
         }).map((meta) =>
           noticia.seo.ogTitle && (meta["property"] === "og:title" || meta["name"] === "twitter:title")
             ? { ...meta, content: noticia.seo.ogTitle }
@@ -149,6 +155,10 @@ function NoticiaPage() {
               {noticia.autoria} · Publicado em {date(noticia.publicadoEm)}
             </p>
             <Hairline className="my-8 max-w-24" />
+            <NewsImage
+              image={noticia.imagem}
+              className="mb-8 aspect-[16/9] w-full rounded-xl object-cover"
+            />
             <div className="space-y-5">
               {noticia.blocos.map((bloco, index) => (
                 <NoticiaBlocoView key={index} bloco={bloco} />

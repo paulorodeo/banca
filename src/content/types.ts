@@ -229,6 +229,8 @@ export interface NoticiaEditorial {
   publicadoEm: string;
   autoria: string;
   seo: SeoConfig;
+  /** Fotografia própria autorizada; a apresentação usa o fallback institucional apenas quando ausente ou indisponível. */
+  imagem?: Media;
   blocos: NoticiaBloco[];
   notas: string[];
   /** Variações para futuros cards contextuais; nunca criam outra URL. */
