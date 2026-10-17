@@ -595,4 +595,346 @@ export const noticias: NoticiaEditorial[] = [
       "Nota editorial: A entrega de 3.353 títulos foi anunciada para 16 de outubro de 2026. Esta versão não afirma que a cerimônia já ocorreu. A efetivação deve ser confirmada com a Prefeitura em atualização posterior.",
     ],
   },
+  {
+    id: "noticia-invasao-mansao-matsunaga-alto-de-pinheiros",
+    slug: "invasao-mansao-familia-matsunaga-alto-de-pinheiros",
+    titulo:
+      "Invasão a mansão da família Matsunaga no Alto de Pinheiros termina com três mortos e caso vai ao DHPP",
+    resumo:
+      "Criminosos invadiram residência da família Matsunaga, renderam funcionários e procuraram joias e um cofre. Ação da Rota terminou com três suspeitos mortos, um preso e um policial ferido.",
+    categoria: "Ocorrências Policiais",
+    publicadoEm: "2026-10-16",
+    autoria: "Redação Banca Paulista",
+    seo: {
+      title: "Invasão à mansão da família Matsunaga deixa 3 mortos",
+      description:
+        "Invasão à mansão da família Matsunaga no Alto de Pinheiros termina com três mortos. Rota resgata reféns, e DHPP investiga confronto na Zona Oeste.",
+      canonicalPath: "/noticias/invasao-mansao-familia-matsunaga-alto-de-pinheiros",
+      ogTitle:
+        "Invasão a mansão da família Matsunaga no Alto de Pinheiros termina com três mortos e caso vai ao DHPP",
+    },
+    blocos: [
+      {
+        tipo: "paragrafo",
+        texto:
+          "Quatro suspeitos invadiram uma residência da família Matsunaga na Rua Alberto Faria, no Alto de Pinheiros, Zona Oeste de São Paulo, na quarta-feira (14). Durante a ocorrência, funcionários foram rendidos e equipes da Rondas Ostensivas Tobias de Aguiar (Rota) foram acionadas. A intervenção terminou com três suspeitos mortos, um homem preso e um policial militar ferido.",
+      },
+      {
+        tipo: "paragrafo",
+        texto:
+          "As circunstâncias das mortes são investigadas pelo Departamento Estadual de Homicídios e de Proteção à Pessoa (DHPP).",
+      },
+      {
+        tipo: "paragrafo",
+        texto:
+          "O imóvel pertence à família de Marcos Kitano Matsunaga, empresário da indústria alimentícia Yoki assassinado em 2012. Segundo informações do boletim de ocorrência divulgadas pela imprensa, os invasores procuravam joias, um cofre e informações sobre o proprietário.",
+      },
+      { tipo: "titulo", texto: "Funcionários foram surpreendidos durante a invasão" },
+      {
+        tipo: "paragrafo",
+        texto:
+          "De acordo com informações divulgadas pela CNN Brasil em 16 de outubro, três funcionários estavam na cozinha quando foram surpreendidos pelos quatro invasores, dos quais pelo menos dois estavam armados. Entre as vítimas estava o motorista da residência, que relatou ter sido imobilizado e agredido. Seu telefone celular foi levado durante a ação.",
+      },
+      {
+        tipo: "paragrafo",
+        texto:
+          "Os funcionários conseguiram se proteger em outro compartimento do imóvel e permaneceram no local até a chegada dos policiais militares. O proprietário, Mitsuo Matsunaga, informou à polícia que recebeu um aviso sobre a invasão e entrou em contato com as autoridades. Imagens de monitoramento divulgadas posteriormente mostram um carro escuro entrando na propriedade.",
+      },
+      { tipo: "titulo", texto: "Confronto com a Rota deixa três suspeitos mortos" },
+      {
+        tipo: "paragrafo",
+        texto:
+          "Ao chegarem à residência, os policiais encontraram um dos suspeitos no pavimento térreo. O homem foi detido sem ferimentos. Outros três suspeitos foram localizados dentro da propriedade. Segundo a versão policial divulgada, houve confronto armado entre eles e as equipes da Rota.",
+      },
+      {
+        tipo: "paragrafo",
+        texto:
+          "Dois homens morreram no local. O terceiro foi levado para a Unidade de Pronto Atendimento (UPA) da Lapa, mas não resistiu aos ferimentos. Um policial militar foi atingido no ombro e encaminhado ao Hospital das Clínicas. Conforme as informações divulgadas após a ocorrência, ele não corria risco de morte. Os funcionários foram retirados da residência com vida.",
+      },
+      {
+        tipo: "titulo",
+        texto: "Ocorrência foi registrada no 14º DP e mortes são apuradas pelo DHPP",
+      },
+      {
+        tipo: "paragrafo",
+        texto:
+          "O suspeito detido foi encaminhado ao 14º Distrito Policial, em Pinheiros, onde a ocorrência de roubo à residência foi registrada. A investigação das mortes ocorridas durante a ação policial foi encaminhada ao DHPP, responsável por apurar as circunstâncias dos disparos e a dinâmica da intervenção policial.",
+      },
+      {
+        tipo: "paragrafo",
+        texto:
+          "A Polícia Militar também instaurou um Inquérito Policial Militar (IPM) para examinar a atuação dos agentes. Trata-se de procedimentos com finalidades distintas. A investigação do roubo busca esclarecer a ação criminosa e identificar os responsáveis. Já a apuração das mortes e o procedimento militar procuram determinar as circunstâncias do confronto e a regularidade da atuação policial. A instauração dessas investigações não significa, por si só, que tenha ocorrido irregularidade na intervenção.",
+      },
+      { tipo: "titulo", texto: "Residência já havia sido invadida em 2023" },
+      {
+        tipo: "paragrafo",
+        texto:
+          "A ocorrência de outubro de 2026 não foi o primeiro roubo registrado na propriedade. Em agosto de 2023, a residência foi alvo de outra invasão. Na ocasião, integrantes da família foram rendidos e os assaltantes levaram aproximadamente R$ 20 mil em dinheiro, além de joias, relógios, telefones celulares, um computador portátil e armas de fogo. Os episódios aconteceram no mesmo imóvel, mas as informações disponíveis não permitem estabelecer ligação entre os envolvidos nas duas ocorrências.",
+      },
+      {
+        tipo: "titulo",
+        texto: "O que a legislação prevê sobre roubo, reféns e intervenção policial?",
+      },
+      {
+        tipo: "paragrafo",
+        texto:
+          "O Código Penal brasileiro prevê o crime de roubo no artigo 157, caracterizado pela subtração de coisa móvel alheia mediante violência, grave ameaça ou outros meios previstos na legislação. Circunstâncias como concurso de pessoas, emprego de arma de fogo e restrição da liberdade da vítima podem influenciar o enquadramento jurídico e as consequências penais, dependendo da comprovação dos fatos.",
+      },
+      {
+        tipo: "paragrafo",
+        texto:
+          "Quanto à intervenção policial, o artigo 25 do Código Penal disciplina a legítima defesa, que exige reação a agressão injusta, atual ou iminente, utilizando moderadamente os meios necessários. A aplicação dessas regras depende das circunstâncias concretas e das provas reunidas pelas autoridades. No caso da residência do Alto de Pinheiros, a investigação deverá analisar depoimentos, perícias e outros elementos para esclarecer a dinâmica dos disparos.",
+      },
+      { tipo: "titulo", texto: "O que ainda está sendo investigado?" },
+      {
+        tipo: "paragrafo",
+        texto:
+          "A investigação poderá esclarecer como os suspeitos obtiveram acesso à residência, se receberam informações prévias sobre os bens existentes no imóvel, a sequência exata do confronto e a eventual participação de outras pessoas. Segundo informações divulgadas pela imprensa, o sistema interno de câmeras da propriedade teve o fornecimento de energia interrompido, e as gravações não puderam ser recuperadas naquele momento.",
+      },
+      {
+        tipo: "paragrafo",
+        texto:
+          "Até o fechamento desta reportagem, não havia confirmação de conclusão das investigações conduzidas pelo DHPP ou de decisão judicial definitiva sobre a situação do suspeito preso. O caso permanece sujeito a novos desdobramentos.",
+      },
+    ],
+    notas: [
+      "Nota editorial: Relatos iniciais divergiram sobre o número total de reféns. Esta reportagem utiliza a identificação de três funcionários descrita na cobertura baseada no boletim de ocorrência divulgado em 16 de outubro de 2026.",
+    ],
+  },
+  {
+    id: "noticia-bosque-salesianos-alto-da-lapa",
+    slug: "justica-libera-obra-bosque-salesianos-alto-da-lapa",
+    titulo:
+      "Justiça libera construção de prédios após corte de 118 árvores no Alto da Lapa; decisão foi por 3 a 2",
+    resumo:
+      "Tribunal de Justiça de São Paulo rejeitou recurso do Ministério Público e manteve autorização para empreendimento imobiliário no antigo Bosque dos Salesianos. Área de aproximadamente 7 mil m² é alvo de disputa ambiental, enquanto moradores questionam a perda de vegetação e os impactos da construção.",
+    categoria: "Urbanismo e Meio Ambiente",
+    publicadoEm: "2026-10-16",
+    autoria: "Redação Banca Paulista",
+    seo: {
+      title: "Justiça libera obra após corte de 118 árvores na Lapa",
+      description:
+        "TJSP libera obra no Bosque dos Salesianos, no Alto da Lapa, após corte de 118 árvores. Decisão por 3 a 2 rejeita recurso do Ministério Público.",
+      canonicalPath: "/noticias/justica-libera-obra-bosque-salesianos-alto-da-lapa",
+      ogTitle:
+        "Justiça libera construção de prédios após corte de 118 árvores no Alto da Lapa; decisão foi por 3 a 2",
+    },
+    blocos: [
+      {
+        tipo: "paragrafo",
+        texto:
+          "Uma decisão do Tribunal de Justiça de São Paulo (TJSP) abriu caminho para a continuidade de um empreendimento imobiliário no antigo Bosque dos Salesianos, no Alto da Lapa, Zona Oeste da capital paulista. Por três votos a dois, os desembargadores rejeitaram, em 1º de outubro de 2026, um recurso do Ministério Público que contestava a autorização para intervenções ambientais no terreno.",
+      },
+      {
+        tipo: "paragrafo",
+        texto:
+          "A disputa envolve a retirada de 118 árvores realizada em novembro de 2025, a construção prevista de duas torres residenciais e um compromisso de compensação ambiental que inclui o plantio de 1.799 mudas de espécies nativas. O julgamento representa uma vitória judicial para a Prefeitura de São Paulo e para a incorporadora Tegra, responsável pelo empreendimento. A decisão, entretanto, não significa necessariamente o encerramento definitivo da controvérsia, uma vez que ainda cabe recurso.",
+      },
+      {
+        tipo: "titulo",
+        texto: "Bosque dos Salesianos: uma área verde no centro de uma disputa imobiliária",
+      },
+      {
+        tipo: "paragrafo",
+        texto:
+          "O Bosque dos Salesianos está localizado entre as ruas Pio XI, Sales Júnior e Presidente Antônio Cândido, no Alto da Lapa. A área verde ocupa aproximadamente 7 mil metros quadrados e integrava um terreno maior pertencente à instituição salesiana de ensino, que foi adquirido pela incorporadora Tegra em 2024. O projeto imobiliário prevê a construção de duas torres residenciais.",
+      },
+      {
+        tipo: "paragrafo",
+        texto:
+          "Para viabilizar o empreendimento, a empresa obteve autorizações municipais, incluindo um alvará de execução e um Termo de Compromisso Ambiental (TCA) firmado com a Prefeitura de São Paulo. Esse termo estabelece condições para a intervenção ambiental, incluindo o manejo de árvores e medidas destinadas a compensar os impactos da retirada da vegetação. Entretanto, a autorização passou a ser questionada por moradores e organizações que defendem a preservação do bosque.",
+      },
+      { tipo: "titulo", texto: "Por que 118 árvores foram derrubadas?" },
+      {
+        tipo: "paragrafo",
+        texto:
+          "O Termo de Compromisso Ambiental autorizou o manejo de 118 árvores existentes no terreno. Segundo informações divulgadas sobre o processo, os exemplares incluíam espécies nativas, exóticas, invasoras e árvores já mortas. A autorização municipal foi concedida com a previsão de medidas compensatórias, incluindo o plantio de 1.799 mudas de espécies nativas.",
+      },
+      {
+        tipo: "paragrafo",
+        texto:
+          "Parte do plantio deve ocorrer no próprio terreno, enquanto outras mudas estão previstas para espaços externos, conforme as condições estabelecidas no compromisso ambiental. A incorporadora sustenta que o empreendimento possui as licenças necessárias e que as medidas previstas atendem às exigências dos órgãos competentes. Os moradores contrários à intervenção, por outro lado, questionam a suficiência da compensação ambiental e a perda da vegetação existente.",
+      },
+      { tipo: "titulo", texto: "Ministério Público tentou impedir a retirada da vegetação" },
+      {
+        tipo: "paragrafo",
+        texto:
+          "A disputa judicial começou antes da derrubada das árvores. Em 2024, o Ministério Público de São Paulo ingressou com medidas judiciais para impedir intervenções que, segundo sua argumentação, poderiam comprometer a proteção ambiental da área. A Justiça chegou a determinar a suspensão do empreendimento. Em junho de 2025, entretanto, uma decisão do Tribunal de Justiça autorizou a retomada das intervenções.",
+      },
+      {
+        tipo: "paragrafo",
+        texto:
+          "Com a autorização judicial então vigente, a incorporadora iniciou, em novembro de 2025, a retirada das árvores previstas no termo ambiental. O episódio provocou protestos de moradores e integrantes do movimento Salve o Bosque. Posteriormente, o Ministério Público voltou a recorrer, obtendo uma nova suspensão provisória das intervenções em dezembro daquele ano. O recurso permaneceu em discussão até o julgamento realizado em outubro de 2026.",
+      },
+      { tipo: "titulo", texto: "Julgamento termina com placar apertado de três votos a dois" },
+      {
+        tipo: "paragrafo",
+        texto:
+          "A 2ª Câmara Reservada ao Meio Ambiente do Tribunal de Justiça de São Paulo rejeitou o recurso do Ministério Público por três votos a dois. A maioria dos julgadores manteve a decisão favorável à continuidade do empreendimento e à validade das autorizações ambientais discutidas no processo. Entre os aspectos considerados no julgamento estavam a composição da vegetação, a documentação técnica apresentada e as medidas de compensação ambiental previstas.",
+      },
+      {
+        tipo: "paragrafo",
+        texto:
+          "Um dos fundamentos mencionados na cobertura do julgamento foi a predominância de espécies exóticas na área, circunstância considerada relevante por integrantes da maioria. A decisão não foi unânime, evidenciando divergências jurídicas sobre a proteção do bosque e os efeitos das autorizações administrativas. Com o resultado, a incorporadora recuperou respaldo judicial para dar continuidade ao empreendimento nos termos das autorizações vigentes. Ainda cabe recurso, motivo pelo qual não se deve tratar o julgamento como decisão definitivamente irrecorrível.",
+      },
+      { tipo: "titulo", texto: "Moradores temem aumento de alagamentos na região da Lapa" },
+      {
+        tipo: "paragrafo",
+        texto:
+          "Além da perda de árvores, moradores apresentam preocupações relacionadas à drenagem urbana. Integrantes do movimento Salve o Bosque sustentam que a área verde exerce uma função ambiental importante, especialmente na absorção da água das chuvas. O receio é que a alteração das características do terreno reduza a permeabilidade do solo e contribua para problemas de escoamento em pontos mais baixos da região da Lapa.",
+      },
+      {
+        tipo: "paragrafo",
+        texto:
+          "Entretanto, a existência de risco específico de agravamento dos alagamentos em decorrência deste empreendimento depende de estudos técnicos e da análise das condições de drenagem do projeto. Não é possível afirmar, apenas com base nas manifestações dos moradores, que a construção provocará enchentes.",
+      },
+      {
+        tipo: "titulo",
+        texto: "O que é um Termo de Compromisso Ambiental e por que ele é importante?",
+      },
+      {
+        tipo: "paragrafo",
+        texto:
+          "O Termo de Compromisso Ambiental, conhecido pela sigla TCA, é um instrumento administrativo utilizado para estabelecer obrigações relacionadas a intervenções ambientais autorizadas pelo poder público. Em situações envolvendo manejo de vegetação, esse documento pode definir condições de compensação, preservação, plantio, manutenção e outras exigências pertinentes.",
+      },
+      {
+        tipo: "paragrafo",
+        texto:
+          "A existência de um TCA não significa que qualquer intervenção esteja automaticamente imune a questionamentos judiciais. Da mesma forma, a contestação apresentada pelo Ministério Público não torna uma autorização ilegal por si só. A legalidade precisa ser examinada à luz das normas aplicáveis, dos documentos administrativos, dos estudos técnicos e das decisões judiciais.",
+      },
+      { tipo: "titulo", texto: "O que acontece agora com o empreendimento?" },
+      {
+        tipo: "paragrafo",
+        texto:
+          "A decisão de 1º de outubro manteve a autorização judicial para a continuidade do projeto imobiliário. Isso não significa que todas as etapas da construção já tenham sido executadas ou que o empreendimento esteja concluído. A empresa permanece sujeita às obrigações estabelecidas nas licenças, nos documentos administrativos e no Termo de Compromisso Ambiental. Também permanece a possibilidade de novos desdobramentos judiciais, caso sejam apresentados recursos cabíveis.",
+      },
+      {
+        tipo: "paragrafo",
+        texto:
+          "Até o fechamento desta reportagem, não foi confirmada decisão posterior que alterasse o resultado do julgamento de 1º de outubro de 2026. O caso permanece relevante para moradores do Alto da Lapa, proprietários de imóveis, empresas do setor imobiliário e cidadãos interessados na preservação ambiental e no desenvolvimento urbano de São Paulo.",
+      },
+    ],
+    notas: [],
+  },
+  {
+    id: "noticia-investimentos-zona-oeste-lapa",
+    slug: "investimentos-1-bilhao-obras-zona-oeste-lapa",
+    titulo:
+      "Mais de R$ 1 bilhão em obras na Zona Oeste de SP: veja os bairros, hospitais, moradias e vias que serão beneficiados",
+    resumo:
+      "Investimentos anunciados pela Prefeitura abrangem a região administrativa da Lapa e incluem novas moradias, regularização de imóveis, ampliação hospitalar e uma ligação viária aguardada há décadas. Projetos estão em diferentes etapas de execução.",
+    categoria: "Investimentos Públicos e Infraestrutura",
+    publicadoEm: "2026-10-16",
+    autoria: "Redação Banca Paulista",
+    seo: {
+      title: "Zona Oeste: R$ 1 bilhão em obras na região da Lapa",
+      description:
+        "Mais de R$ 1 bilhão em investimentos na região da Lapa envolve moradias, hospital, escolas e vias. Veja os bairros da Zona Oeste abrangidos.",
+      canonicalPath: "/noticias/investimentos-1-bilhao-obras-zona-oeste-lapa",
+      ogTitle:
+        "Mais de R$ 1 bilhão em obras na Zona Oeste de SP: veja os bairros, hospitais, moradias e vias que serão beneficiados",
+    },
+    blocos: [
+      {
+        tipo: "paragrafo",
+        texto:
+          "A Prefeitura de São Paulo anunciou um conjunto de investimentos superior a R$ 1 bilhão na região da Lapa, Zona Oeste da capital, com intervenções em habitação, saúde, educação e infraestrutura urbana. O pacote foi apresentado em 6 de agosto de 2026, durante uma edição do programa Prefeitura Presente, e envolve empreendimentos concluídos, obras em andamento e projetos previstos para os próximos anos.",
+      },
+      {
+        tipo: "paragrafo",
+        texto:
+          "A região administrativa abrange seis distritos: Lapa, Vila Leopoldina, Perdizes, Barra Funda, Jaguaré e Jaguara, que, juntos, reúnem mais de 330 mil habitantes. Entre as principais iniciativas anunciadas estão a entrega de apartamentos na Vila Leopoldina, a concessão de títulos de propriedade, a ampliação do Complexo Hospitalar da Lapa e o avanço da ligação viária entre Pirituba e Lapa.",
+      },
+      {
+        tipo: "paragrafo",
+        texto:
+          "O anúncio reúne projetos com diferentes prazos, fontes de financiamento e etapas de execução. Por isso, o valor superior a R$ 1 bilhão não deve ser interpretado como uma quantia integralmente desembolsada em agosto ou como investimento igualmente distribuído entre todos os bairros.",
+      },
+      { tipo: "titulo", texto: "Quais bairros da Zona Oeste estão na área de investimentos?" },
+      {
+        tipo: "paragrafo",
+        texto:
+          "A Subprefeitura da Lapa compreende seis distritos administrativos: Lapa, Vila Leopoldina, Perdizes, Barra Funda, Jaguaré e Jaguara. Essas divisões incluem bairros e localidades conhecidos da Zona Oeste, como Alto da Lapa, Vila Romana, Pompeia, Vila Hamburguesa, Vila Jaguara e outros.",
+      },
+      {
+        tipo: "paragrafo",
+        texto:
+          "A inclusão de determinado distrito no território administrativo do programa não significa, entretanto, que todos os seus bairros receberão intervenções físicas específicas. Os projetos possuem localizações próprias. Algumas obras estão concentradas na Lapa e na Vila Leopoldina, enquanto outras têm efeitos mais amplos sobre a circulação, os serviços públicos e a infraestrutura regional.",
+      },
+      { tipo: "titulo", texto: "Vila Leopoldina recebe apartamentos e títulos de propriedade" },
+      {
+        tipo: "paragrafo",
+        texto:
+          "Um dos principais destaques do programa foi a entrega de 244 apartamentos na quinta e última torre do Residencial Major Paladino, na Vila Leopoldina. Com essa etapa, o conjunto habitacional alcançou 1.035 unidades, destinadas a famílias removidas de ocupações precárias e atendidas pela política habitacional municipal.",
+      },
+      {
+        tipo: "paragrafo",
+        texto:
+          "A Prefeitura também anunciou a concessão de 96 títulos de propriedade pelo programa Escritura na Mão a famílias de núcleos habitacionais do território. A regularização é especialmente relevante porque o documento de propriedade pode proporcionar maior segurança jurídica aos beneficiários, conforme a natureza do título concedido e seu efetivo registro. É necessário distinguir o recebimento do documento, a conclusão dos procedimentos de regularização fundiária e o registro imobiliário aplicável a cada caso.",
+      },
+      { tipo: "titulo", texto: "Novo Complexo Hospitalar da Lapa terá 317 leitos" },
+      {
+        tipo: "paragrafo",
+        texto:
+          "Na área da saúde, um dos investimentos mais expressivos é a ampliação e modernização do Complexo Hospitalar da Lapa. Segundo a Prefeitura, o empreendimento possui investimentos totais previstos de R$ 267 milhões e deverá contar com 317 leitos quando concluído. A estrutura também foi projetada para alcançar capacidade de aproximadamente mil atendimentos diários.",
+      },
+      {
+        tipo: "paragrafo",
+        texto:
+          "As obras começaram em setembro de 2024 e possuem previsão de conclusão em 2027. O projeto contempla cerca de 20 mil metros quadrados de área edificada, distribuídos entre pavimentos hospitalares, áreas técnicas e estruturas de atendimento. Entre as especialidades anunciadas estão ortopedia, maternidade, pediatria, clínica médica, psiquiatria e cirurgia geral.",
+      },
+      {
+        tipo: "paragrafo",
+        texto:
+          "Os números de leitos e a capacidade de atendimentos representam metas para a configuração futura do equipamento. Não significam que a ampliação já esteja concluída ou que todos os novos serviços estejam disponíveis à população em outubro de 2026.",
+      },
+      { tipo: "titulo", texto: "Ligação Pirituba–Lapa promete reduzir tempo de deslocamento" },
+      {
+        tipo: "paragrafo",
+        texto:
+          "Outra intervenção destacada no anúncio é a construção do Complexo Viário Pirituba–Lapa, planejado para melhorar a conexão entre regiões situadas em lados diferentes do Rio Tietê. O empreendimento contempla uma nova travessia e intervenções no sistema viário que liga os dois territórios.",
+      },
+      {
+        tipo: "paragrafo",
+        texto:
+          "Segundo informações divulgadas pela Prefeitura em agosto de 2026, a obra recebeu investimento informado de R$ 376,9 milhões. Estudos de tráfego utilizados pela administração municipal projetam uma redução de até 36 minutos no deslocamento de usuários do transporte público entre os terminais Pirituba e Lapa. Para motoristas, a estimativa apresentada é de economia de aproximadamente 15 minutos. Esses números são projeções de benefício operacional, não tempos de viagem já alcançados.",
+      },
+      { tipo: "titulo", texto: "Educação infantil integra os investimentos da Vila Leopoldina" },
+      {
+        tipo: "paragrafo",
+        texto:
+          "Além dos apartamentos do Residencial Major Paladino, o empreendimento habitacional possui equipamentos educacionais associados. A Prefeitura anunciou a entrega de uma creche e de uma Escola Municipal de Educação Infantil (EMEI), com capacidade conjunta para atender mais de 400 crianças em período integral.",
+      },
+      {
+        tipo: "paragrafo",
+        texto:
+          "A situação operacional atual das unidades, incluindo matrículas disponíveis, funcionamento e eventuais vagas, deverá ser consultada nos canais oficiais da Secretaria Municipal de Educação. A capacidade anunciada não representa garantia de vagas imediatamente disponíveis para qualquer morador.",
+      },
+      { tipo: "titulo", texto: "Como acompanhar os gastos e fiscalizar as obras?" },
+      {
+        tipo: "paragrafo",
+        texto:
+          "Investimentos públicos de grande porte devem ser acompanhados não apenas pelo valor anunciado, mas também por sua execução orçamentária, contratual e física. No caso do pacote da Zona Oeste, os moradores podem buscar informações sobre contratos administrativos e empresas responsáveis, valores inicialmente contratados e eventuais aditivos, cronogramas de execução, medições e pagamentos efetuados, licenças urbanísticas e ambientais aplicáveis, fiscalização dos contratos, previsões de conclusão e entrega efetiva dos serviços públicos.",
+      },
+      {
+        tipo: "paragrafo",
+        texto:
+          "A Lei de Acesso à Informação, Lei Federal nº 12.527/2011, permite solicitar dados públicos observadas as hipóteses legais de restrição. O Portal da Transparência do Município e os canais oficiais de acompanhamento de obras são instrumentos importantes para consultar informações sobre contratos, despesas e andamento dos projetos.",
+      },
+      { tipo: "titulo", texto: "O que já foi entregue e o que ainda depende de conclusão?" },
+      {
+        tipo: "paragrafo",
+        texto:
+          "No Residencial Major Paladino, a Prefeitura anunciou a entrega das últimas 244 unidades habitacionais, completando o conjunto de 1.035 apartamentos. Também foram anunciadas a concessão de 96 títulos de propriedade e a entrega de dois equipamentos educacionais. Já o Complexo Hospitalar da Lapa permanecia em obras, com conclusão prevista para 2027. A ligação viária Pirituba–Lapa também estava em execução na data da vistoria municipal.",
+      },
+      {
+        tipo: "paragrafo",
+        texto:
+          "Não há fundamento para tratar todo o pacote anunciado como obra concluída. O acompanhamento dos cronogramas e a atualização dos dados oficiais serão determinantes para avaliar os resultados e os impactos efetivos sobre os moradores da Zona Oeste.",
+      },
+    ],
+    notas: [
+      "Nota de apuração: Os valores, capacidades, cronogramas e resultados apresentados correspondem às informações oficiais divulgadas em agosto de 2026.",
+    ],
+  },
 ];
