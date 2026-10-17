@@ -4,6 +4,446 @@ import { noticiasZonaLeste } from "./noticias-zona-leste";
 
 export const noticias: NoticiaEditorial[] = [
   {
+    id: "noticia-retrofit-centro-2026",
+    slug: "retrofit-centro-sp-subsidio-25-por-cento-oito-distritos",
+    titulo: "Prefeitura amplia subsídio de até 25% para reformar prédios antigos em oito distritos do Centro de SP",
+    resumo: "Área elegível à subvenção para habitação popular cresceu de 1.170 para 2.780 hectares. Novo chamamento disponibilizou R$ 200 milhões, enquanto mudanças nas regras de licenciamento ampliaram as possibilidades de recuperação de edifícios antigos no Centro de São Paulo.",
+    categoria: "Cidades e Economia",
+    publicadoEm: "2026-10-16",
+    autoria: "Redação Banca Paulista",
+    seo: { title: "Retrofit no Centro de SP: subsídio de até 25% em 8 distritos", description: "Prefeitura de SP amplia incentivos ao retrofit em oito distritos do Centro, com subsídio de até 25% e edital de R$ 200 milhões. Veja as regras.", canonicalPath: "/noticias/retrofit-centro-sp-subsidio-25-por-cento-oito-distritos", ogTitle: "Retrofit no Centro de SP: até 25% de subsídio para prédios antigos", keywords: ["retrofit Centro de São Paulo", "retrofit São Paulo 2026", "Requalifica Centro", "subsídio retrofit São Paulo", "retrofit 25% Prefeitura", "prédios antigos Centro de SP", "retrofit Sé", "retrofit República", "retrofit Brás", "retrofit Bom Retiro", "retrofit Pari", "retrofit Bela Vista", "retrofit Santa Cecília", "retrofit Liberdade", "subvenção econômica Prefeitura SP", "reforma prédios antigos São Paulo", "Decreto 65.233/2026", "Habitação de Interesse Social", "Habitação de Mercado Popular", "licenciamento de retrofit", "incentivo imobiliário Centro SP"] },
+    blocos: [
+      { tipo: "markdown", texto: `São Paulo, 16 de outubro de 2026 — A Prefeitura de São Paulo ampliou os incentivos à recuperação de edifícios antigos na região central da capital, permitindo que projetos de moradia popular localizados em oito distritos tenham acesso a subsídios que podem alcançar 25% do custo das obras de requalificação.
+
+A mudança ampliou de aproximadamente 1.170 para 2.780 hectares a área de abrangência da Subvenção Econômica destinada a empreendimentos de Habitação de Interesse Social (HIS) e Habitação de Mercado Popular (HMP).
+
+As medidas fazem parte da política municipal de revitalização do Centro e foram acompanhadas por alterações na regulamentação do Programa Requalifica Centro, responsável por estabelecer incentivos e procedimentos específicos para recuperação de edificações existentes.
+
+Em agosto, a Prefeitura também lançou o quarto chamamento público da Subvenção Econômica, disponibilizando R$ 200 milhões para projetos de retrofit, com prioridade para a produção de moradias destinadas à população de menor renda.
+
+Os incentivos não representam uma transferência automática de recursos para todos os proprietários de edifícios antigos. A concessão depende do enquadramento territorial, da modalidade de utilização do imóvel, da apresentação de projetos, da análise técnica e do cumprimento das condições estabelecidas pela legislação e pelos editais aplicáveis.
+
+## Oito distritos passam a integrar a área ampliada de incentivos
+
+Uma das principais alterações de 2026 foi a ampliação do território abrangido pelo programa de subvenção voltado à habitação popular. Anteriormente, o apoio financeiro estava concentrado no perímetro original do Requalifica Centro, envolvendo a Sé, a República e parte do Brás.
+
+Com a nova regulamentação, projetos destinados à Habitação de Interesse Social e à Habitação de Mercado Popular passaram a poder concorrer ao benefício em todo o perímetro da Área de Intervenção Urbana do Setor Central (AIU-SCE), incluindo sua área expandida.
+
+A área ampliada alcança cinco distritos integralmente e outros três parcialmente:
+
+- Sé;
+- República;
+- Brás;
+- Bom Retiro;
+- Pari;
+- Bela Vista, parcialmente;
+- Santa Cecília, parcialmente;
+- Liberdade, parcialmente.
+
+A abrangência passou de aproximadamente 1.170 hectares para 2.780 hectares. Isso representa um aumento de cerca de 138% na área territorial considerada para a modalidade de subvenção habitacional.
+
+A ampliação, entretanto, não significa que todos os imóveis localizados nesses distritos estejam automaticamente habilitados a receber subsídios. Nos distritos parcialmente contemplados, é necessário verificar se o endereço está efetivamente inserido no perímetro definido pela legislação. Mesmo nas áreas integralmente abrangidas, permanecem exigências relacionadas ao projeto, ao uso pretendido, às características da edificação e aos procedimentos administrativos de seleção.
+
+## Como funciona o subsídio de até 25% para retrofit?
+
+A Subvenção Econômica é um instrumento de apoio financeiro municipal voltado à recuperação de edificações existentes. Seu objetivo é tornar economicamente viáveis projetos de requalificação que contribuam para a recuperação urbana, a ocupação de imóveis e a produção de moradias na região central.
+
+Pelas regras divulgadas pela Prefeitura, os empreendimentos selecionados podem receber recursos correspondentes a até 25% do custo das intervenções elegíveis. O percentual efetivamente concedido depende da avaliação técnica do projeto e dos critérios previstos no chamamento público.
+
+Entre os fatores considerados estão a destinação do imóvel, sua contribuição para a produção habitacional, a valorização do patrimônio histórico, a integração com o espaço urbano e a adoção de soluções sustentáveis. A existência de um imóvel antigo ou desocupado, portanto, não garante a concessão do benefício.
+
+O empreendedor precisa demonstrar que o projeto atende às condições regulamentares, apresentar a documentação exigida e participar do procedimento de seleção. O pagamento também não ocorre necessariamente de uma só vez: segundo as regras do quarto chamamento, os recursos são liberados em parcelas, conforme a evolução das obras e o cumprimento das etapas previstas no Termo de Outorga firmado com o município. O subsídio não dispensa a obtenção de licenças, alvarás e autorizações necessárias para a execução das intervenções.
+
+## Prefeitura disponibilizou R$ 200 milhões no quarto chamamento
+
+Em 13 de agosto de 2026, a Secretaria Municipal de Urbanismo e Licenciamento (SMUL) anunciou o quarto Chamamento Público da Subvenção Econômica. A nova seleção disponibilizou R$ 200 milhões para apoiar projetos de retrofit e requalificação de imóveis na região central.
+
+O edital previu um período inicial de inscrições de 60 dias, conforme as condições oficiais de participação. Como a data desta reportagem é 16 de outubro, interessados devem consultar o edital e eventuais atos posteriores no Diário Oficial antes de presumir que ainda exista prazo para inscrição.
+
+O quarto chamamento marcou a primeira seleção com a abrangência territorial ampliada para projetos destinados à Habitação de Interesse Social e à Habitação de Mercado Popular. Além da produção habitacional, o edital incluiu incentivos voltados à recuperação de cinemas de rua e de determinados equipamentos culturais, observadas as regras específicas para cada modalidade.
+
+As iniciativas integram uma política de investimentos municipais com previsão total de R$ 1 bilhão em subvenções. Esse montante representa o orçamento previsto para a política pública e não deve ser confundido com recursos já transferidos a todos os empreendimentos.
+
+## Maior parte dos recursos está reservada à moradia popular
+
+A política municipal prevê distribuição dos recursos de acordo com as categorias de utilização dos imóveis. Do orçamento total estimado de R$ 1 bilhão, 60% são destinados a empreendimentos de Habitação de Interesse Social nas modalidades HIS-1 e HIS-2. Essas categorias contemplam, respectivamente, famílias de menor renda e faixas de renda de até seis salários-mínimos, conforme os limites estabelecidos pela legislação habitacional aplicável.
+
+Outros 15% dos recursos estão previstos para Habitação de Mercado Popular, destinada a famílias com renda de até dez salários-mínimos. A distribuição também reserva 15% para empreendimentos residenciais de outras faixas de renda e 10% para projetos não residenciais.
+
+Essa divisão busca estimular diferentes formas de utilização dos edifícios, mantendo prioridade orçamentária para a habitação popular. Segundo a regulamentação do quarto chamamento, os percentuais são fixos e não podem ser livremente transferidos entre as categorias. A destinação social dos recursos é especialmente relevante porque parte significativa das intervenções ocorre em uma região marcada por imóveis ociosos, edificações antigas, infraestrutura consolidada e demanda por moradias próximas a empregos e serviços.
+
+## Nem todos os benefícios foram ampliados para os oito distritos
+
+A expansão anunciada pela Prefeitura envolve instrumentos que possuem regras distintas. A ampliação da Subvenção Econômica para projetos habitacionais de interesse social não significa a extensão automática de todos os incentivos fiscais previstos na legislação do Requalifica Centro.
+
+De acordo com a Secretaria Municipal de Urbanismo e Licenciamento, os benefícios tributários previstos na Lei Municipal nº 17.577/2021 permanecem vinculados ao perímetro original do programa. Esse conjunto de benefícios inclui, nas condições legalmente previstas, medidas relacionadas a IPTU, ITBI, taxas municipais e ISS.
+
+Por outro lado, a revisão regulamentar de 2026 ampliou o alcance de determinados incentivos urbanísticos e procedimentos de licenciamento para a área da AIU do Setor Central. Também existem diferenças entre empreendimentos de moradia popular, residências destinadas a outras faixas de renda e projetos não residenciais.
+
+Para a Subvenção Econômica, a ampliação territorial está especialmente relacionada às modalidades HIS e HMP. Projetos habitacionais de outras faixas de renda e projetos não residenciais continuam sujeitos às limitações territoriais específicas estabelecidas pela regulamentação. Portanto, a análise de elegibilidade exige distinguir três questões: localização do imóvel, modalidade de uso e tipo de incentivo pretendido.
+
+## O que muda no licenciamento dos edifícios antigos?
+
+Além da ampliação da subvenção, o Município atualizou as regras do Requalifica Centro por meio do Decreto nº 65.233/2026. A regulamentação estabelece procedimentos voltados à recuperação de edificações existentes e busca reduzir dificuldades técnicas e administrativas encontradas em projetos de retrofit.
+
+Uma das alterações envolve a consolidação das áreas abrangidas pelos mecanismos urbanísticos do programa. Outra mudança é o aprimoramento dos procedimentos de licenciamento, com a utilização de instrumentos de análise prioritária.
+
+Os projetos continuam sujeitos ao Requalifica Rápido e ao Regime Especial de Atendimento Prioritário (REAP), observadas as regras aplicáveis. Também foram previstas hipóteses mais amplas de utilização de procedimentos declaratórios eletrônicos, inclusive em determinadas situações que envolvam mudança de uso do imóvel.
+
+Essas medidas pretendem reduzir entraves burocráticos, sem afastar a responsabilidade técnica dos profissionais envolvidos ou os deveres de fiscalização da administração pública. A simplificação do procedimento não elimina a necessidade de observância das regras de segurança, acessibilidade, salubridade e legislação urbanística.
+
+## Prédios antigos poderão apresentar soluções técnicas alternativas
+
+Um dos desafios do retrofit é adaptar construções antigas às exigências contemporâneas de segurança, acessibilidade e utilização. Em alguns edifícios, a configuração estrutural ou arquitetônica torna difícil aplicar integralmente soluções originalmente previstas para construções novas.
+
+O Decreto nº 65.233/2026 passou a detalhar hipóteses em que soluções técnicas alternativas podem ser apresentadas para enfrentar essas limitações. A regulamentação contempla situações envolvendo acessibilidade, higiene, segurança e salubridade, desde que as propostas efetivamente melhorem as condições da edificação e atendam às exigências dos órgãos competentes.
+
+A norma também admite, em determinadas condições, divergências de até 5% entre áreas registradas e áreas efetivamente existentes. A previsão busca facilitar o tratamento documental de construções antigas, nas quais plantas, cadastros e dimensões reais nem sempre coincidem integralmente.
+
+Isso não constitui uma autorização geral para irregularidades construtivas. As alternativas dependem de justificativas técnicas, enquadramento regulamentar e análise conforme os requisitos aplicáveis. Os profissionais responsáveis continuam sujeitos às obrigações estabelecidas pela legislação de edificações, pelas normas técnicas e pelos respectivos conselhos profissionais.
+
+## Retrofit pode transformar prédios comerciais em moradias?
+
+Uma das possibilidades associadas à requalificação urbana é a mudança de utilização de imóveis originalmente destinados a escritórios, hotéis ou outras atividades. Edifícios subutilizados podem ser objeto de projetos que adaptem instalações, sistemas prediais, circulação e organização interna para novos usos. Isso pode incluir a produção de unidades residenciais, desde que a conversão seja permitida pelas normas urbanísticas e tecnicamente viável.
+
+A mudança exige análise de fatores como segurança contra incêndios, instalações elétricas e hidráulicas, ventilação, iluminação, acessibilidade e capacidade estrutural. Também devem ser observadas as regras relativas ao uso do solo, ao licenciamento e a eventuais restrições patrimoniais. No caso de edifícios tombados ou protegidos, podem ser necessárias autorizações adicionais dos órgãos de preservação competentes.
+
+Por isso, transformar um prédio comercial em residencial não equivale simplesmente a dividir pavimentos em apartamentos. A intervenção exige projeto técnico e cumprimento dos procedimentos aplicáveis à nova ocupação. Os incentivos municipais procuram melhorar a viabilidade econômica dessas operações, mas não dispensam suas exigências legais.
+
+## Copan, Martinelli e antigos edifícios comerciais aparecem entre projetos contemplados
+
+Os programas de retrofit da capital já alcançaram edificações conhecidas do Centro de São Paulo. Segundo dados divulgados pela Prefeitura, entre os empreendimentos contemplados nos chamamentos anteriores estão o Edifício Copan, o Edifício Martinelli, o Edifício 7 de Abril, antigo imóvel da Telesp, o Residencial Cambridge e o Edifício H Lara.
+
+Os casos demonstram a diversidade de imóveis que podem integrar programas de requalificação urbana. Alguns possuem relevância arquitetônica e histórica, enquanto outros apresentam potencial para recuperação de espaços residenciais ou comerciais. A inclusão de um edifício em programa de incentivo, entretanto, não significa necessariamente que todas as obras tenham sido executadas ou concluídas. Cada empreendimento possui projeto, cronograma, licenciamento e situação administrativa próprios.
+
+Os dados divulgados pela Secretaria Municipal de Urbanismo e Licenciamento em agosto de 2026 apontavam 50 edifícios em processo de requalificação urbana. Desse total, 32 projetos haviam sido aprovados pelo Requalifica Centro e 31 empreendimentos estavam credenciados na Subvenção Econômica. Como 13 participavam simultaneamente dos dois programas, os totais de cada modalidade não devem ser somados como se representassem imóveis distintos.
+
+As iniciativas envolviam edificações com potencial de requalificação correspondente a 5.238 moradias, segundo o balanço municipal. Também haviam sido registrados 15 edifícios com obras concluídas e Certificado de Conclusão de Requalificação. Esses números representam o balanço oficial divulgado naquele período, não uma contagem independente atualizada em 16 de outubro.
+
+## A requalificação pode afetar o mercado imobiliário do Centro?
+
+A ampliação do território elegível aos incentivos cria novas possibilidades de avaliação para proprietários, incorporadores, investidores e profissionais da construção civil. Imóveis antigos podem passar a ser estudados para diferentes formas de aproveitamento, especialmente quando apresentam localização favorável, infraestrutura disponível e condições para adaptação.
+
+O Centro de São Paulo reúne transporte público, estabelecimentos comerciais, equipamentos culturais, hospitais, escolas e serviços públicos. Essas características podem contribuir para projetos de recuperação de edifícios e produção habitacional. Entretanto, o potencial econômico de cada empreendimento depende de fatores como custo de aquisição, situação documental, condições estruturais, obrigações patrimoniais, preço das obras e demanda efetiva por unidades. A existência de subsídio público não garante rentabilidade.
+
+Também não é possível afirmar antecipadamente que a ampliação dos incentivos produzirá determinado percentual de valorização imobiliária nos bairros abrangidos. Outro aspecto importante é o impacto social das transformações urbanas. A recuperação de imóveis pode aumentar a oferta de moradias e melhorar a utilização de espaços subocupados, mas seus efeitos sobre preços, acesso à habitação e permanência de moradores dependem das características dos projetos e das políticas habitacionais adotadas.
+
+A reserva de recursos para HIS e HMP constitui um instrumento destinado a favorecer a produção habitacional para faixas de menor renda. Sua efetividade deverá ser acompanhada por indicadores como número de unidades concluídas, preços praticados, localização dos empreendimentos e perfil das famílias atendidas.
+
+## Proprietários de imóveis antigos podem solicitar o incentivo?
+
+A possibilidade de participação depende do tipo de empreendimento, do enquadramento do imóvel e das condições estabelecidas nos chamamentos públicos. Não existe direito automático ao recebimento de 25% do valor de uma reforma particular.
+
+O interessado precisa verificar inicialmente se a propriedade está localizada no perímetro aplicável ao benefício pretendido. Depois, deve identificar a categoria de utilização prevista para a edificação e confirmar se o projeto atende aos critérios técnicos e urbanísticos. Também é necessário apresentar a documentação exigida no procedimento oficial.
+
+O quarto chamamento prevê etapas de instrução da solicitação, análise documental, credenciamento e acompanhamento do termo de outorga. Uma comissão municipal avalia aspectos como a adequação territorial, as características técnicas do projeto e os benefícios urbanísticos da intervenção. Os projetos são classificados conforme os critérios regulamentares e a disponibilidade de recursos. A seleção e a assinatura do termo correspondente condicionam a concessão da subvenção. As obras devem observar as licenças e autorizações exigidas pela legislação.
+
+## Quais são as obrigações dos empreendimentos beneficiados?
+
+O recebimento de recursos públicos está associado ao cumprimento de condições específicas. No quarto chamamento, a Prefeitura informou que o empreendedor deverá preservar a categoria de uso do imóvel pelo prazo mínimo de dez anos. Isso significa que um empreendimento contemplado como moradia popular não poderá simplesmente alterar sua destinação, ignorando os compromissos assumidos perante a administração municipal.
+
+A regulamentação também exige observância de critérios de sustentabilidade aplicáveis às intervenções. Entre os fatores considerados na avaliação dos projetos estão soluções relacionadas ao uso racional da água, integração com o espaço público e melhoria das condições ambientais. A liberação de recursos está vinculada ao andamento das obras e ao cumprimento das etapas previstas no Termo de Outorga.
+
+O descumprimento de obrigações pode produzir consequências administrativas e jurídicas, conforme as condições do instrumento firmado e a legislação aplicável. A análise concreta dessas consequências depende do edital e do termo correspondente a cada projeto.
+
+## Qual é a diferença entre retrofit, reforma e restauração?
+
+Embora os três termos sejam frequentemente utilizados como sinônimos, eles podem representar intervenções distintas. O retrofit envolve a modernização e requalificação de uma edificação existente para atender a necessidades contemporâneas de utilização, desempenho, segurança ou eficiência.
+
+Uma reforma pode abranger modificações construtivas de diferentes amplitudes, sem necessariamente representar um projeto de requalificação enquadrado nos programas municipais. A restauração, por sua vez, costuma estar relacionada à conservação ou recuperação de características históricas, arquitetônicas e culturais.
+
+Em determinados empreendimentos, as três atividades podem coexistir. Um edifício histórico pode passar por restauração de elementos protegidos, reforma de instalações e retrofit para adaptação a novas formas de utilização. O enquadramento jurídico da intervenção depende das características do imóvel e das definições estabelecidas pela legislação aplicável. Essa distinção é importante porque os incentivos municipais e os procedimentos de licenciamento possuem requisitos específicos.
+
+## O que acontece a partir de agora?
+
+A ampliação dos incentivos cria uma nova etapa para os programas de requalificação urbana do Centro. O resultado dependerá da análise dos projetos apresentados, do credenciamento dos empreendimentos, da contratação das intervenções e da efetiva conclusão das obras.
+
+Também será necessário acompanhar a distribuição dos recursos entre as modalidades habitacionais, verificando se os objetivos de produção de moradia popular estão sendo alcançados. Entre os indicadores relevantes estão o número de edifícios recuperados, as unidades habitacionais entregues, a preservação de imóveis históricos e a utilização dos recursos públicos.
+
+A ampliação territorial permite que mais áreas centrais participem da política municipal. Contudo, a requalificação de prédios antigos envolve decisões técnicas, urbanísticas, imobiliárias e jurídicas que precisam ser avaliadas individualmente.
+
+Para moradores, proprietários e comerciantes do Centro, a principal mudança é a abertura de novas possibilidades de recuperação do patrimônio construído. O alcance real da política será determinado não apenas pelos valores anunciados, mas pela capacidade de transformar projetos aprovados em edificações efetivamente recuperadas e utilizadas pela população.` },
+      { tipo: "tabela", cabecalho: ["Indicador", "Informação"], linhas: [["Área anterior da subvenção ampliada", "1.170 hectares"], ["Nova área elegível para HIS e HMP", "2.780 hectares"], ["Expansão territorial aproximada", "138%"], ["Distritos alcançados", "8, total ou parcialmente"], ["Percentual máximo de subvenção", "Até 25% das obras elegíveis"], ["Quarto chamamento público", "R$ 200 milhões"], ["Investimento total previsto", "R$ 1 bilhão"], ["Recursos reservados para HIS", "60%"], ["Recursos reservados para HMP", "15%"], ["Projetos residenciais de outras rendas", "15%"], ["Projetos não residenciais", "10%"], ["Edifícios em requalificação, balanço de agosto", "50"], ["Moradias abrangidas pelos projetos", "5.238"], ["Edifícios com obras concluídas, balanço de agosto", "15"], ["Permanência mínima do uso subvencionado", "10 anos"], ["Decreto de subvenção", "Decreto nº 62.878/2023, alterado em 2026"], ["Decreto de licenciamento", "Decreto nº 65.233/2026"]] },
+      { tipo: "markdown", texto: "Nota: Os dados sobre empreendimentos representam o balanço divulgado pela Prefeitura em agosto de 2026. Os percentuais de recursos representam a divisão orçamentária anunciada, não valores necessariamente desembolsados." },
+    ],
+    notas: ["A abrangência parcial de Bela Vista, Santa Cecília e Liberdade deve ser confirmada pelo perímetro da AIU do Setor Central; a Subvenção Econômica não é automática.", "A reportagem distingue incentivos fiscais, incentivos urbanísticos e a Subvenção Econômica."],
+    manchetesContextuais: { zona: "Centro de SP ganha R$ 200 milhões em novo edital de retrofit; veja quais imóveis podem receber incentivo", bairro: "Sé, República, Brás e outros cinco distritos entram na ampliação dos incentivos para retrofit em São Paulo", instituicao: "Novos decretos ampliam área do Requalifica Centro e facilitam licenciamento de prédios antigos em SP" },
+    tags: ["retrofit", "requalifica-centro", "subvencao-economica", "predios-antigos", "habitacao-popular", "his", "hmp", "urbanismo", "licenciamento", "patrimonio-historico", "prefeitura-de-sao-paulo", "smul", "requalificacao-urbana", "setor-central"],
+    relacionamentos: { territorios: [{ nome: "Centro de São Paulo", relacao: "direto" }, { nome: "Sé", relacao: "direto" }, { nome: "República", relacao: "direto" }, { nome: "Brás", relacao: "direto" }, { nome: "Bom Retiro", relacao: "direto" }, { nome: "Pari", relacao: "direto" }, { nome: "Bela Vista", relacao: "regional" }, { nome: "Santa Cecília", relacao: "regional" }, { nome: "Liberdade", relacao: "regional" }], instituicoes: [{ nome: "Prefeitura de São Paulo", relacao: "administrativo" }, { nome: "Secretaria Municipal de Urbanismo e Licenciamento", relacao: "administrativo" }, { nome: "SP Urbanismo", relacao: "informativo" }, { nome: "Câmara Municipal de São Paulo", relacao: "informativo" }] },
+    fontes: [
+      { titulo: "Prefeitura amplia perímetro da Subvenção Econômica para impulsionar retrofit de moradia popular no Centro", veiculo: "Prefeitura de São Paulo", data: "2026-05-26", url: "https://gestaourbana.prefeitura.sp.gov.br/noticias/prefeitura-de-sao-paulo-amplia-perimetro-da-subvencao-economica-para-impulsionar-retrofit-de-moradia-popular-no-centro/" },
+      { titulo: "Prefeitura amplia incentivos e mais que dobra área com benefícios a retrofit para moradia no Centro", veiculo: "Prefeitura de São Paulo", data: "2026-06-17", url: "https://prefeitura.sp.gov.br/w/prefeitura-amplia-incentivos-e-mais-que-dobra-%C3%A1rea-com-benef%C3%ADcios-a-retrofit-para-moradia-no-centro" },
+      { titulo: "Programa Requalifica Centro é regulamentado para toda a região central de São Paulo", veiculo: "Secretaria Municipal de Urbanismo e Licenciamento", data: "2026-06-08", url: "https://prefeitura.sp.gov.br/web/licenciamento/w/programa-requalifica-centro-%C3%A9-regulamentado-para-toda-a-regi%C3%A3o-central-de-s%C3%A3o-paulo" },
+      { titulo: "Prefeitura lança 4º Chamamento da Subvenção Econômica para ampliar retrofit com foco em moradia popular no Centro", veiculo: "Prefeitura de São Paulo", data: "2026-08-13", url: "https://gestaourbana.prefeitura.sp.gov.br/noticias/prefeitura-lanca-4o-chamamento-da-subvencao-economica-para-ampliar-retrofit-com-foco-em-moradia-popular-no-centro/" },
+      { titulo: "Decreto nº 65.233/2026 — Requalifica Centro", veiculo: "Catálogo de Legislação Municipal", url: "https://legislacao.prefeitura.sp.gov.br/decreto-65233-de-5-de-junho-de-2026/consolidado" },
+      { titulo: "Decreto nº 62.878/2023 — Subvenção Econômica, com alterações posteriores", veiculo: "Catálogo de Legislação Municipal", url: "https://legislacao.prefeitura.sp.gov.br/decreto-62878-de-30-de-outubro-de-2023" },
+    ],
+  },
+  {
+    id: "noticia-favela-moinho-2026",
+    slug: "favela-do-moinho-851-familias-parque-centro-sp",
+    titulo: "Favela do Moinho chega ao fim após saída de 851 famílias; área de 61 mil m² dará lugar a parque no Centro de SP",
+    resumo: "Governo paulista anunciou o atendimento de 851 famílias após a saída do último morador, em setembro de 2026. Terreno de 61,3 mil m², em Campos Elíseos, será transformado em parque público, enquanto o projeto prevê uma nova estação ferroviária; condições do reassentamento também foram alvo de questionamentos.",
+    categoria: "Cidades e Urbanismo",
+    publicadoEm: "2026-10-16",
+    autoria: "Redação Banca Paulista",
+    seo: { title: "Favela do Moinho: 851 famílias saem e área terá parque", description: "Após saída de 851 famílias da Favela do Moinho, terreno de 61,3 mil m² no Centro de SP será destinado a parque e nova estação. Veja os planos.", canonicalPath: "/noticias/favela-do-moinho-851-familias-parque-centro-sp", ogTitle: "Favela do Moinho chega ao fim; área terá parque e estação", keywords: ["Favela do Moinho", "Favela do Moinho 2026", "Favela do Moinho reassentamento", "Parque do Moinho São Paulo", "Campos Elíseos parque", "Santa Cecília urbanismo", "CDHU Favela do Moinho", "851 famílias Moinho", "Estação Bom Retiro", "habitação Centro São Paulo", "requalificação urbana São Paulo", "Secretaria do Patrimônio da União", "direito à moradia", "remoção de famílias São Paulo"] },
+    blocos: [{ tipo: "markdown", texto: `São Paulo, 16 de outubro de 2026 — A Favela do Moinho, uma das ocupações mais conhecidas da região central de São Paulo, deixou de existir como comunidade residencial após a saída de seu último morador, em 15 de setembro de 2026. Segundo o Governo do Estado, o processo de reassentamento atendeu 851 famílias e abriu caminho para a implantação de um parque público no terreno de 61,3 mil metros quadrados, localizado em Campos Elíseos.
+
+A transformação envolve diferentes esferas da administração pública, incluindo o Governo de São Paulo, a Companhia de Desenvolvimento Habitacional e Urbano (CDHU), a Secretaria de Desenvolvimento Urbano e Habitação (SDUH) e a Secretaria do Patrimônio da União (SPU).
+
+O projeto prevê a criação do Parque do Moinho, com áreas verdes, equipamentos esportivos, espaços culturais e locais de convivência. A região também deverá receber a futura Estação Bom Retiro, planejada para integrar três linhas ferroviárias metropolitanas.
+
+A conclusão da desocupação, entretanto, não significa que todas as famílias já tenham recebido imóveis definitivos. Em setembro, 645 das 851 famílias atendidas estavam em moradias permanentes, enquanto as demais dependiam de atendimento habitacional transitório.
+
+O processo também foi acompanhado de questionamentos de movimentos de moradia, moradores e representantes jurídicos sobre as condições das mudanças, o acesso a imóveis adequados e o afastamento de famílias da região central.
+
+## Último morador deixou a comunidade em setembro
+
+A Favela do Moinho estava localizada entre faixas ferroviárias na região de Campos Elíseos, próxima ao Viaduto Engenheiro Orlando Murgel. A área foi ocupada durante aproximadamente três décadas e se tornou uma referência nas discussões sobre habitação precária, ocupação de terrenos públicos e políticas de requalificação do Centro de São Paulo.
+
+O reassentamento conduzido pelo Governo do Estado começou em abril de 2025. Ao longo dos meses seguintes, moradores deixaram suas residências e diferentes construções foram demolidas como parte da desocupação.
+
+O encerramento foi anunciado em setembro de 2026, com a saída de Manuel Severino Silva dos Santos, de 53 anos, apontado pela imprensa como o último morador a deixar a comunidade. Ele vivia havia aproximadamente duas décadas no local e enfrentou dificuldades para obter uma solução habitacional, permanecendo em meio às demolições enquanto sua situação era analisada.
+
+Reportagens publicadas em agosto relataram que seu acesso ao programa havia enfrentado obstáculos relacionados à análise de renda. Após a aprovação da solução habitacional, sua mudança foi realizada em setembro, encerrando a permanência residencial na área, segundo a administração estadual.
+
+A desocupação abriu espaço para as próximas etapas do projeto urbano, mas não representa a conclusão das obras do parque ou da estação ferroviária.
+
+## Das 851 famílias atendidas, 645 já estavam em moradias definitivas
+
+Os números divulgados pela CDHU permitem distinguir o atendimento habitacional da efetiva entrega de moradias permanentes. Em setembro de 2026, o governo estadual informou que todas as 851 famílias cadastradas haviam sido atendidas pelo programa de reassentamento.
+
+Desse total, 645 já estavam em imóveis definitivos. As outras 206 famílias ainda dependiam de soluções habitacionais em andamento, incluindo o recebimento de auxílio-moradia enquanto aguardavam a conclusão de imóveis ou a aquisição de uma residência.
+
+O benefício temporário informado pelo governo era de R$ 1.200 mensais. A administração estadual declarou ter apresentado mais de 1.500 opções de casas e apartamentos, sendo aproximadamente mil localizadas na região central de São Paulo.
+
+Também afirmou que os moradores puderam indicar preferências e escolher entre alternativas conforme as condições de cada núcleo familiar. Segundo o governo, algumas famílias permaneceram no Centro, enquanto outras se mudaram para a Zona Leste, outros municípios e até regiões do interior ou litoral paulista.
+
+O número de 851 famílias atendidas, portanto, corresponde à conclusão do atendimento cadastral e da retirada residencial da área, não à entrega simultânea de 851 imóveis definitivos. Até o fechamento desta reportagem, a atualização pública consultada não permitia confirmar que as 206 famílias restantes já tivessem concluído sua transição para moradia permanente.
+
+## Remoções geraram críticas sobre localização dos imóveis e participação dos moradores
+
+O reassentamento foi acompanhado de controvérsias desde suas primeiras etapas. Em abril de 2025, moradores participaram de uma audiência pública na Assembleia Legislativa de São Paulo para questionar aspectos da proposta habitacional.
+
+Entre as preocupações apresentadas estavam a localização dos imóveis oferecidos, os valores envolvidos, a adequação das unidades ao tamanho das famílias e a possibilidade de continuar vivendo próximo às redes de trabalho, escola e serviços públicos.
+
+Representantes de movimentos de moradia também questionaram a capacidade financeira de parte dos moradores para assumir eventuais compromissos habitacionais. A União dos Movimentos de Moradia de São Paulo manifestou críticas às alternativas inicialmente apresentadas pelo governo, defendendo soluções que assegurassem condições efetivas de permanência habitacional.
+
+Outro ponto de controvérsia envolveu a condução das demolições. Documentos e manifestações divulgados pelo Governo Federal em 2025 indicaram preocupação com o uso de força policial e com a retirada de estruturas próximas a residências ainda ocupadas.
+
+A Secretaria do Patrimônio da União chegou a interromper temporariamente o processo de cessão da área, solicitando garantias relacionadas ao reassentamento e à proteção das famílias. Posteriormente, as tratativas foram retomadas e a cessão do terreno foi formalizada em julho de 2026.
+
+As críticas não significam, por si só, que todas as remoções tenham sido judicialmente consideradas irregulares. Elas demonstram, entretanto, que a operação envolveu posições divergentes sobre o alcance do direito à moradia e as condições adequadas de reassentamento.
+
+## Pesquisa apontou dispersão de famílias para fora do Centro
+
+Além das discussões iniciais, levantamentos realizados durante o processo apresentaram questionamentos sobre os destinos habitacionais. Reportagem publicada pelo Intercept Brasil em abril de 2026, com análise de dados da CDHU por pesquisadores do LabCidade, da Faculdade de Arquitetura e Urbanismo da Universidade de São Paulo, apontou que grande parte das famílias removidas não havia permanecido na região central.
+
+A pesquisa também identificou número expressivo de famílias em aluguel temporário naquele momento. Os dados analisados se referiam a um estágio anterior à conclusão da desocupação e, portanto, não podem ser utilizados como retrato definitivo da situação em outubro de 2026.
+
+A distinção é importante: os números de março e abril demonstram dificuldades observadas durante o processo, enquanto os dados oficiais de setembro apresentam uma etapa posterior, com 645 famílias em moradias definitivas. O acompanhamento dos endereços finais e das condições de acesso a transporte, escolas e serviços continua sendo relevante para uma avaliação mais ampla dos resultados da política habitacional.
+
+## Parque do Moinho terá 61,3 mil metros quadrados
+
+A transformação do terreno prevê a implantação do Parque do Moinho, com aproximadamente 61,3 mil metros quadrados. O espaço deverá ocupar a área antes utilizada pela comunidade, em Campos Elíseos, atravessando a região do Viaduto Engenheiro Orlando Murgel.
+
+De acordo com o projeto apresentado pela Secretaria de Desenvolvimento Urbano e Habitação, o parque foi organizado em quatro eixos: cultural e educativo, ecológico, esportivo e recreativo, e serviços. A primeira etapa prevê equipamentos de lazer e convivência, entre eles quadras poliesportivas, espaços para basquete e esportes de areia, parque infantil, academia ao ar livre, sanitários, bebedouros e áreas para atividades culturais e ambientais.
+
+Também estão previstos espaços destinados a caminhada, bicicletas e skate. Em fases posteriores, o projeto contempla equipamentos de educação ambiental, horta urbana, viveiro de espécies nativas e estruturas de compostagem.
+
+O objetivo divulgado pelo Governo do Estado é ampliar a oferta de áreas abertas à população e criar novas conexões de circulação para pedestres e ciclistas. A implantação será realizada por etapas.
+
+Não há, nas fontes consultadas para esta reportagem, confirmação suficiente de que todas as obras previstas já tenham começado ou de uma data definitiva para a entrega integral do parque. Por isso, os equipamentos anunciados devem ser tratados como elementos do projeto, e não como instalações atualmente disponíveis à população.
+
+## Nova Estação Bom Retiro deverá conectar três linhas de trem
+
+A requalificação da área também está associada à implantação da futura Estação Bom Retiro. Segundo o planejamento divulgado pelo Governo de São Paulo, a estação deverá possibilitar integração entre as linhas 7-Rubi, 8-Diamante e 11-Coral.
+
+O projeto busca ampliar as conexões de transporte na região central, aproximando a futura estrutura ferroviária do parque e de outros equipamentos urbanos. A área do antigo Moinho possui localização estratégica por estar entre corredores ferroviários metropolitanos.
+
+A proposta contempla a articulação com os deslocamentos de pedestres e ciclistas, de modo a facilitar a circulação entre os espaços de uso público e o transporte coletivo. Entretanto, o anúncio da estação não equivale à existência de uma unidade ferroviária em operação.
+
+A implantação dependerá das etapas de engenharia, licenciamento, contratação, execução e definição de cronograma. A eventual data de abertura deverá ser informada com base em comunicados oficiais atualizados dos órgãos responsáveis pelo transporte metropolitano.
+
+## Terreno foi transferido pela União ao Governo de São Paulo
+
+A implantação do parque dependeu de um processo administrativo entre os governos federal e estadual. A área estava sob domínio da União e era administrada pela Secretaria do Patrimônio da União.
+
+Em julho de 2026, a Secretaria de Desenvolvimento Urbano e Habitação recebeu a cessão de uso não onerosa do terreno, após negociações iniciadas em 2023. O instrumento permitiu ao Governo do Estado assumir a utilização da área para o projeto de requalificação urbana.
+
+A cessão de uso não deve ser confundida automaticamente com transferência de propriedade: trata-se de um instrumento jurídico que estabelece condições para a utilização de um bem público. A destinação do terreno ao parque integra o conjunto de ações de transformação do Centro, com participação de instituições estaduais e federais.
+
+A utilização futura da área deverá observar as condições estabelecidas no instrumento de cessão e as normas aplicáveis ao patrimônio público e à implantação dos equipamentos previstos.
+
+## Incêndios marcaram a história da Favela do Moinho
+
+Durante décadas, a ocupação ficou associada a condições habitacionais precárias e riscos estruturais. A localização entre linhas ferroviárias limitava os acessos e criava dificuldades para circulação de veículos de emergência.
+
+A comunidade também enfrentava problemas relacionados à infraestrutura de saneamento e à existência de construções com materiais inflamáveis. Incêndios registrados em 2011 e 2012 marcaram a história local e provocaram mortes, destruição de moradias e desabrigamento de moradores.
+
+O risco de novos incêndios foi posteriormente utilizado pelo Governo de São Paulo como um dos argumentos para a política de reassentamento. A história da Favela do Moinho, contudo, também envolve relações comunitárias, redes familiares e vínculos econômicos formados ao longo de décadas.
+
+A avaliação dos resultados da desocupação exige considerar tanto os riscos que existiam na área quanto as condições das soluções habitacionais oferecidas às famílias.
+
+## O que a legislação estabelece sobre reassentamento habitacional?
+
+O direito à moradia está previsto no artigo 6º da Constituição Federal como direito social. A Constituição também estabelece competências relacionadas à política urbana, ao planejamento territorial e à atuação do poder público na organização das cidades.
+
+O Estatuto da Cidade, instituído pela Lei nº 10.257/2001, prevê instrumentos e diretrizes voltados ao cumprimento das funções sociais da cidade e da propriedade urbana. Em processos de reassentamento, também podem ser relevantes normas habitacionais específicas, decisões judiciais, instrumentos administrativos e compromissos assumidos pelos órgãos responsáveis.
+
+Isso não significa que toda ocupação em terreno público gere automaticamente direito de permanência no mesmo local. Da mesma forma, a existência de um projeto urbanístico não elimina os deveres legais relacionados à proteção dos direitos das famílias afetadas.
+
+A regularidade de cada procedimento depende de suas circunstâncias, da legislação aplicável e do cumprimento das obrigações assumidas. No caso da Favela do Moinho, o reassentamento esteve associado à destinação de um terreno federal a um projeto público estadual.
+
+Essa combinação de questões habitacionais, patrimoniais e urbanísticas ajuda a explicar por que o processo envolveu diferentes instituições e foi acompanhado por entidades de defesa do direito à moradia.
+
+## O que muda para Campos Elíseos e Santa Cecília?
+
+A futura implantação do parque deverá modificar a utilização de uma área significativa da região central. Campos Elíseos integra o distrito de Santa Cecília e está localizado em uma região de grande importância histórica, ferroviária e econômica da cidade.
+
+A conversão do terreno em espaço público poderá ampliar as possibilidades de lazer, circulação de pedestres e conexão com o transporte metropolitano, caso os projetos sejam integralmente executados. Também poderá produzir efeitos sobre a dinâmica urbana do entorno, incluindo o uso de imóveis, os fluxos de pessoas e o funcionamento do comércio local.
+
+Esses efeitos, entretanto, ainda dependem da implementação efetiva dos equipamentos previstos. Não há fundamento para afirmar antecipadamente que o parque provocará determinado percentual de valorização imobiliária ou resolverá, isoladamente, os problemas sociais e urbanísticos da região.
+
+A transformação do espaço deverá ser acompanhada a partir de informações sobre execução das obras, acessibilidade, conservação, segurança e utilização pela população.
+
+## Quais são os próximos passos?
+
+Com a desocupação anunciada como concluída, o acompanhamento passa a envolver duas frentes principais. A primeira é a execução do projeto de requalificação urbana, com a implantação gradual do Parque do Moinho e os procedimentos necessários à futura Estação Bom Retiro.
+
+A segunda é a verificação dos resultados do reassentamento, especialmente a obtenção de moradia definitiva pelas famílias que, em setembro, ainda dependiam de auxílio temporário. Também permanecem relevantes o acesso a equipamentos públicos, a localização das novas residências e a manutenção dos vínculos sociais das famílias reassentadas.
+
+O terreno onde funcionou a Favela do Moinho está diante de uma transformação de grande escala. O resultado dessa mudança não será medido apenas pela construção de um parque ou pela abertura de uma estação ferroviária, mas também pela efetividade da política habitacional aplicada aos antigos moradores e pela capacidade de integrar o novo espaço à vida urbana do Centro de São Paulo.` }, { tipo: "tabela", cabecalho: ["Indicador", "Informação"], linhas: [["Localização", "Campos Elíseos, distrito de Santa Cecília"], ["Famílias atendidas", "851"], ["Famílias em moradia definitiva", "645, conforme balanço de setembro de 2026"], ["Famílias ainda em atendimento transitório", "206, conforme diferença no mesmo balanço"], ["Valor do auxílio-moradia informado", "R$ 1.200 por mês"], ["Início do reassentamento", "Abril de 2025"], ["Saída do último morador", "15 de setembro de 2026"], ["Área destinada ao parque", "61,3 mil m²"], ["Destinação", "Parque do Moinho"], ["Estação planejada", "Bom Retiro"], ["Linhas previstas para integração", "7-Rubi, 8-Diamante e 11-Coral"], ["Cessão de uso da área", "Julho de 2026"], ["Órgãos habitacionais", "SDUH e CDHU"]] }],
+    notas: ["Os números habitacionais correspondem ao balanço publicado em setembro de 2026, e não a uma verificação individual atualizada em 16 de outubro."],
+    manchetesContextuais: { zona: "Após três décadas, Favela do Moinho é desocupada e abre caminho para novo parque e estação de trem no Centro", bairro: "Campos Elíseos terá parque de 61 mil m² após desocupação da Favela do Moinho; veja o que está previsto", instituicao: "CDHU conclui retirada de moradores da Favela do Moinho, mas 206 famílias ainda aguardavam moradia definitiva" },
+    tags: ["Favela do Moinho", "Parque do Moinho", "Campos Elíseos", "Santa Cecília", "Bom Retiro", "CDHU", "SDUH", "Secretaria do Patrimônio da União", "Reassentamento", "Direito à moradia", "Requalificação urbana", "Estação Bom Retiro", "Patrimônio público"],
+    relacionamentos: [{ nome: "Campos Elíseos", tipo: "territorio", relacao: "direto" }, { nome: "Santa Cecília", tipo: "territorio", relacao: "direto" }, { nome: "Centro", tipo: "territorio", relacao: "regional" }, { nome: "Bom Retiro", tipo: "territorio", relacao: "informativo" }, { nome: "CDHU", tipo: "instituicao", relacao: "direto" }, { nome: "Governo do Estado de São Paulo", tipo: "instituicao", relacao: "direto" }, { nome: "Defensoria Pública do Estado de São Paulo", tipo: "instituicao", relacao: "informativo" }],
+    fontes: [{ titulo: "Governo de SP — Conclui reassentamento na Favela do Moinho", url: "https://www.sp.gov.br/sp/canais-comunicacao/noticias/governo%2Bde%2Bsp%2Bconclui%2Breassentamento%2Bna%2Bfavela%2Bdo%2Bmoinho%2Bcom%2Ba%2Bmudanca%2Bde%2Bultimo%2Bmorador" }, { titulo: "CDHU — Atendimento às mais de 850 famílias", url: "https://www.cdhu.sp.gov.br/cdhu/noticias/governo-de-sp-conclui-reassentamento-da-favela-do-moinho-com-atendimento-as-mais-de-850-familias" }, { titulo: "SDUH — Projeto do Parque do Moinho", url: "https://www.habitacao.sp.gov.br/habitacao/noticias/sduh-recebe-cessao-de-uso-da-area-da-favela-do-moinho-e-apresenta-projeto-do-parque-que-sera-implantado-no-local" }],
+  },
+  {
+    id: "noticia-temporal-anhangabau-2026",
+    slug: "temporal-anhangabau-justica-rejeita-pedido-mp-enchentes-sp",
+    titulo: "Túnel do Anhangabaú vira armadilha durante temporal, e Justiça rejeita pedidos do MP contra Prefeitura de SP",
+    resumo: "Temporal de 14 de outubro deixou motoristas ilhados e veículos submersos no Centro de São Paulo. Ministério Público pediu explicações e multa de até R$ 1,8 milhão, mas decisão da 13ª Vara da Fazenda Pública rejeitou os pedidos apresentados naquele processo.",
+    categoria: "Cidades e Justiça",
+    publicadoEm: "2026-10-16",
+    autoria: "Redação Banca Paulista",
+    seo: {
+      title: "Anhangabaú: Justiça rejeita pedido do MP após enchente",
+      description: "Após temporal que submergiu carros no túnel do Anhangabaú, Justiça rejeita pedidos do MP contra a Prefeitura de SP. Entenda a decisão.",
+      canonicalPath: "/noticias/temporal-anhangabau-justica-rejeita-pedido-mp-enchentes-sp",
+      ogTitle: "Anhangabaú alagado: Justiça rejeita pedidos do MP contra Prefeitura",
+      keywords: ["túnel do Anhangabaú alagado", "temporal Anhangabaú outubro 2026", "enchentes Centro de São Paulo", "Ministério Público enchentes São Paulo", "Justiça rejeita pedido MP enchentes", "Prefeitura de São Paulo drenagem urbana", "túnel Anhangabaú bombas", "responsabilidade civil enchentes", "13ª Vara da Fazenda Pública São Paulo"],
+    },
+    blocos: [{ tipo: "markdown", texto: `São Paulo, 16 de outubro de 2026 — O alagamento do túnel do Anhangabaú, no Centro de São Paulo, voltou a expor os riscos enfrentados por motoristas e passageiros durante temporais na capital. Na quarta-feira (14), uma chuva intensa transformou a passagem subterrânea em uma área inundada, deixando automóveis e ônibus parcialmente submersos e pessoas ilhadas.
+
+O episódio provocou uma reação do Ministério Público de São Paulo (MPSP), que recorreu à Justiça para cobrar explicações da Prefeitura sobre as providências adotadas durante a tempestade e o cumprimento de uma decisão anterior relacionada ao planejamento de drenagem urbana.
+
+Nesta sexta-feira (16), porém, a Justiça rejeitou os pedidos apresentados pela Promotoria naquele processo. A decisão considerou que a ação judicial trata especificamente da apresentação de planos de intervenção para enfrentar as enchentes e que o município ainda estava dentro do prazo estabelecido para cumprir a determinação, conforme informações divulgadas sobre o pronunciamento judicial.
+
+A sequência de acontecimentos reacendeu o debate sobre a capacidade do sistema de drenagem do Centro, o funcionamento dos protocolos de emergência e os instrumentos jurídicos existentes para cobrar medidas preventivas do poder público.
+
+## Chuva de 40 minutos deixa veículos submersos no Anhangabaú
+
+Segundo dados divulgados pela administração municipal, foram registrados aproximadamente 42 milímetros de chuva em apenas 40 minutos na região do Anhangabaú. O volume corresponde a cerca de 37% da precipitação média esperada para todo o mês de outubro, considerada a referência de 112 milímetros informada pela Prefeitura.
+
+A intensidade da chuva provocou uma rápida elevação da água dentro do túnel. Motoristas e passageiros foram surpreendidos pela inundação, enquanto veículos ficaram imobilizados e alguns chegaram a boiar.
+
+Relatos publicados pela imprensa descreveram pessoas tentando abandonar automóveis e buscar locais mais altos enquanto aguardavam socorro. O Corpo de Bombeiros foi mobilizado, e a circulação de veículos precisou ser interrompida.
+
+O cenário foi agravado pela presença de ônibus e automóveis na passagem subterrânea, onde a concentração de água dificultou a saída de ocupantes.
+
+Na mesma tarde, a chuva provocou transtornos em outras regiões da cidade. Na Brasilândia, Zona Norte, uma mulher de 47 anos morreu após um deslizamento atingir uma residência. O temporal também causou transbordamento no Parque Ibirapuera, problemas em estações do Metrô e congestionamentos que levaram à suspensão do rodízio municipal de veículos.
+
+A morte registrada na Brasilândia ocorreu em outro ponto da capital, não no túnel do Anhangabaú.
+
+## Por que as seis bombas do túnel não impediram a inundação?
+
+O túnel do Anhangabaú possui um sistema de drenagem com seis bombas responsáveis por retirar a água acumulada na passagem subterrânea. De acordo com a Prefeitura, os equipamentos estavam funcionando durante o temporal, mas a vazão do sistema não foi suficiente para acompanhar o volume de chuva concentrado em um intervalo tão curto.
+
+A administração municipal também utilizou equipamentos auxiliares de bombeamento para reduzir o nível da água e permitir o trabalho das equipes de emergência.
+
+A localização da passagem subterrânea representa um desafio adicional. A região central concentra cursos d'água canalizados e estruturas de drenagem construídas ao longo de diferentes períodos da urbanização paulistana.
+
+Entre os cursos d'água associados à bacia do Anhangabaú estão os córregos Saracura, Bexiga, Augusta e Itororó. A impermeabilização do solo, a concentração de edificações e a existência de galerias subterrâneas tornam o escoamento das águas pluviais uma questão estrutural para a região.
+
+O histórico de inundações também não é recente. A área já enfrentou episódios graves de alagamento em décadas anteriores, incluindo ocorrências que atingiram a infraestrutura viária subterrânea do Centro.
+
+Assim, embora o volume excepcional de chuva tenha sido apontado pela Prefeitura como causa imediata da inundação de 14 de outubro, permanece a discussão sobre a capacidade de adaptação dos equipamentos e das estruturas de drenagem diante de eventos meteorológicos intensos.
+
+## Ministério Público pede explicações e cobra cumprimento de sentença
+
+Após o temporal, a Promotoria de Justiça de Habitação e Urbanismo de São Paulo apresentou uma manifestação judicial relacionada às obrigações municipais de prevenção e controle de enchentes.
+
+O Ministério Público solicitou informações sobre os procedimentos utilizados pela Prefeitura para enfrentar a emergência, incluindo o acionamento da Defesa Civil, o envio de alertas à população, o isolamento de áreas alagadas e o atendimento às pessoas atingidas.
+
+A Promotoria também questionou o cumprimento de uma sentença anterior que determinou a apresentação de planos de intervenção de curto, médio e longo prazos para enfrentar problemas de drenagem urbana. A decisão anterior havia transitado em julgado em janeiro de 2026.
+
+Segundo a posição apresentada pelo Ministério Público, o município não teria atendido adequadamente aos prazos exigidos para a entrega desses instrumentos de planejamento. A Promotoria pediu o reconhecimento do descumprimento e a incidência de multa diária de R$ 10 mil, até o limite de R$ 1,8 milhão.
+
+O pedido de multa não significava que o município já tivesse sido condenado a pagar esse valor. Sua eventual aplicação dependia de decisão judicial.
+
+## Justiça rejeita pedidos e considera que Prefeitura ainda está no prazo
+
+O desdobramento judicial ocorreu nesta sexta-feira (16). O juiz Yuri Cesar Serapião Soares Pereira, da 13ª Vara da Fazenda Pública de São Paulo, rejeitou os pedidos apresentados pelo Ministério Público no processo.
+
+Conforme o teor da decisão divulgado pela imprensa, o magistrado considerou que a demanda judicial está delimitada ao cumprimento da obrigação de apresentar planos de intervenção de curto, médio e longo prazos para a drenagem urbana.
+
+A decisão também apontou que a administração municipal ainda estava dentro do prazo fixado judicialmente para atender à determinação.
+
+Com esse entendimento, não foram acolhidos, naquela oportunidade, os pedidos da Promotoria para exigir explicações emergenciais sobre os acontecimentos de 14 de outubro e aplicar a penalidade pretendida.
+
+O pronunciamento não representa uma declaração judicial de que a infraestrutura de drenagem do túnel é adequada, nem afasta automaticamente a possibilidade de discussão sobre danos materiais ou responsabilidades em procedimentos próprios. A decisão analisou os pedidos formulados no processo e os limites da obrigação judicial anteriormente estabelecida.
+
+Também não significa que todos os deveres municipais relacionados à prevenção de enchentes estejam encerrados.
+
+## Prefeitura afirma que adotou medidas e prepara novos projetos
+
+A Prefeitura de São Paulo informou que já havia apresentado planos relacionados à drenagem urbana e que esses documentos passam por atualização considerando o Plano Diretor de Drenagem divulgado em setembro de 2026.
+
+O prefeito Ricardo Nunes atribuiu o alagamento do Anhangabaú à concentração extraordinária de chuva na região. Segundo a administração municipal, as seis bombas fixas do túnel permaneceram em funcionamento, mas o volume de água ultrapassou a capacidade de escoamento disponível.
+
+A Prefeitura também informou ter mobilizado equipes para drenagem, limpeza e liberação da passagem. Entre as possibilidades discutidas para reduzir episódios futuros estão melhorias no sistema de bombeamento e intervenções de drenagem na região do Terminal Bandeira.
+
+Entretanto, a existência de projetos e propostas não deve ser confundida com obras efetivamente iniciadas ou concluídas. O novo planejamento municipal de drenagem prevê intervenções distribuídas ao longo das próximas décadas. Sua execução depende de projetos técnicos, recursos orçamentários, procedimentos administrativos e cronogramas específicos.
+
+## Motoristas que tiveram carros danificados podem buscar indenização?
+
+O episódio também levanta uma questão jurídica: em quais circunstâncias o poder público pode ser responsabilizado por prejuízos provocados por alagamentos?
+
+A Constituição Federal, em seu artigo 37, parágrafo 6º, estabelece regras de responsabilidade civil das pessoas jurídicas de direito público e das entidades privadas prestadoras de serviços públicos pelos danos causados por seus agentes nessa qualidade.
+
+Entretanto, a ocorrência de uma enchente não gera, por si só, direito automático à indenização. Em situações de danos atribuídos à omissão estatal, a análise pode envolver a existência de um dever específico de atuação, a conduta administrativa, a comprovação do prejuízo e o nexo causal entre o comportamento do poder público e o dano.
+
+Eventos meteorológicos extraordinários também podem integrar essa avaliação, inclusive quanto à possibilidade de rompimento do nexo causal. No caso de veículos atingidos por enchentes, documentos como fotografias, vídeos, comprovantes de despesas, registros de atendimento e orçamentos de reparação podem contribuir para a demonstração dos prejuízos.
+
+As condições de eventual cobertura securitária devem ser verificadas no contrato de seguro. A análise de uma possível responsabilidade municipal depende das circunstâncias concretas de cada ocorrência e não pode ser presumida apenas pelas imagens do alagamento.
+
+## O que muda para quem circula pelo Centro de São Paulo?
+
+O túnel do Anhangabaú integra uma área estratégica de circulação entre o Centro e outros corredores viários da capital. Sua interdição durante períodos de chuva intensa pode provocar efeitos sobre o transporte coletivo, deslocamentos profissionais, circulação de veículos de emergência e congestionamentos nas vias alternativas.
+
+Para os moradores, trabalhadores e comerciantes da região, a repetição de episódios de inundação também representa uma preocupação com a segurança e a continuidade das atividades econômicas. O episódio de 14 de outubro demonstrou que a rapidez da elevação da água pode reduzir drasticamente o tempo disponível para que motoristas abandonem áreas de risco.
+
+As orientações de segurança são evitar a travessia de locais inundados, não tentar enfrentar correntezas e seguir as determinações das equipes de emergência. Em situações de perigo imediato, os serviços de emergência podem ser acionados pelo telefone 193, do Corpo de Bombeiros, ou 199, da Defesa Civil.
+
+## Quais são os próximos desdobramentos?
+
+A discussão judicial sobre os planos de drenagem e as medidas administrativas para prevenir enchentes permanece relevante para o acompanhamento da infraestrutura paulistana.
+
+Entre os principais pontos que merecem acompanhamento estão a apresentação e a atualização dos planos municipais, o cronograma das obras previstas para a bacia do Anhangabaú, eventuais melhorias na capacidade de bombeamento e os procedimentos de interdição preventiva de passagens subterrâneas.
+
+Também será importante acompanhar possíveis recursos ou novos requerimentos processuais apresentados após a decisão de 16 de outubro. Enquanto não houver confirmação documental de novos pronunciamentos, não é possível afirmar que a discussão judicial tenha sido definitivamente encerrada.
+
+O temporal deixou uma questão que ultrapassa a ocorrência pontual: como preparar uma região densamente urbanizada, construída sobre córregos canalizados e dependente de infraestrutura antiga, para episódios de chuva capazes de concentrar em poucos minutos uma parcela significativa da precipitação de um mês inteiro?` }, { tipo: "tabela", cabecalho: ["Indicador", "Informação"], linhas: [["Data do temporal", "14 de outubro de 2026"], ["Local principal", "Túnel do Anhangabaú, Centro de São Paulo"], ["Chuva registrada", "Aproximadamente 42 mm"], ["Intervalo da precipitação", "40 minutos"], ["Percentual da média mensal", "Aproximadamente 37%"], ["Sistema fixo de drenagem", "Seis bombas"], ["Requerente judicial", "Ministério Público de São Paulo"], ["Órgão judicial", "13ª Vara da Fazenda Pública de São Paulo"], ["Multa solicitada", "R$ 10 mil diários, limitada a R$ 1,8 milhão"], ["Decisão noticiada", "Pedidos do MP rejeitados em 16/10/2026"]] }],
+    notas: ["Nota de apuração: A íntegra da decisão judicial e a manifestação processual original não foram obtidas diretamente nesta pesquisa. A descrição dos fundamentos é atribuída às reportagens consultadas."],
+    manchetesContextuais: { zona: "Temporal deixa carros e ônibus submersos no Centro de SP; cobrança do Ministério Público chega à Justiça", bairro: "42 mm de chuva em 40 minutos: por que o túnel do Anhangabaú voltou a alagar em São Paulo?", instituicao: "Justiça rejeita cobrança do MP após enchente no Anhangabaú; Prefeitura terá de apresentar planos de drenagem" },
+    tags: ["Anhangabaú", "Enchentes", "Temporal", "Centro de São Paulo", "Drenagem urbana", "Ministério Público", "Prefeitura de São Paulo", "Responsabilidade civil", "Fazenda Pública", "Defesa Civil"],
+    relacionamentos: [{ nome: "Centro", tipo: "territorio", relacao: "direto" }, { nome: "Anhangabaú", tipo: "territorio", relacao: "direto" }, { nome: "Brasilândia", tipo: "territorio", relacao: "informativo" }, { nome: "Ministério Público do Estado de São Paulo", tipo: "instituicao", relacao: "direto" }, { nome: "Prefeitura de São Paulo", tipo: "instituicao", relacao: "direto" }, { nome: "Defesa Civil", tipo: "instituicao", relacao: "informativo" }, { nome: "Corpo de Bombeiros", tipo: "instituicao", relacao: "informativo" }],
+    fontes: [{ titulo: "Metrópoles — Justiça rejeita pedido do MP contra Prefeitura de SP por estragos da chuva", url: "https://www.metropoles.com/sao-paulo/justica-rejeita-pedido-do-mp-contra-prefeitura-de-sp-por-estragos-da-chuva" }, { titulo: "CNN Brasil — MP pede plano de contingência da prefeitura após enchentes em SP", url: "https://www.cnnbrasil.com.br/nacional/sudeste/sp/mp-pede-plano-de-contingencia-da-prefeitura-apos-enchentes-em-sp/" }, { titulo: "Folha de S.Paulo — Túnel do Anhangabaú tem histórico de enchentes", url: "https://www1.folha.uol.com.br/cotidiano/2026/10/tunel-do-anhangabau-tem-historico-de-enchentes-e-depende-de-bombas-para-tirar-agua-de-rio-enterrado.shtml" }],
+  },
+  {
     id: "noticia-roubos-marginal-pinheiros-89-dp",
     slug: "roubos-marginal-pinheiros-cinco-detidos-89-dp",
     titulo: "Roubos contra usuários da ciclofaixa levam cinco pessoas ao 89º DP em São Paulo",
