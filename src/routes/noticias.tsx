@@ -160,7 +160,7 @@ export function NoticiasPage({ categoriaSlug }: { categoriaSlug?: string }) {
                   aria-hidden
                 />
               </summary>
-              <div className="absolute right-0 top-full z-30 mt-0.5 grid min-w-48 gap-1 border border-gold/30 bg-brand-navy p-2 shadow-xl sm:left-0 sm:right-auto">
+              <div className="absolute right-0 top-full z-30 mt-0.5 grid min-w-48 gap-1 border border-gold/30 bg-brand-navy p-2 shadow-xl">
                 {regionLinks.map((item) => (
                   <Link
                     key={item.to}
