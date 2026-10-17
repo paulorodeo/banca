@@ -2,7 +2,17 @@ import { useState } from "react";
 import { noticiaFallback } from "@/content/local/settings";
 import type { Media } from "@/content/types";
 
-export function NewsImage({ image, className }: { image?: Media; className?: string }) {
+export function NewsImage({
+  image,
+  className,
+  loading = "lazy",
+  fetchPriority,
+}: {
+  image?: Media;
+  className?: string;
+  loading?: "eager" | "lazy";
+  fetchPriority?: "high" | "low" | "auto";
+}) {
   const [originalFailed, setOriginalFailed] = useState(false);
 
   if (image && !originalFailed) {
@@ -12,7 +22,8 @@ export function NewsImage({ image, className }: { image?: Media; className?: str
         alt={image.alt}
         width={image.width}
         height={image.height}
-        loading="lazy"
+        loading={loading}
+        fetchPriority={fetchPriority}
         decoding="async"
         className={className}
         onError={() => setOriginalFailed(true)}
@@ -26,7 +37,8 @@ export function NewsImage({ image, className }: { image?: Media; className?: str
       <img
         src={noticiaFallback.webp}
         alt={noticiaFallback.alt}
-        loading="lazy"
+        loading={loading}
+        fetchPriority={fetchPriority}
         decoding="async"
         className={className}
         onError={(event) => {
