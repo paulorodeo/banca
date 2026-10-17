@@ -35,8 +35,10 @@ function date(value: string) {
 
 export function NoticiasPage() {
   const categoriaSlug = useRouterState({
-    select: (state) =>
-      typeof state.location.search.categoria === "string" ? state.location.search.categoria : undefined,
+    select: (state) => {
+      const categoria = (state.location.search as { categoria?: unknown } | undefined)?.categoria;
+      return typeof categoria === "string" ? categoria : undefined;
+    },
   });
   const categoriaSelecionada = encontraCategoriaNoticia(categoriaSlug);
   const [featured, ...afterFeatured] = orderedNoticias;
