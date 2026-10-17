@@ -12,37 +12,44 @@ import {
 import { Brand } from "@/components/site/brand";
 import { NewsImage } from "@/components/site/news-image";
 import { Container } from "@/components/site/primitives";
+import { conteudos } from "@/content/local/artigos-editoriais";
 import { noticias } from "@/content/local/noticias";
 
 const orderedNoticias = [...noticias].sort((a, b) => b.publicadoEm.localeCompare(a.publicadoEm));
 const editorias = [
   {
     label: "Justiça e tribunais",
+    description: "Decisões, tribunais e direitos",
     icon: Scale,
     slug: "temporal-anhangabau-justica-rejeita-pedido-mp-enchentes-sp",
   },
   {
     label: "Polícia e segurança",
+    description: "Ocorrências e serviços públicos",
     icon: ShieldCheck,
     slug: "roubos-marginal-pinheiros-cinco-detidos-89-dp",
   },
   {
     label: "Direitos e cidadania",
+    description: "Orientação e informação pública",
     icon: Landmark,
     slug: "favela-do-moinho-851-familias-parque-centro-sp",
   },
   {
     label: "Cidades e infraestrutura",
+    description: "Mobilidade, obras e território",
     icon: Building2,
     slug: "linha-2-verde-metro-penha-guarulhos-escavacoes-2032",
   },
   {
     label: "Urbanismo",
+    description: "Habitação e vida urbana",
     icon: BookOpenText,
     slug: "retrofit-centro-sp-subsidio-25-por-cento-oito-distritos",
   },
   {
     label: "Mercado e serviços",
+    description: "Economia e serviços em São Paulo",
     icon: TrendingUp,
     slug: "investimentos-1-bilhao-obras-zona-oeste-lapa",
   },
@@ -66,9 +73,10 @@ export function NoticiasPage() {
   const latest = afterFeatured.slice(4, 10);
   const archive = afterFeatured.slice(10);
   const emAlta = orderedNoticias.slice(0, 5);
+  const artigosEmDestaque = conteudos.filter((item) => item.status === "publicado").slice(0, 3);
 
   return (
-    <main className="home-light bg-[#fbfaf7] text-brand-navy">
+    <main className="home-light bg-white font-sans text-brand-navy">
       <section className="border-b border-brand-navy/10 bg-brand-navy text-ivory">
         <Container className="flex min-h-8 items-center justify-between gap-4 py-1.5 text-[0.62rem] font-medium">
           <span className="hidden sm:inline">Jornalismo independente sobre São Paulo</span>
@@ -85,7 +93,7 @@ export function NoticiasPage() {
           </Link>
           <Link
             to="/orgaos"
-            className="inline-flex min-h-10 items-center gap-3 border border-brand-navy/15 bg-[#fbfaf7] px-4 text-xs text-muted-foreground transition-colors hover:border-gold hover:text-brand-navy"
+            className="inline-flex min-h-10 items-center gap-3 border border-brand-navy/20 bg-white px-4 text-xs font-semibold text-brand-navy/75 transition-colors hover:border-gold hover:text-brand-navy"
           >
             <Search className="size-4 text-gold" aria-hidden />
             Buscar órgãos e serviços
@@ -115,7 +123,7 @@ export function NoticiasPage() {
         </Container>
       </nav>
 
-      <section className="py-8 md:py-10">
+      <section className="bg-white py-7 md:py-8">
         <Container>
           <div className="grid gap-5 xl:grid-cols-[minmax(0,1.55fr)_minmax(24rem,0.85fr)]">
             <article className="group relative min-h-[30rem] overflow-hidden bg-brand-navy sm:min-h-[35rem]">
@@ -130,10 +138,10 @@ export function NoticiasPage() {
                 <p className="w-fit bg-gold px-3 py-1 text-[0.64rem] font-bold uppercase tracking-[0.1em] text-brand-navy">
                   {featured.categoria}
                 </p>
-                <h1 className="mt-4 max-w-3xl font-serif text-3xl leading-[1.04] text-white sm:text-4xl md:text-5xl">
+                <h1 className="mt-4 max-w-3xl font-[Georgia,serif] text-3xl font-bold leading-[1.05] tracking-[-0.018em] text-white sm:text-[2.35rem] md:text-[2.65rem]">
                   {featured.titulo}
                 </h1>
-                <p className="mt-4 max-w-2xl text-sm leading-6 text-ivory/85 md:text-base">
+                <p className="mt-4 max-w-2xl text-[0.95rem] font-medium leading-6 text-ivory/95 md:text-base">
                   {featured.resumo}
                 </p>
                 <div className="mt-5 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-ivory/75">
@@ -159,19 +167,24 @@ export function NoticiasPage() {
         </Container>
       </section>
 
-      <section className="border-y border-brand-navy/10 bg-white py-5 md:py-6">
+      <section className="border-y border-brand-navy/15 bg-white py-6 md:py-7">
         <Container>
           <div className="grid gap-y-5 sm:grid-cols-2 lg:grid-cols-6">
-            {editorias.map(({ label, icon: Icon, slug }) => (
+            {editorias.map(({ label, description, icon: Icon, slug }) => (
               <Link
                 key={label}
                 to="/noticias/$slug"
                 params={{ slug }}
-                className="group flex items-start gap-3 border-brand-navy/10 px-3 first:pl-0 sm:border-r lg:last:border-r-0"
+                className="group flex items-start gap-3 border-brand-navy/15 px-4 first:pl-0 sm:border-r lg:last:border-r-0"
               >
-                <Icon className="mt-0.5 size-5 shrink-0 text-gold" aria-hidden />
-                <span className="font-serif text-sm leading-5 text-brand-navy transition-colors group-hover:text-gold">
-                  {label}
+                <Icon className="mt-0.5 size-7 shrink-0 text-gold" strokeWidth={1.8} aria-hidden />
+                <span>
+                  <span className="block font-[Georgia,serif] text-[0.97rem] font-bold leading-5 text-brand-navy transition-colors group-hover:text-gold">
+                    {label}
+                  </span>
+                  <span className="mt-1 block text-xs font-medium leading-4 text-brand-navy/65">
+                    {description}
+                  </span>
                 </span>
               </Link>
             ))}
@@ -179,7 +192,7 @@ export function NoticiasPage() {
         </Container>
       </section>
 
-      <section id="ultimas-noticias" className="py-12 md:py-16">
+      <section id="ultimas-noticias" className="bg-white py-12 md:py-16">
         <Container>
           <div className="grid gap-9 xl:grid-cols-[minmax(0,1fr)_18rem]">
             <div>
@@ -213,19 +226,24 @@ export function NoticiasPage() {
               ) : null}
             </div>
             <aside className="space-y-6" aria-label="Curadoria editorial">
-              <section className="bg-brand-navy p-6 text-ivory">
-                <p className="text-xs font-bold uppercase tracking-[0.16em] text-gold">Em alta</p>
+              <section className="bg-brand-navy p-6 text-ivory shadow-[0_14px_35px_-26px_rgba(3,26,47,0.9)]">
+                <div className="flex items-center gap-3">
+                  <TrendingUp className="size-6 text-gold" strokeWidth={1.8} aria-hidden />
+                  <h2 className="font-[Georgia,serif] text-2xl font-bold text-white">Em alta</h2>
+                </div>
                 <ol className="mt-4 space-y-4">
                   {emAlta.map((item, index) => (
                     <li
                       key={item.id}
                       className="flex gap-3 border-b border-white/10 pb-4 last:border-0 last:pb-0"
                     >
-                      <span className="font-serif text-2xl text-gold/90">{index + 1}</span>
+                      <span className="font-[Georgia,serif] text-2xl font-bold text-gold">
+                        {index + 1}
+                      </span>
                       <Link
                         to="/noticias/$slug"
                         params={{ slug: item.slug }}
-                        className="text-sm leading-5 text-ivory/90 hover:text-gold"
+                        className="text-[0.95rem] font-semibold leading-5 text-white hover:text-gold"
                       >
                         {item.titulo}
                       </Link>
@@ -233,14 +251,53 @@ export function NoticiasPage() {
                   ))}
                 </ol>
               </section>
+              {artigosEmDestaque.length ? (
+                <section className="border border-brand-navy/15 bg-white p-6">
+                  <div className="flex items-center justify-between gap-4 border-b border-brand-navy/15 pb-3">
+                    <div className="flex items-center gap-2">
+                      <BookOpenText className="size-5 text-gold" aria-hidden />
+                      <h2 className="font-[Georgia,serif] text-xl font-bold text-brand-navy">
+                        Artigos em destaque
+                      </h2>
+                    </div>
+                    <Link
+                      to="/artigos"
+                      className="text-xs font-bold text-brand-navy underline decoration-gold underline-offset-4 hover:text-gold"
+                    >
+                      Ver todos
+                    </Link>
+                  </div>
+                  <div className="divide-y divide-brand-navy/10">
+                    {artigosEmDestaque.map((item) => (
+                      <article key={item.id} className="py-4 first:pt-4 last:pb-0">
+                        <p className="text-[0.65rem] font-bold uppercase tracking-[0.1em] text-gold">
+                          {item.categoria}
+                        </p>
+                        <h3 className="mt-1 font-[Georgia,serif] text-[1.05rem] font-bold leading-[1.18] text-brand-navy">
+                          <Link
+                            to="/artigos/$slug"
+                            params={{ slug: item.slug }}
+                            className="hover:text-gold"
+                          >
+                            {item.titulo}
+                          </Link>
+                        </h3>
+                        <p className="mt-2 text-sm font-medium leading-5 text-brand-navy/70">
+                          {item.resumo}
+                        </p>
+                      </article>
+                    ))}
+                  </div>
+                </section>
+              ) : null}
               <section className="border border-brand-navy/15 bg-white p-6">
                 <p className="text-xs font-bold uppercase tracking-[0.16em] text-gold">
                   Cobertura Banca Paulista
                 </p>
-                <h2 className="mt-3 font-serif text-2xl leading-tight text-brand-navy">
+                <h2 className="mt-3 font-[Georgia,serif] text-2xl font-bold leading-tight text-brand-navy">
                   Informação verificada para acompanhar São Paulo.
                 </h2>
-                <p className="mt-3 text-sm leading-6 text-muted-foreground">
+                <p className="mt-3 text-[0.95rem] font-medium leading-6 text-brand-navy/70">
                   Reportagens sobre cidades, direitos, segurança pública e instituições, sempre com
                   as fontes no centro da apuração.
                 </p>
@@ -262,7 +319,7 @@ export function NoticiasPage() {
             <p className="text-xs font-bold uppercase tracking-[0.16em] text-gold">
               Banca Paulista
             </p>
-            <h2 className="mt-3 font-serif text-3xl leading-tight text-white md:text-4xl">
+            <h2 className="mt-3 font-[Georgia,serif] text-3xl font-bold leading-tight text-white md:text-4xl">
               Jornalismo independente sobre o que importa para São Paulo.
             </h2>
             <p className="mt-4 text-sm leading-6 text-ivory/80">
@@ -283,13 +340,13 @@ export function NoticiasPage() {
 
 function SideHeadline({ item }: { item: (typeof noticias)[number] }) {
   return (
-    <article className="group grid grid-cols-[7rem_1fr] gap-4 py-4 first:pt-0 last:pb-0 sm:grid-cols-[8rem_1fr] xl:min-h-[8.5rem]">
+    <article className="group grid grid-cols-[7.25rem_1fr] gap-4 py-4 first:pt-0 last:pb-0 sm:grid-cols-[8.25rem_1fr] xl:min-h-[8.55rem]">
       <NewsImage image={item.imagem} className="aspect-[4/3] size-full object-cover" />
       <div className="pr-1">
-        <p className="text-[0.63rem] font-bold uppercase tracking-[0.1em] text-gold">
+        <p className="text-[0.68rem] font-extrabold uppercase tracking-[0.08em] text-[#aa7425]">
           {item.categoria}
         </p>
-        <h2 className="mt-1 font-serif text-base leading-[1.12] text-brand-navy md:text-lg">
+        <h2 className="mt-1 font-[Georgia,serif] text-[1.06rem] font-bold leading-[1.14] tracking-[-0.01em] text-brand-navy md:text-[1.16rem]">
           <Link
             to="/noticias/$slug"
             params={{ slug: item.slug }}
@@ -300,7 +357,7 @@ function SideHeadline({ item }: { item: (typeof noticias)[number] }) {
         </h2>
         <time
           dateTime={item.publicadoEm}
-          className="mt-2 block text-[0.68rem] text-muted-foreground"
+          className="mt-2 block text-[0.72rem] font-medium text-brand-navy/60"
         >
           {date(item.publicadoEm)}
         </time>
@@ -312,10 +369,10 @@ function SideHeadline({ item }: { item: (typeof noticias)[number] }) {
 function SectionTitle({ title }: { title: string }) {
   return (
     <div className="flex items-end justify-between border-b border-brand-navy/20 pb-3">
-      <h2 className="relative font-serif text-3xl text-brand-navy after:absolute after:-bottom-[13px] after:left-0 after:h-0.5 after:w-16 after:bg-gold">
+      <h2 className="relative font-[Georgia,serif] text-[2rem] font-bold tracking-[-0.015em] text-brand-navy after:absolute after:-bottom-[13px] after:left-0 after:h-1 after:w-16 after:bg-gold">
         {title}
       </h2>
-      <span className="text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground">
+      <span className="text-xs font-bold uppercase tracking-[0.1em] text-brand-navy/60">
         Cobertura recente
       </span>
     </div>
@@ -326,10 +383,10 @@ function NewsCard({ item }: { item: (typeof noticias)[number] }) {
   return (
     <article className="group border-b border-brand-navy/15 pb-6">
       <NewsImage image={item.imagem} className="aspect-[16/10] w-full object-cover" />
-      <p className="mt-4 text-[0.63rem] font-bold uppercase tracking-[0.1em] text-gold">
+      <p className="mt-4 text-[0.68rem] font-extrabold uppercase tracking-[0.08em] text-[#aa7425]">
         {item.categoria}
       </p>
-      <h3 className="mt-2 font-serif text-xl leading-[1.12] text-brand-navy">
+      <h3 className="mt-2 font-[Georgia,serif] text-[1.25rem] font-bold leading-[1.14] tracking-[-0.012em] text-brand-navy">
         <Link
           to="/noticias/$slug"
           params={{ slug: item.slug }}
@@ -338,8 +395,11 @@ function NewsCard({ item }: { item: (typeof noticias)[number] }) {
           {item.titulo}
         </Link>
       </h3>
-      <p className="mt-3 text-sm leading-6 text-muted-foreground">{item.resumo}</p>
-      <time dateTime={item.publicadoEm} className="mt-4 block text-[0.7rem] text-muted-foreground">
+      <p className="mt-3 text-[0.95rem] font-medium leading-6 text-brand-navy/70">{item.resumo}</p>
+      <time
+        dateTime={item.publicadoEm}
+        className="mt-4 block text-[0.72rem] font-medium text-brand-navy/60"
+      >
         {date(item.publicadoEm)}
       </time>
     </article>
