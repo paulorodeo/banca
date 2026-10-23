@@ -34,4 +34,6 @@ Autenticar o Wrangler localmente na conta correta, conferir a conta/subdomínio 
 
 ## Liberação futura de produção
 
-Somente após autorização específica: escolher/configurar o domínio real e a configuração explícita de produção; definir `PUBLIC_SITE_URL` para ele e `DEPLOYMENT_ENV=production`; gerar novo build sem a flag de homologação; conferir a ausência de headers globais de noindex nos HTML/erros/assets e a ativação do sitemap com a origem definitiva. O domínio workers.dev deve continuar em noindex. Não basta mudar o robots nem reutilizar este perfil de homologação como perfil de produção.
+A produção usa o Worker independente `banca-prod`, `PUBLIC_SITE_URL=https://bancapaulista.org`, `DEPLOYMENT_ENV=production`, artefato `.output-production` e o namespace KV `BANCA_WEATHER_PRODUCTION`. O Worker não publica uma URL workers.dev permanente; Version URLs permitem validar cada revisão antes de transferir o custom domain existente. A transferência de `bancapaulista.org` ocorre separadamente, após a validação, sem recriar DNS nem regras de redirecionamento de `www`.
+
+O build de produção não herda `noindex`, ativa o sitemap e emite canonical, Open Graph, Twitter Cards e JSON-LD na origem definitiva. Páginas explicitamente privadas, incompletas ou em revisão continuam fora do sitemap e preservam seus bloqueios individuais. Homologação permanece no Worker `banca`, com `noindex, nofollow` e sitemap desativado.

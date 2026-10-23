@@ -12,6 +12,7 @@ test("staging build carries noindex route rules without conflicting with static 
   assert.deepEqual(profile.routeHeaders, { "X-Robots-Tag": "noindex, nofollow" });
   assert.equal(profile.runtimeVars.DEPLOYMENT_ENV, "staging");
   assert.equal(profile.publicOrigin, STAGING_SITE_ORIGIN);
+  assert.equal(profile.outputDir, ".output");
 });
 
 test("production build cannot inherit the staging noindex rules or artifact path", () => {

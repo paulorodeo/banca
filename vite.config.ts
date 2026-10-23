@@ -8,7 +8,8 @@ import { defineConfig, loadEnv } from "vite";
 import { buildProfile } from "./src/lib/deployment-profile";
 
 const CLOUDFLARE_ACCOUNT_ID = "7b2dfe1e7fa69edb06d7bf74d7ebc942";
-const WEATHER_CACHE_ID = "c6f5a6125aba45509501fb04a8c44d7d";
+const STAGING_WEATHER_CACHE_ID = "c6f5a6125aba45509501fb04a8c44d7d";
+const PRODUCTION_WEATHER_CACHE_ID = "c1b76e306aa340f6ab3c25517985395d";
 
 export default defineConfig(({ command, mode }) => {
   const deploymentEnv = process.env["DEPLOYMENT_ENV"];
@@ -69,11 +70,18 @@ export default defineConfig(({ command, mode }) => {
                 deployConfig: true,
                 wrangler: {
                   account_id: CLOUDFLARE_ACCOUNT_ID,
-                  ...(deploymentEnv === "staging"
-                    ? {
-                        kv_namespaces: [{ binding: "WEATHER_CACHE", id: WEATHER_CACHE_ID }],
-                      }
-                    : {}),
+                  name: deploymentEnv === "production" ? "banca-prod" : "banca",
+                  workers_dev: deploymentEnv !== "production",
+                  preview_urls: deploymentEnv === "production",
+                  kv_namespaces: [
+                    {
+                      binding: "WEATHER_CACHE",
+                      id:
+                        deploymentEnv === "production"
+                          ? PRODUCTION_WEATHER_CACHE_ID
+                          : STAGING_WEATHER_CACHE_ID,
+                    },
+                  ],
                   vars: {
                     BUILD_COMMIT: execFileSync("git", ["rev-parse", "HEAD"], {
                       encoding: "utf8",
