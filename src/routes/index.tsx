@@ -371,15 +371,16 @@ function Index() {
                   ) : (
                     <picture>
                       <source
-                        srcSet={`/images/sp/${editorialIllustrations[article.slug] ?? "masp"}.avif`}
+                        srcSet={`/images/sp/${editorialIllustrations[article.slug] ?? "masp-article-thumb"}.avif`}
                         type="image/avif"
                       />
                       <img
-                        src={`/images/sp/${editorialIllustrations[article.slug] ?? "masp"}.webp`}
+                        src={`/images/sp/${editorialIllustrations[article.slug] ?? "masp-article-thumb"}.webp`}
                         alt=""
-                        width={100}
-                        height={100}
+                        width={320}
+                        height={320}
                         loading="lazy"
+                        decoding="async"
                       />
                     </picture>
                   )}

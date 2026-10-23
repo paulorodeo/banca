@@ -159,7 +159,7 @@ export const photoCredits = [
 
 /** Ilustrações de apoio; não representam documentos, pessoas ou fachadas dos artigos. */
 export const editorialIllustrations: Record<string, string> = {
-  "delegacias-e-circunscricao-policial": "masp",
-  "plantao-criminal-e-plantao-judiciario": "ponte",
-  "intimacao-policial-informacoes-do-documento": "participacao-profissional",
+  "delegacias-e-circunscricao-policial": "masp-article-thumb",
+  "plantao-criminal-e-plantao-judiciario": "ponte-article-thumb",
+  "intimacao-policial-informacoes-do-documento": "participacao-profissional-article-thumb",
 };

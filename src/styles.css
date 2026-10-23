@@ -816,8 +816,8 @@ html.reduced-glare .home-light {
 }
 .home-article-card > picture,
 .home-article-card > img {
-  width: 5rem;
-  height: 5.6rem;
+  width: 6.5rem;
+  height: 6.5rem;
   flex-shrink: 0;
   object-fit: cover;
 }
