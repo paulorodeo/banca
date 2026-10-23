@@ -76,6 +76,7 @@ export const Route = createFileRoute("/")({
           "/images/sp/ponte-640.avif 640w, /images/sp/ponte-1024.avif 1024w, /images/sp/ponte-1440.avif 1440w, /images/sp/ponte.avif 2048w",
         imageSizes: "100vw",
         type: "image/avif",
+        fetchPriority: "high",
       },
     ],
     scripts: [{ type: "application/ld+json", children: JSON.stringify(websiteSchema("/")) }],
