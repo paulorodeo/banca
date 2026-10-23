@@ -1,0 +1,20 @@
+# Arquivos gerados pelo build possuem hash no nome e podem ser imutáveis.
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# As fontes mantêm nomes estáveis e só mudam com uma nova versão editorial.
+/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Imagens e marca usam URLs legíveis, sem hash. Um mês reduz revalidações sem
+# prender por um ano uma eventual atualização editorial no navegador do leitor.
+/images/*
+  Cache-Control: public, max-age=2592000, stale-while-revalidate=86400
+
+/brand/*
+  Cache-Control: public, max-age=2592000, stale-while-revalidate=86400
+
+# Static Assets não passa pelo middleware SSR. Preserve a política de
+# indexação do ambiente de homologação também para arquivos públicos.
+https://banca.paulista.workers.dev/*
+  X-Robots-Tag: noindex, nofollow
