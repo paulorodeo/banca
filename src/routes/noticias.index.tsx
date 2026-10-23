@@ -20,7 +20,6 @@ export const Route = createFileRoute("/noticias/")({
           "Notícias sobre segurança pública, direitos, instituições e acontecimentos de São Paulo.",
         path: "/noticias",
       }),
-      { name: "robots", content: "noindex, follow" },
     ],
     links: canonicalLink("/noticias"),
     scripts: [
