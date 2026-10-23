@@ -14,7 +14,7 @@ o endpoint devolve HTTP 503 com `weather_not_configured`; a página explica a
 indisponibilidade e não apresenta dados simulados.
 
 `vite.config.ts` inclui o binding `WEATHER_CACHE` somente no build de homologação,
-apontando para o namespace exclusivo `BANCA_WEATHER_STAGING`. Produção precisará
+apontando para o namespace `BANCA_WEATHER_STAGING` da conta `paulista`. Produção precisará
 de configuração separada quando sua publicação for autorizada.
 
 ## Cache e provedor

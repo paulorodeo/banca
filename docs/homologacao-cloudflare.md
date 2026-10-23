@@ -1,15 +1,15 @@
 # Homologação Banca Paulista — Cloudflare Workers
 
-Destino autorizado: `https://banca.pjdigital-me.workers.dev/`. Worker: **banca**. Branch: `codex/banca-redesign`. Este endereço é temporário e não define o domínio final.
+Destino autorizado: `https://banca.paulista.workers.dev/`. Worker: **banca**. Branch: `codex/banca-redesign`. Este endereço é temporário e não define o domínio final.
 
 ## Configuração
 
-O projeto já utiliza TanStack Start + Nitro, preset Cloudflare module, entry `src/server.ts`, binding `ASSETS` e `nodejs_compat`. Não foi criado outro runtime. `wrangler.jsonc` fixa o nome correto (o nome automático anterior era `paulorodeo-lawsp`), a data de compatibilidade existente e somente duas variáveis públicas:
+O projeto utiliza configuração nativa de Vite, React, TanStack Start e Nitro, preset Cloudflare module, entry `src/server.ts`, binding `ASSETS` e `nodejs_compat`. `wrangler.jsonc` fixa o Worker `banca`, a conta Cloudflare de homologação e somente duas variáveis públicas:
 
-- `PUBLIC_SITE_URL=https://banca.pjdigital-me.workers.dev`
+- `PUBLIC_SITE_URL=https://banca.paulista.workers.dev`
 - `DEPLOYMENT_ENV=staging`
 
-O build injeta também `BUILD_COMMIT`, sem dados sigilosos. Em HTML de homologação, o header `X-Banca-Commit` identifica a revisão. O Nitro gera `.output/server/wrangler.json`, entry e diretório de assets; esses arquivos gerados não devem entrar no Git. `keep_vars` preserva variáveis remotas existentes e o Wrangler mantém secrets. A conta e os bindings remotos precisam ser conferidos antes de publicar: somente o Worker banca na conta com subdomínio pjdigital-me está autorizado. Nenhuma rota DNS, domínio personalizado, Cron ou serviço de dados foi incluído.
+O build injeta também `BUILD_COMMIT`, sem dados sigilosos. Em HTML de homologação, o header `X-Banca-Commit` identifica a revisão. O Nitro gera `.output/server/wrangler.json`, entry e diretório `.output/public`; esses arquivos gerados não entram no Git. O artefato fixa a conta `7b2dfe1e7fa69edb06d7bf74d7ebc942`, o binding `ASSETS` para `../public` e o binding `WEATHER_CACHE` para o namespace `BANCA_WEATHER_STAGING`. `keep_vars` preserva variáveis remotas existentes e o Wrangler mantém secrets. Antes de publicar, a conta deve ter subdomínio `paulista`. Nenhuma rota DNS, domínio personalizado, Cron ou serviço de dados adicional foi incluído.
 
 ## Política SEO
 
@@ -30,12 +30,8 @@ npx --yes wrangler@4.151.0 deploy --dry-run --config .output/server/wrangler.jso
 
 Depois de revisar e commitar os ajustes locais, repetir o build. `bun scripts/check-staging-deploy.ts` exige branch correta, working tree limpo, artefato do HEAD atual, nome/origem/flag exatos, ausência de rotas de domínio e Cron, assets presentes e headers de homologação. É uma checagem local, não uma confirmação de conta autenticada.
 
-Autenticar o Wrangler localmente na conta correta, conferir a conta/subdomínio e o Worker existente antes de usar `bun run deploy:staging`. Não criar conta temporária nem publicar com o nome automático do repositório. A execução final deve verificar respostas HTTPS reais e o header do commit; sucesso do CLI sozinho não conclui a entrega.
+Autenticar o Wrangler localmente na conta correta, conferir a conta/subdomínio e o Worker existente antes de usar `bun run deploy:staging`. Não publicar pelas contas antigas nem com o nome automático do repositório. A execução final deve verificar respostas HTTPS reais e o header do commit; sucesso do CLI sozinho não conclui a entrega.
 
 ## Liberação futura de produção
 
 Somente após autorização específica: escolher/configurar o domínio real e a configuração explícita de produção; definir `PUBLIC_SITE_URL` para ele e `DEPLOYMENT_ENV=production`; gerar novo build sem a flag de homologação; conferir a ausência de headers globais de noindex nos HTML/erros/assets e a ativação do sitemap com a origem definitiva. O domínio workers.dev deve continuar em noindex. Não basta mudar o robots nem reutilizar este perfil de homologação como perfil de produção.
-
-## Pré-deploy desta sessão
-
-Os commits 3379e6e e 93b5940 foram confirmados. A árvore estava limpa antes desta preparação. O Wrangler 4.151.0 confirmou ausência de autenticação. A URL existente respondeu 200 antes de qualquer publicação; isso não comprova que este novo código esteja publicado. A preparação local e os resultados do runtime devem ser distinguidos da validação remota pós-deploy.

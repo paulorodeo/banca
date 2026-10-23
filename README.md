@@ -29,7 +29,7 @@ As informações e vínculos territoriais são mantidos por uma camada de conte�
 
 ## Repositório e branch de trabalho
 
-**Repositório:** [paulorodeo/lawsp](https://github.com/paulorodeo/lawsp)
+**Repositório:** [paulorodeo/banca](https://github.com/paulorodeo/banca)
 
 **Branch de desenvolvimento e homologação:** `codex/banca-redesign`
 

@@ -1,57 +1,91 @@
-// @lovable.dev/vite-tanstack-config already includes the following — do NOT add them manually
-// or the app will break with duplicate plugins:
-//   - TanStack devtools (dev-only, first), tanstackStart, viteReact, tailwindcss, tsConfigPaths,
-//     nitro (build-only using cloudflare as a default target), VITE_* env injection, @ path alias,
-//     React/TanStack dedupe, error logger plugins, and sandbox detection (port/host/strictPort).
-// You can pass additional config via defineConfig({ vite: { ... }, etc... }) if needed.
-import type { NitroConfig } from "nitro/types";
+import tailwindcss from "@tailwindcss/vite";
+import react from "@vitejs/plugin-react";
+import { tanstackStart } from "@tanstack/react-start/plugin/vite";
 import { execFileSync } from "node:child_process";
 import { resolve } from "node:path";
-import { defineConfig } from "@lovable.dev/vite-tanstack-config";
-import { loadEnv } from "vite";
+import { nitro } from "nitro/vite";
+import { defineConfig, loadEnv } from "vite";
 import { buildProfile } from "./src/lib/deployment-profile";
 
-const deploymentEnv = process.env["DEPLOYMENT_ENV"];
-if (!deploymentEnv) {
-  const localSecrets = loadEnv("development", process.cwd(), "");
-  for (const name of ["WEATHERAPI_KEY", "WEATHERAPI_FALLBACK_KEY"] as const) {
-    if (!process.env[name] && localSecrets[name]) process.env[name] = localSecrets[name];
+const CLOUDFLARE_ACCOUNT_ID = "7b2dfe1e7fa69edb06d7bf74d7ebc942";
+const WEATHER_CACHE_ID = "c6f5a6125aba45509501fb04a8c44d7d";
+
+export default defineConfig(({ command, mode }) => {
+  const deploymentEnv = process.env["DEPLOYMENT_ENV"];
+  if (!deploymentEnv) {
+    const localSecrets = loadEnv("development", process.cwd(), "");
+    for (const name of ["WEATHERAPI_KEY", "WEATHERAPI_FALLBACK_KEY"] as const) {
+      if (!process.env[name] && localSecrets[name]) process.env[name] = localSecrets[name];
+    }
   }
-}
-const profile = deploymentEnv ? buildProfile(process.env) : undefined;
-const cloudflare = {
-  deployConfig: true,
-  wrangler: {
-    ...(deploymentEnv === "staging" ? { kv_namespaces: [{ binding: "WEATHER_CACHE", id: "2ea1635b66af4cdfa4523a6564a7f779" }] } : {}),
-    vars: {
-      BUILD_COMMIT: execFileSync("git", ["rev-parse", "HEAD"], { encoding: "utf8" }).trim(),
-      ...(profile?.runtimeVars ?? {}),
+
+  const profile = deploymentEnv ? buildProfile(process.env) : undefined;
+  const routeRules =
+    profile && Object.keys(profile.routeHeaders).length > 0
+      ? { "/**": { headers: profile.routeHeaders } }
+      : undefined;
+
+  return {
+    define: Object.fromEntries(
+      Object.entries(loadEnv(mode, process.cwd(), "VITE_")).map(([key, value]) => [
+        `import.meta.env.${key}`,
+        JSON.stringify(value),
+      ]),
+    ),
+    resolve: {
+      tsconfigPaths: true,
+      alias: { "@": resolve(process.cwd(), "src") },
+      dedupe: [
+        "react",
+        "react-dom",
+        "react/jsx-runtime",
+        "react/jsx-dev-runtime",
+        "@tanstack/react-query",
+        "@tanstack/query-core",
+      ],
     },
-  },
-} satisfies NonNullable<NitroConfig["cloudflare"]>;
-export default defineConfig({
-  nitro: {
-    // Retain Nitro's generated entry, assets binding and node compatibility.
-    cloudflare,
-    output: {
-      dir: resolve(
-        process.cwd(),
-        profile?.outputDir ?? process.env["BP_BUILD_OUTPUT"] ?? ".output",
-      ),
-    },
-    ...(profile && Object.keys(profile.routeHeaders).length > 0
-      ? {
-          routeRules: {
-            "/**": {
-              headers: profile.routeHeaders,
-            },
-          },
-        }
-      : {}),
-  },
-  tanstackStart: {
-    // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
-    // nitro/vite builds from this
-    server: { entry: "server" },
-  },
+    server: { host: "::", port: 8080 },
+    plugins: [
+      tailwindcss(),
+      tanstackStart({
+        importProtection: {
+          behavior: "error",
+          client: { files: ["**/server/**"], specifiers: ["server-only"] },
+        },
+        server: { entry: "server" },
+      }),
+      ...(command === "build"
+        ? [
+            nitro({
+              defaultPreset: "cloudflare-module",
+              output: {
+                dir: resolve(
+                  process.cwd(),
+                  profile?.outputDir ?? process.env["BP_BUILD_OUTPUT"] ?? ".output",
+                ),
+              },
+              ...(routeRules ? { routeRules } : {}),
+              cloudflare: {
+                deployConfig: true,
+                wrangler: {
+                  account_id: CLOUDFLARE_ACCOUNT_ID,
+                  ...(deploymentEnv === "staging"
+                    ? {
+                        kv_namespaces: [{ binding: "WEATHER_CACHE", id: WEATHER_CACHE_ID }],
+                      }
+                    : {}),
+                  vars: {
+                    BUILD_COMMIT: execFileSync("git", ["rev-parse", "HEAD"], {
+                      encoding: "utf8",
+                    }).trim(),
+                    ...(profile?.runtimeVars ?? {}),
+                  },
+                },
+              },
+            }),
+          ]
+        : []),
+      react(),
+    ],
+  };
 });

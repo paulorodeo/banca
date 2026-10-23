@@ -1,5 +1,5 @@
 /** Pure URL policy. Relative head values are resolved by the runtime root context. */
-export const STAGING_SITE_ORIGIN = "https://banca.pjdigital-me.workers.dev";
+export const STAGING_SITE_ORIGIN = "https://banca.paulista.workers.dev";
 export const PRODUCTION_SITE_ORIGIN = "https://bancapaulista.org";
 
 export function publicOrigin(value?: string): string {

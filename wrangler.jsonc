@@ -1,12 +1,13 @@
 {
   // Homologação somente. Não é a configuração do domínio definitivo.
   "name": "banca",
+  "account_id": "7b2dfe1e7fa69edb06d7bf74d7ebc942",
   "compatibility_date": "2026-10-12",
   "compatibility_flags": ["nodejs_compat"],
   "workers_dev": true,
   "keep_vars": true,
   "vars": {
-    "PUBLIC_SITE_URL": "https://banca.pjdigital-me.workers.dev",
-    "DEPLOYMENT_ENV": "staging"
-  }
+    "PUBLIC_SITE_URL": "https://banca.paulista.workers.dev",
+    "DEPLOYMENT_ENV": "staging",
+  },
 }

@@ -10,7 +10,8 @@ assert.equal(git("branch", "--show-current"), "codex/banca-redesign", "Wrong bra
 assert.equal(git("status", "--porcelain"), "", "Commit reviewed changes before deployment");
 const config = JSON.parse(readFileSync(resolve(root, ".output/server/wrangler.json"), "utf8"));
 assert.equal(config.name, "banca");
-assert.equal(config.vars.PUBLIC_SITE_URL, "https://banca.pjdigital-me.workers.dev");
+assert.equal(config.account_id, "7b2dfe1e7fa69edb06d7bf74d7ebc942");
+assert.equal(config.vars.PUBLIC_SITE_URL, "https://banca.paulista.workers.dev");
 assert.equal(config.vars.DEPLOYMENT_ENV, "staging");
 assert.equal(config.vars.BUILD_COMMIT, git("rev-parse", "HEAD"), "Rebuild the committed source");
 assert(config.workers_dev && config.keep_vars);
@@ -19,6 +20,17 @@ assert(
   "Domain routes and Cron are outside scope",
 );
 assert(existsSync(resolve(root, ".output/server", config.main)));
+assert.equal(config.assets?.binding, "ASSETS");
+assert.equal(config.assets?.directory, "../public");
+assert.deepEqual(config.kv_namespaces, [
+  { binding: "WEATHER_CACHE", id: "c6f5a6125aba45509501fb04a8c44d7d" },
+]);
+for (const asset of [
+  "images/sp/masp.webp",
+  "images/sp/banca-paulista-social.png",
+  "brand/simbolo-banca-paulista-fundo-azul.svg",
+])
+  assert(existsSync(resolve(root, ".output/public", asset)), `Missing static asset: ${asset}`);
 const stagingHtml = environmentResponse(
   new Response("<!doctype html>", { headers: { "content-type": "text/html; charset=utf-8" } }),
   config.vars,

@@ -4,7 +4,7 @@ import { environmentResponse, isStaging } from "./indexing";
 import { PRODUCTION_SITE_ORIGIN, STAGING_SITE_ORIGIN, runtimePublicOrigin } from "./public-url";
 test("homologation is explicit and workers.dev cannot accidentally be indexed", () => {
   assert(isStaging({ DEPLOYMENT_ENV: "staging" }));
-  assert(isStaging({ PUBLIC_SITE_URL: "https://banca.pjdigital-me.workers.dev" }));
+  assert(isStaging({ PUBLIC_SITE_URL: "https://banca.paulista.workers.dev" }));
   assert(
     !isStaging({ DEPLOYMENT_ENV: "production", PUBLIC_SITE_URL: "https://portal.example.test" }),
   );
