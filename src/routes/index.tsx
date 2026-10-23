@@ -68,7 +68,15 @@ export const Route = createFileRoute("/")({
     meta: pageMeta({ title: TITLE, description: DESCRIPTION, path: "/" }),
     links: [
       ...canonicalLink("/"),
-      { rel: "preload", as: "image", href: "/images/sp/masp.avif", type: "image/avif" },
+      {
+        rel: "preload",
+        as: "image",
+        href: "/images/sp/ponte-1024.avif",
+        imageSrcSet:
+          "/images/sp/ponte-640.avif 640w, /images/sp/ponte-1024.avif 1024w, /images/sp/ponte-1440.avif 1440w, /images/sp/ponte.avif 2048w",
+        imageSizes: "100vw",
+        type: "image/avif",
+      },
     ],
     scripts: [{ type: "application/ld+json", children: JSON.stringify(websiteSchema("/")) }],
   }),
@@ -146,9 +154,15 @@ function Index() {
     <div className="home-light home-page">
       <section className="home-hero relative isolate overflow-hidden bg-brand-navy text-ivory">
         <picture className="absolute inset-0 -z-20 size-full">
-          <source srcSet="/images/sp/ponte.avif" type="image/avif" />
+          <source
+            srcSet="/images/sp/ponte-640.avif 640w, /images/sp/ponte-1024.avif 1024w, /images/sp/ponte-1440.avif 1440w, /images/sp/ponte.avif 2048w"
+            sizes="100vw"
+            type="image/avif"
+          />
           <img
             src="/images/sp/ponte.webp"
+            srcSet="/images/sp/ponte-640.webp 640w, /images/sp/ponte-1024.webp 1024w, /images/sp/ponte-1440.webp 1440w, /images/sp/ponte.webp 2048w"
+            sizes="100vw"
             alt="Ponte Estaiada ao entardecer, em São Paulo"
             width={2048}
             height={768}
@@ -161,13 +175,19 @@ function Index() {
           className={`hero-second-image absolute inset-0 -z-20 size-full ${heroReady ? "hero-image-ready" : ""}`}
           style={{ animationPlayState: heroPaused ? "paused" : "running" }}
         >
-          <source srcSet="/images/sp/masp.avif" type="image/avif" />
+          <source
+            srcSet="/images/sp/masp-640.avif 640w, /images/sp/masp-1024.avif 1024w, /images/sp/masp-1440.avif 1440w, /images/sp/masp.avif 2048w"
+            sizes="100vw"
+            type="image/avif"
+          />
           <img
             src="/images/sp/masp.webp"
+            srcSet="/images/sp/masp-640.webp 640w, /images/sp/masp-1024.webp 1024w, /images/sp/masp-1440.webp 1440w, /images/sp/masp.webp 2048w"
+            sizes="100vw"
             alt=""
             width={2048}
             height={768}
-            loading="eager"
+            loading="lazy"
             fetchPriority="low"
             className="size-full object-cover"
             ref={secondPhotoRef}

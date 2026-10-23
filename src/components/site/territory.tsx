@@ -109,9 +109,15 @@ export function ZoneCardLight({
     >
       {image && (
         <picture>
-          <source srcSet={`/images/sp/${image.asset}.avif`} type="image/avif" />
+          <source
+            srcSet={`/images/sp/${image.asset}-320.avif 320w, /images/sp/${image.asset}-640.avif 640w, /images/sp/${image.asset}.avif 800w`}
+            sizes="(min-width: 1024px) 20vw, 160px"
+            type="image/avif"
+          />
           <img
             src={`/images/sp/${image.asset}.webp`}
+            srcSet={`/images/sp/${image.asset}-320.webp 320w, /images/sp/${image.asset}-640.webp 640w, /images/sp/${image.asset}.webp 800w`}
+            sizes="(min-width: 1024px) 20vw, 160px"
             alt={image.alt}
             width={image.width}
             height={image.height}
