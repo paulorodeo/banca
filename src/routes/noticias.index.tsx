@@ -9,7 +9,7 @@ type NoticiasSearch = {
 
 export const Route = createFileRoute("/noticias/")({
   validateSearch: (search): NoticiasSearch => {
-    const categoria = typeof search.categoria === "string" ? search.categoria : undefined;
+    const categoria = typeof search["categoria"] === "string" ? search["categoria"] : undefined;
     return categoria && encontraCategoriaNoticia(categoria) ? { categoria } : {};
   },
   head: () => ({
@@ -39,5 +39,5 @@ export const Route = createFileRoute("/noticias/")({
 
 function NoticiasIndexPage() {
   const { categoria } = Route.useSearch();
-  return <NoticiasPage categoriaSlug={categoria} />;
+  return <NoticiasPage {...(categoria ? { categoriaSlug: categoria } : {})} />;
 }
