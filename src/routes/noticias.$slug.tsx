@@ -29,8 +29,8 @@ export const Route = createFileRoute("/noticias/$slug")({
           image: noticia.imagem?.url ?? noticiaFallback.webp,
           imageMetadata: noticia.imagem
             ? {
-                width: noticia.imagem.width,
-                height: noticia.imagem.height,
+                ...(noticia.imagem.width !== undefined ? { width: noticia.imagem.width } : {}),
+                ...(noticia.imagem.height !== undefined ? { height: noticia.imagem.height } : {}),
                 alt: noticia.imagem.alt,
               }
             : { alt: noticiaFallback.alt },
@@ -43,7 +43,6 @@ export const Route = createFileRoute("/noticias/$slug")({
         ...(noticia.seo.keywords
           ? [{ name: "keywords", content: noticia.seo.keywords.join(", ") }]
           : []),
-        { name: "robots", content: "noindex, follow" },
       ],
       links: canonicalLink(noticia.seo.canonicalPath),
       scripts: [

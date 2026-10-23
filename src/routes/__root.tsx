@@ -1,5 +1,4 @@
 import type { ErrorComponentProps } from "@tanstack/react-router";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
   Outlet,
   Link,
@@ -13,7 +12,7 @@ import type { ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { SiteHeader } from "@/components/site/header";
-import { WeatherTicker } from "@/components/site/weather-ticker";
+import { WeatherProvider, WeatherTicker } from "@/components/site/weather-ticker";
 import { Container } from "@/components/site/primitives";
 import { SiteFooter } from "@/components/site/footer";
 import { readPublicOrigin } from "@/lib/public-url.functions";
@@ -77,7 +76,6 @@ function ErrorComponent({ error, reset }: ErrorComponentProps) {
 }
 
 export const Route = createRootRouteWithContext<{
-  queryClient: QueryClient;
   siteOrigin?: string;
   institutions?: PublicInstitution[];
 }>()({
@@ -155,7 +153,7 @@ function RootShell({ children }: { children: ReactNode }) {
 }
 
 function RootComponent() {
-  const { queryClient, institutions = [] } = Route.useRouteContext();
+  const { institutions = [] } = Route.useRouteContext();
   const isJournalismRoute = useRouterState({
     select: (state) => {
       const pathname = state.location.pathname.replace(/\/+$/, "");
@@ -164,7 +162,7 @@ function RootComponent() {
   });
 
   return (
-    <QueryClientProvider client={queryClient}>
+    <WeatherProvider>
       <RadioProvider>
         <a
           href="#conteudo-principal"
@@ -191,6 +189,6 @@ function RootComponent() {
         </div>
         <MiniRadioPlayer />
       </RadioProvider>
-    </QueryClientProvider>
+    </WeatherProvider>
   );
 }

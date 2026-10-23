@@ -1,9 +1,8 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
-import { useSuspenseQuery } from "@tanstack/react-query";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { articleSearchSchema, type ArticleSearch } from "@/content/payload";
-import { articlesQuery } from "@/content/articles.queries";
+import { readArticles } from "@/content/articles.functions";
 import { Container, Section } from "@/components/site/primitives";
 import { ConteudoCard, CtaReservado, PageHero } from "@/components/site/blocks";
 import { ArticleState, ArticlesPending } from "@/components/site/article-state";
@@ -14,8 +13,8 @@ const PATH = "/artigos";
 export const Route = createFileRoute("/artigos/")({
   validateSearch: (search): Partial<ArticleSearch> => articleSearchSchema.parse(search),
   loaderDeps: ({ search }) => articleSearchSchema.parse(search),
-  loader: async ({ context, deps }) => {
-    const result = await context.queryClient.ensureQueryData(articlesQuery(deps));
+  loader: async ({ deps }) => {
+    const result = await readArticles({ data: deps });
     if (result.ok && deps.page > Math.max(1, result.page.totalPages)) throw notFound();
     return result;
   },
@@ -49,7 +48,7 @@ export const Route = createFileRoute("/artigos/")({
 function ConteudosPage() {
   const search = articleSearchSchema.parse(Route.useSearch());
   const navigate = Route.useNavigate();
-  const { data } = useSuspenseQuery(articlesQuery(search));
+  const data = Route.useLoaderData();
   if (!data.ok) return <ArticleState />;
   const { docs, categories, page, totalPages } = data.page;
   return (

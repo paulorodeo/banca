@@ -6,6 +6,7 @@ import { publicSitemap } from "./sitemap.server";
 import { zonas } from "@/content/local/zonas";
 import { bairros } from "@/content/local/bairros";
 import { delegacias } from "@/content/local/delegacias";
+import { noticias } from "@/content/local/noticias";
 import { conteudos } from "@/content/local/artigos-editoriais";
 import { editorialIdentity } from "@/content/local/settings";
 import { organizationSchema, pageMeta, websiteSchema } from "./seo";
@@ -78,6 +79,8 @@ test("sitemap includes all published territory and articles without future modul
     delegacias,
     zonas,
     bairros,
+    noticias,
+    hasVagas: true,
     articles: [...conteudos, { ...conteudos[0]!, slug: "rascunho-teste", status: "revisao" }],
   });
   assert.equal(paths.filter((p) => p.startsWith("/delegacias/")).length, 93);
@@ -90,9 +93,12 @@ test("sitemap includes all published territory and articles without future modul
     "/regioes/zona-sul",
   ]);
   assert(paths.includes("/bairros/pinheiros"));
+  assert(paths.includes("/noticias"));
+  assert(paths.includes("/noticias/justica-libera-obra-bosque-salesianos-alto-da-lapa"));
+  for (const noticia of noticias) assert(paths.includes(noticia.seo.canonicalPath));
   assert(paths.includes("/politica-de-privacidade")); // Still the active canonical route; migration has not occurred.
   assert(!paths.includes("/privacidade")); // Current replacement remains explicitly noindex.
-  assert(!paths.includes("/vagas"));
+  assert(paths.includes("/vagas"));
   assert(!paths.includes("/radar"));
   assert(
     paths.every(
@@ -102,6 +108,11 @@ test("sitemap includes all published territory and articles without future modul
   const xml = await publicSitemap({ NODE_ENV: "production", PUBLIC_SITE_URL: origin });
   assert.equal((xml.match(/<loc>/g) ?? []).length, paths.length);
   assert(xml.includes(`${origin}/delegacias/${delegacias[0]!.slug}`));
+  assert(
+    xml.includes(
+      `${origin}/noticias/justica-libera-obra-bosque-salesianos-alto-da-lapa`,
+    ),
+  );
   assert(!xml.includes("localhost") && !xml.includes("lovable"));
   assert(robotsTxt(origin).includes(`Sitemap: ${origin}/sitemap.xml`));
   assert(sitemapXml(["/arquivos/a&b"], origin).includes("&amp;"));
@@ -118,7 +129,7 @@ test("sitemap selection removes duplicates and excludes drafts, noindex and redi
       { path: "/old", canonicalPath: "/new", published: true, indexable: true, redirected: true },
       { path: "/alias", canonicalPath: "/canonical", published: true, indexable: true },
       { path: "/radar", canonicalPath: "/radar", published: true, indexable: true },
-      { path: "/vagas", canonicalPath: "/vagas", published: true, indexable: true },
+      { path: "/vagas", canonicalPath: "/vagas", published: true, indexable: false },
       { path: "/privacidade", canonicalPath: "/privacidade", published: true, indexable: true },
       {
         path: "/politica-de-privacidade",

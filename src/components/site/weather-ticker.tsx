@@ -1,6 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { useQuery } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
 import {
   Clock3,
   Cloud,
@@ -47,16 +46,54 @@ export async function loadWeather(): Promise<WeatherSnapshot> {
   return (await response.json()) as WeatherSnapshot;
 }
 
+interface WeatherState {
+  data: WeatherSnapshot | undefined;
+  isPending: boolean;
+  error: Error | null;
+}
+
+const WeatherContext = createContext<WeatherState | null>(null);
+
+export function WeatherProvider({ children }: { children: ReactNode }) {
+  const [data, setData] = useState<WeatherSnapshot | undefined>();
+  const [isPending, setIsPending] = useState(true);
+  const [error, setError] = useState<Error | null>(null);
+  useEffect(() => {
+    let active = true;
+    const refresh = () => {
+      void loadWeather()
+        .then((snapshot) => {
+          if (active) {
+            setData(snapshot);
+            setError(null);
+            setIsPending(false);
+          }
+        })
+        .catch((reason: unknown) => {
+          if (active) {
+            setError(reason instanceof Error ? reason : new Error("weather_unavailable"));
+            setIsPending(false);
+          }
+        });
+    };
+    refresh();
+    const interval = window.setInterval(refresh, 15 * 60 * 1000);
+    return () => {
+      active = false;
+      window.clearInterval(interval);
+    };
+  }, []);
+  return (
+    <WeatherContext.Provider value={{ data, isPending, error }}>
+      {children}
+    </WeatherContext.Provider>
+  );
+}
+
 export function useWeather() {
-  return useQuery({
-    queryKey: ["banca", "weather", "sao-paulo"],
-    queryFn: loadWeather,
-    staleTime: 15 * 60 * 1000,
-    refetchInterval: 15 * 60 * 1000,
-    retry: false,
-    refetchOnWindowFocus: false,
-    enabled: typeof window !== "undefined",
-  });
+  const value = useContext(WeatherContext);
+  if (!value) throw new Error("useWeather deve ser usado dentro de WeatherProvider");
+  return value;
 }
 
 export function WeatherTicker() {

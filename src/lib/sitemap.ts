@@ -1,5 +1,5 @@
 import { absoluteUrl, PRODUCTION_SITE_ORIGIN } from "./public-url";
-import type { Bairro, ConteudoJuridico, Delegacia, Zona } from "@/content/types";
+import type { Bairro, ConteudoJuridico, Delegacia, NoticiaEditorial, Zona } from "@/content/types";
 
 export const institutionalPaths = [
   "/",
@@ -14,6 +14,7 @@ export const institutionalPaths = [
   "/plantao-criminal",
   "/delegacias",
   "/regioes",
+  "/noticias",
   "/artigos",
   "/radio",
 ] as const;
@@ -26,7 +27,7 @@ export interface SitemapCandidate {
   redirected?: boolean;
 }
 
-const neverIndexPaths = new Set(["/radar", "/vagas", "/privacidade"]);
+const neverIndexPaths = new Set(["/radar", "/privacidade"]);
 
 /** Keep only public, canonical pages. A duplicate canonical URL is emitted once. */
 export function selectSitemapPaths(candidates: SitemapCandidate[], origin: string): string[] {
@@ -59,6 +60,8 @@ export function publishedPaths(
     zonas: Zona[];
     bairros: Bairro[];
     articles: ConteudoJuridico[];
+    noticias?: NoticiaEditorial[];
+    hasVagas?: boolean;
   },
   origin = PRODUCTION_SITE_ORIGIN,
 ): string[] {
@@ -89,6 +92,9 @@ export function publishedPaths(
       published: true,
       indexable: true,
     })),
+    ...(input.hasVagas
+      ? [{ path: "/vagas", canonicalPath: "/vagas", published: true, indexable: true }]
+      : []),
     ...input.bairros.map((item) => ({
       path: `/bairros/${item.slug}`,
       canonicalPath: item.seo.canonicalPath,
@@ -100,6 +106,12 @@ export function publishedPaths(
       canonicalPath: `/artigos/${item.slug}`,
       published: item.status === "publicado",
       indexable: true,
+    })),
+    ...(input.noticias ?? []).map((item) => ({
+      path: `/noticias/${item.slug}`,
+      canonicalPath: item.seo.canonicalPath,
+      published: true,
+      indexable: !item.seo.noindex,
     })),
   ];
   return selectSitemapPaths(candidates, origin);

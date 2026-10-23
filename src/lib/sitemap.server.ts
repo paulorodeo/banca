@@ -1,4 +1,6 @@
 import { delegacias } from "@/content/local/delegacias";
+import { noticias } from "@/content/local/noticias";
+import { vagasPublicadas } from "@/content/local/vagas";
 import { zonas } from "@/content/local/zonas";
 import { bairros } from "@/content/local/bairros";
 import { loadArticlePage } from "@/content/articles.server";
@@ -24,7 +26,17 @@ export async function publicSitemap(env: Record<string, string | undefined>): Pr
     });
     articles.push(...result.docs);
     if (page >= result.totalPages)
-      return sitemapXml(publishedPaths({ delegacias, zonas, bairros, articles }, origin), origin);
+      return sitemapXml(
+        publishedPaths({
+          delegacias,
+          zonas,
+          bairros,
+          articles,
+          noticias,
+          hasVagas: vagasPublicadas.length > 0,
+        }, origin),
+        origin,
+      );
   }
   throw new Error("Sitemap publication exceeds supported page bound");
 }

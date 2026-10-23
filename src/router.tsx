@@ -1,4 +1,3 @@
-import { QueryClient } from "@tanstack/react-query";
 import { createRouter } from "@tanstack/react-router";
 import { routeTree } from "./routeTree.gen";
 import { absoluteHead } from './lib/public-url';
@@ -18,11 +17,9 @@ function prepareHeads(route: HeadRoute) {
 
 export const getRouter = () => {
   prepareHeads(routeTree as unknown as HeadRoute);
-  const queryClient = new QueryClient();
-
   const router = createRouter({
     routeTree,
-    context: { queryClient },
+    context: {},
     scrollRestoration: true,
     defaultPreloadStaleTime: 0,
   });

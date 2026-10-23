@@ -13,7 +13,7 @@ export const Route = createFileRoute("/vagas")({
         description: "Oportunidades verificadas publicadas pela Banca Paulista.",
         path: "/vagas",
       }),
-      { name: "robots", content: "noindex, follow" },
+      ...(vagasPublicadas.length === 0 ? [{ name: "robots", content: "noindex, follow" }] : []),
     ],
     links: canonicalLink("/vagas"),
   }),

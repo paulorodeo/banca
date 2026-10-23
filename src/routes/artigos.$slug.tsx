@@ -1,6 +1,5 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
-import { useSuspenseQuery } from "@tanstack/react-query";
-import { articleQuery } from "@/content/articles.queries";
+import { readArticle } from "@/content/articles.functions";
 import { Container, Hairline, Section } from "@/components/site/primitives";
 import { CtaReservado, PageHero } from "@/components/site/blocks";
 import { ArticleRichText } from "@/components/site/article-rich-text";
@@ -8,8 +7,8 @@ import { ArticleState, ArticlesPending } from "@/components/site/article-state";
 import { articleSchema, breadcrumbSchema, pageMeta } from "@/lib/seo";
 
 export const Route = createFileRoute("/artigos/$slug")({
-  loader: async ({ params, context }) => {
-    const data = await context.queryClient.ensureQueryData(articleQuery(params.slug));
+  loader: async ({ params }) => {
+    const data = await readArticle({ data: { slug: params.slug } });
     if (data.ok && !data.article) throw notFound();
     return data;
   },
@@ -75,8 +74,7 @@ export const Route = createFileRoute("/artigos/$slug")({
   component: ConteudoPage,
 });
 function ConteudoPage() {
-  const { slug } = Route.useParams();
-  const { data } = useSuspenseQuery(articleQuery(slug));
+  const data = Route.useLoaderData();
   if (!data.ok) return <ArticleState />;
   const conteudo = data.article;
   if (!conteudo) return <ArticleState missing />;
