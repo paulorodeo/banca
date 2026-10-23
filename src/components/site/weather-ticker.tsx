@@ -96,24 +96,29 @@ export function WeatherTicker() {
     <Link
       to="/previsao-do-tempo"
       aria-label={`Ver previsão do tempo em São Paulo. ${clock ? `${clock.date}, ${time}` : `Hora ${time}`}. ${weather}.`}
-      className="inline-flex min-h-8 max-w-full min-w-0 flex-wrap items-center gap-x-2 gap-y-1 rounded-sm text-xs font-semibold text-ivory hover:text-gold focus-visible:outline-2 focus-visible:outline-gold"
+      className="inline-flex min-h-8 min-w-0 flex-1 flex-nowrap items-center justify-end gap-2 overflow-hidden rounded-sm text-xs font-semibold text-ivory hover:text-gold focus-visible:outline-2 focus-visible:outline-gold"
     >
       <MapPin className="size-3.5 shrink-0 text-gold" aria-hidden />
       <span className="whitespace-nowrap">São Paulo</span>
-      <span aria-hidden="true" className="text-gold/80">
+      <span aria-hidden="true" className="hidden text-gold/80 md:inline">
         ·
       </span>
       {clock ? (
-        <time dateTime={clock.iso} className="whitespace-nowrap text-ivory/95">
+        <time
+          dateTime={clock.iso}
+          className="hidden w-64 shrink-0 whitespace-nowrap text-right text-ivory/95 md:inline-block"
+        >
           {clock.date}
         </time>
       ) : (
-        <span className="whitespace-nowrap text-ivory/75">Data local</span>
+        <span className="hidden w-64 shrink-0 whitespace-nowrap text-right text-ivory/75 md:inline-block">
+          Data local
+        </span>
       )}
       <span aria-hidden="true" className="text-gold/80">
         ·
       </span>
-      <span className="inline-flex shrink-0 items-center gap-1 text-ivory/95">
+      <span className="inline-flex w-14 shrink-0 items-center justify-end gap-1 whitespace-nowrap text-ivory/95 tabular-nums">
         <Clock3 className="size-3.5 text-gold" aria-hidden />
         {time}
       </span>
@@ -121,15 +126,18 @@ export function WeatherTicker() {
         ·
       </span>
       {data ? (
-        <span className="inline-flex min-w-0 items-center gap-1.5" title={data.label}>
+        <span
+          className="inline-flex w-32 min-w-0 shrink-0 items-center gap-1.5 sm:w-52"
+          title={data.label}
+        >
           <WeatherIcon kind={data.kind} className="size-4 text-gold" />
           <span className="whitespace-nowrap">{Math.round(data.tempC)}°C</span>
           <span className="truncate">{data.label}</span>
         </span>
       ) : (
-        <span className="inline-flex items-center gap-1 text-ivory/70">
+        <span className="inline-flex w-32 min-w-0 shrink-0 items-center gap-1 text-ivory/70 sm:w-52">
           <CloudSun className="size-4 text-gold" aria-hidden />
-          Tempo indisponível
+          <span className="truncate">Tempo indisponível</span>
         </span>
       )}
     </Link>
