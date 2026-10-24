@@ -26,6 +26,8 @@ interface RadioContextValue {
   nowPlaying: RadioSong | null;
   selectStation: (station: RadioStation, play?: boolean) => void;
   togglePlayback: () => void;
+  pausePlayback: () => void;
+  registerExternalPauseHandler: (handler: () => void) => () => void;
   setVolume: (volume: number) => void;
   toggleMute: () => void;
 }
@@ -47,6 +49,7 @@ export function RadioProvider({ children }: { children: ReactNode }) {
   const playingRef = useRef(false);
   const loadingRef = useRef(false);
   const requestRef = useRef(0);
+  const externalPauseHandlerRef = useRef<(() => void) | null>(null);
   const [station, setStation] = useState<RadioStation>(radioStations[0]!);
   const [playing, setPlaying] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -135,6 +138,7 @@ export function RadioProvider({ children }: { children: ReactNode }) {
   const startStation = useCallback(async (selected: RadioStation) => {
     const audio = audioRef.current;
     if (!audio) return;
+    externalPauseHandlerRef.current?.();
     const requestId = ++requestRef.current;
     attemptRef.current = null;
     mediaErrorHandlerRef.current = () => undefined;
@@ -302,6 +306,24 @@ export function RadioProvider({ children }: { children: ReactNode }) {
     if (playingRef.current) audioRef.current?.pause();
     else void startStation(stationRef.current);
   }, [startStation]);
+  const pausePlayback = useCallback(() => {
+    requestRef.current += 1;
+    attemptRef.current = null;
+    mediaErrorHandlerRef.current = () => undefined;
+    loadingRef.current = false;
+    playingRef.current = false;
+    setLoading(false);
+    setPlaying(false);
+    hlsRef.current?.destroy();
+    hlsRef.current = null;
+    audioRef.current?.pause();
+  }, []);
+  const registerExternalPauseHandler = useCallback((handler: () => void) => {
+    externalPauseHandlerRef.current = handler;
+    return () => {
+      if (externalPauseHandlerRef.current === handler) externalPauseHandlerRef.current = null;
+    };
+  }, []);
   const toggleMute = useCallback(() => setMuted((value) => !value), []);
   const changeVolume = useCallback((next: number) => {
     setVolume(next);
@@ -319,6 +341,8 @@ export function RadioProvider({ children }: { children: ReactNode }) {
       nowPlaying,
       selectStation,
       togglePlayback,
+      pausePlayback,
+      registerExternalPauseHandler,
       setVolume: changeVolume,
       toggleMute,
     }),
@@ -333,6 +357,8 @@ export function RadioProvider({ children }: { children: ReactNode }) {
       nowPlaying,
       selectStation,
       togglePlayback,
+      pausePlayback,
+      registerExternalPauseHandler,
       changeVolume,
       toggleMute,
     ],

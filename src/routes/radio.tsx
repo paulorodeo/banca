@@ -14,12 +14,15 @@ import {
 import { Container } from "@/components/site/primitives";
 import { BancaEditorialBanner } from "@/components/site/banca-editorial-banner";
 import { radioStations } from "@/features/radio/data/stations";
+import { PodcastSection } from "@/features/radio/components/PodcastSection";
 import { useRadioController } from "@/features/radio/components/RadioProvider";
+import { readPodcastFeed } from "@/features/radio/podcast.functions";
 import { breadcrumbSchema, canonical, canonicalLink, pageMeta } from "@/lib/seo";
 
 const PATH = "/radio";
 
 export const Route = createFileRoute("/radio")({
+  loader: () => readPodcastFeed(),
   head: () => ({
     meta: pageMeta({
       title: "Rádio Banca Digital | Smooth Jazz, Soft Rock e Informação",
@@ -55,6 +58,7 @@ export const Route = createFileRoute("/radio")({
 });
 
 function RadioPage() {
+  const podcastResult = Route.useLoaderData();
   const {
     station,
     playing,
@@ -216,6 +220,8 @@ function RadioPage() {
           </section>
         </Container>
       </section>
+
+      <PodcastSection result={podcastResult} />
 
       <section className="py-16 md:py-24">
         <Container>
