@@ -36,12 +36,7 @@ export default defineConfig(({ command, mode }) => {
     resolve: {
       tsconfigPaths: true,
       alias: { "@": resolve(process.cwd(), "src") },
-      dedupe: [
-        "react",
-        "react-dom",
-        "react/jsx-runtime",
-        "react/jsx-dev-runtime",
-      ],
+      dedupe: ["react", "react-dom", "react/jsx-runtime", "react/jsx-dev-runtime"],
     },
     server: { host: "::", port: 8080 },
     plugins: [
@@ -80,6 +75,7 @@ export default defineConfig(({ command, mode }) => {
                           : STAGING_WEATHER_CACHE_ID,
                     },
                   ],
+                  services: [{ binding: "PODCAST_FEED", service: "feed-banca" }],
                   vars: {
                     BUILD_COMMIT: execFileSync("git", ["rev-parse", "HEAD"], {
                       encoding: "utf8",

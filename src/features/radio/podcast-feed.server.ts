@@ -6,6 +6,9 @@ const MAX_FEED_BYTES = 500_000;
 const CACHE_SECONDS = 300;
 
 type SharedCache = Pick<Cache, "match" | "put">;
+export interface PodcastFeedEnv {
+  PODCAST_FEED?: { fetch: typeof fetch };
+}
 
 function runtimeCache(): SharedCache | undefined {
   const storage = globalThis.caches as (CacheStorage & { default?: SharedCache }) | undefined;
