@@ -40,3 +40,23 @@ Executar os comandos no diretório `podcast-portal/` usando a conta Cloudflare *
 - A reprodução é iniciada pelo usuário, usando um único `audio` HTML por página.
 - Manter a identidade azul-marinho e dourada, o header/footer e a navegação de retorno ao portal principal.
 - Validar responsividade e Core Web Vitals reais em navegador; foram feitos testes HTTP/HTML, ainda não houve auditoria Lighthouse desta versão.
+
+## Hero das páginas individuais de episódio (bg_banca.jpg)
+
+Layout preparado no `worker.js`, exclusivamente para `/episodio-*`; a homepage permanece intacta.
+
+**Antes de publicar esta revisão**, no Fedora/WSL, execute em `podcast-portal/`:
+
+```bash
+bash scripts/prepare-hero.sh /mnt/c/Users/casan/OneDrive/Documentos/Banca/bg_banca.jpg
+```
+
+O comando lê a fotografia aprovada de **1920×912 px**, sem modificá-la, e gera:
+
+- `public/assets/bg-banca-960.avif` (960px; mobile)
+- `public/assets/bg-banca-1280.avif` (1280px; tablet e desktop)
+- `public/assets/bg-banca-1600.avif` (1600px; desktop amplo)
+
+O `wrangler.jsonc` usa **Workers Static Assets** para servir esses arquivos de forma direta e cacheável, preservando o Service Binding `PODCAST_FEED` e as demais rotas. Não publicar antes de os três arquivos existirem. Não copiar para os assets do portal jurídico `banca-prod`.
+
+Depois, valide a renderização em `/episodio-teste`, as respostas `image/avif` de cada variante, o hero no desktop/mobile, o LCP/CLS e a homepage sem mudanças; só então faça `wrangler deploy --config wrangler.jsonc` na conta Banca Paulista.
