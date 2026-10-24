@@ -9,5 +9,8 @@
       "binding": "PODCAST_FEED",
       "service": "feed-banca"
     }
-  ]
+  ],
+  "assets": {
+    "directory": "./public"
+  }
 }
