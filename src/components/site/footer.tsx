@@ -11,6 +11,7 @@ const footerLinks = [
   { to: "/artigos", label: "Artigos" },
   { to: "/profissionais", label: "Profissionais" },
   { to: "/radio", label: "Rádio" },
+  { href: "https://podcast.bancapaulista.org/", label: "Podcast" },
   { to: "/sobre", label: "Sobre" },
 ] as const;
 
@@ -30,10 +31,21 @@ export function SiteFooter() {
           <nav aria-label="Navegação do rodapé" className="md:justify-self-center">
             <ul className="flex flex-wrap gap-x-6 gap-y-3 text-[0.68rem] text-ivory/65">
               {footerLinks.map((link) => (
-                <li key={link.to}>
-                  <Link to={link.to} className="rounded-sm transition-colors hover:text-gold">
-                    {link.label}
-                  </Link>
+                <li key={link.label}>
+                  {"href" in link ? (
+                    <a
+                      href={link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="rounded-sm transition-colors hover:text-gold"
+                    >
+                      {link.label}
+                    </a>
+                  ) : (
+                    <Link to={link.to} className="rounded-sm transition-colors hover:text-gold">
+                      {link.label}
+                    </Link>
+                  )}
                 </li>
               ))}
             </ul>

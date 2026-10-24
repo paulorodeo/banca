@@ -4,7 +4,7 @@ import { Container } from "@/components/site/primitives";
 import type { PodcastFeed, PodcastEpisode } from "../podcast-feed";
 import { useRadioController } from "./RadioProvider";
 
-const PODCAST_URL = "https://feed-banca.paulista.workers.dev/";
+const PODCAST_URL = "https://podcast.bancapaulista.org/";
 
 const formatTime = (seconds: number) => {
   if (!Number.isFinite(seconds) || seconds < 0) return "0:00";
