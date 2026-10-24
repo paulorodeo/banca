@@ -84,9 +84,7 @@ export function WeatherProvider({ children }: { children: ReactNode }) {
     };
   }, []);
   return (
-    <WeatherContext.Provider value={{ data, isPending, error }}>
-      {children}
-    </WeatherContext.Provider>
+    <WeatherContext.Provider value={{ data, isPending, error }}>{children}</WeatherContext.Provider>
   );
 }
 
@@ -143,12 +141,12 @@ export function WeatherTicker() {
       {clock ? (
         <time
           dateTime={clock.iso}
-          className="hidden w-64 shrink-0 whitespace-nowrap text-right text-ivory/95 md:inline-block"
+          className="hidden shrink-0 whitespace-nowrap text-ivory/95 md:inline"
         >
           {clock.date}
         </time>
       ) : (
-        <span className="hidden w-64 shrink-0 whitespace-nowrap text-right text-ivory/75 md:inline-block">
+        <span className="hidden shrink-0 whitespace-nowrap text-ivory/75 md:inline">
           Data local
         </span>
       )}

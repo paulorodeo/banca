@@ -47,13 +47,29 @@ export function SiteFooter() {
           </p>
         </div>
 
-        <div className="grid gap-4 border-t border-white/10 py-3 text-[0.58rem] leading-4 text-ivory/45 md:grid-cols-[1fr_auto] md:items-center">
-          <p>
+        <div className="grid min-w-0 gap-4 border-t border-white/10 py-4 text-xs leading-5 text-ivory/65 md:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] md:items-center md:gap-6 md:py-3 md:text-[0.64rem] md:leading-4 md:text-ivory/50">
+          <p className="order-3 min-w-0 text-center md:order-1 md:text-left">
             © {new Date().getFullYear()} Banca Paulista · Portal editorial independente de
             informação jurídica e territorial. Conteúdo informativo não substitui orientação
             profissional.
           </p>
-          <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
+          <a
+            href="https://www.topleo.workers.dev/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Site desenvolvido pela TopLeo Workers (abre em nova aba)"
+            className="order-2 mx-auto inline-flex rounded-sm opacity-85 transition-opacity hover:opacity-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold md:order-2"
+          >
+            <img
+              src="/brand/topleo-workers.webp"
+              alt="TopLeo Workers"
+              width="120"
+              height="56"
+              loading="lazy"
+              className="h-auto w-[112px]"
+            />
+          </a>
+          <div className="order-1 flex min-w-0 flex-wrap items-center justify-center gap-x-5 gap-y-2 md:order-3 md:justify-end">
             <Link to="/privacidade" className="rounded-sm transition-colors hover:text-gold">
               Privacidade e Cookies
             </Link>

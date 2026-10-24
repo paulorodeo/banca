@@ -30,16 +30,17 @@ export function MiniRadioPlayer() {
     nowPlaying,
   } = useRadioController();
   const location = useLocation();
-  const [visible, setVisible] = useState(false);
+  const [scrolledPastThreshold, setScrolledPastThreshold] = useState(false);
   const [expanded, setExpanded] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setVisible(window.scrollY > 350);
+    const onScroll = () => setScrolledPastThreshold(window.scrollY > 350);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+  const visible = scrolledPastThreshold || playing || loading || expanded;
   if (!visible || location.pathname === "/radio") return null;
   const currentSong =
     nowPlaying?.title && nowPlaying.artist
