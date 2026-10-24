@@ -50,7 +50,7 @@ export async function loadPodcastFeed(fetcher: typeof fetch = fetch): Promise<Po
   const response = await fetcher(FEED_URL, {
     headers: { Accept: "application/rss+xml, application/xml;q=0.9" },
     credentials: "omit",
-    redirect: "error",
+    redirect: "manual",
     cache: "no-store",
     signal: AbortSignal.timeout(8_000),
   });
