@@ -2,6 +2,7 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { content } from "@/content/repository";
 import type { Delegacia } from "@/content/types";
 import { Container, Hairline, Section } from "@/components/site/primitives";
+import { BancaEditorialBanner } from "@/components/site/banca-editorial-banner";
 import { CtaReservado, PageHero } from "@/components/site/blocks";
 import { DelegaciaTelefone } from "@/components/site/delegacia-telefone";
 import { ProfessionalSidebar } from "@/components/site/territory";
@@ -193,6 +194,7 @@ function DelegaciaPage() {
         </Container>
       </Section>
       <CtaReservado />
+      <BancaEditorialBanner />
     </div>
   );
 }

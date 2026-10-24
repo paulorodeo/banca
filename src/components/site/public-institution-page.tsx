@@ -3,6 +3,7 @@ import type { PublicInstitution } from "@/content/types";
 import { AdPlaceholder } from "./ad-placeholder";
 import { type Crumb } from "./breadcrumbs";
 import { PageHero } from "./blocks";
+import { BancaEditorialBanner } from "./banca-editorial-banner";
 import { ContextualNewsSection } from "./contextual-news-section";
 import { Container, Section } from "./primitives";
 import { ProfessionalSidebar } from "./territory";
@@ -172,6 +173,7 @@ export function PublicInstitutionPage({
           </aside>
         </Container>
       </Section>
+      <BancaEditorialBanner />
     </>
   );
 }

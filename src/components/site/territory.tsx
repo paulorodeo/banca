@@ -9,7 +9,7 @@ import {
   ShieldCheck,
   Users,
 } from "lucide-react";
-import { type ReactNode, useMemo, useState } from "react";
+import { type CSSProperties, type ReactNode, useMemo, useState } from "react";
 import { filtrarTerritorios, type TerritorioIndice } from "@/content/local/indice-territorial";
 import type { ConteudoJuridico, Delegacia, InstitutionCategory, Zona } from "@/content/types";
 import { cn } from "@/lib/utils";
@@ -20,10 +20,13 @@ import { Container } from "./primitives";
 export interface TerritoryHeroImage {
   avifSrc: string;
   fallbackSrc: string;
+  srcSet?: string;
+  sizes?: string;
   alt: string;
   width: number;
   height: number;
   focalPoint?: string;
+  mobileFocalPoint?: string;
   priority?: boolean;
 }
 
@@ -55,18 +58,28 @@ export function TerritoryHero({
     <section className="territory-hero relative isolate overflow-hidden bg-brand-navy text-ivory">
       {image ? (
         <picture className="absolute inset-0 -z-20 block size-full">
-          <source srcSet={image.avifSrc} type="image/avif" />
+          <source
+            srcSet={image.srcSet ?? image.avifSrc}
+            sizes={image.sizes ?? "100vw"}
+            type="image/avif"
+          />
           <img
             src={image.fallbackSrc}
             alt={image.alt}
             width={image.width}
             height={image.height}
-            sizes="100vw"
+            sizes={image.sizes ?? "100vw"}
             loading={image.priority ? "eager" : "lazy"}
             fetchPriority={image.priority ? "high" : "auto"}
             decoding="async"
-            className="size-full object-cover opacity-75"
-            style={{ objectPosition: image.focalPoint ?? "center" }}
+            className="territory-hero-image size-full object-cover opacity-75"
+            style={
+              {
+                "--hero-object-position": image.focalPoint ?? "center",
+                "--hero-mobile-object-position":
+                  image.mobileFocalPoint ?? image.focalPoint ?? "center",
+              } as CSSProperties
+            }
           />
         </picture>
       ) : null}

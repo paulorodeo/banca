@@ -1,4 +1,5 @@
 import type { PaginaInstitucional } from "@/content/types";
+import type { TerritoryHeroImage } from "./territory";
 import { Container, Hairline, Section } from "./primitives";
 import { PageHero, CtaReservado } from "./blocks";
 import type { Crumb } from "./breadcrumbs";
@@ -9,16 +10,24 @@ export function PaginaInstitucionalView({
   crumbs,
   aside,
   showReservedCta = true,
+  heroImage,
 }: {
   pagina: PaginaInstitucional;
   eyebrow: string;
   crumbs: Crumb[];
   aside?: React.ReactNode;
   showReservedCta?: boolean;
+  heroImage?: TerritoryHeroImage;
 }) {
   return (
     <div className="home-light editorial-page">
-      <PageHero eyebrow={eyebrow} title={pagina.titulo} lead={pagina.subtitulo} crumbs={crumbs} />
+      <PageHero
+        eyebrow={eyebrow}
+        title={pagina.titulo}
+        lead={pagina.subtitulo}
+        crumbs={crumbs}
+        image={heroImage}
+      />
       <Section>
         <Container>
           <div className={aside ? "mx-auto max-w-6xl" : "mx-auto max-w-4xl"}>

@@ -2,6 +2,7 @@ import { createFileRoute, Link, Outlet } from "@tanstack/react-router";
 import { useRef } from "react";
 import { ArrowRight, BookOpenText, ChevronLeft, ChevronRight, TrendingUp } from "lucide-react";
 import { NewsImage } from "@/components/site/news-image";
+import { BancaEditorialBanner } from "@/components/site/banca-editorial-banner";
 import { Container } from "@/components/site/primitives";
 import { NewsEditorialHeader } from "@/components/site/news-editorial-header";
 import { conteudos } from "@/content/local/artigos-editoriais";
@@ -271,27 +272,7 @@ export function NoticiasPage({ categoriaSlug }: { categoriaSlug?: string }) {
         </Container>
       </section>
 
-      <section className="border-y border-gold/30 bg-[linear-gradient(105deg,#051c31_0%,#10395a_58%,#b8873e_160%)] py-10 text-ivory md:py-14">
-        <Container className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-          <div className="max-w-2xl">
-            <p className="text-xs font-bold uppercase tracking-[0.16em] text-gold">
-              Banca Paulista
-            </p>
-            <h2 className="mt-3 font-[Georgia,serif] text-3xl font-bold leading-tight text-white md:text-4xl">
-              Jornalismo independente sobre o que importa para São Paulo.
-            </h2>
-            <p className="mt-4 text-sm leading-6 text-ivory/80">
-              Justiça, instituições, cidades e pessoas em reportagens acessíveis e com contexto.
-            </p>
-          </div>
-          <Link
-            to="/sobre"
-            className="inline-flex items-center gap-2 self-start border border-gold px-5 py-3 text-sm font-semibold text-gold transition-colors hover:bg-gold hover:text-brand-navy md:self-auto"
-          >
-            Conheça a Banca Paulista <ArrowRight className="size-4" aria-hidden />
-          </Link>
-        </Container>
-      </section>
+      <BancaEditorialBanner cta="about" />
     </main>
   );
 }

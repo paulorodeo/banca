@@ -354,6 +354,12 @@ html.reduced-glare .home-light {
 .territory-hero h1 {
   text-wrap: balance;
 }
+.territory-hero-image { object-position: var(--hero-object-position, center); }
+@media (max-width: 639px) {
+  .territory-hero-image {
+    object-position: var(--hero-mobile-object-position, var(--hero-object-position, center));
+  }
+}
 .territory-grid {
   position: absolute;
   inset: 0;

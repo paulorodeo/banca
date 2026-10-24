@@ -10,20 +10,30 @@ import type {
 import { nomeDaZona } from "@/content/local/zonas";
 import { ActionLink, Container, Hairline, Section, SectionHeading } from "./primitives";
 import { type Crumb } from "./breadcrumbs";
-import { TerritoryHero } from "./territory";
+import { TerritoryHero, type TerritoryHeroImage } from "./territory";
 
 export function PageHero({
   eyebrow,
   title,
   lead,
   crumbs,
+  image,
 }: {
   eyebrow: string;
   title: string;
   lead?: string;
   crumbs: Crumb[];
+  image?: TerritoryHeroImage;
 }) {
-  return <TerritoryHero eyebrow={eyebrow} title={title} lead={lead ?? ""} crumbs={crumbs} />;
+  return (
+    <TerritoryHero
+      eyebrow={eyebrow}
+      title={title}
+      lead={lead ?? ""}
+      crumbs={crumbs}
+      image={image}
+    />
+  );
 }
 
 export function AreaCard({ area }: { area: AreaAtuacao }) {

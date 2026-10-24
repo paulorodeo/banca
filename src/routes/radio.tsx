@@ -12,6 +12,7 @@ import {
   VolumeX,
 } from "lucide-react";
 import { Container } from "@/components/site/primitives";
+import { BancaEditorialBanner } from "@/components/site/banca-editorial-banner";
 import { radioStations } from "@/features/radio/data/stations";
 import { useRadioController } from "@/features/radio/components/RadioProvider";
 import { breadcrumbSchema, canonical, canonicalLink, pageMeta } from "@/lib/seo";
@@ -433,6 +434,7 @@ function RadioPage() {
           </div>
         </Container>
       </section>
+      <BancaEditorialBanner />
     </div>
   );
 }

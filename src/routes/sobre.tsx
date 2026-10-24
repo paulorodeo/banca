@@ -1,6 +1,7 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
 import { content } from "@/content/repository";
 import { PaginaInstitucionalView } from "@/components/site/pagina-institucional";
+import { BANCA_EDITORIAL_HERO_IMAGE } from "@/components/site/banca-editorial-image";
 import { canonicalLink, pageMeta } from "@/lib/seo";
 
 export const Route = createFileRoute("/sobre")({
@@ -26,6 +27,7 @@ function Page() {
     <PaginaInstitucionalView
       pagina={pagina}
       eyebrow="Banca Paulista"
+      heroImage={BANCA_EDITORIAL_HERO_IMAGE}
       crumbs={[
         { name: "Início", path: "/" },
         { name: pagina.titulo, path: "/sobre" },

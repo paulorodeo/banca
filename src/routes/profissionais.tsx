@@ -17,6 +17,7 @@ import {
   type RegistroInstitucional,
 } from "@/content/local/pessoas";
 import { Container } from "@/components/site/primitives";
+import { BancaEditorialBanner } from "@/components/site/banca-editorial-banner";
 import { TerritoryHero } from "@/components/site/territory";
 import { canonicalLink, pageMeta } from "@/lib/seo";
 
@@ -256,6 +257,7 @@ function ProfissionaisPage() {
           </div>
         </Container>
       </section>
+      <BancaEditorialBanner />
     </main>
   );
 }

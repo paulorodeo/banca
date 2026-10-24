@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { BriefcaseBusiness, ExternalLink } from "lucide-react";
 import { Container } from "@/components/site/primitives";
+import { BancaEditorialBanner } from "@/components/site/banca-editorial-banner";
 import { TerritoryHero } from "@/components/site/territory";
 import { vagasPublicadas } from "@/content/local/vagas";
 import { canonicalLink, pageMeta } from "@/lib/seo";
@@ -126,6 +127,7 @@ function VagasPage() {
           </div>
         </Container>
       </section>
+      <BancaEditorialBanner />
     </main>
   );
 }

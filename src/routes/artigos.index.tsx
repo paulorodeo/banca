@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import { articleSearchSchema, type ArticleSearch } from "@/content/payload";
 import { readArticles } from "@/content/articles.functions";
 import { Container, Section } from "@/components/site/primitives";
+import { BancaEditorialBanner } from "@/components/site/banca-editorial-banner";
+import { BANCA_EDITORIAL_HERO_IMAGE } from "@/components/site/banca-editorial-image";
 import { ConteudoCard, CtaReservado, PageHero } from "@/components/site/blocks";
 import { ArticleState, ArticlesPending } from "@/components/site/article-state";
 import { articleListPath } from "@/lib/public-url";
@@ -57,6 +59,7 @@ function ConteudosPage() {
         eyebrow="Artigos"
         title="Artigos jurídicos"
         lead="Material de caráter informativo. Não substitui análise individualizada de cada situação."
+        image={BANCA_EDITORIAL_HERO_IMAGE}
         crumbs={[
           { name: "Início", path: "/" },
           { name: "Artigos", path: PATH },

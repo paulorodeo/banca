@@ -4,6 +4,7 @@ import { BookOpen, FileText, Landmark, Search, Shield, Users } from "lucide-reac
 import { content } from "@/content/repository";
 import type { Delegacia, Regiao, Zona } from "@/content/types";
 import { Container } from "@/components/site/primitives";
+import { BancaEditorialBanner } from "@/components/site/banca-editorial-banner";
 import { Breadcrumbs } from "@/components/site/breadcrumbs";
 import { ProfessionalSidebar } from "@/components/site/territory";
 import { DistrictDirectory } from "@/components/site/district-directory";
@@ -217,6 +218,7 @@ function DelegaciasPage() {
           <ProfessionalSidebar neighborhoodName="São Paulo" />
         </Container>
       </section>
+      <BancaEditorialBanner />
     </div>
   );
 }

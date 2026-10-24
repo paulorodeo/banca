@@ -5,6 +5,7 @@ import type { Zona } from "@/content/types";
 import { withPublishedGuideCounts } from "@/content/local/zonas";
 import { montarIndiceTerritorial, type TerritorioIndice } from "@/content/local/indice-territorial";
 import { Container } from "@/components/site/primitives";
+import { BancaEditorialBanner } from "@/components/site/banca-editorial-banner";
 import {
   NeighborhoodIndex,
   ProfessionalSidebar,
@@ -156,6 +157,7 @@ function RegioesPage() {
           </div>
         </Container>
       </section>
+      <BancaEditorialBanner />
     </div>
   );
 }
