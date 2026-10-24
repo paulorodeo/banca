@@ -50,8 +50,7 @@ export function SiteFooter() {
         <div className="grid min-w-0 gap-4 border-t border-white/10 py-4 text-xs leading-5 text-ivory/65 md:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] md:items-center md:gap-6 md:py-3 md:text-[0.64rem] md:leading-4 md:text-ivory/50">
           <p className="order-3 min-w-0 text-center md:order-1 md:text-left">
             © {new Date().getFullYear()} Banca Paulista · Portal editorial independente de
-            informação jurídica e territorial. Conteúdo informativo não substitui orientação
-            profissional.
+            informação jurídica e territorial.
           </p>
           <a
             href="https://www.topleo.workers.dev/"

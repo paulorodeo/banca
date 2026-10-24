@@ -55,7 +55,10 @@ export function MiniRadioPlayer() {
       {!expanded ? (
         <button
           type="button"
-          onClick={() => setExpanded(true)}
+          onClick={() => {
+            setExpanded(true);
+            if (!playing && !loading) togglePlayback();
+          }}
           aria-label="Abrir player de rádio"
           className="flex h-11 w-[105px] items-center gap-2 rounded-full border border-[#C8A66A]/35 bg-[#101B2B] px-3 text-[#F4F1EB] shadow-xl shadow-black/20 transition hover:border-[#C8A66A] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#C8A66A]"
         >
@@ -118,7 +121,8 @@ export function MiniRadioPlayer() {
                   role="option"
                   aria-selected={station.id === item.id}
                   onClick={() => {
-                    selectStation(item);
+                    if (station.id !== item.id) selectStation(item, true);
+                    else if (!playing && !loading) togglePlayback();
                     setMenuOpen(false);
                   }}
                   className={`flex w-full items-center justify-between rounded-lg px-3 py-2 text-left transition hover:bg-white/10 ${station.id === item.id ? "text-[#C8A66A]" : "text-[#F4F1EB]"}`}
