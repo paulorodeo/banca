@@ -20,7 +20,13 @@ export const readPodcastFeed = createServerFn({ method: "GET" }).handler(
         ? (input, init) => env.PODCAST_FEED!.fetch(input, init)
         : fetch;
       return { ok: true, feed: await loadPodcastFeed(fetcher) };
-    } catch {
+    } catch (error) {
+      console.error(
+        JSON.stringify({
+          event: "podcast_feed_read_failed",
+          error: error instanceof Error ? error.message : "unknown_error",
+        }),
+      );
       return { ok: false, error: "podcast_feed_unavailable" };
     }
   },
