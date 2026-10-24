@@ -1,0 +1,13 @@
+{
+  "name": "banca-podcast",
+  "main": "worker.js",
+  "compatibility_date": "2026-10-17",
+  "account_id": "7b2dfe1e7fa69edb06d7bf74d7ebc942",
+  "workers_dev": true,
+  "services": [
+    {
+      "binding": "PODCAST_FEED",
+      "service": "feed-banca"
+    }
+  ]
+}
