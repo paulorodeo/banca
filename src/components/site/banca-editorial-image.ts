@@ -23,4 +23,4 @@ export const BANCA_EDITORIAL_HERO_IMAGE = {
 
 // Banner height is 19rem on mobile and its text can increase the 16rem desktop minimum.
 export const BANCA_EDITORIAL_BANNER_SIZES =
-  "(max-width: 359px) 944px, (max-width: 639px) 811px, 100vw";
+  "(max-width: 359px) 944px, (max-width: 639px) 832px, 100vw";
