@@ -6,7 +6,12 @@ export const Route = createFileRoute(
   "/noticias/dhenis-martins-dos-santos-discussao-dfir-divulgacao-cpf-endereco",
 )({
   loader: async () => {
-    if (!import.meta.env.DEV && import.meta.env.MODE !== "staging") throw notFound();
+    if (
+      !import.meta.env.DEV &&
+      import.meta.env.MODE !== "staging" &&
+      import.meta.env.MODE !== "production"
+    )
+      throw notFound();
 
     const { rascunhoExposicaoDadosLinkedin } =
       await import("@/content/local/rascunho-exposicao-dados-linkedin");
