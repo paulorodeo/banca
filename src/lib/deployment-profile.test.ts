@@ -9,7 +9,9 @@ test("staging build carries noindex route rules without conflicting with static 
     PUBLIC_SITE_URL: STAGING_SITE_ORIGIN,
     BP_BUILD_OUTPUT: ".output",
   });
-  assert.deepEqual(profile.routeHeaders, { "X-Robots-Tag": "noindex, nofollow" });
+  assert.deepEqual(profile.routeHeaders, {
+    "X-Robots-Tag": "noindex, nofollow, noarchive, noimageindex",
+  });
   assert.equal(profile.runtimeVars.DEPLOYMENT_ENV, "staging");
   assert.equal(profile.publicOrigin, STAGING_SITE_ORIGIN);
   assert.equal(profile.outputDir, ".output");

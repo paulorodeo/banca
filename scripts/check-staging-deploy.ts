@@ -35,6 +35,6 @@ const stagingHtml = environmentResponse(
   new Response("<!doctype html>", { headers: { "content-type": "text/html; charset=utf-8" } }),
   config.vars,
 );
-assert.equal(stagingHtml.headers.get("X-Robots-Tag"), "noindex, nofollow");
+assert.equal(stagingHtml.headers.get("X-Robots-Tag"), "noindex, nofollow, noarchive, noimageindex");
 assert.equal(stagingHtml.headers.get("Cache-Control"), "no-store");
 console.log(`Homologação validada: banca · ${config.vars.BUILD_COMMIT}`);

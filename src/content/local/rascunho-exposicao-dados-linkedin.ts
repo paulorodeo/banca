@@ -139,8 +139,6 @@ Segundo a própria declaração, o episódio teria envolvido informações da pe
 
 O usuário afirmou ainda que a situação não teria resultado em consequências, sem apresentar documentação que permitisse verificar o episódio, suas circunstâncias ou eventuais providências adotadas pelas autoridades.
 
-Em outra passagem, o usuário relatou o comparecimento à residência de uma pessoa após um conflito. Não há confirmação independente desse relato, tampouco elementos suficientes para concluir que o episódio ocorreu nas circunstâncias descritas.
-
 ### Críticas depreciativas à Justiça brasileira
 
 Na mesma manifestação, Dhenis utilizou expressões depreciativas sobre o funcionamento da Justiça no Brasil.

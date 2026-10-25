@@ -10,7 +10,7 @@
     "preview": "vite preview",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "build:staging": "DEPLOYMENT_ENV=staging PUBLIC_SITE_URL=https://banca.paulista.workers.dev BP_BUILD_OUTPUT=.output bun run build",
+    "build:staging": "DEPLOYMENT_ENV=staging PUBLIC_SITE_URL=https://banca.paulista.workers.dev BP_BUILD_OUTPUT=.output vite build --mode staging",
     "build:production:check": "DEPLOYMENT_ENV=production PUBLIC_SITE_URL=https://bancapaulista.org BP_BUILD_OUTPUT=.output-production bun run build",
     "deploy:staging": "bun scripts/check-staging-deploy.ts && npx --yes wrangler@4.151.0 deploy --config .output/server/wrangler.json --name banca",
     "deploy:production": "bun scripts/check-production-deploy.ts && npx --yes wrangler@4.151.0 deploy --config .output-production/server/wrangler.json --name banca-prod"

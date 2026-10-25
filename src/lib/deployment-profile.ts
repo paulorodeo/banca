@@ -25,7 +25,10 @@ export function buildProfile(env: Record<string, string | undefined>): BuildProf
     publicOrigin: expectedOrigin,
     outputDir:
       env["BP_BUILD_OUTPUT"] ?? (environment === "staging" ? ".output" : ".output-production"),
-    routeHeaders: environment === "staging" ? { "X-Robots-Tag": "noindex, nofollow" } : {},
+    routeHeaders:
+      environment === "staging"
+        ? { "X-Robots-Tag": "noindex, nofollow, noarchive, noimageindex" }
+        : {},
     runtimeVars: { DEPLOYMENT_ENV: environment, PUBLIC_SITE_URL: expectedOrigin },
   };
 }

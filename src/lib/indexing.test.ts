@@ -19,14 +19,20 @@ test("HTML responses including errors are noindex/nofollow and not cached in sta
       { DEPLOYMENT_ENV: "staging" },
     );
     assert.equal(response.status, status);
-    assert.equal(response.headers.get("X-Robots-Tag"), "noindex, nofollow");
+    assert.equal(
+      response.headers.get("X-Robots-Tag"),
+      "noindex, nofollow, noarchive, noimageindex",
+    );
     assert.equal(response.headers.get("Cache-Control"), "no-store");
     assert.equal(response.headers.get("X-Content-Type-Options"), "nosniff");
     assert.equal(response.headers.get("X-Frame-Options"), "SAMEORIGIN");
   }
   const asset = new Response("image", { headers: { "Content-Type": "image/avif" } });
   const stagedAsset = environmentResponse(asset, { DEPLOYMENT_ENV: "staging" });
-  assert.equal(stagedAsset.headers.get("X-Robots-Tag"), "noindex, nofollow");
+  assert.equal(
+    stagedAsset.headers.get("X-Robots-Tag"),
+    "noindex, nofollow, noarchive, noimageindex",
+  );
   assert.equal(stagedAsset.headers.get("Cache-Control"), null);
 });
 
@@ -42,7 +48,7 @@ test("staging retains noindex while production does not inherit it and receives 
     );
 
   const staging = response(stagingEnv);
-  assert.equal(staging.headers.get("X-Robots-Tag"), "noindex, nofollow");
+  assert.equal(staging.headers.get("X-Robots-Tag"), "noindex, nofollow, noarchive, noimageindex");
   assert.equal(staging.headers.get("Cache-Control"), "no-store");
   assert.equal(runtimePublicOrigin(stagingEnv), STAGING_SITE_ORIGIN);
 

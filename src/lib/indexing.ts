@@ -22,7 +22,7 @@ export function environmentResponse(
   const staging = isStaging(env);
   const isHtml = headers.get("Content-Type")?.includes("text/html") ?? false;
   if (staging) {
-    headers.set("X-Robots-Tag", "noindex, nofollow");
+    headers.set("X-Robots-Tag", "noindex, nofollow, noarchive, noimageindex");
     // HTML and route endpoints are not cached; fingerprinted static assets
     // retain Nitro's immutable cache policy without conflicting _headers.
     if (isHtml) headers.set("Cache-Control", "no-store");
