@@ -23,6 +23,8 @@ export interface Media {
   width?: number;
   height?: number;
   caption?: string;
+  /** Mantém a proporção intrínseca quando a composição editorial não admite recorte. */
+  preserveAspectRatio?: boolean;
 }
 
 export interface Autor {
@@ -206,6 +208,7 @@ export type NoticiaBloco =
   | { tipo: "titulo"; texto: string }
   | { tipo: "lista"; itens: string[] }
   | { tipo: "tabela"; cabecalho: string[]; linhas: string[][] }
+  | { tipo: "imagem"; imagem: Media }
   /** Markdown editorial local, renderizado pelo mesmo template público de notícia. */
   | { tipo: "markdown"; texto: string };
 
@@ -238,6 +241,42 @@ export interface NoticiaEditorial {
   tags?: string[];
   relacionamentos?: NoticiaRelacionamento[];
   fontes?: NoticiaFonte[];
+}
+
+/**
+ * Registro de trabalho deliberadamente fora das coleções públicas de notícias.
+ * Um rascunho só pode ser distribuído após revisão e migração explícita para `noticias`.
+ */
+export interface NoticiaRascunhoEditorial extends NoticiaEditorial {
+  statusEditorial: "rascunho" | "revisao";
+  elaboradoEm: string;
+  identificacaoProfissional?: string;
+  assinaturaDefinitiva: boolean;
+  condicaoAssinatura?: string;
+  manchetesAlternativas: string[];
+  linhaFina: string;
+  subeditoria?: string;
+  tipoEditorial: string;
+  localidade: string;
+  identificacao: {
+    perfilPublico: string;
+    nomeAssociado: string;
+    participante: string;
+    confirmacaoIndependente: "pendente" | "confirmada";
+  };
+  distribuicao: {
+    rotaPublica: false;
+    homepage: false;
+    listagemNoticias: false;
+    carrosseis: false;
+    noticiasRelacionadas: false;
+    paginasTerritoriais: false;
+    paginasInstitucionais: false;
+    buscaInterna: false;
+    feeds: false;
+    sitemap: false;
+  };
+  pendenciasEditoriais: string[];
 }
 
 export interface DelegaciaUnidade {

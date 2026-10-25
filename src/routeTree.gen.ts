@@ -41,6 +41,7 @@ import { Route as DelegaciasSlugRouteImport } from './routes/delegacias.$slug'
 import { Route as InstituicoesSlugRouteImport } from './routes/instituicoes.$slug'
 import { Route as NoticiasIndexRouteImport } from './routes/noticias.index'
 import { Route as NoticiasSlugRouteImport } from './routes/noticias.$slug'
+import { Route as NoticiasPreviewLocalRouteImport } from './routes/noticias.preview-local'
 import { Route as OrgaosIndexRouteImport } from './routes/orgaos.index'
 import { Route as RegioesIndexRouteImport } from './routes/regioes.index'
 import { Route as RegioesSlugRouteImport } from './routes/regioes.$slug'
@@ -207,6 +208,11 @@ const NoticiasSlugRoute = NoticiasSlugRouteImport.update({
   path: '/$slug',
   getParentRoute: () => NoticiasRoute,
 } as any)
+const NoticiasPreviewLocalRoute = NoticiasPreviewLocalRouteImport.update({
+  id: '/preview-local',
+  path: '/preview-local',
+  getParentRoute: () => NoticiasRoute,
+} as any)
 const OrgaosIndexRoute = OrgaosIndexRouteImport.update({
   id: '/orgaos/',
   path: '/orgaos/',
@@ -262,6 +268,7 @@ export interface FileRoutesByFullPath {
   '/delegacias/$slug': typeof DelegaciasSlugRoute
   '/instituicoes/$slug': typeof InstituicoesSlugRoute
   '/noticias/$slug': typeof NoticiasSlugRoute
+  '/noticias/preview-local': typeof NoticiasPreviewLocalRoute
   '/regioes/$slug': typeof RegioesSlugRoute
   '/artigos/': typeof ArtigosIndexRoute
   '/conteudos/': typeof ConteudosIndexRoute
@@ -300,6 +307,7 @@ export interface FileRoutesByTo {
   '/delegacias/$slug': typeof DelegaciasSlugRoute
   '/instituicoes/$slug': typeof InstituicoesSlugRoute
   '/noticias/$slug': typeof NoticiasSlugRoute
+  '/noticias/preview-local': typeof NoticiasPreviewLocalRoute
   '/regioes/$slug': typeof RegioesSlugRoute
   '/artigos': typeof ArtigosIndexRoute
   '/conteudos': typeof ConteudosIndexRoute
@@ -340,6 +348,7 @@ export interface FileRoutesById {
   '/delegacias/$slug': typeof DelegaciasSlugRoute
   '/instituicoes/$slug': typeof InstituicoesSlugRoute
   '/noticias/$slug': typeof NoticiasSlugRoute
+  '/noticias/preview-local': typeof NoticiasPreviewLocalRoute
   '/regioes/$slug': typeof RegioesSlugRoute
   '/artigos/': typeof ArtigosIndexRoute
   '/conteudos/': typeof ConteudosIndexRoute
@@ -381,6 +390,7 @@ export interface FileRouteTypes {
     | '/delegacias/$slug'
     | '/instituicoes/$slug'
     | '/noticias/$slug'
+    | '/noticias/preview-local'
     | '/regioes/$slug'
     | '/artigos/'
     | '/conteudos/'
@@ -419,6 +429,7 @@ export interface FileRouteTypes {
     | '/delegacias/$slug'
     | '/instituicoes/$slug'
     | '/noticias/$slug'
+    | '/noticias/preview-local'
     | '/regioes/$slug'
     | '/artigos'
     | '/conteudos'
@@ -458,6 +469,7 @@ export interface FileRouteTypes {
     | '/delegacias/$slug'
     | '/instituicoes/$slug'
     | '/noticias/$slug'
+    | '/noticias/preview-local'
     | '/regioes/$slug'
     | '/artigos/'
     | '/conteudos/'
@@ -733,6 +745,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof NoticiasSlugRouteImport
       parentRoute: typeof NoticiasRoute
     }
+    '/noticias/preview-local': {
+      id: '/noticias/preview-local'
+      path: '/preview-local'
+      fullPath: '/noticias/preview-local'
+      preLoaderRoute: typeof NoticiasPreviewLocalRouteImport
+      parentRoute: typeof NoticiasRoute
+    }
     '/orgaos/': {
       id: '/orgaos/'
       path: '/orgaos'
@@ -773,11 +792,13 @@ declare module '@tanstack/react-router' {
 
 interface NoticiasRouteChildren {
   NoticiasSlugRoute: typeof NoticiasSlugRoute
+  NoticiasPreviewLocalRoute: typeof NoticiasPreviewLocalRoute
   NoticiasIndexRoute: typeof NoticiasIndexRoute
 }
 
 const NoticiasRouteChildren: NoticiasRouteChildren = {
   NoticiasSlugRoute: NoticiasSlugRoute,
+  NoticiasPreviewLocalRoute: NoticiasPreviewLocalRoute,
   NoticiasIndexRoute: NoticiasIndexRoute,
 }
 

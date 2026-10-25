@@ -127,6 +127,8 @@ function formatDate(value: string) {
 function blockText(block: NoticiaBloco): string {
   if (block.tipo === "lista") return block.itens.join(" ");
   if (block.tipo === "tabela") return [...block.cabecalho, ...block.linhas.flat()].join(" ");
+  if (block.tipo === "imagem")
+    return [block.imagem.alt, block.imagem.caption].filter(Boolean).join(" ");
   return block.texto;
 }
 
@@ -172,6 +174,17 @@ function inlineMarkdown(text: string) {
 }
 
 function NoticiaBlocoView({ bloco }: { bloco: NoticiaBloco }) {
+  if (bloco.tipo === "imagem")
+    return (
+      <figure className="my-7">
+        <NewsImage image={bloco.imagem} className="h-auto w-full object-contain" loading="lazy" />
+        {bloco.imagem.caption ? (
+          <figcaption className="mt-2 border-l-2 border-[#b28341] pl-3 text-xs leading-5 text-[#52616d]">
+            {bloco.imagem.caption}
+          </figcaption>
+        ) : null}
+      </figure>
+    );
   if (bloco.tipo === "titulo")
     return (
       <h2 className="pt-5 font-[Georgia,serif] text-[1.65rem] font-bold leading-tight text-[#061e30] md:text-[1.9rem]">
@@ -734,7 +747,11 @@ export function NewsArticlePage({ noticia }: { noticia: NoticiaEditorial }) {
                 image={noticia.imagem}
                 loading="eager"
                 fetchPriority="high"
-                className="aspect-[16/9] w-full object-cover"
+                className={
+                  noticia.imagem?.preserveAspectRatio
+                    ? "h-auto w-full object-contain"
+                    : "aspect-[16/9] w-full object-cover"
+                }
               />
               {noticia.imagem?.caption ? (
                 <figcaption className="mt-2 border-l-2 border-[#b28341] pl-3 text-xs leading-5 text-[#52616d]">
