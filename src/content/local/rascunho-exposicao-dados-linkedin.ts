@@ -72,7 +72,6 @@ Capturas da conversa fornecidas à Banca Paulista mostram que a conta utiliza pu
 O documento exibia nome completo, CPF e endereço do destinatário. Esses dados não serão reproduzidos nesta reportagem.
 
 A origem do documento, as circunstâncias de sua obtenção e a finalidade de sua divulgação são questões ainda não esclarecidas. O episódio chama a atenção para os limites entre divergência profissional, exposição de informações pessoais e responsabilidade nas redes sociais.
-
 `,
     },
     {

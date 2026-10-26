@@ -3,6 +3,11 @@ import { readArticle } from "@/content/articles.functions";
 import { Container, Hairline, Section } from "@/components/site/primitives";
 import { CtaReservado, PageHero } from "@/components/site/blocks";
 import { ArticleRichText } from "@/components/site/article-rich-text";
+import { collectRichTextImages } from "@/components/site/editorial-gallery";
+import {
+  EditorialImageTrigger,
+  EditorialLightboxProvider,
+} from "@/components/site/editorial-lightbox";
 import { ArticleState, ArticlesPending } from "@/components/site/article-state";
 import { articleSchema, breadcrumbSchema, pageMeta } from "@/lib/seo";
 
@@ -80,85 +85,93 @@ function ConteudoPage() {
   if (!conteudo) return <ArticleState missing />;
   const date = (value: string) =>
     new Date(value).toLocaleDateString("pt-BR", { dateStyle: "long", timeZone: "UTC" });
+  const galleryImages = [
+    ...(conteudo.capa ? [conteudo.capa] : []),
+    ...(conteudo.richText ? collectRichTextImages(conteudo.richText) : []),
+  ];
   return (
-    <div className="home-light editorial-page">
-      <PageHero
-        eyebrow={conteudo.categoria}
-        title={conteudo.titulo}
-        lead={conteudo.resumo}
-        crumbs={[
-          { name: "Início", path: "/" },
-          { name: "Artigos", path: "/artigos" },
-          { name: conteudo.titulo, path: `/artigos/${conteudo.slug}` },
-        ]}
-      />
-      <Section>
-        <Container>
-          <article className="min-w-0 max-w-3xl">
-            <p className="text-xs uppercase text-muted-foreground">
-              Publicado em {date(conteudo.publicadoEm)}
-              {conteudo.atualizadoEm && ` · Atualizado em ${date(conteudo.atualizadoEm)}`}
-            </p>
-            {conteudo.capa && (
-              <figure className="mt-8">
-                <img
-                  src={conteudo.capa.url}
-                  alt={conteudo.capa.alt}
-                  width={conteudo.capa.width}
-                  height={conteudo.capa.height}
-                  className="h-auto w-full"
-                  fetchPriority="high"
-                />
-                {conteudo.capa.caption && (
-                  <figcaption className="mt-3 text-sm text-muted-foreground">
-                    {conteudo.capa.caption}
-                  </figcaption>
-                )}
-              </figure>
-            )}
-            <Hairline className="my-8 max-w-24" />
-            {conteudo.richText ? (
-              <ArticleRichText nodes={conteudo.richText} />
-            ) : (
-              <div className="space-y-5">
-                {conteudo.corpo.map((paragraph, index) => (
-                  <p key={index} className="text-base leading-relaxed text-muted-foreground">
-                    {paragraph}
-                  </p>
-                ))}
-              </div>
-            )}
-            {conteudo.autor && (
-              <footer className="mt-12 border-t border-border pt-6">
-                <div className="flex items-start gap-4">
-                  {conteudo.autor.foto && (
+    <EditorialLightboxProvider images={galleryImages}>
+      <div className="home-light editorial-page">
+        <PageHero
+          eyebrow={conteudo.categoria}
+          title={conteudo.titulo}
+          lead={conteudo.resumo}
+          crumbs={[
+            { name: "Início", path: "/" },
+            { name: "Artigos", path: "/artigos" },
+            { name: conteudo.titulo, path: `/artigos/${conteudo.slug}` },
+          ]}
+        />
+        <Section>
+          <Container>
+            <article className="min-w-0 max-w-3xl">
+              <p className="text-xs uppercase text-muted-foreground">
+                Publicado em {date(conteudo.publicadoEm)}
+                {conteudo.atualizadoEm && ` · Atualizado em ${date(conteudo.atualizadoEm)}`}
+              </p>
+              {conteudo.capa && (
+                <figure className="mt-8">
+                  <EditorialImageTrigger image={conteudo.capa}>
                     <img
-                      src={conteudo.autor.foto.url}
-                      alt={conteudo.autor.foto.alt}
-                      width={64}
-                      height={64}
-                      loading="lazy"
-                      className="size-16 shrink-0 object-cover"
+                      src={conteudo.capa.url}
+                      alt={conteudo.capa.alt}
+                      width={conteudo.capa.width}
+                      height={conteudo.capa.height}
+                      className="h-auto w-full"
+                      fetchPriority="high"
                     />
+                  </EditorialImageTrigger>
+                  {conteudo.capa.caption && (
+                    <figcaption className="mt-3 text-sm text-muted-foreground">
+                      {conteudo.capa.caption}
+                    </figcaption>
                   )}
-                  <div>
-                    <p className="text-foreground">{conteudo.autor.nome}</p>
-                    {conteudo.autor.oab && (
-                      <p className="mt-1 text-sm text-muted-foreground">{conteudo.autor.oab}</p>
-                    )}
-                    {conteudo.autor.bio && (
-                      <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-                        {conteudo.autor.bio}
-                      </p>
-                    )}
-                  </div>
+                </figure>
+              )}
+              <Hairline className="my-8 max-w-24" />
+              {conteudo.richText ? (
+                <ArticleRichText nodes={conteudo.richText} />
+              ) : (
+                <div className="space-y-5">
+                  {conteudo.corpo.map((paragraph, index) => (
+                    <p key={index} className="text-base leading-relaxed text-muted-foreground">
+                      {paragraph}
+                    </p>
+                  ))}
                 </div>
-              </footer>
-            )}
-          </article>
-        </Container>
-      </Section>
-      <CtaReservado />
-    </div>
+              )}
+              {conteudo.autor && (
+                <footer className="mt-12 border-t border-border pt-6">
+                  <div className="flex items-start gap-4">
+                    {conteudo.autor.foto && (
+                      <img
+                        src={conteudo.autor.foto.url}
+                        alt={conteudo.autor.foto.alt}
+                        width={64}
+                        height={64}
+                        loading="lazy"
+                        className="size-16 shrink-0 object-cover"
+                      />
+                    )}
+                    <div>
+                      <p className="text-foreground">{conteudo.autor.nome}</p>
+                      {conteudo.autor.oab && (
+                        <p className="mt-1 text-sm text-muted-foreground">{conteudo.autor.oab}</p>
+                      )}
+                      {conteudo.autor.bio && (
+                        <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                          {conteudo.autor.bio}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                </footer>
+              )}
+            </article>
+          </Container>
+        </Section>
+        <CtaReservado />
+      </div>
+    </EditorialLightboxProvider>
   );
 }

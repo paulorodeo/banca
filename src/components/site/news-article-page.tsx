@@ -20,6 +20,10 @@ import { noticias } from "@/content/local/noticias";
 import { zonas } from "@/content/local/zonas";
 import type { NoticiaBloco, NoticiaEditorial } from "@/content/types";
 import { NewsImage } from "@/components/site/news-image";
+import {
+  EditorialImageTrigger,
+  EditorialLightboxProvider,
+} from "@/components/site/editorial-lightbox";
 import { Container } from "@/components/site/primitives";
 
 type TerritoryRelation = { nome: string; relacao?: string };
@@ -177,7 +181,9 @@ function NoticiaBlocoView({ bloco }: { bloco: NoticiaBloco }) {
   if (bloco.tipo === "imagem")
     return (
       <figure className="my-7">
-        <NewsImage image={bloco.imagem} className="h-auto w-full object-contain" loading="lazy" />
+        <EditorialImageTrigger image={bloco.imagem}>
+          <NewsImage image={bloco.imagem} className="h-auto w-full object-contain" loading="lazy" />
+        </EditorialImageTrigger>
         {bloco.imagem.caption ? (
           <figcaption className="mt-2 border-l-2 border-[#b28341] pl-3 text-xs leading-5 text-[#52616d]">
             {bloco.imagem.caption}
@@ -703,155 +709,167 @@ function ArticleSidebar({ noticia }: { noticia: NoticiaEditorial }) {
 export function NewsArticlePage({ noticia }: { noticia: NoticiaEditorial }) {
   const readTime = readingMinutes(noticia);
   const displayedRelations = territoriesOf(noticia);
+  const galleryImages = [
+    ...(noticia.imagem ? [noticia.imagem] : []),
+    ...noticia.blocos.flatMap((bloco) => (bloco.tipo === "imagem" ? [bloco.imagem] : [])),
+  ];
   return (
-    <div className="bg-white text-[#152638]">
-      <Container className="pt-5 md:pt-7">
-        <nav aria-label="Breadcrumb" className="mb-6 text-xs leading-5 text-[#52616d] md:text-sm">
-          <ol className="flex flex-wrap items-center gap-x-2 gap-y-1">
-            <li>
-              <Link to="/" className="hover:text-[#76501f]">
-                Início
-              </Link>
-            </li>
-            <li aria-hidden="true">›</li>
-            <li>
-              <Link to="/noticias" className="hover:text-[#76501f]">
-                Notícias
-              </Link>
-            </li>
-            <li aria-hidden="true">›</li>
-            <li className="font-medium text-[#102c43]" aria-current="page">
-              {noticia.titulo}
-            </li>
-          </ol>
-        </nav>
-        <div className="grid items-start gap-8 min-[900px]:grid-cols-[minmax(0,2fr)_minmax(17rem,0.92fr)] min-[900px]:gap-7 xl:gap-8">
-          <article className="min-w-0" aria-labelledby="news-article-title">
-            <p className="text-xs font-bold uppercase tracking-[0.11em] text-[#91652b] md:text-sm">
-              {noticia.categoria}
-            </p>
-            <h1
-              id="news-article-title"
-              className="mt-3 max-w-4xl font-[Georgia,serif] text-[1.9rem] font-bold leading-[1.08] tracking-[-0.02em] text-[#061e30] sm:text-[2.1rem] min-[900px]:text-[2.25rem] xl:text-[2.7rem]"
-            >
-              {noticia.titulo}
-            </h1>
-            <p className="mt-4 max-w-4xl font-[Georgia,serif] text-lg leading-[1.45] text-[#263746] sm:text-xl xl:text-[1.35rem]">
-              {noticia.resumo}
-            </p>
-            <div className="mt-5">
-              <ArticleByline noticia={noticia} readTime={readTime} />
-            </div>
-            <figure className="mt-2">
-              <NewsImage
-                image={noticia.imagem}
-                loading="eager"
-                fetchPriority="high"
-                className={
-                  noticia.imagem?.preserveAspectRatio
-                    ? "h-auto w-full object-contain"
-                    : "aspect-[16/9] w-full object-cover"
-                }
-              />
-              {noticia.imagem?.caption ? (
-                <figcaption className="mt-2 border-l-2 border-[#b28341] pl-3 text-xs leading-5 text-[#52616d]">
-                  {noticia.imagem.caption}
-                </figcaption>
-              ) : null}
-            </figure>
-            <div className="mt-7 space-y-5">
-              {noticia.blocos.map((bloco, index) => (
-                <NoticiaBlocoView key={`${bloco.tipo}-${index}`} bloco={bloco} />
-              ))}
-            </div>
-            <footer className="mt-9 border-t border-[#d9e0e5] pt-5">
-              {noticia.notas.length ? (
-                <div className="mb-6 space-y-2 text-sm leading-6 text-[#475569]">
-                  {noticia.notas.map((nota) => (
-                    <p key={nota}>{nota}</p>
-                  ))}
-                </div>
-              ) : null}
-              {noticia.fontes?.length ? (
-                <section
-                  className="border-l-4 border-[#b28341] bg-[#f8f8f6] p-4 md:p-5"
-                  aria-labelledby="sources-title"
-                >
-                  <h2
-                    id="sources-title"
-                    className="flex items-center gap-2 font-[Georgia,serif] text-xl font-bold text-[#061e30]"
+    <EditorialLightboxProvider images={galleryImages}>
+      <div className="bg-white text-[#152638]">
+        <Container className="pt-5 md:pt-7">
+          <nav aria-label="Breadcrumb" className="mb-6 text-xs leading-5 text-[#52616d] md:text-sm">
+            <ol className="flex flex-wrap items-center gap-x-2 gap-y-1">
+              <li>
+                <Link to="/" className="hover:text-[#76501f]">
+                  Início
+                </Link>
+              </li>
+              <li aria-hidden="true">›</li>
+              <li>
+                <Link to="/noticias" className="hover:text-[#76501f]">
+                  Notícias
+                </Link>
+              </li>
+              <li aria-hidden="true">›</li>
+              <li className="font-medium text-[#102c43]" aria-current="page">
+                {noticia.titulo}
+              </li>
+            </ol>
+          </nav>
+          <div className="grid items-start gap-8 min-[900px]:grid-cols-[minmax(0,2fr)_minmax(17rem,0.92fr)] min-[900px]:gap-7 xl:gap-8">
+            <article className="min-w-0" aria-labelledby="news-article-title">
+              <p className="text-xs font-bold uppercase tracking-[0.11em] text-[#91652b] md:text-sm">
+                {noticia.categoria}
+              </p>
+              <h1
+                id="news-article-title"
+                className="mt-3 max-w-4xl font-[Georgia,serif] text-[1.9rem] font-bold leading-[1.08] tracking-[-0.02em] text-[#061e30] sm:text-[2.1rem] min-[900px]:text-[2.25rem] xl:text-[2.7rem]"
+              >
+                {noticia.titulo}
+              </h1>
+              <p className="mt-4 max-w-4xl font-[Georgia,serif] text-lg leading-[1.45] text-[#263746] sm:text-xl xl:text-[1.35rem]">
+                {noticia.resumo}
+              </p>
+              <div className="mt-5">
+                <ArticleByline noticia={noticia} readTime={readTime} />
+              </div>
+              <figure className="mt-2">
+                {noticia.imagem ? (
+                  <EditorialImageTrigger image={noticia.imagem}>
+                    <NewsImage
+                      image={noticia.imagem}
+                      loading="eager"
+                      fetchPriority="high"
+                      className={
+                        noticia.imagem.preserveAspectRatio
+                          ? "h-auto w-full object-contain"
+                          : "aspect-[16/9] w-full object-cover"
+                      }
+                    />
+                  </EditorialImageTrigger>
+                ) : (
+                  <NewsImage loading="eager" fetchPriority="high" />
+                )}
+                {noticia.imagem?.caption ? (
+                  <figcaption className="mt-2 border-l-2 border-[#b28341] pl-3 text-xs leading-5 text-[#52616d]">
+                    {noticia.imagem.caption}
+                  </figcaption>
+                ) : null}
+              </figure>
+              <div className="mt-7 space-y-5">
+                {noticia.blocos.map((bloco, index) => (
+                  <NoticiaBlocoView key={`${bloco.tipo}-${index}`} bloco={bloco} />
+                ))}
+              </div>
+              <footer className="mt-9 border-t border-[#d9e0e5] pt-5">
+                {noticia.notas.length ? (
+                  <div className="mb-6 space-y-2 text-sm leading-6 text-[#475569]">
+                    {noticia.notas.map((nota) => (
+                      <p key={nota}>{nota}</p>
+                    ))}
+                  </div>
+                ) : null}
+                {noticia.fontes?.length ? (
+                  <section
+                    className="border-l-4 border-[#b28341] bg-[#f8f8f6] p-4 md:p-5"
+                    aria-labelledby="sources-title"
                   >
-                    <FileText className="size-5 text-[#91652b]" aria-hidden /> Fontes consultadas
-                  </h2>
-                  <ul className="mt-3 space-y-2 text-sm leading-6 text-[#40515f]">
-                    {noticia.fontes.map((source) => (
-                      <li key={source.url}>
-                        <a
-                          href={source.url}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="underline decoration-[#b28341]/60 underline-offset-4 hover:text-[#76501f]"
+                    <h2
+                      id="sources-title"
+                      className="flex items-center gap-2 font-[Georgia,serif] text-xl font-bold text-[#061e30]"
+                    >
+                      <FileText className="size-5 text-[#91652b]" aria-hidden /> Fontes consultadas
+                    </h2>
+                    <ul className="mt-3 space-y-2 text-sm leading-6 text-[#40515f]">
+                      {noticia.fontes.map((source) => (
+                        <li key={source.url}>
+                          <a
+                            href={source.url}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="underline decoration-[#b28341]/60 underline-offset-4 hover:text-[#76501f]"
+                          >
+                            {source.titulo}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </section>
+                ) : null}
+                {noticia.tags?.length ? (
+                  <div className="mt-6">
+                    <h2 className="text-xs font-bold uppercase tracking-wide text-[#102c43]">
+                      Temas relacionados
+                    </h2>
+                    <ul className="mt-2 flex flex-wrap gap-2">
+                      {noticia.tags.map((tag) => (
+                        <li
+                          key={tag}
+                          className="border border-[#d5dde2] bg-white px-2.5 py-1 text-xs text-[#40515f]"
                         >
-                          {source.titulo}
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                </section>
-              ) : null}
-              {noticia.tags?.length ? (
-                <div className="mt-6">
-                  <h2 className="text-xs font-bold uppercase tracking-wide text-[#102c43]">
-                    Temas relacionados
-                  </h2>
-                  <ul className="mt-2 flex flex-wrap gap-2">
-                    {noticia.tags.map((tag) => (
-                      <li
-                        key={tag}
-                        className="border border-[#d5dde2] bg-white px-2.5 py-1 text-xs text-[#40515f]"
-                      >
-                        {tag.replaceAll("-", " ")}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ) : null}
-              {displayedRelations.length ? (
-                <div className="mt-6 border-t border-[#d9e0e5] pt-4">
-                  <h2 className="text-xs font-bold uppercase tracking-wide text-[#102c43]">
-                    Relacionamentos editoriais
-                  </h2>
-                  <ul className="mt-2 flex flex-wrap gap-2">
-                    {displayedRelations.map((relation, index) => (
-                      <li
-                        key={`${relation.nome}-${index}`}
-                        className="inline-flex items-center gap-1.5 border border-[#d5dde2] px-2.5 py-1 text-xs text-[#40515f]"
-                      >
-                        {relation.nome}
-                        {relation.relacao === "regional" ? (
-                          <span className="text-[#91652b]">· regional</span>
-                        ) : null}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              ) : null}
-            </footer>
-          </article>
-          <div className="min-w-0">
-            <ArticleSidebar noticia={noticia} />
+                          {tag.replaceAll("-", " ")}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ) : null}
+                {displayedRelations.length ? (
+                  <div className="mt-6 border-t border-[#d9e0e5] pt-4">
+                    <h2 className="text-xs font-bold uppercase tracking-wide text-[#102c43]">
+                      Relacionamentos editoriais
+                    </h2>
+                    <ul className="mt-2 flex flex-wrap gap-2">
+                      {displayedRelations.map((relation, index) => (
+                        <li
+                          key={`${relation.nome}-${index}`}
+                          className="inline-flex items-center gap-1.5 border border-[#d5dde2] px-2.5 py-1 text-xs text-[#40515f]"
+                        >
+                          {relation.nome}
+                          {relation.relacao === "regional" ? (
+                            <span className="text-[#91652b]">· regional</span>
+                          ) : null}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ) : null}
+              </footer>
+            </article>
+            <div className="min-w-0">
+              <ArticleSidebar noticia={noticia} />
+            </div>
           </div>
-        </div>
-      </Container>
-      <RelatedNews noticia={noticia} />
-      <Container className="pb-10">
-        <Link
-          to="/noticias"
-          className="inline-flex items-center gap-2 text-sm font-bold text-[#102c43] underline decoration-[#b28341] underline-offset-4 hover:text-[#76501f]"
-        >
-          <Link2 className="size-4" aria-hidden /> Voltar para Notícias
-        </Link>
-      </Container>
-    </div>
+        </Container>
+        <RelatedNews noticia={noticia} />
+        <Container className="pb-10">
+          <Link
+            to="/noticias"
+            className="inline-flex items-center gap-2 text-sm font-bold text-[#102c43] underline decoration-[#b28341] underline-offset-4 hover:text-[#76501f]"
+          >
+            <Link2 className="size-4" aria-hidden /> Voltar para Notícias
+          </Link>
+        </Container>
+      </div>
+    </EditorialLightboxProvider>
   );
 }
