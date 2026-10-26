@@ -25,6 +25,10 @@ export default defineConfig(({ command, mode }) => {
     profile && Object.keys(profile.routeHeaders).length > 0
       ? { "/**": { headers: profile.routeHeaders } }
       : undefined;
+  const atlasDemoModule =
+    mode === "development" || mode === "staging"
+      ? "src/content/demo/atlasNoticias.ts"
+      : "src/content/demo/atlasNoticias.disabled.ts";
 
   return {
     define: Object.fromEntries(
@@ -35,7 +39,13 @@ export default defineConfig(({ command, mode }) => {
     ),
     resolve: {
       tsconfigPaths: true,
-      alias: { "@": resolve(process.cwd(), "src") },
+      alias: [
+        {
+          find: "./demo/atlasNoticias",
+          replacement: resolve(process.cwd(), atlasDemoModule),
+        },
+        { find: "@", replacement: resolve(process.cwd(), "src") },
+      ],
       dedupe: ["react", "react-dom", "react/jsx-runtime", "react/jsx-dev-runtime"],
     },
     server: { host: "::", port: 8080 },

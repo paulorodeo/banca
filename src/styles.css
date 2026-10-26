@@ -282,6 +282,512 @@
   }
 }
 
+.news-geography-page {
+  min-height: 70vh;
+  padding-block: 1.1rem 3.5rem;
+  color: var(--brand-navy);
+  background: #f7f7f5;
+}
+.news-geography-breadcrumb {
+  display: flex;
+  min-height: 2.8rem;
+  align-items: center;
+  gap: 0.4rem;
+  color: #637080;
+  font-size: 0.72rem;
+}
+.news-geography-breadcrumb svg {
+  width: 0.8rem;
+  height: 0.8rem;
+}
+.news-geography-breadcrumb a:hover {
+  color: var(--brand-navy);
+  text-decoration: underline;
+  text-decoration-color: var(--brand-gold);
+}
+.news-geography-demo-notice {
+  margin: 0.7rem 0 1rem;
+  padding: 0.7rem 0.9rem;
+  border-left: 3px solid #c79f45;
+  color: #60480f;
+  background: #fbf4df;
+  font-size: 0.76rem;
+  line-height: 1.45;
+}
+.news-geography-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 2rem;
+  padding: 1rem 0 1.4rem;
+  border-bottom: 1px solid rgba(8, 30, 49, 0.15);
+}
+.news-geography-eyebrow {
+  margin: 0;
+  color: #987626;
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.news-geography-header h1 {
+  margin: 0.45rem 0 0;
+  color: var(--brand-navy);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(2rem, 4vw, 3.35rem);
+  font-weight: 500;
+  line-height: 1.06;
+}
+.news-geography-header > div > p:last-of-type {
+  max-width: 54rem;
+  margin: 0.65rem 0 0;
+  color: #586574;
+  font-size: 0.92rem;
+  line-height: 1.55;
+}
+.news-geography-capital {
+  display: inline-flex;
+  margin-top: 0.7rem;
+  padding: 0.25rem 0.55rem;
+  border: 1px solid rgba(172, 131, 45, 0.38);
+  color: #6e571f;
+  background: rgba(218, 190, 123, 0.12);
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+.news-geography-backlink {
+  display: inline-flex;
+  min-height: 2.75rem;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.55rem 0.8rem;
+  border: 1px solid rgba(8, 30, 49, 0.2);
+  color: var(--brand-navy);
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+.news-geography-backlink svg {
+  width: 1rem;
+  height: 1rem;
+  color: #a9812d;
+}
+.news-geography-map-row {
+  display: grid;
+  grid-template-columns: minmax(250px, 0.8fr) minmax(0, 1.5fr);
+  gap: clamp(1rem, 2.5vw, 2.25rem);
+  padding: 1.4rem 0 2rem;
+}
+.news-geography-map-card {
+  align-self: start;
+  padding: 1rem;
+  border: 1px solid rgba(139, 177, 203, 0.2);
+  color: #eef3f7;
+  background: radial-gradient(ellipse at 50% 48%, #102f4c, #07192d 72%);
+}
+.news-geography-map-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.8rem;
+}
+.news-geography-map-head p {
+  margin: 0;
+  color: #d0b060;
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.news-geography-map-head h2 {
+  margin: 0.3rem 0 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.15rem;
+  font-weight: 400;
+}
+.news-geography-map-head > svg {
+  width: 1.2rem;
+  height: 1.2rem;
+  color: #6bd6fb;
+}
+.news-geography-map {
+  display: block;
+  width: 100%;
+  max-height: 310px;
+  margin: 0.5rem auto 0;
+  overflow: visible;
+}
+.news-geography-map-state {
+  fill: rgba(6, 42, 72, 0.85);
+  stroke: #58c9ef;
+  stroke-width: 1.4px;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+.news-geography-map-link {
+  cursor: pointer;
+}
+.news-geography-map-link:hover .news-geography-map-state,
+.news-geography-map-link:focus-visible .news-geography-map-state,
+.news-geography-map-link.is-selected .news-geography-map-state,
+.news-geography-map-state.is-selected {
+  fill: rgba(0, 140, 202, 0.55);
+  stroke: #d4f5ff;
+  stroke-width: 2.2px;
+  filter: drop-shadow(0 0 5px rgba(42, 199, 244, 0.8));
+}
+.news-geography-map-link:focus-visible {
+  outline: none;
+}
+.news-geography-map text {
+  fill: #f0f5f8;
+  font-family: Arial, sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  text-anchor: middle;
+  dominant-baseline: middle;
+  pointer-events: none;
+}
+.news-geography-map-help {
+  margin: 0.2rem 0 0;
+  color: rgba(231, 240, 247, 0.62);
+  font-size: 0.63rem;
+  line-height: 1.4;
+}
+.news-geography-headlines {
+  min-width: 0;
+}
+.news-geography-lead {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(210px, 0.8fr);
+  gap: 1.2rem;
+  padding: 1.15rem;
+  border: 1px solid rgba(7, 31, 52, 0.13);
+  background: white;
+  box-shadow: 0 8px 24px rgba(5, 28, 48, 0.06);
+}
+.news-geography-lead-copy {
+  align-self: center;
+}
+.news-geography-demo-tag {
+  display: inline-flex;
+  padding: 0.22rem 0.38rem;
+  border: 1px solid rgba(172, 131, 45, 0.4);
+  color: #6e571f;
+  background: #fcf5e2;
+  font-size: 0.52rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.news-geography-category {
+  margin: 0.55rem 0 0;
+  color: #977327;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.news-geography-lead h2 {
+  margin: 0.4rem 0 0;
+  color: var(--brand-navy);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.45rem, 2.3vw, 2.15rem);
+  font-weight: 500;
+  line-height: 1.12;
+}
+.news-geography-lead-copy > p:not(.news-geography-category) {
+  margin: 0.6rem 0 0;
+  color: #566373;
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+.news-geography-lead-copy > a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.85rem;
+  color: var(--brand-navy);
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-color: var(--brand-gold);
+  text-underline-offset: 4px;
+}
+.news-geography-lead-copy > a svg {
+  width: 1rem;
+  height: 1rem;
+  color: #977327;
+}
+.news-geography-lead-image {
+  min-height: 180px;
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: #e6e7e5;
+}
+.news-geography-lead-image img,
+.news-geography-secondary-image img,
+.news-geography-list-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.news-geography-secondary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.8rem;
+  margin-top: 0.8rem;
+}
+.news-geography-secondary article {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid rgba(7, 31, 52, 0.13);
+  background: white;
+}
+.news-geography-secondary-image {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: #e6e7e5;
+}
+.news-geography-secondary article > div:last-child {
+  padding: 0.7rem;
+}
+.news-geography-secondary article p {
+  margin: 0.35rem 0 0;
+  color: #987626;
+  font-size: 0.56rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+.news-geography-secondary h3 {
+  margin: 0.3rem 0 0;
+  color: var(--brand-navy);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 0.94rem;
+  font-weight: 500;
+  line-height: 1.22;
+}
+.news-geography-secondary h3 a:hover,
+.news-geography-list h3 a:hover {
+  text-decoration: underline;
+  text-decoration-color: var(--brand-gold);
+  text-underline-offset: 3px;
+}
+.news-geography-secondary article > div:last-child > span:last-child {
+  display: -webkit-box;
+  overflow: hidden;
+  margin-top: 0.4rem;
+  color: #66717b;
+  font-size: 0.68rem;
+  line-height: 1.45;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+.news-geography-empty {
+  display: grid;
+  justify-items: start;
+  gap: 0.65rem;
+  min-height: 18rem;
+  align-content: center;
+  padding: 2rem;
+  border: 1px solid rgba(7, 31, 52, 0.14);
+  background: white;
+}
+.news-geography-empty > svg {
+  color: #a98231;
+}
+.news-geography-empty h2,
+.news-geography-empty p {
+  margin: 0;
+}
+.news-geography-empty p {
+  color: #566373;
+  font-size: 0.85rem;
+}
+.news-geography-latest {
+  padding: 1.2rem 0 2rem;
+  border-top: 1px solid rgba(8, 30, 49, 0.15);
+}
+.news-geography-section-heading h2 {
+  margin: 0.4rem 0 0;
+  color: var(--brand-navy);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.55rem, 2.5vw, 2.1rem);
+  font-weight: 500;
+}
+.news-geography-categories {
+  display: flex;
+  gap: 0.45rem;
+  overflow-x: auto;
+  margin: 1rem 0;
+  padding: 0.2rem 0 0.5rem;
+  scrollbar-width: thin;
+}
+.news-geography-categories button {
+  min-height: 2.35rem;
+  flex: 0 0 auto;
+  padding: 0.45rem 0.8rem;
+  border: 1px solid rgba(8, 30, 49, 0.2);
+  border-radius: 999px;
+  color: var(--brand-navy);
+  background: white;
+  font-size: 0.68rem;
+  font-weight: 600;
+}
+.news-geography-categories button.is-active,
+.news-geography-categories button:hover,
+.news-geography-categories button:focus-visible {
+  border-color: #a17a2b;
+  color: white;
+  background: var(--brand-navy);
+  outline: none;
+}
+.news-geography-list {
+  display: grid;
+  gap: 0.75rem;
+}
+.news-geography-list article {
+  display: grid;
+  grid-template-columns: 9rem minmax(0, 1fr);
+  gap: 1rem;
+  padding: 0.8rem;
+  border: 1px solid rgba(7, 31, 52, 0.12);
+  background: white;
+}
+.news-geography-list-image {
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+  background: #e6e7e5;
+}
+.news-geography-list h3 {
+  margin: 0.3rem 0 0;
+  color: var(--brand-navy);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.05rem;
+  font-weight: 500;
+  line-height: 1.25;
+}
+.news-geography-list article > div:last-child > p:last-of-type {
+  margin: 0.4rem 0 0;
+  color: #586574;
+  font-size: 0.76rem;
+  line-height: 1.45;
+}
+.news-geography-list time {
+  display: inline-block;
+  margin-top: 0.45rem;
+  color: #68717b;
+  font-size: 0.65rem;
+}
+.news-geography-empty-category {
+  padding: 1.25rem;
+  color: #5b6672;
+  border: 1px dashed rgba(7, 31, 52, 0.25);
+  background: white;
+  font-size: 0.82rem;
+}
+.news-geography-navigation {
+  display: flex;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: 1.2rem 0;
+  border-top: 1px solid rgba(8, 30, 49, 0.15);
+}
+.news-geography-navigation h2 {
+  margin: 0;
+  color: var(--brand-navy);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.4rem;
+  font-weight: 500;
+}
+.news-geography-navigation ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin: 0.8rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+.news-geography-navigation a {
+  display: inline-flex;
+  min-height: 2.6rem;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 0.7rem;
+  border: 1px solid rgba(8, 30, 49, 0.18);
+  color: var(--brand-navy);
+  background: white;
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+.news-geography-navigation a:hover,
+.news-geography-navigation a:focus-visible {
+  border-color: #a17a2b;
+  outline: none;
+}
+.news-geography-navigation a svg {
+  width: 0.9rem;
+  height: 0.9rem;
+  color: #9c792e;
+}
+.news-geography-navigation > p {
+  max-width: 22rem;
+  align-self: end;
+  margin: 0;
+  color: #66717b;
+  font-size: 0.72rem;
+  line-height: 1.5;
+}
+@media (max-width: 900px) {
+  .news-geography-map-row {
+    grid-template-columns: minmax(200px, 0.7fr) minmax(0, 1.3fr);
+  }
+  .news-geography-secondary {
+    grid-template-columns: 1fr;
+  }
+  .news-geography-secondary article {
+    display: grid;
+    grid-template-columns: 7rem minmax(0, 1fr);
+  }
+  .news-geography-secondary-image {
+    height: 100%;
+    aspect-ratio: auto;
+  }
+}
+@media (max-width: 640px) {
+  .news-geography-header {
+    align-items: start;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .news-geography-map-row {
+    grid-template-columns: 1fr;
+  }
+  .news-geography-map-card {
+    max-width: 34rem;
+    margin-inline: auto;
+  }
+  .news-geography-map {
+    max-height: 360px;
+  }
+  .news-geography-lead {
+    grid-template-columns: 1fr;
+  }
+  .news-geography-lead-image {
+    grid-row: 1;
+  }
+  .news-geography-list article {
+    grid-template-columns: 5.5rem minmax(0, 1fr);
+    gap: 0.7rem;
+  }
+  .news-geography-navigation {
+    flex-direction: column;
+  }
+}
+
 /* Homepage metropolitana: superfícies claras escopadas apenas à home. */
 .home-light {
   --page-background: oklch(0.92 0.006 255);
@@ -1070,4 +1576,727 @@ nav[aria-label="Trilha de navegação"] a {
 .home-search input:focus-visible {
   outline: 2px solid var(--brand-navy);
   outline-offset: 3px;
+}
+
+/* Atlas editorial nacional, com geometria vetorial e controles reais por UF. */
+.home-page > section.brazil-atlas-section {
+  padding-block: 0;
+  border: 0;
+  background: #061629;
+}
+.brazil-atlas-section {
+  color: #f4f1e9;
+  background:
+    radial-gradient(ellipse at 48% 48%, rgba(13, 67, 111, 0.3), transparent 48%),
+    linear-gradient(112deg, #061629 0%, #071a30 52%, #061629 100%);
+  border-block: 1px solid rgba(104, 191, 227, 0.22);
+}
+.brazil-atlas-shell {
+  display: grid;
+  grid-template-columns: minmax(210px, 0.68fr) minmax(0, 1.45fr) minmax(325px, 1fr);
+  grid-template-rows: auto 1fr auto;
+  column-gap: clamp(1.25rem, 2.6vw, 2.75rem);
+  row-gap: 1rem;
+  max-width: 1320px;
+  min-height: 660px;
+  margin: 0 auto;
+  padding: clamp(1.5rem, 4vw, 3.25rem) clamp(1.25rem, 3vw, 2.75rem) 1.25rem;
+}
+.brazil-atlas-heading {
+  grid-column: 1;
+  grid-row: 1;
+  align-self: start;
+  padding-top: 0.3rem;
+}
+.brazil-atlas-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0;
+  color: #d4b365;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  line-height: 1.3;
+  text-transform: uppercase;
+}
+.brazil-atlas-eyebrow span {
+  width: 1.65rem;
+  height: 1px;
+  background: #d4b365;
+}
+.brazil-atlas-heading h2 {
+  margin: 0.8rem 0 0;
+  color: #f7f3eb;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.8rem, 2.6vw, 2.55rem);
+  font-weight: 400;
+  line-height: 1.08;
+  text-wrap: balance;
+}
+.brazil-atlas-intro {
+  max-width: 23rem;
+  margin: 0.85rem 0 0;
+  color: rgba(240, 245, 249, 0.75);
+  font-size: 0.82rem;
+  line-height: 1.55;
+}
+.brazil-atlas-regions {
+  grid-column: 2 / 4;
+  grid-row: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: start;
+  gap: 0.6rem;
+  overflow-x: auto;
+  padding: 0.25rem 0 0.75rem;
+  scrollbar-width: thin;
+}
+.brazil-atlas-regions button {
+  flex: 0 0 auto;
+  min-height: 2.35rem;
+  padding: 0.45rem 1.1rem;
+  border: 1px solid rgba(188, 213, 233, 0.28);
+  border-radius: 999px;
+  color: #eef3f7;
+  background: rgba(3, 17, 33, 0.5);
+  font-size: 0.73rem;
+  font-weight: 600;
+  transition: color 160ms ease, background 160ms ease, border-color 160ms ease;
+}
+.brazil-atlas-regions button:hover,
+.brazil-atlas-regions button:focus-visible {
+  border-color: #e1bd68;
+  outline: none;
+}
+.brazil-atlas-regions button.is-active {
+  border-color: #dfbd70;
+  color: #10243a;
+  background: #dfbd70;
+  box-shadow: 0 0 18px rgba(223, 189, 112, 0.2);
+}
+.brazil-atlas-grid {
+  grid-column: 1 / 4;
+  grid-row: 2;
+  display: grid;
+  grid-template-columns: minmax(210px, 0.68fr) minmax(0, 1.45fr) minmax(325px, 1fr);
+  align-items: center;
+  column-gap: clamp(1.25rem, 2.6vw, 2.75rem);
+  min-width: 0;
+}
+.brazil-atlas-layers {
+  align-self: center;
+  min-width: 0;
+}
+.brazil-atlas-side-label {
+  margin: 0 0 0.65rem;
+  color: rgba(229, 237, 244, 0.52);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+.brazil-atlas-layer {
+  display: flex;
+  width: 100%;
+  min-height: 2.5rem;
+  align-items: center;
+  gap: 0.65rem;
+  margin-top: 0.2rem;
+  padding: 0.45rem 0.65rem;
+  border: 1px solid rgba(156, 190, 216, 0.13);
+  border-radius: 0.4rem;
+  color: rgba(241, 245, 249, 0.83);
+  background: rgba(4, 21, 39, 0.62);
+  text-align: left;
+  font-size: 0.78rem;
+  transition: border-color 160ms ease, color 160ms ease, background 160ms ease;
+}
+.brazil-atlas-layer:hover:not(:disabled),
+.brazil-atlas-layer:focus-visible {
+  border-color: rgba(85, 204, 245, 0.75);
+  outline: none;
+}
+.brazil-atlas-layer.is-active {
+  border-color: #dfbd70;
+  color: #10243a;
+  background: #dfbd70;
+  box-shadow: 0 0 15px rgba(223, 189, 112, 0.15);
+}
+.brazil-atlas-layer:disabled {
+  color: rgba(226, 234, 241, 0.44);
+  cursor: not-allowed;
+}
+.brazil-atlas-layer small {
+  margin-left: auto;
+  color: rgba(226, 234, 241, 0.45);
+  font-size: 0.55rem;
+  white-space: nowrap;
+}
+.brazil-atlas-layer-arrow {
+  margin-left: auto;
+}
+.brazil-atlas-layer-note {
+  margin: 0.85rem 0 0;
+  color: rgba(220, 230, 238, 0.5);
+  font-size: 0.62rem;
+  line-height: 1.5;
+}
+.brazil-atlas-map-column {
+  min-width: 0;
+  align-self: center;
+}
+.brazil-atlas-map-status {
+  display: flex;
+  min-height: 1.75rem;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.75rem;
+  color: rgba(226, 238, 248, 0.78);
+  font-size: 0.68rem;
+}
+.brazil-atlas-map-status button {
+  color: #e6c879;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.brazil-atlas-map-status button:focus-visible {
+  outline: 2px solid #e6c879;
+  outline-offset: 3px;
+}
+.brazil-atlas-map {
+  display: block;
+  width: 100%;
+  max-height: 590px;
+  overflow: visible;
+}
+.brazil-atlas-state {
+  fill: rgba(7, 34, 61, 0.78);
+  stroke: #55c9f2;
+  stroke-width: 1.45px;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+  cursor: pointer;
+  transition: fill 160ms ease, stroke 160ms ease, opacity 160ms ease, filter 160ms ease;
+}
+.brazil-atlas-state:hover,
+.brazil-atlas-state:focus-visible {
+  fill: rgba(4, 133, 201, 0.55);
+  stroke: #b4edff;
+  stroke-width: 2.2px;
+  filter: drop-shadow(0 0 7px rgba(35, 199, 255, 0.85));
+  outline: none;
+}
+.brazil-atlas-state.is-in-region {
+  fill: rgba(2, 103, 166, 0.28);
+  stroke: #72dcff;
+  filter: drop-shadow(0 0 4px rgba(35, 199, 255, 0.48));
+}
+.brazil-atlas-state.is-selected,
+.brazil-atlas-state.is-hovered {
+  fill: rgba(0, 143, 219, 0.62);
+  stroke: #d0f4ff;
+  stroke-width: 2.5px;
+  filter: drop-shadow(0 0 8px rgba(35, 199, 255, 0.95));
+}
+.brazil-atlas-state.is-climate-focus {
+  fill: rgba(13, 103, 150, 0.3);
+  stroke: #8ee6ff;
+  filter: drop-shadow(0 0 6px rgba(35, 199, 255, 0.68));
+}
+.brazil-atlas-state-label {
+  fill: rgba(235, 244, 250, 0.83);
+  font-family: Arial, sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-anchor: middle;
+  dominant-baseline: middle;
+  pointer-events: none;
+}
+.brazil-atlas-state-label.is-in-region {
+  fill: #ffffff;
+  filter: drop-shadow(0 0 4px #0aa8e3);
+}
+.brazil-atlas-weather-point {
+  fill: #84e7ff;
+  stroke: #092c49;
+  stroke-width: 2px;
+  vector-effect: non-scaling-stroke;
+  filter: drop-shadow(0 0 8px rgba(55, 214, 255, 0.98));
+  pointer-events: none;
+}
+.brazil-atlas-map-caption {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.55rem;
+  margin-top: -0.2rem;
+  color: rgba(225, 236, 245, 0.64);
+  font-size: 0.62rem;
+  line-height: 1.45;
+}
+.brazil-atlas-source {
+  margin: 0.45rem 0 0;
+  color: rgba(225, 236, 245, 0.38);
+  font-size: 0.55rem;
+}
+.brazil-atlas-news {
+  min-width: 0;
+  align-self: center;
+  overflow: hidden;
+  border: 1px solid rgba(135, 180, 211, 0.21);
+  border-radius: 0.8rem;
+  background: linear-gradient(150deg, rgba(13, 39, 64, 0.94), rgba(7, 27, 48, 0.96));
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.2);
+}
+.brazil-atlas-demo-banner {
+  margin: 0;
+  padding: 0.55rem 1rem;
+  border-bottom: 1px solid rgba(224, 190, 111, 0.25);
+  color: #f4d78f;
+  background: rgba(143, 105, 28, 0.18);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.brazil-atlas-news-topline {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.8rem;
+  padding: 0.8rem 1rem 0.45rem;
+  color: #dfbd70;
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+}
+.brazil-atlas-news-topline span:last-child {
+  color: rgba(230, 239, 246, 0.58);
+  text-align: right;
+}
+.brazil-atlas-lead {
+  display: block;
+  padding: 0.5rem 1rem 0.8rem;
+  color: inherit;
+  text-decoration: none;
+}
+.brazil-atlas-lead:hover h3,
+.brazil-atlas-lead:focus-visible h3 {
+  color: #f0d389;
+}
+.brazil-atlas-lead:focus-visible {
+  outline: 2px solid #dfbd70;
+  outline-offset: -3px;
+}
+.brazil-atlas-demo-label {
+  display: inline-flex;
+  margin-bottom: 0.5rem;
+  padding: 0.22rem 0.4rem;
+  border: 1px solid rgba(240, 207, 129, 0.52);
+  border-radius: 0.2rem;
+  color: #f2d48b;
+  font-size: 0.52rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.brazil-atlas-category {
+  margin: 0;
+  color: #e7c775;
+  font-size: 0.61rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.brazil-atlas-lead h3 {
+  margin: 0.45rem 0 0;
+  color: #fff;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.35rem, 1.75vw, 1.9rem);
+  font-weight: 400;
+  line-height: 1.16;
+  transition: color 140ms ease;
+}
+.brazil-atlas-summary {
+  margin: 0.55rem 0 0;
+  color: rgba(233, 240, 246, 0.78);
+  font-size: 0.77rem;
+  line-height: 1.5;
+}
+.brazil-atlas-lead-image {
+  width: 100%;
+  aspect-ratio: 16 / 7;
+  margin-top: 0.75rem;
+  overflow: hidden;
+  border: 1px solid rgba(160, 198, 222, 0.16);
+  background: rgba(0, 0, 0, 0.16);
+}
+.brazil-atlas-lead-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.brazil-atlas-read-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.7rem;
+  color: #f0d389;
+  font-size: 0.68rem;
+  font-weight: 700;
+}
+.brazil-atlas-secondary {
+  padding: 0 1rem;
+  border-top: 1px solid rgba(178, 204, 221, 0.15);
+}
+.brazil-atlas-secondary-item {
+  display: grid;
+  width: 100%;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 0.35rem 0.65rem;
+  padding: 0.65rem 0;
+  border-bottom: 1px solid rgba(178, 204, 221, 0.14);
+  color: #f3f5f6;
+  background: transparent;
+  text-align: left;
+}
+.brazil-atlas-secondary-item:last-child {
+  border-bottom: 0;
+}
+.brazil-atlas-secondary-item span {
+  grid-column: 1;
+  color: #ddbd70;
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.brazil-atlas-secondary-item strong {
+  grid-column: 1;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 0.85rem;
+  font-weight: 400;
+  line-height: 1.3;
+}
+.brazil-atlas-secondary-item svg {
+  grid-column: 2;
+  grid-row: 1 / 3;
+  color: #e2c675;
+}
+.brazil-atlas-secondary-item:hover strong,
+.brazil-atlas-secondary-item:focus-visible strong {
+  color: #f0d389;
+}
+.brazil-atlas-secondary-item:focus-visible {
+  outline: 2px solid #dfbd70;
+  outline-offset: 2px;
+}
+.brazil-atlas-demo-disclaimer {
+  margin: 0;
+  padding: 0 1rem 0.75rem;
+  color: rgba(233, 240, 246, 0.62);
+  font-size: 0.62rem;
+  line-height: 1.45;
+}
+.brazil-atlas-news-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.65rem 1rem;
+  border-top: 1px solid rgba(178, 204, 221, 0.15);
+  color: rgba(228, 237, 244, 0.56);
+  font-size: 0.58rem;
+}
+.brazil-atlas-all-news,
+.brazil-atlas-empty a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: #f0d389;
+  font-size: 0.67rem;
+  font-weight: 700;
+}
+.brazil-atlas-all-news:focus-visible,
+.brazil-atlas-empty a:focus-visible,
+.brazil-atlas-weather-card a:focus-visible {
+  outline: 2px solid #dfbd70;
+  outline-offset: 3px;
+}
+.brazil-atlas-count {
+  margin: 0;
+  padding: 0 1rem 0.7rem;
+  color: rgba(228, 237, 244, 0.44);
+  font-size: 0.56rem;
+}
+.brazil-atlas-empty {
+  display: grid;
+  justify-items: start;
+  gap: 0.55rem;
+  min-height: 13rem;
+  align-content: center;
+  padding: 1.25rem;
+}
+.brazil-atlas-empty h3 {
+  margin: 0;
+  color: #fff;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.25rem;
+  font-weight: 400;
+}
+.brazil-atlas-empty p {
+  margin: 0;
+  color: rgba(233, 240, 246, 0.72);
+  font-size: 0.76rem;
+  line-height: 1.5;
+}
+.brazil-atlas-empty a {
+  margin-top: 0.35rem;
+}
+.brazil-atlas-weather-card {
+  min-height: 17rem;
+  padding: 1rem;
+  color: #f4f7fa;
+}
+.brazil-atlas-weather-location,
+.brazil-atlas-weather-condition,
+.brazil-atlas-weather-note,
+.brazil-atlas-updated {
+  margin: 0;
+}
+.brazil-atlas-weather-location {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: #cbdce8;
+  font-size: 0.68rem;
+  font-weight: 600;
+}
+.brazil-atlas-weather-now {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin-top: 1.2rem;
+}
+.brazil-atlas-weather-now strong {
+  color: #fff;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 3.2rem;
+  font-weight: 400;
+}
+.brazil-atlas-weather-condition {
+  color: #f0d389;
+  font-size: 0.9rem;
+}
+.brazil-atlas-weather-note {
+  max-width: 22rem;
+  margin-top: 1rem;
+  color: rgba(233, 240, 246, 0.66);
+  font-size: 0.7rem;
+  line-height: 1.5;
+}
+.brazil-atlas-updated {
+  display: block;
+  margin-top: 0.85rem;
+  color: rgba(233, 240, 246, 0.45);
+  font-size: 0.56rem;
+}
+.brazil-atlas-credit {
+  grid-column: 1 / 4;
+  grid-row: 3;
+  margin: 0;
+  padding-top: 0.6rem;
+  border-top: 1px solid rgba(172, 204, 224, 0.1);
+  color: rgba(221, 233, 241, 0.42);
+  font-size: 0.56rem;
+  line-height: 1.45;
+}
+.home-news-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 1.3rem;
+}
+.home-news-card {
+  display: grid;
+  grid-template-columns: 5.25rem minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.75rem;
+  min-width: 0;
+  padding: 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 0.4rem;
+  color: var(--brand-navy);
+  background: var(--card);
+  text-decoration: none;
+  transition: border-color 160ms ease, transform 160ms ease;
+}
+.home-news-card:hover,
+.home-news-card:focus-visible {
+  border-color: var(--gold);
+  outline: none;
+  transform: translateY(-2px);
+}
+.home-news-card-image {
+  width: 5.25rem;
+  aspect-ratio: 1;
+  overflow: hidden;
+  background: var(--background);
+}
+.home-news-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.home-news-card-copy {
+  min-width: 0;
+}
+.home-news-card-copy > span {
+  color: #946f22;
+  font-size: 0.56rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.home-news-card h3 {
+  display: -webkit-box;
+  overflow: hidden;
+  margin: 0.25rem 0 0;
+  color: var(--brand-navy);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 0.92rem;
+  font-weight: 500;
+  line-height: 1.25;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+.home-news-card p {
+  display: none;
+}
+.home-news-card-arrow {
+  color: var(--brand-gold);
+}
+@media (max-width: 1100px) {
+  .brazil-atlas-shell {
+    grid-template-columns: minmax(180px, 0.7fr) minmax(0, 1.5fr);
+  }
+  .brazil-atlas-heading {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  .brazil-atlas-regions {
+    grid-column: 2;
+    grid-row: 1;
+  }
+  .brazil-atlas-grid {
+    grid-template-columns: minmax(180px, 0.7fr) minmax(0, 1.5fr);
+  }
+  .brazil-atlas-news {
+    grid-column: 2;
+    width: 100%;
+    max-width: 36rem;
+    justify-self: center;
+  }
+  .brazil-atlas-credit {
+    grid-column: 1 / 3;
+  }
+  .home-news-grid {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 700px) {
+  .brazil-atlas-shell {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto auto auto auto;
+    gap: 1rem;
+    padding: 1.6rem 1rem 1rem;
+  }
+  .brazil-atlas-heading,
+  .brazil-atlas-regions,
+  .brazil-atlas-grid,
+  .brazil-atlas-credit {
+    grid-column: 1;
+  }
+  .brazil-atlas-heading {
+    grid-row: 1;
+  }
+  .brazil-atlas-regions {
+    grid-row: 2;
+    justify-content: flex-start;
+    margin-inline: -0.25rem;
+  }
+  .brazil-atlas-grid {
+    grid-row: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1rem;
+  }
+  .brazil-atlas-layers {
+    order: 1;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.35rem;
+  }
+  .brazil-atlas-side-label,
+  .brazil-atlas-layer-note {
+    grid-column: 1 / -1;
+  }
+  .brazil-atlas-layer {
+    min-height: 2.6rem;
+    gap: 0.35rem;
+    margin: 0;
+    padding: 0.4rem;
+    font-size: 0.68rem;
+  }
+  .brazil-atlas-layer small,
+  .brazil-atlas-layer-arrow {
+    display: none;
+  }
+  .brazil-atlas-map-column {
+    order: 2;
+  }
+  .brazil-atlas-map {
+    max-height: none;
+  }
+  .brazil-atlas-news {
+    order: 3;
+    max-width: none;
+  }
+  .brazil-atlas-credit {
+    grid-row: 4;
+    font-size: 0.54rem;
+  }
+  .home-news-card {
+    grid-template-columns: 4.25rem minmax(0, 1fr) auto;
+  }
+  .home-news-card-image {
+    width: 4.25rem;
+  }
+}
+@media (max-width: 430px) {
+  .brazil-atlas-state-label {
+    display: none;
+  }
+  .brazil-atlas-layer {
+    font-size: 0.62rem;
+  }
+  .brazil-atlas-news-footer {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .brazil-atlas-regions button,
+  .brazil-atlas-layer,
+  .brazil-atlas-state,
+  .brazil-atlas-lead h3,
+  .home-news-card {
+    transition: none;
+  }
 }

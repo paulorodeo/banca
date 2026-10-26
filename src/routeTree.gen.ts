@@ -41,12 +41,15 @@ import { Route as DelegaciasSlugRouteImport } from './routes/delegacias.$slug'
 import { Route as InstituicoesSlugRouteImport } from './routes/instituicoes.$slug'
 import { Route as NoticiasIndexRouteImport } from './routes/noticias.index'
 import { Route as NoticiasSlugRouteImport } from './routes/noticias.$slug'
+import { Route as NoticiasBrasilRouteImport } from './routes/noticias.brasil'
 import { Route as NoticiasDhenisMartinsDosSantosDiscussaoDfirDivulgacaoCpfEnderecoRouteImport } from './routes/noticias.dhenis-martins-dos-santos-discussao-dfir-divulgacao-cpf-endereco'
 import { Route as OrgaosIndexRouteImport } from './routes/orgaos.index'
 import { Route as RegioesIndexRouteImport } from './routes/regioes.index'
 import { Route as RegioesSlugRouteImport } from './routes/regioes.$slug'
 import { Route as ApiPublicTempoRouteImport } from './routes/api/public/tempo'
 import { Route as ApiPublicTriagemRouteImport } from './routes/api/public/triagem'
+import { Route as NoticiasEstadosUfRouteImport } from './routes/noticias.estados.$uf'
+import { Route as NoticiasRegioesSlugRouteImport } from './routes/noticias.regioes.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -208,6 +211,11 @@ const NoticiasSlugRoute = NoticiasSlugRouteImport.update({
   path: '/$slug',
   getParentRoute: () => NoticiasRoute,
 } as any)
+const NoticiasBrasilRoute = NoticiasBrasilRouteImport.update({
+  id: '/brasil',
+  path: '/brasil',
+  getParentRoute: () => NoticiasRoute,
+} as any)
 const NoticiasDhenisMartinsDosSantosDiscussaoDfirDivulgacaoCpfEnderecoRoute =
   NoticiasDhenisMartinsDosSantosDiscussaoDfirDivulgacaoCpfEnderecoRouteImport.update(
     {
@@ -241,6 +249,16 @@ const ApiPublicTriagemRoute = ApiPublicTriagemRouteImport.update({
   path: '/api/public/triagem',
   getParentRoute: () => rootRouteImport,
 } as any)
+const NoticiasEstadosUfRoute = NoticiasEstadosUfRouteImport.update({
+  id: '/estados/$uf',
+  path: '/estados/$uf',
+  getParentRoute: () => NoticiasRoute,
+} as any)
+const NoticiasRegioesSlugRoute = NoticiasRegioesSlugRouteImport.update({
+  id: '/regioes/$slug',
+  path: '/regioes/$slug',
+  getParentRoute: () => NoticiasRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -271,6 +289,7 @@ export interface FileRoutesByFullPath {
   '/delegacias/$slug': typeof DelegaciasSlugRoute
   '/instituicoes/$slug': typeof InstituicoesSlugRoute
   '/noticias/$slug': typeof NoticiasSlugRoute
+  '/noticias/brasil': typeof NoticiasBrasilRoute
   '/noticias/dhenis-martins-dos-santos-discussao-dfir-divulgacao-cpf-endereco': typeof NoticiasDhenisMartinsDosSantosDiscussaoDfirDivulgacaoCpfEnderecoRoute
   '/regioes/$slug': typeof RegioesSlugRoute
   '/artigos/': typeof ArtigosIndexRoute
@@ -281,6 +300,8 @@ export interface FileRoutesByFullPath {
   '/regioes/': typeof RegioesIndexRoute
   '/api/public/tempo': typeof ApiPublicTempoRoute
   '/api/public/triagem': typeof ApiPublicTriagemRoute
+  '/noticias/estados/$uf': typeof NoticiasEstadosUfRoute
+  '/noticias/regioes/$slug': typeof NoticiasRegioesSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -310,6 +331,7 @@ export interface FileRoutesByTo {
   '/delegacias/$slug': typeof DelegaciasSlugRoute
   '/instituicoes/$slug': typeof InstituicoesSlugRoute
   '/noticias/$slug': typeof NoticiasSlugRoute
+  '/noticias/brasil': typeof NoticiasBrasilRoute
   '/noticias/dhenis-martins-dos-santos-discussao-dfir-divulgacao-cpf-endereco': typeof NoticiasDhenisMartinsDosSantosDiscussaoDfirDivulgacaoCpfEnderecoRoute
   '/regioes/$slug': typeof RegioesSlugRoute
   '/artigos': typeof ArtigosIndexRoute
@@ -320,6 +342,8 @@ export interface FileRoutesByTo {
   '/regioes': typeof RegioesIndexRoute
   '/api/public/tempo': typeof ApiPublicTempoRoute
   '/api/public/triagem': typeof ApiPublicTriagemRoute
+  '/noticias/estados/$uf': typeof NoticiasEstadosUfRoute
+  '/noticias/regioes/$slug': typeof NoticiasRegioesSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -351,6 +375,7 @@ export interface FileRoutesById {
   '/delegacias/$slug': typeof DelegaciasSlugRoute
   '/instituicoes/$slug': typeof InstituicoesSlugRoute
   '/noticias/$slug': typeof NoticiasSlugRoute
+  '/noticias/brasil': typeof NoticiasBrasilRoute
   '/noticias/dhenis-martins-dos-santos-discussao-dfir-divulgacao-cpf-endereco': typeof NoticiasDhenisMartinsDosSantosDiscussaoDfirDivulgacaoCpfEnderecoRoute
   '/regioes/$slug': typeof RegioesSlugRoute
   '/artigos/': typeof ArtigosIndexRoute
@@ -361,6 +386,8 @@ export interface FileRoutesById {
   '/regioes/': typeof RegioesIndexRoute
   '/api/public/tempo': typeof ApiPublicTempoRoute
   '/api/public/triagem': typeof ApiPublicTriagemRoute
+  '/noticias/estados/$uf': typeof NoticiasEstadosUfRoute
+  '/noticias/regioes/$slug': typeof NoticiasRegioesSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -393,6 +420,7 @@ export interface FileRouteTypes {
     | '/delegacias/$slug'
     | '/instituicoes/$slug'
     | '/noticias/$slug'
+    | '/noticias/brasil'
     | '/noticias/dhenis-martins-dos-santos-discussao-dfir-divulgacao-cpf-endereco'
     | '/regioes/$slug'
     | '/artigos/'
@@ -403,6 +431,8 @@ export interface FileRouteTypes {
     | '/regioes/'
     | '/api/public/tempo'
     | '/api/public/triagem'
+    | '/noticias/estados/$uf'
+    | '/noticias/regioes/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -432,6 +462,7 @@ export interface FileRouteTypes {
     | '/delegacias/$slug'
     | '/instituicoes/$slug'
     | '/noticias/$slug'
+    | '/noticias/brasil'
     | '/noticias/dhenis-martins-dos-santos-discussao-dfir-divulgacao-cpf-endereco'
     | '/regioes/$slug'
     | '/artigos'
@@ -442,6 +473,8 @@ export interface FileRouteTypes {
     | '/regioes'
     | '/api/public/tempo'
     | '/api/public/triagem'
+    | '/noticias/estados/$uf'
+    | '/noticias/regioes/$slug'
   id:
     | '__root__'
     | '/'
@@ -472,6 +505,7 @@ export interface FileRouteTypes {
     | '/delegacias/$slug'
     | '/instituicoes/$slug'
     | '/noticias/$slug'
+    | '/noticias/brasil'
     | '/noticias/dhenis-martins-dos-santos-discussao-dfir-divulgacao-cpf-endereco'
     | '/regioes/$slug'
     | '/artigos/'
@@ -482,6 +516,8 @@ export interface FileRouteTypes {
     | '/regioes/'
     | '/api/public/tempo'
     | '/api/public/triagem'
+    | '/noticias/estados/$uf'
+    | '/noticias/regioes/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -748,6 +784,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof NoticiasSlugRouteImport
       parentRoute: typeof NoticiasRoute
     }
+    '/noticias/brasil': {
+      id: '/noticias/brasil'
+      path: '/brasil'
+      fullPath: '/noticias/brasil'
+      preLoaderRoute: typeof NoticiasBrasilRouteImport
+      parentRoute: typeof NoticiasRoute
+    }
     '/noticias/dhenis-martins-dos-santos-discussao-dfir-divulgacao-cpf-endereco': {
       id: '/noticias/dhenis-martins-dos-santos-discussao-dfir-divulgacao-cpf-endereco'
       path: '/dhenis-martins-dos-santos-discussao-dfir-divulgacao-cpf-endereco'
@@ -790,20 +833,40 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicTriagemRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/noticias/estados/$uf': {
+      id: '/noticias/estados/$uf'
+      path: '/estados/$uf'
+      fullPath: '/noticias/estados/$uf'
+      preLoaderRoute: typeof NoticiasEstadosUfRouteImport
+      parentRoute: typeof NoticiasRoute
+    }
+    '/noticias/regioes/$slug': {
+      id: '/noticias/regioes/$slug'
+      path: '/regioes/$slug'
+      fullPath: '/noticias/regioes/$slug'
+      preLoaderRoute: typeof NoticiasRegioesSlugRouteImport
+      parentRoute: typeof NoticiasRoute
+    }
   }
 }
 
 interface NoticiasRouteChildren {
   NoticiasSlugRoute: typeof NoticiasSlugRoute
+  NoticiasBrasilRoute: typeof NoticiasBrasilRoute
   NoticiasDhenisMartinsDosSantosDiscussaoDfirDivulgacaoCpfEnderecoRoute: typeof NoticiasDhenisMartinsDosSantosDiscussaoDfirDivulgacaoCpfEnderecoRoute
   NoticiasIndexRoute: typeof NoticiasIndexRoute
+  NoticiasEstadosUfRoute: typeof NoticiasEstadosUfRoute
+  NoticiasRegioesSlugRoute: typeof NoticiasRegioesSlugRoute
 }
 
 const NoticiasRouteChildren: NoticiasRouteChildren = {
   NoticiasSlugRoute: NoticiasSlugRoute,
+  NoticiasBrasilRoute: NoticiasBrasilRoute,
   NoticiasDhenisMartinsDosSantosDiscussaoDfirDivulgacaoCpfEnderecoRoute:
     NoticiasDhenisMartinsDosSantosDiscussaoDfirDivulgacaoCpfEnderecoRoute,
   NoticiasIndexRoute: NoticiasIndexRoute,
+  NoticiasEstadosUfRoute: NoticiasEstadosUfRoute,
+  NoticiasRegioesSlugRoute: NoticiasRegioesSlugRoute,
 }
 
 const NoticiasRouteWithChildren = NoticiasRoute._addFileChildren(

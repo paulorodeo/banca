@@ -23,10 +23,14 @@ const regionLinks = [
 /** Masthead compartilhado entre o índice jornalístico e as reportagens. */
 export function NewsEditorialHeader() {
   const isRegionActive = useRouterState({
-    select: (state) => state.location.pathname.startsWith("/regioes/"),
+    select: (state) =>
+      state.location.pathname.startsWith("/regioes/") ||
+      state.location.pathname.startsWith("/noticias/regioes/"),
   });
-  const navClass = ({ isActive }: { isActive: boolean }) =>
-    `inline-flex min-h-12 items-center border-b-2 px-2 py-2 text-[0.8rem] font-semibold transition-colors focus-visible:outline-2 focus-visible:outline-gold ${isActive ? "border-gold text-gold" : "border-transparent text-ivory/90 hover:border-gold/70 hover:text-gold"}`;
+  const navBaseClass =
+    "inline-flex min-h-12 items-center border-b-2 border-transparent px-2 py-2 text-[0.8rem] font-semibold text-ivory/90 transition-colors hover:border-gold/70 hover:text-gold focus-visible:outline-2 focus-visible:outline-gold";
+  const navActiveClass =
+    "inline-flex min-h-12 items-center border-b-2 border-gold px-2 py-2 text-[0.8rem] font-semibold text-gold transition-colors focus-visible:outline-2 focus-visible:outline-gold";
 
   return (
     <header className="w-full">
@@ -76,22 +80,25 @@ export function NewsEditorialHeader() {
           >
             <House className="size-[1.05rem]" aria-hidden />
           </Link>
-          <Link to="/noticias" className={navClass}>
+          <Link to="/noticias" className={navBaseClass} activeProps={{ className: navActiveClass }}>
             Notícias
           </Link>
-          <Link to="/artigos" className={navClass}>
+          <Link to="/noticias/brasil" className="inline-flex min-h-12 items-center border-b-2 border-transparent px-2 py-2 text-[0.8rem] font-semibold text-ivory/90 hover:border-gold/70 hover:text-gold focus-visible:outline-2 focus-visible:outline-gold">
+            Brasil
+          </Link>
+          <Link to="/artigos" className={navBaseClass} activeProps={{ className: navActiveClass }}>
             Artigos
           </Link>
-          <Link to="/previsao-do-tempo" className={navClass}>
+          <Link to="/previsao-do-tempo" className={navBaseClass} activeProps={{ className: navActiveClass }}>
             Previsão do Tempo
           </Link>
-          <Link to="/radio" className={navClass}>
+          <Link to="/radio" className={navBaseClass} activeProps={{ className: navActiveClass }}>
             Rádio
           </Link>
-          <Link to="/delegacias" className={navClass}>
+          <Link to="/delegacias" className={navBaseClass} activeProps={{ className: navActiveClass }}>
             Delegacias
           </Link>
-          <Link to="/orgaos" className={navClass}>
+          <Link to="/orgaos" className={navBaseClass} activeProps={{ className: navActiveClass }}>
             Órgãos e Serviços
           </Link>
           <details

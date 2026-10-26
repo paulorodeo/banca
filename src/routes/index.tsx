@@ -27,6 +27,7 @@ interface HomeData {
   delegacias: Delegacia[];
   zonas: (Zona & { quantidade: number })[];
   conteudos: ConteudoJuridico[];
+  atlasNews: AtlasEditorialItem[];
   neighborhoods: import("@/content/local/home-highlights").HomeNeighborhoodHighlight[];
   artigosErro?: string;
 }
@@ -37,18 +38,22 @@ import { ZoneCardLight } from "@/components/site/territory";
 import { withPublishedGuideCounts } from "@/content/local/zonas";
 import { NeighborhoodCarousel } from "@/components/site/neighborhood-carousel";
 import { editorialIdentity, marca } from "@/content/local/settings";
+import { readAtlasEditorial, type AtlasEditorialItem } from "@/content/atlas.functions";
+import { BrazilEditorialAtlas } from "@/components/site/brazil-editorial-atlas";
+import { NewsImage } from "@/components/site/news-image";
 
 const TITLE = `${marca.curto} — Informação jurídica e territorial`;
 const DESCRIPTION = editorialIdentity.description;
 
 export const Route = createFileRoute("/")({
   loader: async (): Promise<HomeData> => {
-    const [regioes, delegacias, bairros, zonas, articles] = await Promise.all([
+    const [regioes, delegacias, bairros, zonas, articles, atlasNews] = await Promise.all([
       content.listRegioes(),
       content.listDelegacias(),
       content.listBairros(),
       content.listZonas(),
       readArticles({ data: { page: 1, limit: 3, sort: "-publishedAt", category: "" } }),
+      readAtlasEditorial(),
     ]);
     const neighborhoods = await homeNeighborhoodHighlights(regioes, bairros, (slug) =>
       content.getBairro(slug),
@@ -57,6 +62,7 @@ export const Route = createFileRoute("/")({
       regioes,
       delegacias,
       bairros,
+      atlasNews,
       neighborhoods,
       zonas: withPublishedGuideCounts(zonas, regioes, delegacias),
       ...(articles.ok
@@ -149,7 +155,7 @@ function Index() {
       img.removeEventListener("load", ready);
     };
   }, []);
-  const { zonas, delegacias, conteudos, neighborhoods } = Route.useLoaderData();
+  const { zonas, delegacias, conteudos, neighborhoods, atlasNews } = Route.useLoaderData();
   const featured = homeFeaturedDistricts(delegacias);
   return (
     <div className="home-light home-page">
@@ -254,28 +260,6 @@ function Index() {
         </Container>
       </section>
 
-      <section className="border-y border-border bg-card py-12 md:py-16">
-        <Container>
-          <HomeHeading
-            eyebrow="Jornalismo e atualidades"
-            title="Notícias"
-            lead="Cobertura de Justiça, instituições, direitos e acontecimentos que impactam a sociedade."
-            to="/noticias"
-            cta="Conhecer a editoria"
-          />
-          <div className="mt-7 flex items-start gap-4 rounded-lg border border-dashed border-brand-navy/25 bg-background p-6 md:p-8">
-            <Newspaper className="size-8 shrink-0 text-gold" aria-hidden />
-            <div>
-              <h3 className="font-serif text-xl text-brand-navy">Cobertura em preparação</h3>
-              <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground">
-                A Banca Paulista está estruturando sua cobertura jornalística. As reportagens serão
-                apresentadas aqui quando estiverem publicadas.
-              </p>
-            </div>
-          </div>
-        </Container>
-      </section>
-
       <section className="home-neighborhood-section">
         <Container>
           <HomeHeading
@@ -286,6 +270,42 @@ function Index() {
             cta="Explorar territórios"
           />
           <NeighborhoodCarousel items={neighborhoods} />
+        </Container>
+      </section>
+
+      <section className="py-12">
+        <Container>
+          <HomeHeading
+            eyebrow="Delegacias em destaque"
+            title="Acesso direto às principais delegacias de Polícia Civil"
+            lead="Seleção editorial de guias informativos sobre delegacias de Polícia Civil de São Paulo. Os cards abrem páginas deste portal, sem vínculo com as unidades."
+            to="/delegacias"
+            cta="Ver todas as delegacias"
+          />
+          <div className="mt-7 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {featured.map(({ guia: dp, titulo, subtitulo }) => (
+              <Link
+                key={dp.id}
+                to="/delegacias/$slug"
+                params={{ slug: dp.slug }}
+                className="home-featured-guide"
+              >
+                <span className="home-guide-icon" aria-hidden>
+                  <Landmark className="size-7" />
+                  <small>{dp.unidade.numero}º DP</small>
+                </span>
+                <div>
+                  <h3 className="mt-4 font-serif text-xl leading-tight text-brand-navy">
+                    {titulo}
+                  </h3>
+                  <p className="mt-3 text-xs text-muted-foreground">
+                    {subtitulo ? `${subtitulo} · ` : ""}Guia informativo publicado
+                  </p>
+                </div>
+                <ArrowRight className="size-4 shrink-0 text-brand-navy" aria-hidden />
+              </Link>
+            ))}
+          </div>
         </Container>
       </section>
 
@@ -327,42 +347,51 @@ function Index() {
         </Container>
       </section>
 
-      <section className="py-12">
+      <BrazilEditorialAtlas stories={atlasNews} />
+
+      <section className="border-y border-border bg-card py-12 md:py-16">
         <Container>
           <HomeHeading
-            eyebrow="Delegacias em destaque"
-            title="Acesso direto às principais delegacias de Polícia Civil"
-            lead="Seleção editorial de guias informativos sobre delegacias de Polícia Civil de São Paulo. Os cards abrem páginas deste portal, sem vínculo com as unidades."
-            to="/delegacias"
-            cta="Ver todas as delegacias"
+            eyebrow="Jornalismo e atualidades"
+            title="Notícias"
+            lead="Reportagens publicadas pela Banca Paulista sobre Justiça, instituições, direitos e acontecimentos que impactam a sociedade."
+            to="/noticias"
+            cta="Ver todas as notícias"
           />
-          <div className="mt-7 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {featured.map(({ guia: dp, titulo, subtitulo }) => (
-              <Link
-                key={dp.id}
-                to="/delegacias/$slug"
-                params={{ slug: dp.slug }}
-                className="home-featured-guide"
-              >
-                <span className="home-guide-icon" aria-hidden>
-                  <Landmark className="size-7" />
-                  <small>{dp.unidade.numero}º DP</small>
-                </span>
-                <div>
-                  <h3 className="mt-4 font-serif text-xl leading-tight text-brand-navy">
-                    {titulo}
-                  </h3>
-                  <p className="mt-3 text-xs text-muted-foreground">
-                    {subtitulo ? `${subtitulo} · ` : ""}Guia informativo publicado
-                  </p>
-                </div>
-                <ArrowRight className="size-4 shrink-0 text-brand-navy" aria-hidden />
-              </Link>
-            ))}
-          </div>
+          {atlasNews.some((item) => !item.isDemo && item.slug) ? (
+            <div className="home-news-grid">
+              {atlasNews.filter((item) => !item.isDemo && item.slug).slice(0, 3).map((item) => (
+                <Link
+                  key={item.id}
+                  to="/noticias/$slug"
+                  params={{ slug: item.slug! }}
+                  className="home-news-card"
+                >
+                  <div className="home-news-card-image">
+                    <NewsImage {...(item.imagem ? { image: item.imagem } : {})} />
+                  </div>
+                  <div className="home-news-card-copy">
+                    <span>{item.categoria}</span>
+                    <h3>{item.titulo}</h3>
+                    <p>{item.resumo}</p>
+                  </div>
+                  <ArrowRight className="home-news-card-arrow size-4" aria-hidden />
+                </Link>
+              ))}
+            </div>
+          ) : (
+            <div className="mt-7 flex items-start gap-4 rounded-lg border border-dashed border-brand-navy/25 bg-background p-6 md:p-8">
+              <Newspaper className="size-8 shrink-0 text-gold" aria-hidden />
+              <div>
+                <h3 className="font-serif text-xl text-brand-navy">Cobertura em preparação</h3>
+                <p className="mt-2 max-w-2xl text-sm leading-6 text-muted-foreground">
+                  As reportagens serão apresentadas aqui quando estiverem publicadas.
+                </p>
+              </div>
+            </div>
+          )}
         </Container>
       </section>
-
       <section className="border-t border-border bg-card py-12">
         <Container>
           <HomeHeading
