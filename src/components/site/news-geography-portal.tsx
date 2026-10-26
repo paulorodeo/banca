@@ -2,9 +2,19 @@ import { useMemo, useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { ArrowRight, ChevronRight, MapPinned, Newspaper } from "lucide-react";
 import { Container } from "@/components/site/primitives";
+import { BrazilEditorialAtlas } from "@/components/site/brazil-editorial-atlas";
 import { NewsImage } from "@/components/site/news-image";
 import { BRASIL_UFS, BRASIL_VIEWBOX } from "@/content/local/brasil-ufs";
 import type { AtlasEditorialItem } from "@/content/atlas.functions";
+import { ExternalNewsSection } from "./external-news-section";
+
+const REGION_CODE: Record<string, string> = {
+  Norte: "N",
+  Nordeste: "NE",
+  "Centro-Oeste": "CO",
+  Sudeste: "SE",
+  Sul: "S",
+};
 
 export type NewsGeographyPortalProps = {
   title: string;
@@ -61,13 +71,36 @@ export function NewsGeographyPortal(props: NewsGeographyPortalProps) {
           <Link to="/noticias" className="news-geography-backlink">Capa de Notícias <ArrowRight aria-hidden /></Link>
         </header>
 
-        <div className="news-geography-map-row">
+      </Container>
+
+      {props.level === "Brasil" ? (
+        <BrazilEditorialAtlas stories={props.stories} variant="portal" />
+      ) : null}
+
+      <ExternalNewsSection
+        title={
+          props.level === "Brasil"
+            ? "Fontes nacionais"
+            : props.level === "Região"
+              ? `Fontes do ${props.title}`
+              : `Fontes sobre ${props.title}`
+        }
+        query={{
+          ...(props.level === "Estado" ? { stateCode: props.selectedStates[0] } : {}),
+          ...(props.level === "Região" ? { regionCode: REGION_CODE[props.title] } : {}),
+          limit: 6,
+        }}
+      />
+
+      <Container>
+
+        {props.level !== "Brasil" ? <div className="news-geography-map-row">
           <div className="news-geography-map-card">
             <div className="news-geography-map-head">
-              <div><p>Brasil em foco</p><h2>{props.level === "Brasil" ? "Panorama nacional" : props.title}</h2></div>
+              <div><p>Brasil em foco</p><h2>{props.title}</h2></div>
               <MapPinned aria-hidden />
             </div>
-            <svg className="news-geography-map" viewBox={BRASIL_VIEWBOX} role="group" aria-label={`Mapa do Brasil com destaque para ${props.level === "Brasil" ? "todas as unidades federativas" : props.title}`}>
+            <svg className="news-geography-map" viewBox={BRASIL_VIEWBOX} role="group" aria-label={`Mapa do Brasil com destaque para ${props.title}`}>
               {mapStates.map((item) => {
                 const available = availableStateSet.has(item.uf);
                 const selected = selectedSet.has(item.uf);
@@ -85,7 +118,11 @@ export function NewsGeographyPortal(props: NewsGeographyPortalProps) {
                     ) : (
                       <path d={item.d} className={`news-geography-map-state ${selected ? "is-selected" : ""}`} />
                     )}
-                    <text x={item.label[0]} y={item.label[1]} aria-hidden="true">{item.uf}</text>
+                    {item.label ? (
+                      <text x={item.label[0]} y={item.label[1]} aria-hidden="true">
+                        {item.uf}
+                      </text>
+                    ) : null}
                   </g>
                 );
               })}
@@ -124,7 +161,7 @@ export function NewsGeographyPortal(props: NewsGeographyPortalProps) {
               </div>
             ) : null}
           </div>
-        </div>
+        </div> : null}
 
         <section className="news-geography-latest" aria-labelledby="news-geography-latest-title">
           <div className="news-geography-section-heading">

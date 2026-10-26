@@ -13,11 +13,11 @@ const portalLinks = [
 ] as const;
 
 const regionLinks = [
-  { to: "/regioes/centro", label: "Centro" },
-  { to: "/regioes/zona-sul", label: "Zona Sul" },
-  { to: "/regioes/zona-oeste", label: "Zona Oeste" },
-  { to: "/regioes/zona-leste", label: "Zona Leste" },
-  { to: "/regioes/zona-norte", label: "Zona Norte" },
+  { slug: "centro", label: "Centro" },
+  { slug: "zona-sul", label: "Zona Sul" },
+  { slug: "zona-oeste", label: "Zona Oeste" },
+  { slug: "zona-leste", label: "Zona Leste" },
+  { slug: "zona-norte", label: "Zona Norte" },
 ] as const;
 
 /** Masthead compartilhado entre o índice jornalístico e as reportagens. */
@@ -123,8 +123,9 @@ export function NewsEditorialHeader() {
             <div className="absolute right-0 top-full z-30 mt-0.5 grid min-w-48 gap-1 border border-gold/30 bg-brand-navy p-2 shadow-xl">
               {regionLinks.map((item) => (
                 <Link
-                  key={item.to}
-                  to={item.to}
+                  key={item.slug}
+                  to="/regioes/$slug"
+                  params={{ slug: item.slug }}
                   className="rounded-sm px-3 py-2.5 text-sm font-semibold text-ivory/90 transition-colors hover:bg-white/5 hover:text-gold focus-visible:outline-2 focus-visible:outline-gold"
                 >
                   {item.label}

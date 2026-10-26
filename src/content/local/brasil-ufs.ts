@@ -4,7 +4,7 @@
  * Dados vetoriais oficiais: https://servicodados.ibge.gov.br/api/v3/malhas/paises/BR?formato=application%2Fvnd.geo%2Bjson&qualidade=maxima&intrarregiao=UF
  * A geometria é simplificada para SVG; não deve ser usada para demarcação ou finalidade cadastral.
  */
-export type UfBrasileira = { uf: string; nome: string; regiao: string; d: string; label: [number, number] };
+export type UfBrasileira = { uf: string; nome: string; regiao: string; d: string; label: [number, number] | null };
 export const BRASIL_VIEWBOX = "0 0 760 700";
 export const SAO_PAULO_CAPITAL_PONTO: [number, number] = [459.8, 502.9];
 export const BRASIL_REGIONS = ["Norte", "Nordeste", "Centro-Oeste", "Sudeste", "Sul"] as const;
@@ -15,7 +15,7 @@ export const UFS_BY_REGION: Record<(typeof BRASIL_REGIONS)[number], string[]> = 
   Sudeste: ["ES", "MG", "RJ", "SP"],
   Sul: ["PR", "RS", "SC"],
 };
-export const BRASIL_UFS: readonly UfBrasileira[] = [
+const BRASIL_UFS_DATA: readonly (Omit<UfBrasileira, "label"> & { label: [number, number] })[] = [
   {
     "uf": "AC",
     "nome": "Acre",
@@ -287,3 +287,40 @@ export const BRASIL_UFS: readonly UfBrasileira[] = [
     ]
   }
 ];
+
+// Pontos internos obtidos das próprias geometrias SVG já projetadas no viewBox.
+// UFs pequenas ou estreitas usam o nome acessível no foco/hover em vez de rótulo externo solto.
+const UF_INTERIOR_LABELS: Record<string, [number, number] | null> = {
+  AC: [62, 259],
+  AL: null,
+  AM: [161, 181],
+  AP: [378, 96],
+  BA: [539, 319],
+  CE: [573, 196],
+  DF: null,
+  ES: null,
+  GO: [405, 390],
+  MA: [480, 199],
+  MG: [500, 408],
+  MS: [322, 444],
+  MT: [315, 335],
+  PA: [354, 208],
+  PB: null,
+  PE: null,
+  PI: [524, 247],
+  PR: [375, 520],
+  RJ: null,
+  RN: null,
+  RO: [192, 289],
+  RR: [224, 72],
+  RS: [350, 603],
+  SC: [407, 564],
+  SE: null,
+  SP: [431, 479],
+  TO: [432, 291],
+};
+
+export const BRASIL_UFS: readonly UfBrasileira[] = BRASIL_UFS_DATA.map((state) => ({
+  ...state,
+  label: UF_INTERIOR_LABELS[state.uf] ?? null,
+}));
