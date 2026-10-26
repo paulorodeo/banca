@@ -21,10 +21,13 @@ export const Route = createFileRoute(
 
     const { rascunhoExposicaoDadosLinkedin } =
       await import("@/content/local/rascunho-exposicao-dados-linkedin");
+    const { noindex: previousNoindex, ...publishedSeo } = rascunhoExposicaoDadosLinkedin.seo;
+    void previousNoindex;
     const noticia: NoticiaEditorial = {
       ...rascunhoExposicaoDadosLinkedin,
       resumo: rascunhoExposicaoDadosLinkedin.linhaFina,
       notas: [],
+      seo: { ...publishedSeo, canonicalPath: path },
     };
     return noticia;
   },
