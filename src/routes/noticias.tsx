@@ -76,7 +76,7 @@ export function NoticiasPage({ categoriaSlug }: { categoriaSlug?: string }) {
             <div className="grid gap-5 xl:grid-cols-[minmax(0,1.55fr)_minmax(24rem,0.85fr)]">
               <article className="group relative min-h-[30rem] overflow-hidden bg-brand-navy sm:min-h-[35rem]">
                 <NewsImage
-                  image={featured.imagem}
+                  {...(featured.imagem ? { image: featured.imagem } : {})}
                   loading="eager"
                   fetchPriority="high"
                   className="absolute inset-0 size-full object-cover transition-transform duration-700 group-hover:scale-[1.025]"
@@ -118,7 +118,7 @@ export function NoticiasPage({ categoriaSlug }: { categoriaSlug?: string }) {
 
       <section className="border-y border-brand-navy/15 bg-white py-6 md:py-7">
         <Container>
-          <CategoryCarousel categoriaSelecionada={categoriaSelecionada?.slug} />
+          <CategoryCarousel {...(categoriaSelecionada ? { categoriaSelecionada: categoriaSelecionada.slug } : {})} />
         </Container>
       </section>
 
@@ -441,7 +441,7 @@ function FilteredNews({
 function SideHeadline({ item }: { item: (typeof noticias)[number] }) {
   return (
     <article className="group grid grid-cols-[7.25rem_1fr] gap-4 py-4 first:pt-0 last:pb-0 sm:grid-cols-[8.25rem_1fr] xl:min-h-[8.55rem]">
-      <NewsImage image={item.imagem} className="aspect-[4/3] size-full object-cover" />
+      <NewsImage {...(item.imagem ? { image: item.imagem } : {})} className="aspect-[4/3] size-full object-cover" />
       <div className="pr-1">
         <p className="text-[0.68rem] font-extrabold uppercase tracking-[0.08em] text-gold">
           {item.categoria}
@@ -482,7 +482,7 @@ function SectionTitle({ title }: { title: string }) {
 function NewsCard({ item }: { item: (typeof noticias)[number] }) {
   return (
     <article className="group border-b border-brand-navy/15 pb-6">
-      <NewsImage image={item.imagem} className="aspect-[16/10] w-full object-cover" />
+      <NewsImage {...(item.imagem ? { image: item.imagem } : {})} className="aspect-[16/10] w-full object-cover" />
       <p className="mt-4 text-[0.68rem] font-extrabold uppercase tracking-[0.08em] text-gold">
         {item.categoria}
       </p>

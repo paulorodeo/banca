@@ -218,9 +218,21 @@ export interface NoticiaRelacionamento {
   relacao: "direto" | "regional" | "administrativo" | "informativo";
 }
 
+export interface NoticiaRelacionamentoLegado {
+  nome: string;
+  relacao: NoticiaRelacionamento["relacao"];
+}
+
+export interface NoticiaRelacionamentosLegados {
+  territorios: NoticiaRelacionamentoLegado[];
+  instituicoes: NoticiaRelacionamentoLegado[];
+}
+
 export interface NoticiaFonte {
   titulo: string;
   url: string;
+  veiculo?: string;
+  data?: string;
 }
 
 export interface NoticiaEditorial {
@@ -239,7 +251,7 @@ export interface NoticiaEditorial {
   /** Variações para futuros cards contextuais; nunca criam outra URL. */
   manchetesContextuais?: { zona?: string; bairro?: string; instituicao?: string };
   tags?: string[];
-  relacionamentos?: NoticiaRelacionamento[];
+  relacionamentos?: NoticiaRelacionamento[] | NoticiaRelacionamentosLegados;
   fontes?: NoticiaFonte[];
 }
 
