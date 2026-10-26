@@ -1,6 +1,7 @@
 import type { NoticiaRascunhoEditorial } from "../types";
 import imagemComplementarUrl from "./preview-assets/dfir-dhenis-martins-dos-santos-deboche.avif?url";
 import imagemInformacoesFiscaisUrl from "./preview-assets/dfir-dhenis-martins-dos-santos-informacoes-fiscais.avif?url";
+import imagemComentarioJusticaUrl from "./preview-assets/dhenis-santos-comentario-justica-analista-dfir.avif?url";
 import imagemPrincipalUrl from "./preview-assets/dhenis-martins-dos-santos.avif?url";
 
 /**
@@ -72,7 +73,24 @@ O documento exibia nome completo, CPF e endereço do destinatário. Esses dados 
 
 A origem do documento, as circunstâncias de sua obtenção e a finalidade de sua divulgação são questões ainda não esclarecidas. O episódio chama a atenção para os limites entre divergência profissional, exposição de informações pessoais e responsabilidade nas redes sociais.
 
-## Uma notícia sobre o Gaeco deu início à discussão
+`,
+    },
+    {
+      tipo: "imagem",
+      imagem: {
+        id: "rascunho-linkedin-comentario-justica",
+        url: imagemComentarioJusticaUrl,
+        alt: "Arte editorial baseada em comentário do perfil D. Santos no LinkedIn, com declaração sobre documentos de identificação de terceiros e críticas à Justiça brasileira.",
+        caption:
+          "Em comentário posterior à divulgação da nota fiscal, o perfil D. Santos criticou a Justiça brasileira e afirmou: 'Eu tinha imprimido literalmente a identidade da pessoa em questão, da mãe e do pai e não deu absolutamente nada.' O episódio anterior relatado pelo usuário não foi confirmado independentemente. Reprodução editorial adaptada de comentário no LinkedIn.",
+        width: 1672,
+        height: 941,
+        preserveAspectRatio: true,
+      },
+    },
+    {
+      tipo: "markdown",
+      texto: `## Uma notícia sobre o Gaeco deu início à discussão
 
 Em 21 de outubro, o portal Migalhas publicou uma reportagem sobre duas operações do Gaeco destinadas a investigar suspeitas de fraudes em ações judiciais envolvendo aposentados e pensionistas.
 
