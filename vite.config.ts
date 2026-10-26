@@ -39,6 +39,10 @@ const localAtlasRoadData: Plugin = {
 
 export default defineConfig(({ command, mode }) => {
   const deploymentEnv = process.env["DEPLOYMENT_ENV"];
+  const modeEnv = loadEnv(mode, process.cwd(), "VITE_");
+  const atlasDemoEnabled =
+    (mode === "development" || mode === "staging") &&
+    (process.env["VITE_ATLAS_DEMO"] ?? modeEnv["VITE_ATLAS_DEMO"]) === "true";
   if (!deploymentEnv) {
     const localSecrets = loadEnv("development", process.cwd(), "");
     for (const name of ["WEATHERAPI_KEY", "WEATHERAPI_FALLBACK_KEY"] as const) {
@@ -58,10 +62,10 @@ export default defineConfig(({ command, mode }) => {
 
   return {
     define: Object.fromEntries(
-      Object.entries(loadEnv(mode, process.cwd(), "VITE_")).map(([key, value]) => [
-        `import.meta.env.${key}`,
-        JSON.stringify(value),
-      ]),
+      [
+        ...Object.entries(modeEnv),
+        ["VITE_ATLAS_DEMO", atlasDemoEnabled ? "true" : "false"],
+      ].map(([key, value]) => [`import.meta.env.${key}`, JSON.stringify(value)]),
     ),
     resolve: {
       tsconfigPaths: true,
