@@ -17,6 +17,13 @@ export function normalizeGalleryImages(images: EditorialGalleryImage[]) {
   });
 }
 
+export function galleryImageIndex(images: EditorialGalleryImage[], image: EditorialGalleryImage) {
+  return images.findIndex(
+    (candidate) =>
+      (Boolean(image.id) && candidate.id === image.id) || candidate.url === image.url,
+  );
+}
+
 export function adjacentGalleryIndex(index: number, length: number, direction: -1 | 1) {
   if (length < 1) return 0;
   return (index + direction + length) % length;

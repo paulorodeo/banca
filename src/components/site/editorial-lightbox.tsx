@@ -14,6 +14,7 @@ import {
 import logoLightboxUrl from "@/assets/logo-lightbox.avif?url";
 import {
   adjacentGalleryIndex,
+  galleryImageIndex,
   type EditorialGalleryImage,
   normalizeGalleryImages,
 } from "@/components/site/editorial-gallery";
@@ -22,7 +23,7 @@ export type { EditorialGalleryImage } from "@/components/site/editorial-gallery"
 
 type GalleryContextValue = {
   images: EditorialGalleryImage[];
-  openImage: (image: EditorialGalleryImage) => void;
+  openImage: (image: EditorialGalleryImage, trigger: HTMLButtonElement) => void;
 };
 
 const GalleryContext = createContext<GalleryContextValue | null>(null);
@@ -37,6 +38,7 @@ export function EditorialLightboxProvider({
   const gallery = useMemo(() => normalizeGalleryImages(images), [images]);
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
   const pointerStartX = useRef<number | null>(null);
+  const lastTriggerRef = useRef<HTMLButtonElement | null>(null);
   const activeImage = activeIndex === null ? undefined : gallery[activeIndex];
   const hasNavigation = gallery.length > 1;
 
@@ -50,10 +52,9 @@ export function EditorialLightboxProvider({
     [gallery.length],
   );
   const openImage = useCallback(
-    (image: EditorialGalleryImage) => {
-      const index = gallery.findIndex(
-        (candidate) => candidate.id === image.id || candidate.url === image.url,
-      );
+    (image: EditorialGalleryImage, trigger: HTMLButtonElement) => {
+      const index = galleryImageIndex(gallery, image);
+      lastTriggerRef.current = trigger;
       if (index >= 0) setActiveIndex(index);
     },
     [gallery],
@@ -95,6 +96,10 @@ export function EditorialLightboxProvider({
           <Dialog.Content
             aria-describedby="editorial-lightbox-description"
             className="fixed left-1/2 top-1/2 z-[101] flex max-h-[94dvh] w-[min(96vw,78rem)] -translate-x-1/2 -translate-y-1/2 flex-col overflow-hidden rounded-md bg-white shadow-2xl focus:outline-none motion-safe:animate-in motion-safe:fade-in motion-safe:zoom-in-95 motion-reduce:transition-none"
+            onCloseAutoFocus={(event) => {
+              event.preventDefault();
+              lastTriggerRef.current?.focus();
+            }}
           >
             <header className="flex min-h-16 shrink-0 items-center border-b border-[#d9e0e5] px-4 py-3 sm:px-6">
               <img
@@ -200,13 +205,14 @@ export function EditorialImageTrigger({
   className?: string;
 }) {
   const gallery = useContext(GalleryContext);
-  if (!gallery || !gallery.images.some((candidate) => candidate.id === image.id)) return children;
+  if (!gallery || galleryImageIndex(gallery.images, image) < 0) return children;
   return (
     <button
       type="button"
-      onClick={() => gallery.openImage(image)}
+      onClick={(event) => gallery.openImage(image, event.currentTarget)}
       className={`block w-full cursor-zoom-in text-left focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#b28341] ${className}`}
       aria-label={`Ampliar imagem: ${image.alt}`}
+      aria-haspopup="dialog"
     >
       {children}
     </button>

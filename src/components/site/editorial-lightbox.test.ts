@@ -1,5 +1,9 @@
 import { describe, expect, test } from "bun:test";
-import { adjacentGalleryIndex, normalizeGalleryImages } from "./editorial-gallery";
+import {
+  adjacentGalleryIndex,
+  galleryImageIndex,
+  normalizeGalleryImages,
+} from "./editorial-gallery";
 
 describe("editorial lightbox gallery", () => {
   const images = [
@@ -21,5 +25,15 @@ describe("editorial lightbox gallery", () => {
   test("mantém uma galeria de artigo com imagem única estável", () => {
     expect(adjacentGalleryIndex(0, 1, 1)).toBe(0);
     expect(adjacentGalleryIndex(0, 1, -1)).toBe(0);
+  });
+
+  test("resolve o mesmo ativo por URL quando o ID da mídia foi normalizado", () => {
+    expect(
+      galleryImageIndex([...images], {
+        id: "payload-id-different",
+        url: "/interna-1.avif",
+        alt: "Primeira imagem interna",
+      }),
+    ).toBe(1);
   });
 });
