@@ -10,6 +10,7 @@ A Banca Paulista reúne jornalismo, notícias, artigos e guias para orientar a n
 
 - **Início:** apresentação do portal e acesso aos conteúdos.
 - **Notícias:** reportagens e cobertura de acontecimentos locais e institucionais.
+- **Atlas Brasil em Foco:** exploração jornalística do país por região, estado e camada temática.
 - **Artigos:** conteúdos explicativos sobre direito e cidadania.
 - **Regiões e bairros:** guias territoriais de São Paulo.
 - **Delegacias e instituições:** diretório informativo de órgãos e serviços públicos.
@@ -17,6 +18,41 @@ A Banca Paulista reúne jornalismo, notícias, artigos e guias para orientar a n
 - **Rádio:** Rádio Banca Digital e acesso à programação de áudio.
 
 As informações e vínculos territoriais são mantidos por uma camada de conteúdo separada da interface. A arquitetura prevê integração futura com um CMS, sem dependência de dados institucionais inventados.
+
+## Atlas Brasil em Foco
+
+O **Brasil em Foco — O Brasil, em múltiplas camadas** é um Atlas editorial interativo que conecta o noticiário da Banca Paulista à geografia brasileira. Seu objetivo é permitir que o leitor descubra reportagens e contextos institucionais a partir do território e do assunto, sem confundir o mapa com um serviço de navegação ou monitoramento de trânsito em tempo real.
+
+### Navegação e cobertura
+
+- **Mapa interativo:** geometria SVG das 27 unidades federativas, com seleção por clique ou teclado e destaque visual dos estados.
+- **Recorte regional:** filtros para Norte, Nordeste, Centro-Oeste, Sudeste e Sul; seleção de UF e retorno à visão nacional.
+- **Camadas temáticas:** Notícias, Justiça, Política, Economia, Agronegócio, Clima, Infraestrutura, Rodovias e População. A exibição de notícias em cada camada depende da cobertura editorial disponível.
+- **Painel contextual:** manchetes, resumos e links para reportagens publicadas, filtrados pelo recorte geográfico e temático.
+- **Portais geográficos:** rotas `/noticias/brasil`, `/noticias/regioes/:slug` e `/noticias/estados/:uf`, com navegação condicionada à existência de conteúdo; áreas sem cobertura podem não disponibilizar uma página pública.
+- **Geografia de referência:** limites estaduais generalizados da Malha Territorial 2025 do IBGE, identificados e creditados na interface.
+
+O Atlas aparece na Home e dispõe de componentes reutilizáveis para os portais geográficos. Seu modelo editorial relaciona notícias a UFs, regiões e editorias, preservando a URL original de cada reportagem.
+
+### Dados reais, demonstrações e indexação
+
+Notícias fictícias usadas para demonstrar os filtros são separadas do acervo publicado. A flag `VITE_ATLAS_DEMO=true` permite habilitá-las **somente** nos modos de desenvolvimento ou staging previstos no código; páginas com demonstrações recebem `noindex`. Conteúdo de demonstração não deve ser incluído no sitemap, nos feeds públicos ou em páginas indexáveis de produção.
+
+Na versão **atualmente commitada nesta branch**, a camada Clima exibe uma observação referente à capital paulista. As demais camadas funcionam como recortes temáticos das notícias existentes, conforme sua disponibilidade. Em particular, o seletor **Rodovias ainda não desenha a malha rodoviária no SVG** e não deve ser apresentado como acompanhamento em tempo real.
+
+### Evolução planejada
+
+As próximas entregas incluem ampliar os dados oficiais de População (IBGE), Agronegócio (Conab) e Clima por UF; sobrepor geometrias reais de rodovias federais com traçados luminosos selecionáveis; e conectar notas externas de fontes RSS/Atom ou APIs aos hubs editoriais, com atribuição, curadoria, respeito a direitos autorais e preservação do SEO. A integração futura com **Payload CMS** deverá reutilizar os modelos e componentes existentes. Essas frentes **não devem ser tratadas como funcionalidades já publicadas** apenas por existirem em estudos ou alterações locais ainda não commitadas.
+
+### Principais pontos de implementação
+
+- `src/components/site/brazil-editorial-atlas.tsx` — interface interativa.
+- `src/content/local/brasil-ufs.ts` — estados, regiões e geometrias SVG.
+- `src/content/atlas.functions.ts` — leitura e organização dos itens editoriais.
+- `src/content/local/brasil-atlas-model.ts` — filtros geográficos e temáticos.
+- `src/components/site/news-geography-portal.tsx` — composição dos portais geográficos.
+
+O código presente no Git, o workspace local e os Workers publicados podem estar em versões diferentes. Verifique sempre o commit, o build e o destino da publicação antes de afirmar que uma nova camada já está disponível ao público.
 
 ## Tecnologia
 
