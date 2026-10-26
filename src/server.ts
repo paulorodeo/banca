@@ -56,7 +56,11 @@ export default {
     try {
       const handler = await getServerEntry();
       const response = await handler.fetch(request, env, ctx);
-      return environmentResponse(await normalizeCatastrophicSsrResponse(response), runtimeEnv(env));
+      return environmentResponse(
+        await normalizeCatastrophicSsrResponse(response),
+        runtimeEnv(env),
+        request,
+      );
     } catch (error) {
       console.error(error);
       return environmentResponse(
@@ -65,6 +69,7 @@ export default {
           headers: { "content-type": "text/html; charset=utf-8" },
         }),
         runtimeEnv(env),
+        request,
       );
     }
   },

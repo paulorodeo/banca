@@ -1,5 +1,8 @@
 import { PRODUCTION_SITE_ORIGIN } from "./public-url";
 
+export const LIMITED_ARCHIVE_NEWS_PATH =
+  "/noticias/dhenis-martins-dos-santos-discussao-dfir-divulgacao-cpf-endereco";
+
 /** workers.dev is always a review environment, even if the explicit flag is omitted. */
 export function isStaging(env: Record<string, string | undefined>): boolean {
   if (env["DEPLOYMENT_ENV"] === "staging") return true;
@@ -12,6 +15,7 @@ export function isStaging(env: Record<string, string | undefined>): boolean {
 export function environmentResponse(
   response: Response,
   env: Record<string, string | undefined>,
+  request?: Request,
 ): Response {
   const headers = new Headers(response.headers);
   headers.set("X-Content-Type-Options", "nosniff");
@@ -32,6 +36,12 @@ export function environmentResponse(
   ) {
     // Short initial max-age; do not opt every subdomain into HSTS.
     headers.set("Strict-Transport-Security", "max-age=604800");
+    if (
+      isHtml &&
+      request &&
+      new URL(request.url).pathname.replace(/\/+$/, "") === LIMITED_ARCHIVE_NEWS_PATH
+    )
+      headers.set("X-Robots-Tag", "noarchive, noimageindex");
   }
 
   if (staging && isHtml && /^[a-f0-9]{40}$/.test(env["BUILD_COMMIT"] ?? ""))

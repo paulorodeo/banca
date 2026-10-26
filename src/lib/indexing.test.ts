@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { environmentResponse, isStaging } from "./indexing";
+import { environmentResponse, isStaging, LIMITED_ARCHIVE_NEWS_PATH } from "./indexing";
 import { PRODUCTION_SITE_ORIGIN, STAGING_SITE_ORIGIN, runtimePublicOrigin } from "./public-url";
 test("homologation is explicit and workers.dev cannot accidentally be indexed", () => {
   assert(isStaging({ DEPLOYMENT_ENV: "staging" }));
@@ -56,6 +56,20 @@ test("staging retains noindex while production does not inherit it and receives 
   assert.equal(production.headers.get("X-Robots-Tag"), null);
   assert.equal(production.headers.get("Strict-Transport-Security"), "max-age=604800");
   assert.equal(runtimePublicOrigin(productionEnv), PRODUCTION_SITE_ORIGIN);
+
+  const limitedArchive = environmentResponse(
+    new Response("HTML", { headers: { "Content-Type": "text/html" } }),
+    productionEnv,
+    new Request(`${PRODUCTION_SITE_ORIGIN}${LIMITED_ARCHIVE_NEWS_PATH}`),
+  );
+  assert.equal(limitedArchive.headers.get("X-Robots-Tag"), "noarchive, noimageindex");
+
+  const otherNews = environmentResponse(
+    new Response("HTML", { headers: { "Content-Type": "text/html" } }),
+    productionEnv,
+    new Request(`${PRODUCTION_SITE_ORIGIN}/noticias/outra-noticia`),
+  );
+  assert.equal(otherNews.headers.get("X-Robots-Tag"), null);
 
   const individualNoindex = response(productionEnv, { "X-Robots-Tag": "noindex" });
   assert.equal(individualNoindex.headers.get("X-Robots-Tag"), "noindex");
