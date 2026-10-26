@@ -27,6 +27,8 @@ export type AtlasEditorialItem = {
   ufs: string[];
   ufPrincipal?: string;
   regiao?: string;
+  /** Relações editoriais explícitas; não inferidas apenas de uma menção geográfica. */
+  roadCodes?: string[];
   isDemo: boolean;
 };
 
