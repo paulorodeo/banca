@@ -45,7 +45,7 @@ export function SiteHeader({ institutions }: { institutions: PublicInstitution[]
     const savedPreference = window.localStorage.getItem("banca-reduced-glare") === "true";
     setReducedGlare(savedPreference);
     document.documentElement.classList.toggle("reduced-glare", savedPreference);
-    delete document.documentElement.dataset.contrast;
+    delete document.documentElement.dataset["contrast"];
   }, []);
 
   const toggleReducedGlare = () => {

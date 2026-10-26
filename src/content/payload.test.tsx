@@ -5,6 +5,7 @@ import { adaptPayloadArticle, articleSearchSchema, parseLexical, safeUrl } from 
 import { cmsConfig, fetchCms, type SharedCache, type CmsConfig } from './payload-transport';
 import { loadArticle, loadArticlePage } from './articles.server';
 import { ArticleRichText } from '../components/site/article-rich-text';
+import type { Fetcher } from '../lib/fetcher';
 
 const config: CmsConfig = { baseUrl: 'https://cms.test', path: '/api/articles', ttl: 60, timeout: 100, namespace: 'test' };
 const territory = { regions: new Set(['zona-sul']), delegacias: new Set<string>(), bairros: new Set<string>(), themes: new Set<string>() };
@@ -51,7 +52,7 @@ describe('Payload editorial contract', () => {
 describe('CMS lifecycle and cache', () => {
   test('enforces published query, has no cookies or authorization, caches across consumers', async () => {
     const { cache } = memoryCache(); let calls = 0;
-    const fetcher: typeof fetch = async (url, init) => {
+    const fetcher: Fetcher = async (url, init) => {
       calls++; const parsed = new URL(String(url));
       assert.equal(parsed.searchParams.get('where[_status][equals]'), 'published');
       assert.equal(parsed.searchParams.get('draft'), 'false'); assert.equal(init?.credentials, 'omit');
@@ -63,7 +64,7 @@ describe('CMS lifecycle and cache', () => {
   });
   test('publication, update and withdrawal are revalidated after TTL; no stale fallback', async () => {
     const { cache, expire } = memoryCache(); let docs: unknown[] = [];
-    const fetcher: typeof fetch = async () => response(docs);
+    const fetcher: Fetcher = async () => response(docs);
     assert.equal(await loadArticle(config, article.slug, cache, fetcher), null);
     docs = [article]; expire(); assert.equal((await loadArticle(config, article.slug, cache, fetcher))?.titulo, article.title);
     docs = [{ ...article, title: 'Atualizado' }]; expire(); assert.equal((await loadArticle(config, article.slug, cache, fetcher))?.titulo, 'Atualizado');
@@ -72,7 +73,7 @@ describe('CMS lifecycle and cache', () => {
   });
   test('cache namespace invalidates all article variants', async () => {
     const { cache } = memoryCache(); let calls = 0;
-    const fetcher: typeof fetch = async () => { calls++; return response([article]); };
+    const fetcher: Fetcher = async () => { calls++; return response([article]); };
     await loadArticle(config, article.slug, cache, fetcher);
     await loadArticle({ ...config, namespace: 'test-next' }, article.slug, cache, fetcher);
     assert.equal(calls, 2);
@@ -83,7 +84,7 @@ describe('CMS lifecycle and cache', () => {
   });
   test('pagination and category filter are server queries; categories have no drafts predicate', async () => {
     const search = articleSearchSchema.parse({ page: 2, limit: 1, category: 'direitos' });
-    const fetcher: typeof fetch = async input => {
+    const fetcher: Fetcher = async input => {
       const url = new URL(String(input));
       if (url.pathname === '/api/categories') {
         assert.equal(url.searchParams.has('where[_status][equals]'), false);
@@ -98,7 +99,7 @@ describe('CMS lifecycle and cache', () => {
   });
   test('connection failure, HTTP errors and timeout fail explicitly without local substitution', async () => {
     await assert.rejects(() => loadArticlePage(config, articleSearchSchema.parse({}), undefined, async () => new Response('', { status: 500 })));
-    const fetcher: typeof fetch = async (_, init) => new Promise((_, reject) => { init?.signal?.addEventListener('abort', () => reject(new Error('timeout'))); });
+    const fetcher: Fetcher = async (_, init) => new Promise((_, reject) => { init?.signal?.addEventListener('abort', () => reject(new Error('timeout'))); });
     await assert.rejects(() => fetchCms({ ...config, timeout: 5 }, new URLSearchParams(), undefined, fetcher));
   });
   test('local legitimate articles remain available only with unconfigured CMS', async () => {

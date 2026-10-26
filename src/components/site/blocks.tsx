@@ -31,7 +31,7 @@ export function PageHero({
       title={title}
       lead={lead ?? ""}
       crumbs={crumbs}
-      image={image}
+      {...(image ? { image } : {})}
     />
   );
 }

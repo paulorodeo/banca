@@ -4,6 +4,7 @@ import { absoluteHead, absoluteUrl, articleListPath, publicOrigin } from "../lib
 import { parseLexical, safeUrl, articleSearchSchema } from "./payload";
 import { boundedText, cmsConfig, fetchCms, type SharedCache } from "./payload-transport";
 import { invalidationScope, verifyEditorialSignature } from "./editorial-events";
+import type { Fetcher } from "../lib/fetcher";
 const cfg = {
   baseUrl: "https://cms.test",
   path: "/api/articles",
@@ -148,7 +149,7 @@ test("revision invalidates all cached query variants without deploy", async () =
   const { cache } = cacheFixture();
   let revision = "1",
     calls = 0;
-  const fetcher: typeof fetch = async (input) =>
+  const fetcher: Fetcher = async (input) =>
     new URL(String(input)).pathname === cfg.revisionPath
       ? Response.json({ revision })
       : (calls++, Response.json({ revision }));
@@ -168,7 +169,7 @@ test("revision invalidates all cached query variants without deploy", async () =
 test("withdrawal during origin read rejects old content and never caches it", async () => {
   const { cache, values } = cacheFixture();
   let revision = "1";
-  const fetcher: typeof fetch = async (input) => {
+  const fetcher: Fetcher = async (input) => {
     if (new URL(String(input)).pathname === cfg.revisionPath) return Response.json({ revision });
     revision = "2";
     return Response.json({ title: "withdrawn" });
@@ -179,7 +180,7 @@ test("withdrawal during origin read rejects old content and never caches it", as
 test("revision failure never falls back to cached success", async () => {
   const { cache } = cacheFixture();
   let fail = false;
-  const fetcher: typeof fetch = async (input) =>
+  const fetcher: Fetcher = async (input) =>
     new URL(String(input)).pathname === cfg.revisionPath
       ? fail
         ? new Response("", { status: 503 })

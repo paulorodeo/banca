@@ -46,7 +46,8 @@ export function ContextualNewsSection({
     .slice(0, maxItems);
 
   if (!items.length) return null;
-  const [featured, ...remaining] = items;
+  const featured = items[0]!;
+  const remaining = items.slice(1);
   const secondary = remaining.slice(0, 2);
   const compact = remaining.slice(2);
   const title = (item: (typeof noticias)[number]) => item.manchetesContextuais?.[headlineContext] ?? item.titulo;
@@ -57,7 +58,7 @@ export function ContextualNewsSection({
         <p className="text-xs font-semibold uppercase tracking-[0.16em] text-gold">Cobertura relacionada</p>
         <h2 className="mt-3 font-serif text-4xl text-brand-navy">Notícias no contexto desta página</h2>
         <article className="mt-8 overflow-hidden rounded-xl border border-border bg-background md:grid md:grid-cols-[1.1fr_0.9fr]">
-          <NewsImage image={featured.imagem} className="aspect-[16/9] size-full object-cover" />
+          <NewsImage {...(featured.imagem ? { image: featured.imagem } : {})} className="aspect-[16/9] size-full object-cover" />
           <div className="p-6 md:p-8">
             <p className="text-xs font-semibold uppercase tracking-[0.14em] text-gold">{featured.categoria}</p>
             <h3 className="mt-3 font-serif text-3xl text-brand-navy">{title(featured)}</h3>
@@ -84,7 +85,7 @@ export function ContextualNewsSection({
 function NewsCard({ item, title, compact = false }: { item: (typeof noticias)[number]; title: string; compact?: boolean }) {
   return (
     <article className="overflow-hidden rounded-xl border border-border bg-background">
-      <NewsImage image={item.imagem} className={compact ? "aspect-[16/9] w-full object-cover" : "aspect-[16/9] w-full object-cover"} />
+      <NewsImage {...(item.imagem ? { image: item.imagem } : {})} className={compact ? "aspect-[16/9] w-full object-cover" : "aspect-[16/9] w-full object-cover"} />
       <div className="p-5">
         <p className="text-xs font-semibold uppercase tracking-[0.14em] text-gold">{item.categoria}</p>
         <h3 className="mt-3 font-serif text-2xl text-brand-navy">{title}</h3>

@@ -26,7 +26,7 @@ export function PaginaInstitucionalView({
         title={pagina.titulo}
         lead={pagina.subtitulo}
         crumbs={crumbs}
-        image={heroImage}
+        {...(heroImage ? { image: heroImage } : {})}
       />
       <Section>
         <Container>

@@ -1,4 +1,5 @@
 import { parsePodcastFeed, type PodcastFeed } from "./podcast-feed";
+import type { Fetcher } from "@/lib/fetcher";
 
 const FEED_URL = "https://feed-banca.paulista.workers.dev/rss.xml";
 const CACHE_KEY = "https://banca.internal/podcast-feed-v1";
@@ -7,7 +8,7 @@ const CACHE_SECONDS = 300;
 
 type SharedCache = Pick<Cache, "match" | "put">;
 export interface PodcastFeedEnv {
-  PODCAST_FEED?: { fetch: typeof fetch };
+  PODCAST_FEED?: { fetch: Fetcher };
 }
 
 function runtimeCache(): SharedCache | undefined {
@@ -38,7 +39,7 @@ async function boundedText(response: Response) {
   }
 }
 
-export async function loadPodcastFeed(fetcher: typeof fetch = fetch): Promise<PodcastFeed> {
+export async function loadPodcastFeed(fetcher: Fetcher = fetch): Promise<PodcastFeed> {
   const cache = runtimeCache();
   const cacheRequest = new Request(CACHE_KEY);
   try {

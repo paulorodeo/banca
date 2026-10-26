@@ -13,7 +13,7 @@ describe("editorial lightbox gallery", () => {
   ] as const;
 
   test("preserva a ordem editorial e elimina duplicatas", () => {
-    expect(normalizeGalleryImages([...images, images[0]!])).toEqual(images);
+    expect(normalizeGalleryImages([...images, images[0]!])).toEqual([...images]);
   });
 
   test("navega circularmente em uma reportagem com três imagens", () => {

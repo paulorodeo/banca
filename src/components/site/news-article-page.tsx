@@ -48,12 +48,10 @@ function territoriesOf(item: NoticiaEditorial): TerritoryRelation[] {
     const relation = value as { nome: unknown; tipo?: unknown; relacao?: unknown };
     if (typeof relation.nome !== "string") return [];
     if (relation.tipo && relation.tipo !== "territorio") return [];
-    return [
-      {
-        nome: relation.nome,
-        relacao: typeof relation.relacao === "string" ? relation.relacao : undefined,
-      },
-    ];
+    return [{
+      nome: relation.nome,
+      ...(typeof relation.relacao === "string" ? { relacao: relation.relacao } : {}),
+    }];
   });
 }
 
@@ -79,6 +77,7 @@ function territoryDestination(name: string): { href: string; label: string } | u
   const canonicalKey = key === "centro de sao paulo" || key === "centro sp" ? "centro" : key;
   const zona = zonas.find((item) => normalize(item.nome) === canonicalKey);
   if (zona) return { href: `/regioes/${zona.slug}`, label: `Ver todas em ${zona.nome}` };
+  return undefined;
 }
 
 function relatedFilters(item: NoticiaEditorial): RelatedFilter[] {
@@ -437,7 +436,7 @@ function NewsCard({ item }: { item: NoticiaEditorial }) {
         className="group grid grid-cols-[minmax(8rem,9rem)_minmax(0,1fr)] items-start gap-3"
       >
         <NewsImage
-          image={item.imagem}
+          {...(item.imagem ? { image: item.imagem } : {})}
           className="aspect-[4/3] w-full object-cover"
           fallbackClassName="bg-[#f8f8f6] object-contain! p-1.5"
         />
@@ -586,7 +585,7 @@ function ArticleSidebar({ noticia }: { noticia: NoticiaEditorial }) {
                   className="group grid grid-cols-[minmax(7rem,7.5rem)_minmax(0,1fr)] items-start gap-3"
                 >
                   <NewsImage
-                    image={item.imagem}
+                    {...(item.imagem ? { image: item.imagem } : {})}
                     className="aspect-[4/3] w-full object-cover"
                     fallbackClassName="bg-[#f8f8f6] object-contain! p-1.5"
                   />

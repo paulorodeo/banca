@@ -371,7 +371,7 @@ export const noticiasZonaNorte: NoticiaEditorial[] = [
     autoria: "Redação Banca Paulista",
     seo: { title: "2.846 imóveis regularizados na Zona Norte: veja os locais", description: "Prefeitura regularizou 2.846 imóveis em nove núcleos de Jaçanã e Tremembé. Veja a lista dos locais atendidos e como consultar a documentação da sua casa.", canonicalPath: "/noticias/2846-imoveis-regularizados-zona-norte-sp", ogTitle: "Sua casa está entre as 2.846 regularizadas na Zona Norte? Veja os nove locais", keywords: ["regularização fundiária Zona Norte", "2.846 imóveis", "Jaçanã", "Tremembé", "Escritura na Mão"] },
     blocos: [
-      { tipo: "markdown", texto: regularizacao.split("## Veja os nove locais da Zona Norte que receberam regularização de imóveis")[0] },
+      { tipo: "markdown", texto: regularizacao.split("## Veja os nove locais da Zona Norte que receberam regularização de imóveis")[0] ?? regularizacao },
       { tipo: "titulo", texto: "Veja os nove locais da Zona Norte que receberam regularização de imóveis" },
       {
         tipo: "tabela",

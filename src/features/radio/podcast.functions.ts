@@ -2,6 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { setResponseHeader } from "@tanstack/react-start/server";
 import type { PodcastFeed } from "./podcast-feed";
 import { loadPodcastFeed, type PodcastFeedEnv } from "./podcast-feed.server";
+import type { Fetcher } from "@/lib/fetcher";
 
 type PodcastResult =
   { ok: true; feed: PodcastFeed } | { ok: false; error: "podcast_feed_unavailable" };
@@ -16,7 +17,7 @@ export const readPodcastFeed = createServerFn({ method: "GET" }).handler(
       } catch {
         /* Local Vite runtime uses the public feed URL. */
       }
-      const fetcher: typeof fetch = env.PODCAST_FEED
+      const fetcher: Fetcher = env.PODCAST_FEED
         ? (input, init) => env.PODCAST_FEED!.fetch(input, init)
         : fetch;
       return { ok: true, feed: await loadPodcastFeed(fetcher) };

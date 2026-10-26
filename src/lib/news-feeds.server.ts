@@ -197,8 +197,8 @@ ${items.map(atomEntry).join("\n")}
 export function newsFeedResponse(format: "rss" | "atom", env: Record<string, string | undefined>) {
   const body =
     format === "rss"
-      ? rssXml({ limit: env["NEWS_FEED_LIMIT"] })
-      : atomXml({ limit: env["NEWS_FEED_LIMIT"] });
+      ? rssXml({ ...(env["NEWS_FEED_LIMIT"] ? { limit: env["NEWS_FEED_LIMIT"] } : {}) })
+      : atomXml({ ...(env["NEWS_FEED_LIMIT"] ? { limit: env["NEWS_FEED_LIMIT"] } : {}) });
   return new Response(body, {
     headers: {
       "Content-Type": `${format === "rss" ? "application/rss+xml" : "application/atom+xml"}; charset=utf-8`,

@@ -1,3 +1,5 @@
+import type { Fetcher } from "@/lib/fetcher";
+
 /** Fetch-only transport: no Payload/Next/Node runtime dependencies. Called only on the server. */
 export interface CmsConfig { baseUrl: string; path: string; ttl: number; timeout: number; namespace: string; revisionPath?: string; siteOrigin?: string }
 export interface SharedCache { match(request: Request): Promise<Response | undefined>; put(request: Request, response: Response): Promise<unknown> }
@@ -21,7 +23,7 @@ export function cmsConfig(env: Record<string, string | undefined>): CmsConfig | 
   return { ...(revisionPath ? { revisionPath } : {}), baseUrl: url.href.replace(/\/$/, ''), path, ttl: number('ARTICLES_CACHE_TTL', 60, 300), timeout: number('PAYLOAD_TIMEOUT_MS', 5000, 15000), namespace };
 }
 export class CmsUnavailable extends Error { constructor() { super('Publicações temporariamente indisponíveis. Tente novamente em instantes.'); } }
-export async function fetchCms(config: CmsConfig, query: URLSearchParams, cache?: SharedCache, fetcher: typeof fetch = fetch, publishedOnly = true, validate: (input: unknown) => unknown = value => value): Promise<unknown> {
+export async function fetchCms(config: CmsConfig, query: URLSearchParams, cache?: SharedCache, fetcher: Fetcher = fetch, publishedOnly = true, validate: (input: unknown) => unknown = value => value): Promise<unknown> {
   const url = new URL(config.path, config.baseUrl);
   url.search = query.toString();
   // Payload native drafts authority; also enforced by anonymous collection access on the VPS.
