@@ -17,7 +17,12 @@ describe("weather shared cache", () => {
   it("serves another instance from KV without another provider call and refreshes after TTL", async () => {
     let now = 1000;
     const provider = mock(
-      async () => ({ provider: "WeatherAPI.com", tempC: 22 }) as WeatherSnapshot,
+      async (_key: string, uf = "SP") =>
+        ({
+          provider: "WeatherAPI.com",
+          city: uf === "SP" ? "São Paulo" : "Rio de Janeiro",
+          tempC: 22,
+        }) as WeatherSnapshot,
     );
     const env = { WEATHERAPI_KEY: "test-only", WEATHER_CACHE: cache(), DEPLOYMENT_ENV: "staging" };
     const first = createWeatherService(provider, () => now);
@@ -38,6 +43,21 @@ describe("weather shared cache", () => {
     expect(await response.json()).toEqual({ error: "weather_not_configured" });
     expect(provider).not.toHaveBeenCalled();
   });
+  it("keeps per-capital cache entries isolated and queries only selected capitals", async () => {
+    const provider = mock(
+      async (_key: string, uf = "SP") =>
+        ({
+          provider: "WeatherAPI.com",
+          city: uf === "RJ" ? "Rio de Janeiro" : "São Paulo",
+        }) as WeatherSnapshot,
+    );
+    const env = { WEATHERAPI_KEY: "test-only", WEATHER_CACHE: cache() };
+    const service = createWeatherService(provider);
+    await service(env, "SP");
+    await service(env, "RJ");
+    await service(env, "RJ");
+    expect(provider.mock.calls.map(([_, uf]) => uf)).toEqual(["SP", "RJ"]);
+  });
   it("uses the reserve only after an eligible primary failure", async () => {
     const primaryWorks = mock(async (key: string) => {
       if (key !== "primary") throw new Error("unexpected reserve request");
@@ -51,7 +71,9 @@ describe("weather shared cache", () => {
       if (key === "primary") throw new WeatherProviderError("unavailable", true);
       return { provider: "WeatherAPI.com", tempC: 18 } as WeatherSnapshot;
     });
-    expect((await createWeatherService(primaryFails)({ ...env, WEATHER_CACHE: cache() })).status).toBe(200);
+    expect(
+      (await createWeatherService(primaryFails)({ ...env, WEATHER_CACHE: cache() })).status,
+    ).toBe(200);
     expect(primaryFails.mock.calls.map(([key]) => key)).toEqual(["primary", "reserve"]);
   });
   it("does not use the reserve to bypass a non-eligible provider restriction", async () => {

@@ -1,5 +1,6 @@
 import type { WeatherSnapshot } from "./weather-model";
 import { fetchWeatherApi, WeatherProviderError } from "./weather-provider.server";
+import { WEATHER_CAPITALS } from "@/content/local/weather-capitals";
 
 export interface WeatherCache {
   get(key: string): Promise<string | null>;
@@ -12,29 +13,36 @@ export type WeatherEnv = {
   DEPLOYMENT_ENV?: string;
 };
 const TTL = 900;
-const CACHE_KEY = "weatherapi:sao-paulo:v1";
 type CachedResult = { expiresAt: number; data?: WeatherSnapshot; error?: string };
 
 export function createWeatherService(provider = fetchWeatherApi, now = Date.now) {
-  let memo: CachedResult | undefined;
-  let inFlight: Promise<CachedResult> | undefined;
-  async function read(env: WeatherEnv): Promise<CachedResult> {
+  const memo = new Map<string, CachedResult>();
+  const inFlight = new Map<string, Promise<CachedResult>>();
+  async function read(env: WeatherEnv, uf: string): Promise<CachedResult> {
+    const cacheKey =
+      uf === "SP" ? "weatherapi:sao-paulo:v1" : `weatherapi:capital:${uf.toLowerCase()}:v1`;
     if (!env.WEATHERAPI_KEY) return { expiresAt: now() + 60_000, error: "weather_not_configured" };
     if (env.DEPLOYMENT_ENV === "staging" && !env.WEATHER_CACHE)
       return { expiresAt: now() + 60_000, error: "weather_cache_unavailable" };
-    const cached = await env.WEATHER_CACHE?.get(CACHE_KEY);
+    const cached = await env.WEATHER_CACHE?.get(cacheKey);
     if (cached) {
-      const entry = JSON.parse(cached) as CachedResult;
-      if (
-        entry.expiresAt > now() &&
-        (entry.data?.provider === "WeatherAPI.com" || entry.error === "weather_unavailable")
-      )
-        return entry;
+      try {
+        const entry = JSON.parse(cached) as CachedResult;
+        if (
+          entry.expiresAt > now() &&
+          ((entry.data?.provider === "WeatherAPI.com" &&
+            entry.data.city === WEATHER_CAPITALS[uf]?.city) ||
+            entry.error === "weather_unavailable")
+        )
+          return entry;
+      } catch {
+        // Invalid/obsolete cache data is ignored and refreshed from the provider.
+      }
     }
     try {
       let data: WeatherSnapshot;
       try {
-        data = await provider(env.WEATHERAPI_KEY);
+        data = await provider(env.WEATHERAPI_KEY, uf);
       } catch (error) {
         const canUseFallback =
           env.WEATHERAPI_FALLBACK_KEY &&
@@ -43,33 +51,49 @@ export function createWeatherService(provider = fetchWeatherApi, now = Date.now)
           error.fallbackEligible;
         if (!canUseFallback) throw error;
         // One request per credential at most. Do not retry or cascade past the reserve key.
-        data = await provider(env.WEATHERAPI_FALLBACK_KEY);
+        const fallbackKey = env.WEATHERAPI_FALLBACK_KEY;
+        if (!fallbackKey) throw error;
+        data = await provider(fallbackKey, uf);
       }
       const entry = { expiresAt: now() + TTL * 1000, data };
-      await env.WEATHER_CACHE?.put(CACHE_KEY, JSON.stringify(entry), { expirationTtl: TTL });
+      await env.WEATHER_CACHE?.put(cacheKey, JSON.stringify(entry), { expirationTtl: TTL });
       return entry;
     } catch {
       // Briefly share provider failures too, to avoid retrying upstream per visitor.
       const entry = { expiresAt: now() + 60_000, error: "weather_unavailable" };
-      await env.WEATHER_CACHE?.put(CACHE_KEY, JSON.stringify(entry), { expirationTtl: 60 });
+      await env.WEATHER_CACHE?.put(cacheKey, JSON.stringify(entry), { expirationTtl: 60 });
       return entry;
     }
   }
-  return async (env: WeatherEnv) => {
+  return async (env: WeatherEnv, requestedUf = "SP") => {
+    const uf = requestedUf.toUpperCase();
+    if (!WEATHER_CAPITALS[uf])
+      return Response.json(
+        { error: "weather_location_invalid" },
+        { status: 400, headers: { "Cache-Control": "no-store" } },
+      );
     try {
-      if (!memo || memo.expiresAt <= now()) {
-        inFlight ??= read(env).finally(() => {
-          inFlight = undefined;
-        });
-        memo = await inFlight;
+      const cachedResult = memo.get(uf);
+      if (!cachedResult || cachedResult.expiresAt <= now()) {
+        let pending = inFlight.get(uf);
+        if (!pending) {
+          pending = read(env, uf).finally(() => inFlight.delete(uf));
+          inFlight.set(uf, pending);
+        }
+        memo.set(uf, await pending);
       }
-      if (memo.error || !memo.data)
+      const entry = memo.get(uf);
+      if (entry?.error || !entry?.data)
         return Response.json(
-          { error: memo.error ?? "weather_unavailable" },
+          { error: entry?.error ?? "weather_unavailable" },
           { status: 503, headers: { "Cache-Control": "no-store" } },
         );
-      return Response.json(memo.data, {
-        headers: { "Cache-Control": "public, max-age=60", "X-Weather-Cache": "shared-kv" },
+      return Response.json(entry.data, {
+        headers: {
+          "Cache-Control": "public, max-age=60",
+          "X-Weather-Cache": "shared-kv",
+          "X-Weather-Location": uf,
+        },
       });
     } catch {
       return Response.json(

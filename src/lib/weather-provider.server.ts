@@ -1,4 +1,6 @@
 import { normalizeWeather, type WeatherApiResponse, type WeatherSnapshot } from "./weather-model";
+import { WEATHER_CAPITALS } from "@/content/local/weather-capitals";
+import type { Fetcher } from "./fetcher";
 
 export class WeatherProviderError extends Error {
   constructor(
@@ -13,12 +15,15 @@ export class WeatherProviderError extends Error {
 /** Provider boundary: future providers must return this same snapshot contract. */
 export async function fetchWeatherApi(
   key: string,
-  fetcher: typeof fetch = fetch,
+  uf = "SP",
+  fetcher: Fetcher = fetch,
 ): Promise<WeatherSnapshot> {
+  const capital = WEATHER_CAPITALS[uf];
+  if (!capital) throw new WeatherProviderError("weather_location_invalid", false);
   const query = new URLSearchParams({
     key,
-    q: "-23.5505,-46.6333",
-    days: "3",
+    q: `${capital.latitude},${capital.longitude}`,
+    days: "1",
     lang: "pt",
     aqi: "no",
     alerts: "no",
@@ -32,9 +37,7 @@ export async function fetchWeatherApi(
     throw new WeatherProviderError("weather_provider_unavailable", true);
   }
   if (!response.ok) {
-    const body = (await response.json().catch(() => null)) as
-      | { error?: { code?: unknown } }
-      | null;
+    const body = (await response.json().catch(() => null)) as { error?: { code?: unknown } } | null;
     const code = body?.error?.code;
     // A monthly quota/plan restriction is not bypassed with another credential.
     const fallbackEligible =
@@ -43,5 +46,10 @@ export async function fetchWeatherApi(
       (response.status === 401 && code === 2006);
     throw new WeatherProviderError("weather_provider_unavailable", fallbackEligible);
   }
-  return normalizeWeather((await response.json()) as WeatherApiResponse);
+  return normalizeWeather(
+    (await response.json()) as WeatherApiResponse,
+    Math.floor(Date.now() / 1000),
+    capital.city,
+    capital.timezone,
+  );
 }

@@ -35,8 +35,10 @@ export function WeatherIcon({
   return <Icon className={className} aria-hidden />;
 }
 
-export async function loadWeather(): Promise<WeatherSnapshot> {
-  const response = await fetch("/api/public/tempo", { headers: { Accept: "application/json" } });
+export async function loadWeather(uf = "SP"): Promise<WeatherSnapshot> {
+  const response = await fetch(`/api/public/tempo?uf=${encodeURIComponent(uf)}`, {
+    headers: { Accept: "application/json" },
+  });
   if (!response.ok) {
     const result = (await response.json().catch(() => ({}))) as { error?: string };
     throw new Error(

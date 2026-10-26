@@ -20,8 +20,8 @@ export type WeatherDay = {
 };
 
 export type WeatherSnapshot = {
-  city: "São Paulo";
-  timezone: "America/Sao_Paulo";
+  city: string;
+  timezone: string;
   tempC: number;
   feelsLikeC: number;
   humidity: number;
@@ -122,6 +122,8 @@ const rawSchema = z.object({
 export function normalizeWeather(
   input: unknown,
   nowEpochSeconds = Math.floor(Date.now() / 1000),
+  city = "São Paulo",
+  timezone = "America/Sao_Paulo",
 ): WeatherSnapshot {
   const raw = rawSchema.parse(input);
   if (!raw.current || !raw.forecast?.forecastday?.length || !Number.isFinite(raw.current.temp_c)) {
@@ -147,8 +149,8 @@ export function normalizeWeather(
     label: item.day.condition.text,
   }));
   return {
-    city: "São Paulo",
-    timezone: "America/Sao_Paulo",
+    city,
+    timezone,
     tempC: raw.current.temp_c,
     feelsLikeC: raw.current.feelslike_c,
     humidity: raw.current.humidity,
