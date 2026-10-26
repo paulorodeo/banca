@@ -14,9 +14,9 @@ export const rascunhoExposicaoDadosLinkedin = {
   titulo:
     "Perfil associado a Dhenis Martins dos Santos divulga nota fiscal com dados pessoais em discussão no LinkedIn",
   resumo:
-    "Perfil associado a Dhenis Martins dos Santos publicou uma nota fiscal contendo CPF e endereço de Paulo Helfstein durante uma discussão no LinkedIn. A reportagem examina a cronologia documentada e as questões de privacidade decorrentes da exposição.",
+    "Perfil associado a Dhenis Martins dos Santos, que se apresenta como analista júnior de perícia digital, publicou nota fiscal com CPF e endereço de Paulo Helfstein durante discussão no LinkedIn. Em comentário posterior, classificou a Justiça brasileira como 'desprezível' e fez referência a ela como uma 'piada'. O episódio levanta questionamentos sobre privacidade e proteção de dados pessoais.",
   linhaFina:
-    "Perfil associado a Dhenis Martins dos Santos publicou uma nota fiscal contendo CPF e endereço de Paulo Helfstein durante uma discussão no LinkedIn. A origem do documento e as circunstâncias de sua obtenção ainda dependem de verificação independente.",
+    "Perfil associado a Dhenis Martins dos Santos, que se apresenta como analista júnior de perícia digital, publicou nota fiscal com CPF e endereço de Paulo Helfstein durante discussão no LinkedIn. Em comentário posterior, classificou a Justiça brasileira como 'desprezível' e fez referência a ela como uma 'piada'. O episódio levanta questionamentos sobre privacidade e proteção de dados pessoais.",
   manchetesAlternativas: [
     "Dhenis Martins dos Santos: publicação de nota fiscal com CPF e endereço levanta debate sobre privacidade no LinkedIn",
     "Discussão sobre perícia digital termina com exposição de documento fiscal por perfil associado a Dhenis Martins dos Santos",
