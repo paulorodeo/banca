@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { NewsImage } from "@/components/site/news-image";
 import { ExternalNewsCard } from "@/components/site/external-news-card";
+import { AtlasIndicatorPanel } from "@/components/site/atlas-indicator-panel";
 import { readExternalNews } from "@/features/external-news/external-news.functions";
 import type { ExternalNewsCardItem } from "@/features/external-news/query.server";
 import { loadWeather, useWeather, WeatherIcon } from "@/components/site/weather-ticker";
@@ -28,6 +29,7 @@ import {
 import { WEATHER_CAPITALS } from "@/content/local/weather-capitals";
 import { filterAtlasStories } from "@/content/local/brasil-atlas-model";
 import type { AtlasEditorialItem, AtlasLayer } from "@/content/atlas.functions";
+import { defaultPanelTab, panelTabs, type AtlasPanelTab } from "@/content/atlas-panel-tabs";
 import type { AtlasRoadDataset } from "@/content/local/atlas-roads.types";
 import {
   BRAZIL_POPULATION_TOTAL,
@@ -60,7 +62,6 @@ const REGION_SLUG: Record<(typeof BRASIL_REGIONS)[number], string> = {
   Sul: "sul",
 };
 const localRoadsEnabled = import.meta.env.DEV && import.meta.env.MODE === "development";
-
 const LAYERS: {
   id: AtlasLayer;
   label: string;
@@ -145,10 +146,13 @@ export function BrazilEditorialAtlas({
   const [state, setState] = useState<string | null>(null);
   const [hoveredState, setHoveredState] = useState<string | null>(null);
   const [layer, setLayer] = useState<AtlasLayer>("noticias");
+  const [panelTab, setPanelTab] = useState<AtlasPanelTab>("news");
   const [focusedStoryId, setFocusedStoryId] = useState<string | null>(null);
   const [externalItems, setExternalItems] = useState<ExternalNewsCardItem[]>([]);
   const [roadDataset, setRoadDataset] = useState<AtlasRoadDataset | null>(null);
-  const [roadDatasetStatus, setRoadDatasetStatus] = useState<"idle" | "loading" | "ready" | "error">("idle");
+  const [roadDatasetStatus, setRoadDatasetStatus] = useState<
+    "idle" | "loading" | "ready" | "error"
+  >("idle");
   const [selectedRoad, setSelectedRoad] = useState<string | null>(null);
   const [hoveredRoad, setHoveredRoad] = useState<string | null>(null);
 
@@ -166,14 +170,11 @@ export function BrazilEditorialAtlas({
               : region === "Sul"
                 ? "S"
                 : undefined;
-    const supportsExternalLayer = [
-      "noticias",
-      "justica",
-      "politica",
-      "economia",
-      "agronegocio",
-      "infraestrutura",
-    ].includes(layer);
+    const supportsExternalLayer =
+      panelTab === "news" &&
+      ["noticias", "justica", "politica", "economia", "agronegocio", "infraestrutura"].includes(
+        layer,
+      );
     if (!supportsExternalLayer) {
       setExternalItems([]);
       return () => {
@@ -192,10 +193,16 @@ export function BrazilEditorialAtlas({
     return () => {
       active = false;
     };
-  }, [layer, region, state]);
+  }, [layer, panelTab, region, state]);
 
   useEffect(() => {
-    if (layer !== "rodovias" || !localRoadsEnabled || roadDataset || roadDatasetStatus === "loading") return;
+    if (
+      layer !== "rodovias" ||
+      !localRoadsEnabled ||
+      roadDataset ||
+      roadDatasetStatus === "loading"
+    )
+      return;
     let active = true;
     setRoadDatasetStatus("loading");
     void fetch("/__local/atlas-roads", { headers: { accept: "application/json" } })
@@ -204,7 +211,11 @@ export function BrazilEditorialAtlas({
         return (await response.json()) as AtlasRoadDataset;
       })
       .then((dataset) => {
-        if (!Array.isArray(dataset.roads) || !dataset.roads.length || dataset.productionEligible !== false) {
+        if (
+          !Array.isArray(dataset.roads) ||
+          !dataset.roads.length ||
+          dataset.productionEligible !== false
+        ) {
           throw new Error("O conjunto local de rodovias não passou na validação");
         }
         if (!active) return;
@@ -235,8 +246,28 @@ export function BrazilEditorialAtlas({
   }, [roadDataset]);
 
   const activeLayer = LAYERS.find((item) => item.id === layer)!;
+  const tabs = panelTabs(layer);
+  const activePanelTab = tabs.some((tab) => tab.id === panelTab)
+    ? panelTab
+    : defaultPanelTab(layer);
+  const panelId = `atlas-panel-${variant}`;
+  const tabKeyDown = (event: KeyboardEvent<HTMLButtonElement>, index: number) => {
+    if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
+    event.preventDefault();
+    const next =
+      event.key === "Home"
+        ? 0
+        : event.key === "End"
+          ? tabs.length - 1
+          : (index + (event.key === "ArrowRight" ? 1 : -1) + tabs.length) % tabs.length;
+    const tab = tabs[next];
+    if (tab) {
+      setPanelTab(tab.id);
+      document.getElementById(`${panelId}-tab-${tab.id}`)?.focus();
+    }
+  };
   const displayedStories = useMemo(
-    () => (layer === "clima" ? stories : filterAtlasStories(stories, { uf: state, region, layer })),
+    () => filterAtlasStories(stories, { uf: state, region, layer }),
     [layer, region, state, stories],
   );
   const lead = displayedStories.find((item) => item.id === focusedStoryId) ?? displayedStories[0];
@@ -246,7 +277,7 @@ export function BrazilEditorialAtlas({
     : state
       ? BRASIL_UFS.find((item) => item.uf === state)?.nome
       : (region ?? "Brasil");
-  const layerHasStories = layer === "clima" || stories.some(activeLayer.availableForEditorial);
+  const layerHasStories = stories.some(activeLayer.availableForEditorial);
   const hasSelectedStatePortal = Boolean(state && stories.some((item) => item.ufs.includes(state)));
   const hasSelectedRegionPortal = Boolean(
     region && filterAtlasStories(stories, { region }).length > 0,
@@ -289,36 +320,23 @@ export function BrazilEditorialAtlas({
         <div className="brazil-atlas-grid">
           <aside className="brazil-atlas-layers" aria-label="Camadas editoriais">
             <p className="brazil-atlas-side-label">Camadas</p>
-            {LAYERS.map(({ id, label, icon: Icon, availableForEditorial: hasData, note }) => {
-              const available =
-                id === "rodovias"
-                  ? localRoadsEnabled
-                  : id === "clima" ||
-                    id === "populacao" ||
-                    id === "agronegocio" ||
-                    stories.some(hasData);
+            {LAYERS.map(({ id, label, icon: Icon, note }) => {
               return (
                 <button
                   key={id}
                   type="button"
                   className={`brazil-atlas-layer ${layer === id ? "is-active" : ""}`}
                   aria-pressed={layer === id}
-                  disabled={!available}
-                  title={
-                    available ? note : "Camada identificada; conteúdo editorial ainda indisponível."
-                  }
+                  title={note}
                   onClick={() => {
                     setLayer(id);
+                    setPanelTab(defaultPanelTab(id));
                     setFocusedStoryId(null);
                   }}
                 >
                   <Icon className="size-4 shrink-0" aria-hidden />
                   <span>{label}</span>
-                  {!available ? (
-                    <small>Em breve</small>
-                  ) : (
-                    <ArrowRight className="brazil-atlas-layer-arrow size-3.5" aria-hidden />
-                  )}
+                  <ArrowRight className="brazil-atlas-layer-arrow size-3.5" aria-hidden />
                 </button>
               );
             })}
@@ -347,7 +365,11 @@ export function BrazilEditorialAtlas({
             </nav>
 
             {layer === "rodovias" && roadDataset ? (
-              <div className="brazil-atlas-road-controls" role="group" aria-label="Selecionar rodovia federal">
+              <div
+                className="brazil-atlas-road-controls"
+                role="group"
+                aria-label="Selecionar rodovia federal"
+              >
                 {roadDataset.roads.map((road) => (
                   <button
                     key={road.code}
@@ -364,7 +386,9 @@ export function BrazilEditorialAtlas({
 
             <div className="brazil-atlas-map-column">
               <div className="brazil-atlas-map-status">
-                <span aria-live="polite">{hoveredState ? `Sobrevoando: ${mapLabel}` : `Em foco: ${mapLabel}`}</span>
+                <span aria-live="polite">
+                  {hoveredState ? `Sobrevoando: ${mapLabel}` : `Em foco: ${mapLabel}`}
+                </span>
                 {region || state ? (
                   <button
                     type="button"
@@ -438,12 +462,18 @@ export function BrazilEditorialAtlas({
                   );
                 })}
                 {layer === "rodovias" && roadDataset ? (
-                  <g className="brazil-atlas-roads" aria-label="Traçados geográficos de rodovias federais">
+                  <g
+                    className="brazil-atlas-roads"
+                    aria-label="Traçados geográficos de rodovias federais"
+                  >
                     {[...roadPathsByUf.entries()].map(([roadCode, byUf]) => {
                       const selected = selectedRoad === roadCode;
                       const hovered = hoveredRoad === roadCode;
                       const emphasized = !selectedRoad || selected || hovered;
-                      const selectedRegionUfs = !state && region ? UFS_BY_REGION[region as keyof typeof UFS_BY_REGION] : null;
+                      const selectedRegionUfs =
+                        !state && region
+                          ? UFS_BY_REGION[region as keyof typeof UFS_BY_REGION]
+                          : null;
                       const completePath = [...byUf.values()].flatMap((paths) => paths).join("");
                       return (
                         <g
@@ -453,7 +483,11 @@ export function BrazilEditorialAtlas({
                           onPointerLeave={() => setHoveredRoad(null)}
                         >
                           {[...byUf.entries()].map(([uf, paths]) => {
-                            const geographyActive = state ? state === uf : selectedRegionUfs ? selectedRegionUfs.includes(uf) : true;
+                            const geographyActive = state
+                              ? state === uf
+                              : selectedRegionUfs
+                                ? selectedRegionUfs.includes(uf)
+                                : true;
                             return (
                               <path
                                 key={`${roadCode}-${uf}`}
@@ -485,17 +519,19 @@ export function BrazilEditorialAtlas({
                     })}
                   </g>
                 ) : null}
-                {BRASIL_UFS.map((item) => item.label ? (
-                  <text
-                    key={`label-${item.uf}`}
-                    x={item.label[0]}
-                    y={item.label[1]}
-                    className={`brazil-atlas-state-label ${state === item.uf || (!state && region === item.regiao) ? "is-in-region" : ""}`}
-                    aria-hidden="true"
-                  >
-                    {item.uf}
-                  </text>
-                ) : null)}
+                {BRASIL_UFS.map((item) =>
+                  item.label ? (
+                    <text
+                      key={`label-${item.uf}`}
+                      x={item.label[0]}
+                      y={item.label[1]}
+                      className={`brazil-atlas-state-label ${state === item.uf || (!state && region === item.regiao) ? "is-in-region" : ""}`}
+                      aria-hidden="true"
+                    >
+                      {item.uf}
+                    </text>
+                  ) : null,
+                )}
                 {layer === "clima" ? (
                   <circle
                     cx={SAO_PAULO_CAPITAL_PONTO[0]}
@@ -510,7 +546,9 @@ export function BrazilEditorialAtlas({
                 <MapPinned className="size-4 text-cyan-300" aria-hidden />
                 <span>
                   {layer === "rodovias"
-                    ? "Traçados da malha federal sobre a geometria estadual. Selecione uma BR no mapa ou nos controles."
+                    ? roadDataset
+                      ? "Traçados da malha federal sobre a geometria estadual. Selecione uma BR no mapa ou nos controles."
+                      : "Dados históricos de rodovias permanecem bloqueados fora do desenvolvimento enquanto os direitos de uso não forem validados."
                     : "Selecione um estado para filtrar o painel editorial. O mapa representa limites estaduais."}
                 </span>
               </div>
@@ -524,7 +562,8 @@ export function BrazilEditorialAtlas({
           </div>
 
           <aside className="brazil-atlas-news" aria-label="Destaques editoriais">
-            {import.meta.env["VITE_ATLAS_DEMO"] === "true" &&
+            {activePanelTab === "news" &&
+            import.meta.env["VITE_ATLAS_DEMO"] === "true" &&
             (import.meta.env.DEV || import.meta.env.MODE === "staging") ? (
               <p className="brazil-atlas-demo-banner">
                 Conteúdo demonstrativo · itens fictícios identificados
@@ -542,134 +581,171 @@ export function BrazilEditorialAtlas({
               </span>
               <span>{layer === "clima" ? "Clima" : activeLayer.label}</span>
             </div>
-            {layer === "rodovias" ? (
-              <RoadwayPanel
-                dataset={roadDataset}
-                status={roadDatasetStatus}
-                selectedRoad={selectedRoad}
-                selectedState={state}
-                region={region}
-                stories={displayedStories}
-              />
-            ) : layer === "clima" ? (
-              <WeatherPanel state={state} region={region} onSelectState={selectState} />
-            ) : layer === "populacao" ? (
-              <PopulationPanel state={state} region={region} onSelectState={selectState} />
-            ) : layer === "agronegocio" ? (
-              <AgribusinessPanel
-                state={state}
-                region={region}
-                stories={displayedStories}
-                onSelectState={selectState}
-              />
-            ) : lead ? (
-              <>
-                <StoryLink
-                  item={lead}
-                  className={`brazil-atlas-lead ${lead.isDemo ? "is-demo" : ""}`}
+            <div
+              className="brazil-atlas-panel-tabs"
+              role="tablist"
+              aria-label={`Painel ${activeLayer.label}`}
+            >
+              {tabs.map((tab, index) => (
+                <button
+                  key={tab.id}
+                  id={`${panelId}-tab-${tab.id}`}
+                  type="button"
+                  role="tab"
+                  aria-selected={activePanelTab === tab.id}
+                  aria-controls={`${panelId}-content`}
+                  tabIndex={activePanelTab === tab.id ? 0 : -1}
+                  onClick={() => setPanelTab(tab.id)}
+                  onKeyDown={(event) => tabKeyDown(event, index)}
                 >
-                  <div className="brazil-atlas-lead-copy">
-                    {lead.isDemo ? (
-                      <span className="brazil-atlas-demo-label">Conteúdo demonstrativo</span>
-                    ) : null}
-                    <p className="brazil-atlas-category">{lead.categoria}</p>
-                    <h3>{lead.titulo}</h3>
-                    <p className="brazil-atlas-summary">{lead.resumo}</p>
-                    {lead.slug ? (
-                      <span className="brazil-atlas-read-link">
-                        Ler reportagem <ArrowRight className="size-4" aria-hidden />
-                      </span>
-                    ) : null}
-                  </div>
-                  <div className="brazil-atlas-lead-image">
-                    <NewsImage
-                      {...(lead.imagem ? { image: lead.imagem } : {})}
-                      className="size-full object-cover"
-                    />
-                  </div>
-                </StoryLink>
-                <div className="brazil-atlas-secondary" aria-label="Notícias secundárias">
-                  {secondary.map((item) => (
-                    <button
-                      key={item.id}
-                      type="button"
-                      className="brazil-atlas-secondary-item"
-                      onClick={() => setFocusedStoryId(item.id)}
+                  {tab.label}
+                </button>
+              ))}
+            </div>
+            <div
+              id={`${panelId}-content`}
+              role="tabpanel"
+              aria-labelledby={`${panelId}-tab-${activePanelTab}`}
+              tabIndex={0}
+            >
+              {activePanelTab === "news" ? (
+                lead ? (
+                  <>
+                    <StoryLink
+                      item={lead}
+                      className={`brazil-atlas-lead ${lead.isDemo ? "is-demo" : ""}`}
                     >
-                      <span>
-                        {item.isDemo ? <small>Demonstrativa · </small> : null}
-                        {item.categoria}
-                      </span>
-                      <strong>{item.titulo}</strong>
-                      <ArrowRight className="size-4 shrink-0" aria-hidden />
-                    </button>
+                      <div className="brazil-atlas-lead-copy">
+                        {lead.isDemo ? (
+                          <span className="brazil-atlas-demo-label">Conteúdo demonstrativo</span>
+                        ) : null}
+                        <p className="brazil-atlas-category">{lead.categoria}</p>
+                        <h3>{lead.titulo}</h3>
+                        <p className="brazil-atlas-summary">{lead.resumo}</p>
+                        {lead.slug ? (
+                          <span className="brazil-atlas-read-link">
+                            Ler reportagem <ArrowRight className="size-4" aria-hidden />
+                          </span>
+                        ) : null}
+                      </div>
+                      <div className="brazil-atlas-lead-image">
+                        <NewsImage
+                          {...(lead.imagem ? { image: lead.imagem } : {})}
+                          className="size-full object-cover"
+                        />
+                      </div>
+                    </StoryLink>
+                    <div className="brazil-atlas-secondary" aria-label="Notícias secundárias">
+                      {secondary.map((item) => (
+                        <button
+                          key={item.id}
+                          type="button"
+                          className="brazil-atlas-secondary-item"
+                          onClick={() => setFocusedStoryId(item.id)}
+                        >
+                          <span>
+                            {item.isDemo ? <small>Demonstrativa · </small> : null}
+                            {item.categoria}
+                          </span>
+                          <strong>{item.titulo}</strong>
+                          <ArrowRight className="size-4 shrink-0" aria-hidden />
+                        </button>
+                      ))}
+                    </div>
+                    {displayedStories.every((item) => item.isDemo) ? (
+                      <p className="brazil-atlas-demo-disclaimer">
+                        As manchetes exibidas são fictícias e servem apenas à demonstração dos
+                        filtros. Não correspondem a reportagens publicadas.
+                      </p>
+                    ) : null}
+                    <div className="brazil-atlas-news-footer">
+                      <Link to="/noticias" className="brazil-atlas-all-news">
+                        Ver editoria de Notícias <ArrowRight className="size-4" aria-hidden />
+                      </Link>
+                      {state && hasSelectedStatePortal ? (
+                        <Link
+                          to="/noticias/estados/$uf"
+                          params={{ uf: state.toLowerCase() }}
+                          className="brazil-atlas-all-news"
+                        >
+                          Portal de {BRASIL_UFS.find((item) => item.uf === state)?.nome}{" "}
+                          <ArrowRight className="size-4" aria-hidden />
+                        </Link>
+                      ) : region && hasSelectedRegionPortal ? (
+                        <Link
+                          to="/noticias/regioes/$slug"
+                          params={{ slug: REGION_SLUG[region as keyof typeof REGION_SLUG] }}
+                          className="brazil-atlas-all-news"
+                        >
+                          Portal do {region} <ArrowRight className="size-4" aria-hidden />
+                        </Link>
+                      ) : state ? (
+                        <span>Portal estadual ainda não disponível</span>
+                      ) : null}
+                    </div>
+                  </>
+                ) : (
+                  <div className="brazil-atlas-empty">
+                    <Newspaper className="size-7 text-gold" aria-hidden />
+                    <h3>Nenhuma reportagem nesta seleção</h3>
+                    <p>
+                      A Banca Paulista ainda não tem cobertura publicada para{" "}
+                      {state
+                        ? BRASIL_UFS.find((item) => item.uf === state)?.nome
+                        : (region ?? "este recorte")}{" "}
+                      nesta camada.
+                    </p>
+                    <Link to="/noticias">
+                      Ver todas as notícias <ArrowRight className="size-4" aria-hidden />
+                    </Link>
+                  </div>
+                )
+              ) : activePanelTab === "markets" ? (
+                <div className="brazil-atlas-empty">
+                  <h3>Mercados financeiros</h3>
+                  <p>
+                    Cotações de mercado só serão exibidas após validar licenças e direitos de
+                    redistribuição da fonte.
+                  </p>
+                </div>
+              ) : layer === "rodovias" ? (
+                <RoadwayPanel
+                  dataset={roadDataset}
+                  status={roadDatasetStatus}
+                  selectedRoad={selectedRoad}
+                  selectedState={state}
+                  region={region}
+                />
+              ) : layer === "clima" ? (
+                <WeatherPanel state={state} region={region} onSelectState={selectState} />
+              ) : layer === "populacao" ? (
+                <PopulationPanel state={state} region={region} onSelectState={selectState} />
+              ) : layer === "agronegocio" ? (
+                <AgribusinessPanel state={state} region={region} onSelectState={selectState} />
+              ) : layer === "justica" ||
+                layer === "politica" ||
+                layer === "economia" ||
+                layer === "infraestrutura" ? (
+                <AtlasIndicatorPanel layer={layer} uf={state} region={region} />
+              ) : null}
+              {activePanelTab === "news" && externalItems.length ? (
+                <div
+                  className="brazil-atlas-external-news"
+                  aria-label="Referências de veículos externos"
+                >
+                  <p>Referências externas · curadoria editorial</p>
+                  {externalItems.map((item) => (
+                    <ExternalNewsCard key={item.id} item={item} compact />
                   ))}
                 </div>
-                {displayedStories.every((item) => item.isDemo) ? (
-                  <p className="brazil-atlas-demo-disclaimer">
-                    As manchetes exibidas são fictícias e servem apenas à demonstração dos filtros.
-                    Não correspondem a reportagens publicadas.
-                  </p>
-                ) : null}
-                <div className="brazil-atlas-news-footer">
-                  <Link to="/noticias" className="brazil-atlas-all-news">
-                    Ver editoria de Notícias <ArrowRight className="size-4" aria-hidden />
-                  </Link>
-                  {state && hasSelectedStatePortal ? (
-                    <Link
-                      to="/noticias/estados/$uf"
-                      params={{ uf: state.toLowerCase() }}
-                      className="brazil-atlas-all-news"
-                    >
-                      Portal de {BRASIL_UFS.find((item) => item.uf === state)?.nome}{" "}
-                      <ArrowRight className="size-4" aria-hidden />
-                    </Link>
-                  ) : region && hasSelectedRegionPortal ? (
-                    <Link
-                      to="/noticias/regioes/$slug"
-                      params={{ slug: REGION_SLUG[region as keyof typeof REGION_SLUG] }}
-                      className="brazil-atlas-all-news"
-                    >
-                      Portal do {region} <ArrowRight className="size-4" aria-hidden />
-                    </Link>
-                  ) : state ? (
-                    <span>Portal estadual ainda não disponível</span>
-                  ) : null}
-                </div>
-              </>
-            ) : (
-              <div className="brazil-atlas-empty">
-                <Newspaper className="size-7 text-gold" aria-hidden />
-                <h3>Nenhuma reportagem nesta seleção</h3>
-                <p>
-                  A Banca Paulista ainda não tem cobertura publicada para{" "}
-                  {state
-                    ? BRASIL_UFS.find((item) => item.uf === state)?.nome
-                    : (region ?? "este recorte")}{" "}
-                  nesta camada.
+              ) : null}
+              {activePanelTab === "news" && layerHasStories && displayedStories.length > 0 ? (
+                <p className="brazil-atlas-count">
+                  {displayedStories.length}{" "}
+                  {displayedStories.length === 1 ? "conteúdo" : "conteúdos"} neste recorte
                 </p>
-                <Link to="/noticias">
-                  Ver todas as notícias <ArrowRight className="size-4" aria-hidden />
-                </Link>
-              </div>
-            )}
-            {externalItems.length ? (
-              <div
-                className="brazil-atlas-external-news"
-                aria-label="Referências de veículos externos"
-              >
-                <p>Referências externas · curadoria editorial</p>
-                {externalItems.map((item) => (
-                  <ExternalNewsCard key={item.id} item={item} compact />
-                ))}
-              </div>
-            ) : null}
-            {layerHasStories && layer !== "clima" && displayedStories.length > 0 ? (
-              <p className="brazil-atlas-count">
-                {displayedStories.length} {displayedStories.length === 1 ? "conteúdo" : "conteúdos"}{" "}
-                neste recorte
-              </p>
-            ) : null}
+              ) : null}
+            </div>
           </aside>
         </div>
         <p className="brazil-atlas-credit">
@@ -780,28 +856,41 @@ function RoadwayPanel({
   selectedRoad,
   selectedState,
   region,
-  stories,
 }: {
   dataset: AtlasRoadDataset | null;
   status: "idle" | "loading" | "ready" | "error";
   selectedRoad: string | null;
   selectedState: string | null;
   region: string | null;
-  stories: AtlasEditorialItem[];
 }) {
   const road = dataset?.roads.find((item) => item.code === selectedRoad);
-  const roadStories = stories.filter((story) => story.roadCodes?.includes(selectedRoad ?? ""));
   const selectedUf = selectedState ? BRASIL_UFS.find((item) => item.uf === selectedState) : null;
-  const relevantSegments = road?.segments.filter((segment) =>
-    selectedState
-      ? segment.uf === selectedState
-      : region
-        ? UFS_BY_REGION[region as keyof typeof UFS_BY_REGION].includes(segment.uf)
-        : true,
-  ) ?? [];
+  const relevantSegments =
+    road?.segments.filter((segment) =>
+      selectedState
+        ? segment.uf === selectedState
+        : region
+          ? UFS_BY_REGION[region as keyof typeof UFS_BY_REGION].includes(segment.uf)
+          : true,
+    ) ?? [];
 
+  if (!localRoadsEnabled) {
+    return (
+      <div className="brazil-atlas-road-panel">
+        <h3>Dados de rodovias bloqueados</h3>
+        <p>
+          O traçado histórico SNV 202201B permanece restrito ao desenvolvimento; direitos de uso e
+          versão vigente ainda precisam ser validados.
+        </p>
+      </div>
+    );
+  }
   if (status === "loading" || status === "idle") {
-    return <div className="brazil-atlas-road-panel" role="status">Carregando traçados oficiais locais…</div>;
+    return (
+      <div className="brazil-atlas-road-panel" role="status">
+        Carregando traçados oficiais locais…
+      </div>
+    );
   }
   if (status === "error" || !dataset) {
     return (
@@ -814,24 +903,25 @@ function RoadwayPanel({
 
   return (
     <div className="brazil-atlas-road-panel">
-      <p className="brazil-atlas-road-kicker"><RouteIcon className="size-4" aria-hidden /> Malha federal · SNV {dataset.version}</p>
+      <p className="brazil-atlas-road-kicker">
+        <RouteIcon className="size-4" aria-hidden /> Malha federal · SNV {dataset.version}
+      </p>
       {road ? (
         <>
           <h3>{road.code}</h3>
           <p className="brazil-atlas-road-states">
-            {selectedUf ? `${selectedUf.nome} (${selectedUf.uf}) · ${relevantSegments.length} trechos nesta seleção` : `${road.ufs.length} UFs · ${road.ufs.join(", ")}`}
+            {selectedUf
+              ? `${selectedUf.nome} (${selectedUf.uf}) · ${relevantSegments.length} trechos nesta seleção`
+              : `${road.ufs.length} UFs · ${road.ufs.join(", ")}`}
           </p>
-          <div className="brazil-atlas-road-news">
-            <strong>Notícias relacionadas</strong>
-            {roadStories.length ? roadStories.slice(0, 3).map((story) => (
-              story.slug ? <Link key={story.id} to="/noticias/$slug" params={{ slug: story.slug }}>{story.titulo}</Link> : <p key={story.id}>{story.titulo}</p>
-            )) : <p>Ainda não há reportagens relacionadas a esta rodovia.</p>}
-          </div>
         </>
       ) : (
         <>
           <h3>Rodovias federais</h3>
-          <p>Selecione uma linha no mapa ou uma BR nos controles para destacar todos os trechos disponíveis.</p>
+          <p>
+            Selecione uma linha no mapa ou uma BR nos controles para destacar todos os trechos
+            disponíveis.
+          </p>
         </>
       )}
       <small>{dataset.attribution}</small>
@@ -842,12 +932,10 @@ function RoadwayPanel({
 function AgribusinessPanel({
   state,
   region,
-  stories,
   onSelectState,
 }: {
   state: string | null;
   region: string | null;
-  stories: AtlasEditorialItem[];
   onSelectState: (uf: string) => void;
 }) {
   const selected = BRASIL_UFS.find((item) => item.uf === state);
@@ -862,7 +950,6 @@ function AgribusinessPanel({
     (sum, item) => sum + (GRAIN_PRODUCTION_BY_UF[item.uf] ?? 0),
     0,
   );
-  const headlines = stories.slice(0, 3);
   return (
     <div className="brazil-atlas-population-card">
       <p className="brazil-atlas-weather-location">
@@ -930,24 +1017,6 @@ function AgribusinessPanel({
       >
         Fonte: {GRAIN_SOURCE} ↗
       </a>
-      <div className="brazil-atlas-agri-headlines" aria-label="Reportagens sobre agronegócio">
-        <strong>Reportagens relacionadas</strong>
-        {headlines.length ? (
-          headlines.map((item) =>
-            item.slug ? (
-              <Link key={item.id} to="/noticias/$slug" params={{ slug: item.slug }}>
-                {item.titulo}
-              </Link>
-            ) : (
-              <span key={item.id}>
-                <small>Conteúdo demonstrativo</small> {item.titulo}
-              </span>
-            ),
-          )
-        ) : (
-          <p>Não há reportagem relacionada a este recorte.</p>
-        )}
-      </div>
     </div>
   );
 }

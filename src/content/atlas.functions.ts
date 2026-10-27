@@ -1,4 +1,9 @@
 import { createServerFn } from "@tanstack/react-start";
+import { setResponseHeader } from "@tanstack/react-start/server";
+import { z } from "zod";
+import { BRASIL_REGIONS, BRASIL_UFS } from "./local/brasil-ufs";
+import { readIndicators } from "./atlas-indicators.server";
+import type { AtlasIndicatorResult } from "./atlas-indicators.types";
 import { categoriaNoticiaPorId } from "./local/noticia-categorias";
 import { noticias } from "./local/noticias";
 import type { Media } from "./types";
@@ -94,3 +99,22 @@ export const readAtlasEditorial = createServerFn({ method: "GET" }).handler(
     return [...atlasDemoNews, ...published];
   },
 );
+
+const atlasIndicatorQuery = z
+  .object({
+    layer: z.enum(["justica", "politica", "economia", "infraestrutura"]),
+    uf: z.enum(BRASIL_UFS.map((item) => item.uf) as [string, ...string[]]).optional(),
+    region: z.enum(BRASIL_REGIONS).optional(),
+  })
+  .refine((value) => !(value.uf && value.region), "Informe UF ou região, não ambos.");
+
+export const readAtlasIndicators = createServerFn({ method: "GET" })
+  .validator((value: unknown) => atlasIndicatorQuery.parse(value))
+  .handler(async ({ data }): Promise<AtlasIndicatorResult> => {
+    setResponseHeader("Cache-Control", "no-store");
+    return readIndicators({
+      layer: data.layer,
+      ...(data.uf ? { uf: data.uf } : {}),
+      ...(data.region ? { region: data.region } : {}),
+    });
+  });

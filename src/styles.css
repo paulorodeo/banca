@@ -2006,6 +2006,76 @@ nav[aria-label="Trilha de navegação"] a {
   color: rgba(230, 239, 246, 0.58);
   text-align: right;
 }
+.brazil-atlas-panel-tabs {
+  display: flex;
+  gap: 0.35rem;
+  padding: 0 0.8rem 0.55rem;
+  border-bottom: 1px solid rgba(178, 204, 221, 0.15);
+}
+.brazil-atlas-panel-tabs button {
+  min-height: 2rem;
+  padding: 0.35rem 0.65rem;
+  border: 1px solid transparent;
+  border-radius: 0.3rem;
+  color: rgba(228, 237, 244, 0.68);
+  background: transparent;
+  font-size: 0.64rem;
+  font-weight: 700;
+}
+.brazil-atlas-panel-tabs button[aria-selected="true"] {
+  border-color: rgba(223, 189, 112, 0.4);
+  color: #f0d389;
+  background: rgba(223, 189, 112, 0.1);
+}
+.brazil-atlas-panel-tabs button:focus-visible {
+  outline: 2px solid #dfbd70;
+  outline-offset: 2px;
+}
+.brazil-atlas-indicators {
+  padding: 0.85rem 1rem;
+}
+.brazil-atlas-indicator-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.55rem;
+}
+.brazil-atlas-indicator-card {
+  min-width: 0;
+  padding: 0.7rem;
+  border: 1px solid rgba(135, 180, 211, 0.2);
+  border-radius: 0.45rem;
+  background: rgba(2, 19, 35, 0.42);
+}
+.brazil-atlas-indicator-card > span {
+  display: block;
+  color: rgba(233, 240, 246, 0.73);
+  font-size: 0.62rem;
+}
+.brazil-atlas-indicator-card > strong {
+  display: block;
+  margin-top: 0.3rem;
+  color: #fff;
+  font-size: 1.12rem;
+}
+.brazil-atlas-indicator-card > strong small {
+  color: #f0d389;
+  font-size: 0.63rem;
+  font-weight: 500;
+}
+.brazil-atlas-indicator-card p,
+.brazil-atlas-indicator-card a,
+.brazil-atlas-indicator-timestamp,
+.brazil-atlas-indicator-status {
+  margin: 0.3rem 0 0;
+  color: rgba(225, 236, 245, 0.55);
+  font-size: 0.55rem;
+  line-height: 1.4;
+}
+.brazil-atlas-indicator-card a { display: block; color: #e8cc82; }
+.brazil-atlas-indicator-card .is-stale { display: block; margin-top: 0.3rem; color: #f2d48b; }
+.brazil-atlas-indicator-timestamp { text-align: right; }
+.brazil-atlas-indicator-status { margin: 0 0 0.55rem; color: #f2d48b; }
+[role="tabpanel"]:focus-visible { outline: 2px solid rgba(223, 189, 112, 0.55); outline-offset: -2px; }
 .brazil-atlas-lead {
   display: block;
   padding: 0.5rem 1rem 0.8rem;
@@ -2703,6 +2773,7 @@ nav[aria-label="Trilha de navegação"] a {
     align-items: flex-start;
     flex-direction: column;
   }
+  .brazil-atlas-indicator-grid { grid-template-columns: 1fr; }
 }
 @media (prefers-reduced-motion: reduce) {
   .brazil-atlas-regions button,
