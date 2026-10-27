@@ -10,6 +10,19 @@
 /brand/*
   Cache-Control: public, max-age=2592000, stale-while-revalidate=86400
 
+/site.webmanifest
+  Content-Type: application/manifest+json; charset=utf-8
+  Cache-Control: public, max-age=3600, must-revalidate
+
+/sw.js
+  Content-Type: application/javascript; charset=utf-8
+  Cache-Control: no-cache, no-store, must-revalidate
+  Service-Worker-Allowed: /
+
+/offline.html
+  Content-Type: text/html; charset=utf-8
+  Cache-Control: no-cache
+
 # Static Assets não passa pelo middleware SSR. Preserve a política de
 # indexação do ambiente de homologação também para arquivos públicos.
 https://banca.paulista.workers.dev/*

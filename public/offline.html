@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#101b2b" />
+    <title>Sem conexão · Banca Paulista</title>
+    <style>
+      :root { color-scheme: light; font-family: system-ui, sans-serif; background: #f4f1eb; color: #101b2b; }
+      * { box-sizing: border-box; }
+      body { min-height: 100vh; margin: 0; display: grid; place-items: center; padding: 1.5rem; }
+      main { width: min(34rem, 100%); border-top: 4px solid #b48a46; background: white; padding: clamp(2rem, 7vw, 4rem); box-shadow: 0 1.5rem 4rem rgba(16, 27, 43, 0.12); text-align: center; }
+      img { width: 4.5rem; height: 4.5rem; border-radius: 1rem; }
+      h1 { margin: 1.25rem 0 0; font-family: Georgia, serif; font-size: clamp(2rem, 8vw, 3rem); }
+      h2 { margin: 1rem 0 0; font-size: 1.1rem; }
+      p { margin: 0.8rem auto 0; max-width: 27rem; line-height: 1.65; color: #465463; }
+      button { margin-top: 1.75rem; border: 0; border-radius: 0.35rem; background: #101b2b; color: white; padding: 0.8rem 1.2rem; font: inherit; font-weight: 700; cursor: pointer; }
+      button:hover { background: #1b3049; }
+      button:focus-visible { outline: 3px solid #b48a46; outline-offset: 3px; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <img src="/icon-192.png" alt="" width="72" height="72" />
+      <h1>Banca Paulista</h1>
+      <h2>Você está sem conexão com a internet.</h2>
+      <p>Acompanhe nossas notícias, informações jurídicas e o Atlas Brasil quando a conexão estiver disponível.</p>
+      <button type="button" onclick="window.location.reload()">Tentar novamente</button>
+    </main>
+  </body>
+</html>

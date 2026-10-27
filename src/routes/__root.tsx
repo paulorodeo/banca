@@ -23,6 +23,7 @@ import { organizationSchema } from "@/lib/seo";
 import { MiniRadioPlayer } from "@/features/radio/components/MiniRadioPlayer";
 import { RadioProvider } from "@/features/radio/components/RadioProvider";
 import { AdSenseProvider } from "@/components/ads/AdSenseProvider";
+import { PwaManager } from "@/components/pwa/PwaManager";
 
 function NotFoundComponent() {
   return (
@@ -88,6 +89,10 @@ export const Route = createRootRouteWithContext<{
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
+      { name: "theme-color", content: "#101B2B" },
+      { name: "apple-mobile-web-app-capable", content: "yes" },
+      { name: "apple-mobile-web-app-status-bar-style", content: "black-translucent" },
+      { name: "apple-mobile-web-app-title", content: "Banca Paulista" },
       { title: editorialIdentity.name },
       {
         name: "description",
@@ -190,6 +195,7 @@ function RootComponent() {
             <SiteFooter />
           </div>
           <MiniRadioPlayer />
+          <PwaManager />
         </RadioProvider>
       </WeatherProvider>
     </AdSenseProvider>

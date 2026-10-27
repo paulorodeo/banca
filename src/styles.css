@@ -3596,6 +3596,58 @@ nav[aria-label="Trilha de navegação"] a {
 .atlas-portal-hero-ad .adsense-live-label {
   color: rgba(243, 246, 249, 0.62);
 }
+.pwa-install-card {
+  position: fixed;
+  right: 1rem;
+  bottom: 5.75rem;
+  z-index: 55;
+  width: min(23rem, calc(100vw - 2rem));
+  border: 1px solid rgba(180, 138, 70, 0.5);
+  border-radius: 0.5rem;
+  background: #101b2b;
+  padding: 1rem;
+  color: #f4f1eb;
+  box-shadow: 0 1rem 3rem rgba(4, 12, 20, 0.28);
+}
+.pwa-install-card > p {
+  font-family: Georgia, serif;
+  font-size: 1.08rem;
+  font-weight: 700;
+}
+.pwa-install-card > span {
+  display: block;
+  margin-top: 0.4rem;
+  color: rgba(244, 241, 235, 0.78);
+  font-size: 0.78rem;
+  line-height: 1.55;
+}
+.pwa-install-card > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.8rem;
+}
+.pwa-install-card button {
+  border-radius: 0.3rem;
+  padding: 0.55rem 0.75rem;
+  font-size: 0.72rem;
+  font-weight: 750;
+}
+.pwa-install-primary {
+  background: #c9a35c;
+  color: #101b2b;
+}
+.pwa-install-dismiss {
+  border: 1px solid rgba(244, 241, 235, 0.25);
+  color: #f4f1eb;
+}
+@media (max-width: 640px) {
+  .pwa-install-card {
+    right: 0.75rem;
+    bottom: 5.25rem;
+    width: calc(100vw - 1.5rem);
+  }
+}
 @media (max-width: 760px) {
   .atlas-portal-hero-grid {
     grid-template-columns: minmax(0, 1fr);
