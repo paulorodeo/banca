@@ -17,28 +17,32 @@ export function runWithStagingLock(command: string[], lockPath = defaultLockPath
   return result.status ?? 1;
 }
 
+export function parseLockInvocation(args: string[], fallbackLockPath = defaultLockPath()) {
+  let index = 0;
+  let lockPath = fallbackLockPath;
+  if (args[index] === "--lock-path") {
+    lockPath = args[index + 1] ?? "";
+    if (!lockPath) throw new Error("A lock path is required after --lock-path");
+    index += 2;
+  }
+  if (args[index] !== "--run") throw new Error("Expected --run before the command");
+  const command = args.slice(index + 1);
+  if (command.length === 0) throw new Error("A command is required after --run");
+  return { command, lockPath };
+}
+
 function defaultLockPath() {
   return `${tmpdir()}/banca-staging-deploy-${process.getuid?.() ?? "user"}.lock`;
 }
 
 if (import.meta.main) {
-  const args = process.argv.slice(2);
-  const delimiter = args.indexOf("--");
-  if (delimiter < 0 || delimiter === args.length - 1) {
+  try {
+    const { command, lockPath } = parseLockInvocation(process.argv.slice(2));
+    process.exitCode = runWithStagingLock(command, lockPath);
+  } catch (error) {
     console.error(
-      "Uso: bun scripts/with-staging-lock.ts [--lock-path ARQUIVO] -- comando [argumentos]",
+      `Uso: bun scripts/with-staging-lock.ts [--lock-path ARQUIVO] --run comando [argumentos]\n${error instanceof Error ? error.message : error}`,
     );
     process.exitCode = 2;
-  } else {
-    let lockPath = defaultLockPath();
-    const commandArgs: string[] = [];
-    for (let index = 0; index < delimiter; index += 1) {
-      if (args[index] === "--lock-path") {
-        lockPath = args[index + 1] ?? "";
-        index += 1;
-      }
-    }
-    commandArgs.push(...args.slice(delimiter + 1));
-    process.exitCode = runWithStagingLock(commandArgs, lockPath);
   }
 }

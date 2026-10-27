@@ -1,7 +1,7 @@
 import { afterEach, describe, expect, test } from "bun:test";
 import { existsSync, mkdtempSync } from "node:fs";
-import { mkdir, mkdtemp, rm, writeFile } from "node:fs/promises";
-import { join } from "node:path";
+import { chmod, mkdir, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
+import { join, resolve } from "node:path";
 import { tmpdir } from "node:os";
 import { spawn, spawnSync } from "node:child_process";
 import { setTimeout as delay } from "node:timers/promises";
@@ -130,6 +130,76 @@ describe("staging artifact preflight", () => {
     } finally {
       holder.kill("SIGTERM");
     }
+  });
+
+  test("wrapper passes the Bun-safe lock invocation without uploading", async () => {
+    const testDir = await mkdtemp(join(tmpdir(), "banca-staging-wrapper-test-"));
+    roots.push(testDir);
+    const projectRoot = resolve(import.meta.dirname, "..");
+    const packageJson = JSON.parse(await readFile(join(projectRoot, "package.json"), "utf8")) as {
+      scripts: Record<string, string>;
+    };
+    expect(packageJson.scripts["deploy:staging"]).toBe("bash scripts/deploy-staging-locked.sh");
+    const binDir = join(testDir, "bin");
+    const fakeBun = join(binDir, "bun");
+    const invocationLog = join(testDir, "invocations.log");
+    await mkdir(binDir);
+    await writeFile(
+      fakeBun,
+      `#!/usr/bin/env bash
+set -euo pipefail
+if [[ "$1" == "scripts/deploy-staging.ts" && "$2" == "--initial-preflight" ]]; then
+  printf '%s\\n' preflight >> "$STAGING_WRAPPER_LOG"
+  exit 0
+fi
+printf '%s\\n' "$@" >> "$STAGING_WRAPPER_LOG"
+`,
+    );
+    await chmod(fakeBun, 0o755);
+    const result = spawnSync("bash", ["scripts/deploy-staging-locked.sh"], {
+      cwd: projectRoot,
+      encoding: "utf8",
+      env: {
+        ...process.env,
+        PATH: `${binDir}:${process.env.PATH ?? ""}`,
+        STAGING_WRAPPER_LOG: invocationLog,
+      },
+    });
+    expect(result.status).toBe(0);
+    expect(await readFile(invocationLog, "utf8")).toBe(
+      [
+        "preflight",
+        "scripts/with-staging-lock.ts",
+        "--run",
+        "bun",
+        "scripts/deploy-staging.ts",
+        "--locked",
+        "",
+      ].join("\n"),
+    );
+  });
+
+  test("Bun CLI preserves the command and --locked argument under flock", async () => {
+    const testDir = await mkdtemp(join(tmpdir(), "banca-staging-cli-test-"));
+    roots.push(testDir);
+    const lockPath = join(testDir, "deploy.lock");
+    const result = spawnSync(
+      "bun",
+      [
+        "scripts/with-staging-lock.ts",
+        "--lock-path",
+        lockPath,
+        "--run",
+        "bash",
+        "-c",
+        'printf "%s\\n" "$@"',
+        "bash",
+        "--locked",
+      ],
+      { cwd: resolve(import.meta.dirname, ".."), encoding: "utf8" },
+    );
+    expect(result.status).toBe(0);
+    expect(result.stdout.trim()).toBe("--locked");
   });
 
   test("releases the host lock when a child command fails", () => {
