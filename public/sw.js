@@ -1,7 +1,7 @@
 const CACHE_VERSION = "banca-pwa-v1";
 const OFFLINE_CACHE = `${CACHE_VERSION}-offline`;
 const STATIC_CACHE = `${CACHE_VERSION}-static`;
-const OFFLINE_URL = "/offline.html";
+const OFFLINE_URL = "/offline";
 const PRECACHE_URLS = [
   OFFLINE_URL,
   "/icon-192.png",

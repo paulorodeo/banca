@@ -83,6 +83,7 @@ test("service worker limita cache e mantém conteúdo editorial network-first", 
     assert(worker.includes(`"${excluded}"`));
   }
   assert.match(worker, /request\.mode === "navigate"/);
+  assert.match(worker, /const OFFLINE_URL = "\/offline"/);
   assert.match(worker, /fetch\(request\)\.catch\(\(\) => caches\.match\(OFFLINE_URL\)\)/);
   assert.doesNotMatch(worker, /googlesyndication|adsbygoogle/);
 });

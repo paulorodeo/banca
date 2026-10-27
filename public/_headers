@@ -19,7 +19,7 @@
   Cache-Control: no-cache, no-store, must-revalidate
   Service-Worker-Allowed: /
 
-/offline.html
+/offline
   Content-Type: text/html; charset=utf-8
   Cache-Control: no-cache
 
