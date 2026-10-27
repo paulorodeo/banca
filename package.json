@@ -12,6 +12,8 @@
     "format": "prettier --write .",
     "build:staging": "DEPLOYMENT_ENV=staging PUBLIC_SITE_URL=https://banca.paulista.workers.dev VITE_ATLAS_DEMO=true vite build --mode staging",
     "build:production:check": "DEPLOYMENT_ENV=production PUBLIC_SITE_URL=https://bancapaulista.org BP_BUILD_OUTPUT=.output-production bun run build",
+    "roads:artesp:build": "python3 scripts/build-artesp-roads-sp.py",
+    "roads:snv:release": "bun scripts/prepare-snv-roads-release.ts",
     "test:staging-pipeline": "bun test scripts/staging-artifact.test.ts",
     "deploy:staging": "bash scripts/deploy-staging-locked.sh",
     "deploy:production": "bun scripts/check-production-deploy.ts && npx --yes wrangler@4.151.0 deploy --config .output-production/server/wrangler.json --name banca-prod"

@@ -1684,27 +1684,31 @@ nav[aria-label="Trilha de navegação"] a {
 }
 .brazil-atlas-road-controls {
   display: flex;
-  flex-wrap: wrap;
+  align-items: center;
   justify-content: center;
   gap: 0.4rem;
   margin: -0.15rem 0 0.55rem;
 }
-.brazil-atlas-road-controls button {
-  min-height: 1.9rem;
-  padding: 0.25rem 0.7rem;
+.brazil-atlas-road-controls span {
+  color: rgba(226, 238, 248, 0.72);
+  font-size: 0.68rem;
+}
+.brazil-atlas-road-controls select {
+  min-height: 2.1rem;
+  max-width: min(100%, 26rem);
+  padding: 0.3rem 2rem 0.3rem 0.7rem;
   border: 1px solid rgba(82, 207, 245, 0.4);
-  border-radius: 999px;
+  border-radius: 0.55rem;
   color: #c9effa;
   background: rgba(3, 31, 52, 0.88);
   font-size: 0.67rem;
   font-weight: 700;
 }
-.brazil-atlas-road-controls button:hover,
-.brazil-atlas-road-controls button:focus-visible,
-.brazil-atlas-road-controls button.is-active {
+.brazil-atlas-road-controls select:hover,
+.brazil-atlas-road-controls select:focus-visible {
   border-color: #e4c572;
   color: #fff3ce;
-  background: rgba(113, 85, 26, 0.45);
+  background: rgba(3, 31, 52, 0.98);
   outline: none;
   box-shadow: 0 0 10px rgba(80, 211, 255, 0.22);
 }
@@ -2732,14 +2736,13 @@ nav[aria-label="Trilha de navegação"] a {
     display: none;
   }
   .brazil-atlas-road-controls {
-    flex-wrap: nowrap;
+    align-items: stretch;
+    flex-direction: column;
     justify-content: flex-start;
-    overflow-x: auto;
-    padding: 0 0 0.3rem;
-    scrollbar-width: thin;
   }
-  .brazil-atlas-road-controls button {
-    flex: 0 0 auto;
+  .brazil-atlas-road-controls select {
+    width: 100%;
+    max-width: none;
   }
   .brazil-atlas-map-column {
     order: 2;

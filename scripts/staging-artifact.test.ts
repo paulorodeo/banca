@@ -52,6 +52,13 @@ describe("staging artifact preflight", () => {
     ).rejects.toThrow("Artifact commit does not match HEAD");
   });
 
+  test("blocks road data unless both approved datasets retain attribution and source evidence", async () => {
+    const artifact = await createArtifact({ roadRightsApproved: false });
+    await expect(
+      validateStagingArtifact({ buildId: "test-build", commit, outputDir: artifact }),
+    ).rejects.toThrow("Historical road approval is missing");
+  });
+
   test("blocks a wrong Worker or Cloudflare account", async () => {
     const wrongWorker = await createArtifact({ worker: "banca-prod" });
     await expect(
@@ -219,6 +226,7 @@ async function createArtifact(
     artifactCommit?: string;
     worker?: string;
     account?: string;
+    roadRightsApproved?: boolean;
   } = {},
 ) {
   const root = await mkdtemp(join(tmpdir(), "banca-staging-artifact-test-"));
@@ -228,6 +236,42 @@ async function createArtifact(
   const assets = join(root, "public", "assets");
   await mkdir(ssr, { recursive: true });
   await mkdir(assets, { recursive: true });
+  const dataDir = join(root, "public", "data");
+  await mkdir(dataDir, { recursive: true });
+  const rightsStatus = options.roadRightsApproved === false ? "pending" : "approved";
+  await writeFile(
+    join(dataDir, "atlas-roads-snv-202201b.json"),
+    JSON.stringify({
+      id: "dnit-snv-202201b",
+      version: "202201B",
+      scope: "Traçados históricos das cinco BRs.",
+      rightsStatus,
+      productionEligible: true,
+      attribution:
+        "Fonte: DNIT/SNV 202201B, distribuição Ibama/PAMGIA. Base histórica, não vigente.",
+      ownerAuthorization: "Autorização do proprietário da Banca Paulista em 27/10/2026.",
+      roads: Array.from({ length: 5 }, () => ({})),
+    }),
+  );
+  await writeFile(
+    join(dataDir, "atlas-roads-artesp-sp.json"),
+    JSON.stringify({
+      id: "artesp-sp-concession-roads",
+      scope: "Malha concedida em SP; não representa todas as vias.",
+      relationshipNote: "O XLSX e os KMZ são fontes paralelas; não foi presumida junção.",
+      rightsStatus,
+      productionEligible: true,
+      license: "Creative Commons Attribution",
+      termsUrl: "https://dadosabertos.artesp.sp.gov.br/terms",
+      attribution: "ARTESP não endossa este produto.",
+      sources: [{ sha256: "a".repeat(64) }, { sha256: "b".repeat(64) }],
+      tabularSummary: {
+        recordCount: 1,
+        coordinateNote: "Pontos municipais não são eixos rodoviários.",
+      },
+      roads: [{}],
+    }),
+  );
   await writeFile(
     join(root, "public", "_headers"),
     "/*\n  X-Robots-Tag: noindex, nofollow, noarchive, noimageindex\n",

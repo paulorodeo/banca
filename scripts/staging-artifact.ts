@@ -66,16 +66,50 @@ export async function validateStagingArtifact(
   assert.match(fixtureBundle, /isDemo:\s*!0|isDemo:\s*true/);
   assert.match(clientBundle, /Conteúdo demonstrativo/);
   assert.match(clientBundle, /manchetes exibidas são fictícias/);
-  for (const forbiddenRoadMarker of [
-    "atlas-roads-dataset.json",
-    "101AES2005",
-    "1129067",
-    "pamgia.ibama.gov.br",
-  ])
-    assert(
-      !artifactText.toLowerCase().includes(forbiddenRoadMarker.toLowerCase()),
-      `Historical roads artifact marker found: ${forbiddenRoadMarker}`,
-    );
+  assert(
+    !artifactText.includes(".local/atlas-roads-dataset.json"),
+    "Ignored local road build input must not be embedded in the artifact",
+  );
+  const roadsDir = join(publicDir, "data");
+  const historicRoads = JSON.parse(
+    await readFile(join(roadsDir, "atlas-roads-snv-202201b.json"), "utf8"),
+  ) as Record<string, unknown>;
+  assert.equal(historicRoads["id"], "dnit-snv-202201b");
+  assert.equal(historicRoads["version"], "202201B");
+  assert.equal(historicRoads["rightsStatus"], "approved", "Historical road approval is missing");
+  assert.equal(historicRoads["productionEligible"], true);
+  assert.match(String(historicRoads["scope"]), /históric/i);
+  assert.match(
+    String(historicRoads["attribution"]),
+    /DNIT\/SNV 202201B.*Ibama\/PAMGIA.*histórica/is,
+  );
+  assert.match(String(historicRoads["ownerAuthorization"]), /Banca Paulista/);
+  assert(
+    Array.isArray(historicRoads["roads"]) && historicRoads["roads"].length === 5,
+    "Expected the five approved historical federal highways",
+  );
+
+  const artespRoads = JSON.parse(
+    await readFile(join(roadsDir, "atlas-roads-artesp-sp.json"), "utf8"),
+  ) as Record<string, unknown>;
+  assert.equal(artespRoads["id"], "artesp-sp-concession-roads");
+  assert.equal(artespRoads["rightsStatus"], "approved", "ARTESP road approval is missing");
+  assert.equal(artespRoads["productionEligible"], true);
+  assert.match(String(artespRoads["license"]), /Creative Commons Attribution/i);
+  assert.match(String(artespRoads["termsUrl"]), /dadosabertos\.artesp\.sp\.gov\.br\/terms/);
+  assert.match(String(artespRoads["scope"]), /não representa todas as vias/i);
+  assert.match(
+    String(artespRoads["relationshipNote"]),
+    /fontes paralelas.*não foi presumida junção/i,
+  );
+  assert.match(String(artespRoads["attribution"]), /ARTESP.*não endossa/is);
+  const artespSources = artespRoads["sources"] as Array<Record<string, unknown>> | undefined;
+  assert(artespSources && artespSources.length >= 2, "ARTESP source references are missing");
+  assert(artespSources.every((source) => /^[a-f0-9]{64}$/.test(String(source["sha256"]))));
+  const tabularSummary = artespRoads["tabularSummary"] as Record<string, unknown> | undefined;
+  assert(tabularSummary && Number(tabularSummary["recordCount"]) > 0);
+  assert.match(String(tabularSummary["coordinateNote"]), /não são eixos rodoviários/i);
+  assert(Array.isArray(artespRoads["roads"]) && artespRoads["roads"].length > 0);
 
   const headersPolicy = await readFile(join(publicDir, "_headers"), "utf8");
   assert.match(

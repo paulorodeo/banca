@@ -61,7 +61,6 @@ const REGION_SLUG: Record<(typeof BRASIL_REGIONS)[number], string> = {
   Sudeste: "sudeste",
   Sul: "sul",
 };
-const localRoadsEnabled = import.meta.env.DEV && import.meta.env.MODE === "development";
 const LAYERS: {
   id: AtlasLayer;
   label: string;
@@ -149,7 +148,7 @@ export function BrazilEditorialAtlas({
   const [panelTab, setPanelTab] = useState<AtlasPanelTab>("news");
   const [focusedStoryId, setFocusedStoryId] = useState<string | null>(null);
   const [externalItems, setExternalItems] = useState<ExternalNewsCardItem[]>([]);
-  const [roadDataset, setRoadDataset] = useState<AtlasRoadDataset | null>(null);
+  const [roadDatasets, setRoadDatasets] = useState<AtlasRoadDataset[]>([]);
   const [roadDatasetStatus, setRoadDatasetStatus] = useState<
     "idle" | "loading" | "ready" | "error"
   >("idle");
@@ -198,28 +197,38 @@ export function BrazilEditorialAtlas({
   useEffect(() => {
     if (
       layer !== "rodovias" ||
-      !localRoadsEnabled ||
-      roadDataset ||
-      roadDatasetStatus === "loading"
+      roadDatasetStatus === "loading" ||
+      roadDatasetStatus === "ready" ||
+      roadDatasetStatus === "error"
     )
       return;
     let active = true;
     setRoadDatasetStatus("loading");
-    void fetch("/__local/atlas-roads", { headers: { accept: "application/json" } })
-      .then(async (response) => {
-        if (!response.ok) throw new Error(`Dados locais indisponíveis (HTTP ${response.status})`);
-        return (await response.json()) as AtlasRoadDataset;
-      })
-      .then((dataset) => {
+    void Promise.all(
+      ["/data/atlas-roads-snv-202201b.json", "/data/atlas-roads-artesp-sp.json"].map(
+        async (path) => {
+          const response = await fetch(path, { headers: { accept: "application/json" } });
+          if (!response.ok)
+            throw new Error(`Dados de rodovias indisponíveis (HTTP ${response.status})`);
+          return (await response.json()) as AtlasRoadDataset;
+        },
+      ),
+    )
+      .then((datasets) => {
         if (
-          !Array.isArray(dataset.roads) ||
-          !dataset.roads.length ||
-          dataset.productionEligible !== false
+          datasets.some(
+            (dataset) =>
+              !Array.isArray(dataset.roads) ||
+              !dataset.roads.length ||
+              dataset.productionEligible !== true ||
+              dataset.rightsStatus !== "approved" ||
+              !dataset.attribution,
+          )
         ) {
-          throw new Error("O conjunto local de rodovias não passou na validação");
+          throw new Error("Um conjunto rodoviário não passou na validação de publicação");
         }
         if (!active) return;
-        setRoadDataset(dataset);
+        setRoadDatasets(datasets);
         setRoadDatasetStatus("ready");
       })
       .catch(() => {
@@ -229,21 +238,33 @@ export function BrazilEditorialAtlas({
     return () => {
       active = false;
     };
-  }, [layer, roadDataset, roadDatasetStatus]);
+  }, [layer, roadDatasetStatus]);
+
+  const roadEntries = useMemo(
+    () =>
+      roadDatasets.flatMap((dataset) =>
+        dataset.roads.map((road) => ({
+          key: `${dataset.id ?? dataset.version}:${road.code}`,
+          dataset,
+          road,
+        })),
+      ),
+    [roadDatasets],
+  );
 
   const roadPathsByUf = useMemo(() => {
     const result = new Map<string, Map<string, string[]>>();
-    for (const road of roadDataset?.roads ?? []) {
+    for (const entry of roadEntries) {
       const byUf = new Map<string, string[]>();
-      for (const segment of road.segments) {
+      for (const segment of entry.road.segments) {
         const paths = byUf.get(segment.uf) ?? [];
         paths.push(segment.path);
         byUf.set(segment.uf, paths);
       }
-      result.set(road.code, byUf);
+      result.set(entry.key, byUf);
     }
     return result;
-  }, [roadDataset]);
+  }, [roadEntries]);
 
   const activeLayer = LAYERS.find((item) => item.id === layer)!;
   const tabs = panelTabs(layer);
@@ -364,24 +385,25 @@ export function BrazilEditorialAtlas({
               ))}
             </nav>
 
-            {layer === "rodovias" && roadDataset ? (
-              <div
-                className="brazil-atlas-road-controls"
-                role="group"
-                aria-label="Selecionar rodovia federal"
-              >
-                {roadDataset.roads.map((road) => (
-                  <button
-                    key={road.code}
-                    type="button"
-                    aria-pressed={selectedRoad === road.code}
-                    className={selectedRoad === road.code ? "is-active" : ""}
-                    onClick={() => setSelectedRoad(road.code)}
-                  >
-                    {road.code}
-                  </button>
-                ))}
-              </div>
+            {layer === "rodovias" && roadDatasets.length ? (
+              <label className="brazil-atlas-road-controls">
+                <span>Selecionar rodovia</span>
+                <select
+                  value={selectedRoad ?? ""}
+                  onChange={(event) => setSelectedRoad(event.target.value || null)}
+                  aria-label="Selecionar rodovia no Atlas"
+                >
+                  <option value="">Todas as rodovias</option>
+                  {roadEntries.map(({ key, dataset, road }) => (
+                    <option key={key} value={key}>
+                      {road.code} ·{" "}
+                      {dataset.id === "artesp-sp-concession-roads"
+                        ? "ARTESP · SP"
+                        : "SNV histórico"}
+                    </option>
+                  ))}
+                </select>
+              </label>
             ) : null}
 
             <div className="brazil-atlas-map-column">
@@ -461,14 +483,12 @@ export function BrazilEditorialAtlas({
                     </g>
                   );
                 })}
-                {layer === "rodovias" && roadDataset ? (
-                  <g
-                    className="brazil-atlas-roads"
-                    aria-label="Traçados geográficos de rodovias federais"
-                  >
-                    {[...roadPathsByUf.entries()].map(([roadCode, byUf]) => {
-                      const selected = selectedRoad === roadCode;
-                      const hovered = hoveredRoad === roadCode;
+                {layer === "rodovias" && roadDatasets.length ? (
+                  <g className="brazil-atlas-roads" aria-label="Traçados geográficos de rodovias">
+                    {roadEntries.map(({ key, dataset, road }) => {
+                      const byUf = roadPathsByUf.get(key) ?? new Map<string, string[]>();
+                      const selected = selectedRoad === key;
+                      const hovered = hoveredRoad === key;
                       const emphasized = !selectedRoad || selected || hovered;
                       const selectedRegionUfs =
                         !state && region
@@ -477,9 +497,9 @@ export function BrazilEditorialAtlas({
                       const completePath = [...byUf.values()].flatMap((paths) => paths).join("");
                       return (
                         <g
-                          key={roadCode}
+                          key={key}
                           className={`brazil-atlas-road ${selected ? "is-selected" : ""} ${hovered ? "is-hovered" : ""} ${emphasized ? "is-emphasized" : "is-muted"}`}
-                          onPointerEnter={() => setHoveredRoad(roadCode)}
+                          onPointerEnter={() => setHoveredRoad(key)}
                           onPointerLeave={() => setHoveredRoad(null)}
                         >
                           {[...byUf.entries()].map(([uf, paths]) => {
@@ -490,7 +510,7 @@ export function BrazilEditorialAtlas({
                                 : true;
                             return (
                               <path
-                                key={`${roadCode}-${uf}`}
+                                key={`${key}-${uf}`}
                                 d={paths.join("")}
                                 className={`brazil-atlas-road-line ${geographyActive ? "is-geography-active" : "is-geography-muted"}`}
                                 aria-hidden="true"
@@ -501,18 +521,20 @@ export function BrazilEditorialAtlas({
                             d={completePath}
                             className="brazil-atlas-road-hit"
                             role="button"
-                            tabIndex={0}
-                            aria-label={`${roadCode}, trechos federais em ${[...byUf.keys()].join(", ")}`}
+                            tabIndex={selected ? 0 : -1}
+                            aria-label={`${road.code}, ${dataset.title ?? dataset.version}, trechos em ${[...byUf.keys()].join(", ")}`}
                             aria-pressed={selected}
-                            onClick={() => setSelectedRoad(roadCode)}
+                            onClick={() => setSelectedRoad(key)}
                             onKeyDown={(event) => {
                               if (event.key === "Enter" || event.key === " ") {
                                 event.preventDefault();
-                                setSelectedRoad(roadCode);
+                                setSelectedRoad(key);
                               }
                             }}
                           >
-                            <title>{roadCode} · selecionar rodovia</title>
+                            <title>
+                              {road.code} · {dataset.title ?? dataset.version}
+                            </title>
                           </path>
                         </g>
                       );
@@ -546,16 +568,18 @@ export function BrazilEditorialAtlas({
                 <MapPinned className="size-4 text-cyan-300" aria-hidden />
                 <span>
                   {layer === "rodovias"
-                    ? roadDataset
-                      ? "Traçados da malha federal sobre a geometria estadual. Selecione uma BR no mapa ou nos controles."
-                      : "Dados históricos de rodovias permanecem bloqueados fora do desenvolvimento enquanto os direitos de uso não forem validados."
+                    ? roadDatasets.length
+                      ? "Traçados do SNV 202201B (histórico) e das concessões mapeadas pela ARTESP em São Paulo. Selecione uma linha ou use o seletor."
+                      : roadDatasetStatus === "error"
+                        ? "Não foi possível carregar as geometrias rodoviárias publicadas."
+                        : "Carregando traçados rodoviários..."
                     : "Selecione um estado para filtrar o painel editorial. O mapa representa limites estaduais."}
                 </span>
               </div>
               <p className="brazil-atlas-source">
                 Geometria estadual: Malha Territorial 2025 · IBGE
-                {layer === "rodovias" && roadDataset
-                  ? ` · Rodovias: SNV ${roadDataset.version} — distribuição Ibama/PAMGIA (uso local; direitos pendentes)`
+                {layer === "rodovias" && roadDatasets.length
+                  ? " · Fontes rodoviárias: DNIT/SNV 202201B (histórico) · ARTESP (concessões em SP)"
                   : ""}
               </p>
             </div>
@@ -710,7 +734,7 @@ export function BrazilEditorialAtlas({
                 </div>
               ) : layer === "rodovias" ? (
                 <RoadwayPanel
-                  dataset={roadDataset}
+                  datasets={roadDatasets}
                   status={roadDatasetStatus}
                   selectedRoad={selectedRoad}
                   selectedState={state}
@@ -851,52 +875,49 @@ function PopulationPanel({
 }
 
 function RoadwayPanel({
-  dataset,
+  datasets,
   status,
   selectedRoad,
   selectedState,
   region,
 }: {
-  dataset: AtlasRoadDataset | null;
+  datasets: AtlasRoadDataset[];
   status: "idle" | "loading" | "ready" | "error";
   selectedRoad: string | null;
   selectedState: string | null;
   region: string | null;
 }) {
-  const road = dataset?.roads.find((item) => item.code === selectedRoad);
+  const entries = datasets.flatMap((dataset) =>
+    dataset.roads.map((road) => ({
+      key: `${dataset.id ?? dataset.version}:${road.code}`,
+      dataset,
+      road,
+    })),
+  );
+  const selectedEntry = entries.find((item) => item.key === selectedRoad);
   const selectedUf = selectedState ? BRASIL_UFS.find((item) => item.uf === selectedState) : null;
-  const relevantSegments =
-    road?.segments.filter((segment) =>
+  const visibleSegments = (road: AtlasRoadDataset["roads"][number]) =>
+    road.segments.filter((segment) =>
       selectedState
         ? segment.uf === selectedState
         : region
           ? UFS_BY_REGION[region as keyof typeof UFS_BY_REGION].includes(segment.uf)
           : true,
-    ) ?? [];
-
-  if (!localRoadsEnabled) {
-    return (
-      <div className="brazil-atlas-road-panel">
-        <h3>Dados de rodovias bloqueados</h3>
-        <p>
-          O traçado histórico SNV 202201B permanece restrito ao desenvolvimento; direitos de uso e
-          versão vigente ainda precisam ser validados.
-        </p>
-      </div>
     );
-  }
+  const relevantSegments = selectedEntry ? visibleSegments(selectedEntry.road) : [];
+
   if (status === "loading" || status === "idle") {
     return (
       <div className="brazil-atlas-road-panel" role="status">
-        Carregando traçados oficiais locais…
+        Carregando traçados e dados rodoviários…
       </div>
     );
   }
-  if (status === "error" || !dataset) {
+  if (status === "error" || !datasets.length) {
     return (
       <div className="brazil-atlas-road-panel" role="status">
         <h3>Traçados indisponíveis</h3>
-        <p>Gere o conjunto local de rodovias e mantenha o servidor de desenvolvimento ativo.</p>
+        <p>Os arquivos publicados da camada rodoviária não puderam ser carregados.</p>
       </div>
     );
   }
@@ -904,27 +925,80 @@ function RoadwayPanel({
   return (
     <div className="brazil-atlas-road-panel">
       <p className="brazil-atlas-road-kicker">
-        <RouteIcon className="size-4" aria-hidden /> Malha federal · SNV {dataset.version}
+        <RouteIcon className="size-4" aria-hidden /> Camada rodoviária · dados cartográficos e
+        inventário
       </p>
-      {road ? (
+      {selectedEntry ? (
         <>
-          <h3>{road.code}</h3>
+          <h3>{selectedEntry.road.code}</h3>
           <p className="brazil-atlas-road-states">
             {selectedUf
-              ? `${selectedUf.nome} (${selectedUf.uf}) · ${relevantSegments.length} trechos nesta seleção`
-              : `${road.ufs.length} UFs · ${road.ufs.join(", ")}`}
+              ? `${selectedUf.nome} (${selectedUf.uf}) · ${relevantSegments.length} geometrias neste recorte`
+              : `${selectedEntry.road.operators?.join(", ") || selectedEntry.dataset.title || selectedEntry.dataset.version} · ${relevantSegments.length} geometrias no recorte`}
           </p>
+          <p>{selectedEntry.dataset.scope}</p>
         </>
       ) : (
         <>
-          <h3>Rodovias federais</h3>
+          <h3>Malhas identificadas</h3>
           <p>
-            Selecione uma linha no mapa ou uma BR nos controles para destacar todos os trechos
-            disponíveis.
+            Selecione uma linha no mapa ou uma rodovia no seletor. O recorte mostra os dados
+            disponíveis para{" "}
+            {selectedUf
+              ? `${selectedUf.nome} (${selectedUf.uf})`
+              : region
+                ? `a região ${region}`
+                : "o Brasil"}
+            .
           </p>
         </>
       )}
-      <small>{dataset.attribution}</small>
+      <div className="brazil-atlas-road-news" aria-label="Conjuntos de dados rodoviários">
+        {datasets.map((dataset) => {
+          const routes = dataset.roads.filter((road) => visibleSegments(road).length > 0);
+          const segments = routes.reduce((sum, road) => sum + visibleSegments(road).length, 0);
+          return (
+            <section key={dataset.id ?? dataset.version}>
+              <strong>{dataset.title ?? dataset.version}</strong>
+              <p>
+                {routes.length} identificadores de rodovia · {segments.toLocaleString("pt-BR")}{" "}
+                geometrias no recorte
+              </p>
+              {dataset.tabularSummary ? (
+                <p>
+                  Inventário ARTESP de São Paulo:{" "}
+                  {dataset.tabularSummary.recordCount.toLocaleString("pt-BR")} registros tabulares ·{" "}
+                  {dataset.tabularSummary.distinctRoadLabels.toLocaleString("pt-BR")} rótulos de
+                  via.
+                </p>
+              ) : null}
+              {dataset.relationshipNote ? <p>{dataset.relationshipNote}</p> : null}
+              <p>{dataset.scope}</p>
+              <small>
+                <a href={dataset.sourceUrl} target="_blank" rel="noopener noreferrer">
+                  Fonte dos dados
+                </a>
+                {dataset.termsUrl ? (
+                  <>
+                    {" · "}
+                    <a href={dataset.termsUrl} target="_blank" rel="noopener noreferrer">
+                      Termos e licença
+                    </a>
+                  </>
+                ) : null}
+                {dataset.tabularSummary ? (
+                  <>
+                    <br />
+                    {dataset.tabularSummary.coordinateNote}
+                  </>
+                ) : null}
+                <br />
+                {dataset.attribution}
+              </small>
+            </section>
+          );
+        })}
+      </div>
     </div>
   );
 }
