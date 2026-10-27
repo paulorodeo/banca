@@ -1921,6 +1921,25 @@ nav[aria-label="Trilha de navegação"] a {
   font-size: 0.75rem;
   line-height: 1.55;
 }
+.brazil-atlas-road-retry {
+  min-height: 2.5rem;
+  margin-top: 0.5rem;
+  padding: 0.5rem 0.8rem;
+  border: 1px solid rgba(82, 207, 245, 0.5);
+  border-radius: 0.5rem;
+  color: #dff7ff;
+  background: rgba(3, 31, 52, 0.75);
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+.brazil-atlas-road-retry:hover,
+.brazil-atlas-road-retry:focus-visible {
+  border-color: #e4c572;
+  color: #fff3ce;
+  outline: 2px solid rgba(80, 211, 255, 0.3);
+  outline-offset: 2px;
+}
 .brazil-atlas-road-kicker {
   display: flex;
   align-items: center;

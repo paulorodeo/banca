@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState, type KeyboardEvent, type ReactNode } from "react";
+import { useEffect, useMemo, useRef, useState, type KeyboardEvent, type ReactNode } from "react";
 import { Link } from "@tanstack/react-router";
 import {
   ArrowRight,
@@ -31,6 +31,7 @@ import { filterAtlasStories } from "@/content/local/brasil-atlas-model";
 import type { AtlasEditorialItem, AtlasLayer } from "@/content/atlas.functions";
 import { defaultPanelTab, panelTabs, type AtlasPanelTab } from "@/content/atlas-panel-tabs";
 import type { AtlasRoadDataset } from "@/content/local/atlas-roads.types";
+import { startAtlasRoadDatasetLoad } from "@/content/local/atlas-roads-loader";
 import {
   BRAZIL_POPULATION_TOTAL,
   POPULATION_BY_REGION,
@@ -149,6 +150,9 @@ export function BrazilEditorialAtlas({
   const [focusedStoryId, setFocusedStoryId] = useState<string | null>(null);
   const [externalItems, setExternalItems] = useState<ExternalNewsCardItem[]>([]);
   const [roadDatasets, setRoadDatasets] = useState<AtlasRoadDataset[]>([]);
+  const roadDatasetsReady = useRef(false);
+  const [roadRetryKey, setRoadRetryKey] = useState(0);
+  const [roadDatasetError, setRoadDatasetError] = useState<string | null>(null);
   const [roadDatasetStatus, setRoadDatasetStatus] = useState<
     "idle" | "loading" | "ready" | "error"
   >("idle");
@@ -195,50 +199,18 @@ export function BrazilEditorialAtlas({
   }, [layer, panelTab, region, state]);
 
   useEffect(() => {
-    if (
-      layer !== "rodovias" ||
-      roadDatasetStatus === "loading" ||
-      roadDatasetStatus === "ready" ||
-      roadDatasetStatus === "error"
-    )
-      return;
-    let active = true;
-    setRoadDatasetStatus("loading");
-    void Promise.all(
-      ["/data/atlas-roads-snv-202201b.json", "/data/atlas-roads-artesp-sp.json"].map(
-        async (path) => {
-          const response = await fetch(path, { headers: { accept: "application/json" } });
-          if (!response.ok)
-            throw new Error(`Dados de rodovias indisponíveis (HTTP ${response.status})`);
-          return (await response.json()) as AtlasRoadDataset;
-        },
-      ),
-    )
-      .then((datasets) => {
-        if (
-          datasets.some(
-            (dataset) =>
-              !Array.isArray(dataset.roads) ||
-              !dataset.roads.length ||
-              dataset.productionEligible !== true ||
-              dataset.rightsStatus !== "approved" ||
-              !dataset.attribution,
-          )
-        ) {
-          throw new Error("Um conjunto rodoviário não passou na validação de publicação");
-        }
-        if (!active) return;
+    if (layer !== "rodovias" || roadDatasetsReady.current) return;
+    const request = startAtlasRoadDatasetLoad(fetch, {
+      setDatasets: (datasets) => {
+        roadDatasetsReady.current = true;
         setRoadDatasets(datasets);
-        setRoadDatasetStatus("ready");
-      })
-      .catch(() => {
-        if (!active) return;
-        setRoadDatasetStatus("error");
-      });
-    return () => {
-      active = false;
-    };
-  }, [layer, roadDatasetStatus]);
+      },
+      setError: setRoadDatasetError,
+      setStatus: setRoadDatasetStatus,
+    });
+    return request.cancel;
+    // Loading status is intentionally excluded: changing it must not cancel its own request.
+  }, [layer, roadRetryKey]);
 
   const roadEntries = useMemo(
     () =>
@@ -571,7 +543,7 @@ export function BrazilEditorialAtlas({
                     ? roadDatasets.length
                       ? "Traçados do SNV 202201B (histórico) e das concessões mapeadas pela ARTESP em São Paulo. Selecione uma linha ou use o seletor."
                       : roadDatasetStatus === "error"
-                        ? "Não foi possível carregar as geometrias rodoviárias publicadas."
+                        ? "Falha ao carregar os dados rodoviários. Consulte o painel para tentar novamente."
                         : "Carregando traçados rodoviários..."
                     : "Selecione um estado para filtrar o painel editorial. O mapa representa limites estaduais."}
                 </span>
@@ -739,6 +711,8 @@ export function BrazilEditorialAtlas({
                   selectedRoad={selectedRoad}
                   selectedState={state}
                   region={region}
+                  error={roadDatasetError}
+                  onRetry={() => setRoadRetryKey((key) => key + 1)}
                 />
               ) : layer === "clima" ? (
                 <WeatherPanel state={state} region={region} onSelectState={selectState} />
@@ -880,12 +854,16 @@ function RoadwayPanel({
   selectedRoad,
   selectedState,
   region,
+  error,
+  onRetry,
 }: {
   datasets: AtlasRoadDataset[];
   status: "idle" | "loading" | "ready" | "error";
   selectedRoad: string | null;
   selectedState: string | null;
   region: string | null;
+  error: string | null;
+  onRetry: () => void;
 }) {
   const entries = datasets.flatMap((dataset) =>
     dataset.roads.map((road) => ({
@@ -917,7 +895,13 @@ function RoadwayPanel({
     return (
       <div className="brazil-atlas-road-panel" role="status">
         <h3>Traçados indisponíveis</h3>
-        <p>Os arquivos publicados da camada rodoviária não puderam ser carregados.</p>
+        <p role="alert">
+          Os arquivos publicados da camada rodoviária não puderam ser carregados.
+          {error ? ` ${error}` : ""}
+        </p>
+        <button className="brazil-atlas-road-retry" type="button" onClick={onRetry}>
+          Tentar carregar novamente
+        </button>
       </div>
     );
   }
