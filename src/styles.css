@@ -1948,6 +1948,69 @@ nav[aria-label="Trilha de navegação"] a {
   font-size: 0.67rem !important;
   font-weight: 700;
 }
+.brazil-atlas-road-fact {
+  margin-top: 0.7rem;
+}
+.brazil-atlas-road-fact-classification {
+  color: #80e4ff !important;
+  font-size: 0.68rem !important;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.brazil-atlas-road-description {
+  max-width: 52ch;
+  font-size: 0.82rem !important;
+}
+.brazil-atlas-road-facts {
+  display: grid;
+  gap: 0.45rem;
+  margin: 0.85rem 0 0;
+}
+.brazil-atlas-road-facts > div {
+  padding-top: 0.4rem;
+  border-top: 1px solid rgba(143, 183, 207, 0.14);
+}
+.brazil-atlas-road-facts dt {
+  color: rgba(226, 238, 248, 0.5);
+  font-size: 0.61rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+.brazil-atlas-road-facts dd {
+  margin: 0.12rem 0 0;
+  color: #f2f7fb;
+  font-size: 0.73rem;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+.brazil-atlas-road-no-data {
+  padding: 0.55rem 0.65rem;
+  border-left: 2px solid #e6c879;
+  background: rgba(230, 200, 121, 0.08);
+}
+.brazil-atlas-road-context {
+  margin-top: 1rem;
+  padding-top: 0.7rem;
+  border-top: 1px solid rgba(143, 183, 207, 0.18);
+  color: rgba(226, 238, 248, 0.64);
+  font-size: 0.68rem;
+}
+.brazil-atlas-road-context summary {
+  color: #e6c879;
+  font-weight: 700;
+  cursor: pointer;
+}
+.brazil-atlas-road-context a {
+  color: #f4f7fa;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.brazil-atlas-road-context ul {
+  display: grid;
+  gap: 0.3rem;
+  padding-left: 1rem;
+}
 .brazil-atlas-road-news {
   display: grid;
   gap: 0.45rem;

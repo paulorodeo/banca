@@ -33,6 +33,10 @@ import { defaultPanelTab, panelTabs, type AtlasPanelTab } from "@/content/atlas-
 import type { AtlasRoadDataset } from "@/content/local/atlas-roads.types";
 import { startAtlasRoadDatasetLoad } from "@/content/local/atlas-roads-loader";
 import {
+  buildRoadwayFactCard,
+  filterRoadSegmentsForTerritory,
+} from "@/content/local/atlas-road-facts";
+import {
   BRAZIL_POPULATION_TOTAL,
   POPULATION_BY_REGION,
   POPULATION_BY_UF,
@@ -874,15 +878,25 @@ function RoadwayPanel({
   );
   const selectedEntry = entries.find((item) => item.key === selectedRoad);
   const selectedUf = selectedState ? BRASIL_UFS.find((item) => item.uf === selectedState) : null;
+  const selectedRegionUfs = region
+    ? UFS_BY_REGION[region as keyof typeof UFS_BY_REGION]
+    : undefined;
   const visibleSegments = (road: AtlasRoadDataset["roads"][number]) =>
-    road.segments.filter((segment) =>
-      selectedState
-        ? segment.uf === selectedState
-        : region
-          ? UFS_BY_REGION[region as keyof typeof UFS_BY_REGION].includes(segment.uf)
-          : true,
-    );
+    filterRoadSegmentsForTerritory(road.segments, selectedState, selectedRegionUfs);
   const relevantSegments = selectedEntry ? visibleSegments(selectedEntry.road) : [];
+  const selectedTerritory = selectedUf
+    ? `${selectedUf.nome} (${selectedUf.uf})`
+    : region
+      ? `Região ${region}`
+      : "Brasil";
+  const factCard = selectedEntry
+    ? buildRoadwayFactCard(
+        selectedEntry.dataset,
+        selectedEntry.road,
+        relevantSegments,
+        selectedTerritory,
+      )
+    : null;
 
   if (status === "loading" || status === "idle") {
     return (
@@ -913,15 +927,9 @@ function RoadwayPanel({
         inventário
       </p>
       {selectedEntry ? (
-        <>
-          <h3>{selectedEntry.road.code}</h3>
-          <p className="brazil-atlas-road-states">
-            {selectedUf
-              ? `${selectedUf.nome} (${selectedUf.uf}) · ${relevantSegments.length} geometrias neste recorte`
-              : `${selectedEntry.road.operators?.join(", ") || selectedEntry.dataset.title || selectedEntry.dataset.version} · ${relevantSegments.length} geometrias no recorte`}
-          </p>
-          <p>{selectedEntry.dataset.scope}</p>
-        </>
+        factCard ? (
+          <RoadwayFactCardView card={factCard} dataset={selectedEntry.dataset} />
+        ) : null
       ) : (
         <>
           <h3>Malhas identificadas</h3>
@@ -937,54 +945,195 @@ function RoadwayPanel({
           </p>
         </>
       )}
-      <div className="brazil-atlas-road-news" aria-label="Conjuntos de dados rodoviários">
-        {datasets.map((dataset) => {
-          const routes = dataset.roads.filter((road) => visibleSegments(road).length > 0);
-          const segments = routes.reduce((sum, road) => sum + visibleSegments(road).length, 0);
-          return (
-            <section key={dataset.id ?? dataset.version}>
-              <strong>{dataset.title ?? dataset.version}</strong>
-              <p>
-                {routes.length} identificadores de rodovia · {segments.toLocaleString("pt-BR")}{" "}
-                geometrias no recorte
-              </p>
-              {dataset.tabularSummary ? (
+      {selectedEntry ? (
+        <RoadwaySourcesContext dataset={selectedEntry.dataset} sources={factCard?.sources ?? []} />
+      ) : (
+        <div
+          className="brazil-atlas-road-news"
+          aria-label="Panorama geral dos conjuntos rodoviários"
+        >
+          {datasets.map((dataset) => {
+            const routes = dataset.roads.filter((road) => visibleSegments(road).length > 0);
+            const segments = routes.reduce((sum, road) => sum + visibleSegments(road).length, 0);
+            return (
+              <section key={dataset.id ?? dataset.version}>
+                <strong>{dataset.title ?? dataset.version}</strong>
                 <p>
-                  Inventário ARTESP de São Paulo:{" "}
-                  {dataset.tabularSummary.recordCount.toLocaleString("pt-BR")} registros tabulares ·{" "}
-                  {dataset.tabularSummary.distinctRoadLabels.toLocaleString("pt-BR")} rótulos de
-                  via.
+                  Total geral da base: {routes.length} identificadores ·{" "}
+                  {segments.toLocaleString("pt-BR")} geometrias no recorte.
                 </p>
-              ) : null}
-              {dataset.relationshipNote ? <p>{dataset.relationshipNote}</p> : null}
-              <p>{dataset.scope}</p>
-              <small>
-                <a href={dataset.sourceUrl} target="_blank" rel="noopener noreferrer">
-                  Fonte dos dados
-                </a>
-                {dataset.termsUrl ? (
-                  <>
-                    {" · "}
-                    <a href={dataset.termsUrl} target="_blank" rel="noopener noreferrer">
-                      Termos e licença
-                    </a>
-                  </>
-                ) : null}
                 {dataset.tabularSummary ? (
-                  <>
-                    <br />
-                    {dataset.tabularSummary.coordinateNote}
-                  </>
+                  <p>
+                    Inventário tabular geral ARTESP:{" "}
+                    {dataset.tabularSummary.recordCount.toLocaleString("pt-BR")} registros ·{" "}
+                    {dataset.tabularSummary.distinctRoadLabels.toLocaleString("pt-BR")} rótulos de
+                    via.
+                  </p>
                 ) : null}
-                <br />
-                {dataset.attribution}
-              </small>
-            </section>
-          );
-        })}
-      </div>
+                {dataset.relationshipNote ? <p>{dataset.relationshipNote}</p> : null}
+                <p>{dataset.scope}</p>
+                <small>
+                  <a href={dataset.sourceUrl} target="_blank" rel="noopener noreferrer">
+                    Fonte dos dados
+                  </a>
+                  {dataset.termsUrl ? (
+                    <>
+                      {" "}
+                      ·{" "}
+                      <a href={dataset.termsUrl} target="_blank" rel="noopener noreferrer">
+                        Termos e licença
+                      </a>
+                    </>
+                  ) : null}
+                  {dataset.tabularSummary ? (
+                    <>
+                      <br />
+                      {dataset.tabularSummary.coordinateNote}
+                    </>
+                  ) : null}
+                  <br />
+                  {dataset.attribution}
+                </small>
+              </section>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
+}
+
+function RoadwayFactCardView({
+  card,
+  dataset,
+}: {
+  card: NonNullable<ReturnType<typeof buildRoadwayFactCard>>;
+  dataset: AtlasRoadDataset;
+}) {
+  return (
+    <section
+      className="brazil-atlas-road-fact"
+      aria-label={`Ficha de ${card.code}`}
+      aria-live="polite"
+    >
+      <p className="brazil-atlas-road-fact-classification">{card.classification}</p>
+      <h3>{card.code}</h3>
+      <p className="brazil-atlas-road-description">{card.description}</p>
+      <dl className="brazil-atlas-road-facts">
+        <div>
+          <dt>Recorte territorial</dt>
+          <dd>{card.territory}</dd>
+        </div>
+        <div>
+          <dt>Geometrias neste recorte</dt>
+          <dd>{card.geometryCount.toLocaleString("pt-BR")}</dd>
+        </div>
+        <div>
+          <dt>Total desta rodovia na base</dt>
+          <dd>{card.routeGeometryCount.toLocaleString("pt-BR")}</dd>
+        </div>
+        <div>
+          <dt>UFs na base da rodovia</dt>
+          <dd>{card.ufs.join(", ") || "Não informado"}</dd>
+        </div>
+        {card.segmentTypes.length ? (
+          <div>
+            <dt>Tipos de segmento no recorte</dt>
+            <dd>{card.segmentTypes.map(({ code, count }) => `${code}: ${count}`).join(" · ")}</dd>
+          </div>
+        ) : null}
+        {card.operators.length ? (
+          <div>
+            <dt>Operador(es) identificados</dt>
+            <dd>{card.operators.join(", ")}</dd>
+          </div>
+        ) : null}
+        <div>
+          <dt>Fonte e referência</dt>
+          <dd>
+            {dataset.source} · {dataset.version}
+            {dataset.extractedAt ? ` · extração ${formatRoadwayDate(dataset.extractedAt)}` : ""}
+          </dd>
+        </div>
+      </dl>
+      {card.geometryCount === 0 ? (
+        <p className="brazil-atlas-road-no-data">
+          Sem geometrias desta rodovia no recorte selecionado.
+        </p>
+      ) : null}
+    </section>
+  );
+}
+
+function RoadwaySourcesContext({
+  dataset,
+  sources,
+}: {
+  dataset: AtlasRoadDataset;
+  sources: NonNullable<AtlasRoadDataset["sources"]>;
+}) {
+  return (
+    <details className="brazil-atlas-road-context">
+      <summary>Fontes, cobertura e ressalvas</summary>
+      <p>
+        {dataset.title ?? dataset.version}: {dataset.scope}
+      </p>
+      {dataset.id === "dnit-snv-202201b" ? (
+        <p>
+          Base histórica SNV 202201B. A referência não representa a versão vigente do cadastro
+          rodoviário.
+        </p>
+      ) : null}
+      {dataset.id === "artesp-sp-concession-roads" ? (
+        <p>
+          Cobertura parcial: geometrias disponíveis nos KMZ por concessionária. O inventário XLSX é
+          apresentado como fonte tabular independente e não foi associado a esta geometria sem
+          correspondência validada.
+        </p>
+      ) : null}
+      {sources.length ? (
+        <ul>
+          {sources.map((source) => (
+            <li key={source.resourceId}>
+              <a href={source.url} target="_blank" rel="noopener noreferrer">
+                {source.name}
+              </a>
+              {source.updatedAt ? ` · referência ${formatRoadwayDate(source.updatedAt)}` : ""}
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <p>
+          Fonte desta camada:{" "}
+          <a href={dataset.sourceUrl} target="_blank" rel="noopener noreferrer">
+            {dataset.source}
+          </a>
+          {dataset.accessedAt ? ` · consulta ${formatRoadwayDate(dataset.accessedAt)}` : ""}
+        </p>
+      )}
+      {dataset.relationshipNote ? <p>{dataset.relationshipNote}</p> : null}
+      {dataset.tabularSummary ? <p>{dataset.tabularSummary.coordinateNote}</p> : null}
+      <p>
+        {dataset.attribution}
+        {dataset.termsUrl ? (
+          <>
+            {" "}
+            ·{" "}
+            <a href={dataset.termsUrl} target="_blank" rel="noopener noreferrer">
+              Termos e licença
+            </a>
+          </>
+        ) : null}
+      </p>
+    </details>
+  );
+}
+
+function formatRoadwayDate(value: string) {
+  const date = new Date(value);
+  return Number.isNaN(date.valueOf())
+    ? value
+    : date.toLocaleDateString("pt-BR", { timeZone: "UTC" });
 }
 
 function AgribusinessPanel({
