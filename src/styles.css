@@ -2871,3 +2871,633 @@ nav[aria-label="Trilha de navegação"] a {
     transition: none;
   }
 }
+
+.brazil-atlas-home-link {
+  grid-column: 2;
+  grid-row: 3;
+  display: inline-flex;
+  align-items: center;
+  justify-self: end;
+  gap: 0.45rem;
+  color: #f1d68f;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-color: rgba(241, 214, 143, 0.5);
+  text-underline-offset: 4px;
+}
+.brazil-atlas-home-link:focus-visible {
+  outline: 2px solid #f1d68f;
+  outline-offset: 4px;
+}
+.brazil-atlas-section.is-standalone {
+  border-block: 0;
+}
+.brazil-atlas-section.is-standalone .brazil-atlas-shell {
+  width: min(100%, 1760px);
+  max-width: none;
+  grid-template-columns: minmax(220px, 0.72fr) minmax(0, 1.6fr) minmax(350px, 1fr);
+}
+.brazil-atlas-section.is-standalone .brazil-atlas-grid {
+  grid-template-columns: minmax(220px, 0.72fr) minmax(0, 1.6fr) minmax(350px, 1fr);
+}
+.atlas-portal-page {
+  min-height: 100%;
+  color: #14263a;
+  background: #f5f3ed;
+}
+.atlas-portal-hero {
+  padding: clamp(1.8rem, 4vw, 3.4rem) 0 clamp(2rem, 4vw, 3.8rem);
+  color: #f7f4ed;
+  background:
+    radial-gradient(ellipse at 85% 20%, rgba(47, 105, 147, 0.36), transparent 40%),
+    linear-gradient(115deg, #07182b 0%, #0b2742 62%, #061629 100%);
+}
+.atlas-portal-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-bottom: 2rem;
+  color: rgba(245, 242, 234, 0.67);
+  font-size: 0.72rem;
+}
+.atlas-portal-breadcrumb svg {
+  width: 0.85rem;
+  height: 0.85rem;
+  color: #d5b768;
+}
+.atlas-portal-breadcrumb a:hover,
+.atlas-portal-breadcrumb a:focus-visible {
+  color: #f1d68f;
+}
+.atlas-portal-eyebrow {
+  margin: 0;
+  color: #a6812f;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+.atlas-portal-hero .atlas-portal-eyebrow {
+  color: #e1c478;
+}
+.atlas-portal-hero h1 {
+  margin: 0.35rem 0 0;
+  color: #fff;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(2.65rem, 6vw, 5.1rem);
+  font-weight: 400;
+  letter-spacing: -0.035em;
+  line-height: 1.02;
+}
+.atlas-portal-lede {
+  max-width: 54rem;
+  margin: 1rem 0 0;
+  color: rgba(243, 246, 249, 0.79);
+  font-size: clamp(1rem, 1.6vw, 1.2rem);
+  line-height: 1.65;
+}
+.atlas-portal-navigation {
+  position: relative;
+  z-index: 20;
+  border-bottom: 1px solid rgba(11, 35, 57, 0.15);
+  background: #fffefa;
+  box-shadow: 0 8px 24px rgba(16, 38, 56, 0.06);
+}
+.atlas-portal-navigation-inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: 0.4rem;
+  padding-block: 0.55rem;
+}
+.atlas-portal-menu {
+  position: relative;
+  min-width: max-content;
+}
+.atlas-portal-menu > summary {
+  display: flex;
+  min-height: 2.7rem;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 0.85rem;
+  border: 1px solid transparent;
+  border-radius: 0.3rem;
+  color: #17334c;
+  font-size: 0.78rem;
+  font-weight: 750;
+  list-style: none;
+  cursor: pointer;
+}
+.atlas-portal-menu > summary::-webkit-details-marker {
+  display: none;
+}
+.atlas-portal-menu > summary::after {
+  width: 0.42rem;
+  height: 0.42rem;
+  border-right: 1.5px solid #a6812f;
+  border-bottom: 1.5px solid #a6812f;
+  content: "";
+  transform: translateY(-0.12rem) rotate(45deg);
+  transition: transform 140ms ease;
+}
+.atlas-portal-menu[open] > summary::after {
+  transform: translateY(0.08rem) rotate(225deg);
+}
+.atlas-portal-menu > summary:hover,
+.atlas-portal-menu > summary:focus-visible,
+.atlas-portal-menu[open] > summary {
+  border-color: rgba(166, 129, 47, 0.36);
+  color: #8a6a25;
+  outline: none;
+  background: rgba(218, 190, 123, 0.12);
+}
+.atlas-portal-menu-list,
+.atlas-portal-state-groups {
+  position: absolute;
+  top: calc(100% + 0.35rem);
+  left: 0;
+  z-index: 30;
+  display: none;
+  width: min(25rem, calc(100vw - 2rem));
+  max-height: min(75vh, 38rem);
+  overflow: auto;
+  padding: 0.75rem;
+  border: 1px solid rgba(11, 35, 57, 0.16);
+  border-radius: 0.45rem;
+  background: #fffefa;
+  box-shadow: 0 18px 40px rgba(7, 24, 43, 0.2);
+  list-style: none;
+}
+.atlas-portal-menu[open] > .atlas-portal-menu-list,
+.atlas-portal-menu[open] > .atlas-portal-state-groups {
+  display: grid;
+}
+.atlas-portal-menu-list {
+  gap: 0.12rem;
+  margin: 0;
+}
+.atlas-portal-menu-list a,
+.atlas-portal-state-groups a,
+.atlas-portal-menu-list .is-unavailable,
+.atlas-portal-state-groups .is-unavailable {
+  display: flex;
+  min-height: 2.35rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.5rem 0.6rem;
+  border-radius: 0.25rem;
+  color: #19364e;
+  font-size: 0.75rem;
+  line-height: 1.35;
+  text-decoration: none;
+}
+.atlas-portal-menu-list a:hover,
+.atlas-portal-menu-list a:focus-visible,
+.atlas-portal-state-groups a:hover,
+.atlas-portal-state-groups a:focus-visible {
+  outline: 2px solid rgba(166, 129, 47, 0.45);
+  outline-offset: -2px;
+  background: rgba(218, 190, 123, 0.16);
+}
+.atlas-portal-menu-list svg {
+  width: 0.9rem;
+  height: 0.9rem;
+  flex: 0 0 auto;
+  color: #a6812f;
+}
+.atlas-portal-menu-list .is-unavailable,
+.atlas-portal-state-groups .is-unavailable {
+  color: #87909a;
+  cursor: default;
+}
+.atlas-portal-state-groups {
+  width: min(58rem, calc(100vw - 2rem));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.65rem 1rem;
+}
+.atlas-portal-state-groups section {
+  min-width: 0;
+}
+.atlas-portal-state-groups h3 {
+  margin: 0;
+  padding: 0.55rem 0.6rem;
+  border-bottom: 1px solid rgba(166, 129, 47, 0.24);
+  color: #8a6a25;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1rem;
+}
+.atlas-portal-state-groups ul {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.05rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.atlas-portal-state-groups b {
+  margin-left: auto;
+  color: #8c6d2d;
+  font-size: 0.65rem;
+}
+.atlas-portal-editorias-menu .atlas-portal-menu-list {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.atlas-portal-editorias-menu a[aria-current="true"] {
+  color: #8a6a25;
+  background: rgba(218, 190, 123, 0.18);
+}
+.brazil-atlas-section.is-standalone .brazil-atlas-shell {
+  padding-top: clamp(2rem, 4vw, 3.75rem);
+  padding-bottom: clamp(2rem, 4vw, 3rem);
+}
+.atlas-portal-content {
+  max-width: 100rem;
+  padding-top: clamp(2.5rem, 6vw, 5rem);
+  padding-bottom: clamp(3rem, 7vw, 6rem);
+}
+.atlas-editorial-intro {
+  max-width: 53rem;
+  margin-bottom: 2rem;
+}
+.atlas-editorial-intro h2,
+.atlas-portal-sources h2 {
+  margin: 0.4rem 0 0;
+  color: #102940;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(2rem, 4vw, 3.15rem);
+  font-weight: 500;
+  line-height: 1.1;
+}
+.atlas-editorial-intro > p:last-child,
+.atlas-portal-sources > div > p:last-child {
+  max-width: 48rem;
+  margin: 0.8rem 0 0;
+  color: #596775;
+  font-size: 0.9rem;
+  line-height: 1.65;
+}
+.atlas-editorial-sections {
+  display: grid;
+  gap: clamp(2.5rem, 6vw, 5rem);
+}
+.atlas-editorial-section {
+  padding-top: clamp(1.5rem, 3vw, 2.5rem);
+  border-top: 1px solid rgba(13, 42, 66, 0.16);
+  scroll-margin-top: 6rem;
+}
+.atlas-editorial-section-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 2rem;
+  margin-bottom: 1.35rem;
+}
+.atlas-editorial-section-heading h2 {
+  margin: 0.35rem 0 0;
+  color: #112c45;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.7rem, 3vw, 2.45rem);
+  font-weight: 500;
+  line-height: 1.15;
+}
+.atlas-editorial-section-heading > div > p:last-child {
+  max-width: 58rem;
+  margin: 0.5rem 0 0;
+  color: #5b6875;
+  font-size: 0.83rem;
+  line-height: 1.55;
+}
+.atlas-editorial-section-heading > a,
+.atlas-editorial-read {
+  display: inline-flex;
+  min-height: 2.55rem;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 0.45rem;
+  color: #73591f;
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-decoration: underline;
+  text-decoration-color: rgba(166, 129, 47, 0.45);
+  text-underline-offset: 4px;
+}
+.atlas-editorial-section-heading > a svg,
+.atlas-editorial-read svg {
+  width: 1rem;
+  height: 1rem;
+}
+.atlas-editorial-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(18rem, 0.8fr);
+  gap: clamp(1rem, 2.8vw, 2rem);
+  align-items: start;
+}
+.atlas-editorial-lead {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(17rem, 0.95fr);
+  overflow: hidden;
+  border: 1px solid rgba(17, 44, 69, 0.13);
+  background: #fffefa;
+  box-shadow: 0 12px 34px rgba(16, 38, 56, 0.06);
+}
+.atlas-editorial-lead-image,
+.atlas-editorial-secondary-image {
+  display: block;
+  overflow: hidden;
+  background: #e9e7df;
+}
+.atlas-editorial-lead-image {
+  min-height: 20rem;
+}
+.atlas-editorial-lead-image img,
+.atlas-editorial-secondary-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.atlas-editorial-lead-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: clamp(1.15rem, 2.6vw, 2rem);
+}
+.atlas-editorial-lead-copy > p:first-child,
+.atlas-editorial-secondary article > div > p:first-child {
+  margin: 0;
+  color: #8a6a25;
+  font-size: 0.64rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.atlas-editorial-lead-copy h3 {
+  margin: 0.75rem 0 0;
+  color: #112c45;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.35rem, 2.1vw, 2rem);
+  font-weight: 500;
+  line-height: 1.2;
+}
+.atlas-editorial-lead-copy h3 a,
+.atlas-editorial-secondary h3 a {
+  color: inherit;
+  text-decoration: none;
+}
+.atlas-editorial-lead-copy h3 a:hover,
+.atlas-editorial-secondary h3 a:hover {
+  text-decoration: underline;
+  text-decoration-color: #b08b3e;
+  text-underline-offset: 4px;
+}
+.atlas-editorial-lead-copy > p:not(:first-child) {
+  margin: 0.85rem 0 0;
+  color: #5c6874;
+  font-size: 0.83rem;
+  line-height: 1.65;
+}
+.atlas-editorial-lead-copy .atlas-editorial-read {
+  margin-top: auto;
+  padding-top: 1.1rem;
+}
+.atlas-editorial-secondary {
+  display: grid;
+  gap: 0.8rem;
+}
+.atlas-editorial-secondary article {
+  display: grid;
+  grid-template-columns: 7.5rem minmax(0, 1fr);
+  gap: 0.8rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 1px solid rgba(17, 44, 69, 0.14);
+}
+.atlas-editorial-secondary-image {
+  aspect-ratio: 1.2;
+}
+.atlas-editorial-secondary h3 {
+  margin: 0.3rem 0 0;
+  color: #112c45;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.25;
+}
+.atlas-editorial-secondary article > div > p:last-child {
+  display: -webkit-box;
+  overflow: hidden;
+  margin: 0.35rem 0 0;
+  color: #687481;
+  font-size: 0.72rem;
+  line-height: 1.5;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+.atlas-editorial-empty {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1.4rem;
+  border: 1px dashed rgba(17, 44, 69, 0.25);
+  background: #fffefa;
+}
+.atlas-editorial-empty > svg {
+  width: 1.8rem;
+  height: 1.8rem;
+  flex: 0 0 auto;
+  color: #a6812f;
+}
+.atlas-editorial-empty h3 {
+  margin: 0;
+  color: #112c45;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.2rem;
+}
+.atlas-editorial-empty p {
+  margin: 0.4rem 0 0;
+  color: #5c6874;
+  font-size: 0.82rem;
+  line-height: 1.55;
+}
+.atlas-portal-sources {
+  display: grid;
+  grid-template-columns: minmax(15rem, 0.8fr) minmax(0, 1.2fr);
+  gap: 2rem;
+  margin-top: clamp(3rem, 7vw, 6rem);
+  padding: clamp(1.4rem, 3vw, 2.5rem);
+  border: 1px solid rgba(166, 129, 47, 0.3);
+  background: #eeeadf;
+}
+.atlas-portal-sources ul {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.55rem 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.atlas-portal-sources a {
+  display: flex;
+  min-height: 2.6rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding: 0.5rem 0.65rem;
+  border-bottom: 1px solid rgba(17, 44, 69, 0.16);
+  color: #18364f;
+  font-size: 0.72rem;
+  line-height: 1.45;
+  text-decoration: none;
+}
+.atlas-portal-sources a:hover,
+.atlas-portal-sources a:focus-visible {
+  color: #73591f;
+  outline: 2px solid rgba(166, 129, 47, 0.45);
+  outline-offset: 2px;
+}
+.atlas-portal-sources svg {
+  width: 0.9rem;
+  height: 0.9rem;
+  flex: 0 0 auto;
+  color: #a6812f;
+}
+.atlas-portal-more {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 2rem;
+  margin-top: 1.5rem;
+}
+.atlas-portal-more a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  color: #19364e;
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-decoration: underline;
+  text-decoration-color: rgba(166, 129, 47, 0.5);
+  text-underline-offset: 4px;
+}
+.atlas-portal-more svg {
+  width: 1rem;
+  height: 1rem;
+  color: #a6812f;
+}
+.news-geography-header-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+.news-geography-atlas-link {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 0.8rem;
+  border: 1px solid rgba(172, 131, 45, 0.5);
+  color: #73591f;
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+.news-geography-atlas-link svg {
+  width: 1rem;
+  height: 1rem;
+}
+@media (max-width: 1100px) {
+  .brazil-atlas-section.is-standalone .brazil-atlas-shell {
+    grid-template-columns: minmax(180px, 0.7fr) minmax(0, 1.5fr);
+  }
+  .brazil-atlas-section.is-standalone .brazil-atlas-grid {
+    grid-template-columns: minmax(180px, 0.7fr) minmax(0, 1.5fr);
+  }
+  .brazil-atlas-home-link {
+    grid-row: 3;
+  }
+}
+@media (max-width: 700px) {
+  .brazil-atlas-home-link {
+    grid-column: 1;
+    grid-row: auto;
+    justify-self: start;
+  }
+  .brazil-atlas-section.is-standalone .brazil-atlas-shell {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .brazil-atlas-section.is-standalone .brazil-atlas-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .atlas-portal-navigation-inner {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.3rem;
+    padding-block: 0.45rem;
+  }
+  .atlas-portal-menu {
+    min-width: 0;
+  }
+  .atlas-portal-menu > summary {
+    justify-content: space-between;
+    padding-inline: 0.5rem;
+    font-size: 0.7rem;
+  }
+  .atlas-portal-menu-list,
+  .atlas-portal-state-groups {
+    position: static;
+    width: auto;
+    max-height: 60vh;
+    margin: 0.2rem 0.5rem 0;
+    padding: 0.45rem;
+    box-shadow: 0 8px 18px rgba(7, 24, 43, 0.12);
+  }
+  .atlas-portal-states-menu,
+  .atlas-portal-editorias-menu {
+    grid-column: 1 / -1;
+  }
+  .atlas-portal-state-groups {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.45rem;
+  }
+  .atlas-portal-state-groups ul {
+    grid-template-columns: 1fr;
+  }
+  .atlas-portal-state-groups a,
+  .atlas-portal-state-groups .is-unavailable {
+    padding-inline: 0.35rem;
+    font-size: 0.66rem;
+  }
+  .atlas-portal-editorias-menu .atlas-portal-menu-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .atlas-editorial-section-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .atlas-editorial-grid,
+  .atlas-editorial-lead {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .atlas-editorial-lead-image {
+    min-height: auto;
+    aspect-ratio: 16 / 9;
+  }
+  .atlas-editorial-secondary article {
+    grid-template-columns: 6rem minmax(0, 1fr);
+  }
+  .atlas-portal-sources {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1rem;
+  }
+  .atlas-portal-sources ul {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .news-geography-header-links {
+    justify-content: flex-start;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .atlas-portal-menu > summary::after {
+    transition: none;
+  }
+}

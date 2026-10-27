@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AreasDeAtuacaoRouteImport } from './routes/areas-de-atuacao'
 import { Route as AtendimentoReservadoRouteImport } from './routes/atendimento-reservado'
+import { Route as AtlasBrasilRouteImport } from './routes/atlas-brasil'
 import { Route as AtomDotxmlRouteImport } from './routes/atom[.]xml'
 import { Route as ContatoRouteImport } from './routes/contato'
 import { Route as IntegridadeEEticaRouteImport } from './routes/integridade-e-etica'
@@ -64,6 +65,11 @@ const AreasDeAtuacaoRoute = AreasDeAtuacaoRouteImport.update({
 const AtendimentoReservadoRoute = AtendimentoReservadoRouteImport.update({
   id: '/atendimento-reservado',
   path: '/atendimento-reservado',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AtlasBrasilRoute = AtlasBrasilRouteImport.update({
+  id: '/atlas-brasil',
+  path: '/atlas-brasil',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AtomDotxmlRoute = AtomDotxmlRouteImport.update({
@@ -264,6 +270,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/areas-de-atuacao': typeof AreasDeAtuacaoRoute
   '/atendimento-reservado': typeof AtendimentoReservadoRoute
+  '/atlas-brasil': typeof AtlasBrasilRoute
   '/atom.xml': typeof AtomDotxmlRoute
   '/contato': typeof ContatoRoute
   '/integridade-e-etica': typeof IntegridadeEEticaRoute
@@ -307,6 +314,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/areas-de-atuacao': typeof AreasDeAtuacaoRoute
   '/atendimento-reservado': typeof AtendimentoReservadoRoute
+  '/atlas-brasil': typeof AtlasBrasilRoute
   '/atom.xml': typeof AtomDotxmlRoute
   '/contato': typeof ContatoRoute
   '/integridade-e-etica': typeof IntegridadeEEticaRoute
@@ -350,6 +358,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/areas-de-atuacao': typeof AreasDeAtuacaoRoute
   '/atendimento-reservado': typeof AtendimentoReservadoRoute
+  '/atlas-brasil': typeof AtlasBrasilRoute
   '/atom.xml': typeof AtomDotxmlRoute
   '/contato': typeof ContatoRoute
   '/integridade-e-etica': typeof IntegridadeEEticaRoute
@@ -395,6 +404,7 @@ export interface FileRouteTypes {
     | '/'
     | '/areas-de-atuacao'
     | '/atendimento-reservado'
+    | '/atlas-brasil'
     | '/atom.xml'
     | '/contato'
     | '/integridade-e-etica'
@@ -438,6 +448,7 @@ export interface FileRouteTypes {
     | '/'
     | '/areas-de-atuacao'
     | '/atendimento-reservado'
+    | '/atlas-brasil'
     | '/atom.xml'
     | '/contato'
     | '/integridade-e-etica'
@@ -480,6 +491,7 @@ export interface FileRouteTypes {
     | '/'
     | '/areas-de-atuacao'
     | '/atendimento-reservado'
+    | '/atlas-brasil'
     | '/atom.xml'
     | '/contato'
     | '/integridade-e-etica'
@@ -524,6 +536,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AreasDeAtuacaoRoute: typeof AreasDeAtuacaoRoute
   AtendimentoReservadoRoute: typeof AtendimentoReservadoRoute
+  AtlasBrasilRoute: typeof AtlasBrasilRoute
   AtomDotxmlRoute: typeof AtomDotxmlRoute
   ContatoRoute: typeof ContatoRoute
   IntegridadeEEticaRoute: typeof IntegridadeEEticaRoute
@@ -579,6 +592,13 @@ declare module '@tanstack/react-router' {
       path: '/atendimento-reservado'
       fullPath: '/atendimento-reservado'
       preLoaderRoute: typeof AtendimentoReservadoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/atlas-brasil': {
+      id: '/atlas-brasil'
+      path: '/atlas-brasil'
+      fullPath: '/atlas-brasil'
+      preLoaderRoute: typeof AtlasBrasilRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/atom.xml': {
@@ -877,6 +897,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AreasDeAtuacaoRoute: AreasDeAtuacaoRoute,
   AtendimentoReservadoRoute: AtendimentoReservadoRoute,
+  AtlasBrasilRoute: AtlasBrasilRoute,
   AtomDotxmlRoute: AtomDotxmlRoute,
   ContatoRoute: ContatoRoute,
   IntegridadeEEticaRoute: IntegridadeEEticaRoute,

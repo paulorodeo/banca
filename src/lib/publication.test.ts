@@ -94,6 +94,7 @@ test("sitemap includes all published territory and articles without future modul
   ]);
   assert(paths.includes("/bairros/pinheiros"));
   assert(paths.includes("/noticias"));
+  assert(paths.includes("/atlas-brasil"));
   assert(paths.includes("/noticias/justica-libera-obra-bosque-salesianos-alto-da-lapa"));
   for (const noticia of noticias) assert(paths.includes(noticia.seo.canonicalPath));
   assert(paths.includes("/politica-de-privacidade")); // Still the active canonical route; migration has not occurred.
@@ -108,11 +109,7 @@ test("sitemap includes all published territory and articles without future modul
   const xml = await publicSitemap({ NODE_ENV: "production", PUBLIC_SITE_URL: origin });
   assert.equal((xml.match(/<loc>/g) ?? []).length, paths.length);
   assert(xml.includes(`${origin}/delegacias/${delegacias[0]!.slug}`));
-  assert(
-    xml.includes(
-      `${origin}/noticias/justica-libera-obra-bosque-salesianos-alto-da-lapa`,
-    ),
-  );
+  assert(xml.includes(`${origin}/noticias/justica-libera-obra-bosque-salesianos-alto-da-lapa`));
   assert(!xml.includes("localhost") && !xml.includes("lovable"));
   assert(robotsTxt(origin).includes(`Sitemap: ${origin}/sitemap.xml`));
   assert(sitemapXml(["/arquivos/a&b"], origin).includes("&amp;"));

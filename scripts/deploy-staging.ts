@@ -23,7 +23,12 @@ const buildId = randomUUID();
 const outputDir = join(tmpdir(), `lawsp-banca-staging-${buildId}`);
 const localStateDir = join(tmpdir(), `lawsp-banca-staging-state-${buildId}`);
 const wrangler = ["x", "--yes", "wrangler@4.151.0"];
-const routes = ["/noticias/brasil", "/noticias/regioes/norte", "/noticias/estados/ac"] as const;
+const routes = [
+  "/atlas-brasil",
+  "/noticias/brasil",
+  "/noticias/regioes/norte",
+  "/noticias/estados/ac",
+] as const;
 
 async function main() {
   if (process.argv[2] === "--initial-preflight") {

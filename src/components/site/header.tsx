@@ -10,6 +10,7 @@ import type { PublicInstitution } from "@/content/types";
 const navItems = [
   { to: "/", label: "Início" },
   { to: "/noticias", label: "Notícias" },
+  { to: "/atlas-brasil", label: "Atlas Brasil" },
   { to: "/artigos", label: "Artigos" },
   { to: "/regioes", label: "Regiões" },
   { to: "/orgaos", label: "Órgãos e Serviços" },
@@ -106,7 +107,7 @@ export function SiteHeader({ institutions }: { institutions: PublicInstitution[]
 
   return (
     <header className="sticky top-0 z-50 border-b border-white/10 bg-brand-navy text-ivory shadow-[0_12px_40px_-28px_rgba(0,0,0,0.9)]">
-      <Container className="flex h-[4.5rem] items-center justify-between gap-5">
+      <Container className="flex h-[4.5rem] items-center justify-between gap-3 xl:gap-5">
         <Link
           ref={homeRef}
           to="/"
@@ -117,7 +118,10 @@ export function SiteHeader({ institutions }: { institutions: PublicInstitution[]
           <Brand presentation="header" />
         </Link>
 
-        <nav aria-label="Navegação principal" className="hidden h-full items-center gap-5 lg:flex">
+        <nav
+          aria-label="Navegação principal"
+          className="hidden h-full items-center gap-3 xl:gap-5 lg:flex"
+        >
           {navItems.map((item) =>
             item.to === "/orgaos" ? (
               <details

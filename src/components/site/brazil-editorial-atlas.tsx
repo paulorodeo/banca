@@ -142,14 +142,19 @@ function StoryLink({
 export function BrazilEditorialAtlas({
   stories,
   variant = "home",
+  selectedLayer,
+  onLayerChange,
 }: {
   stories: AtlasEditorialItem[];
-  variant?: "home" | "portal";
+  variant?: "home" | "portal" | "standalone";
+  selectedLayer?: AtlasLayer;
+  onLayerChange?: (layer: AtlasLayer) => void;
 }) {
-  const [region, setRegion] = useState<string | null>(variant === "portal" ? null : "Sudeste");
+  const [region, setRegion] = useState<string | null>(variant === "home" ? "Sudeste" : null);
   const [state, setState] = useState<string | null>(null);
   const [hoveredState, setHoveredState] = useState<string | null>(null);
-  const [layer, setLayer] = useState<AtlasLayer>("noticias");
+  const [internalLayer, setInternalLayer] = useState<AtlasLayer>("noticias");
+  const layer = selectedLayer ?? internalLayer;
   const [panelTab, setPanelTab] = useState<AtlasPanelTab>("news");
   const [focusedStoryId, setFocusedStoryId] = useState<string | null>(null);
   const [externalItems, setExternalItems] = useState<ExternalNewsCardItem[]>([]);
@@ -162,6 +167,15 @@ export function BrazilEditorialAtlas({
   >("idle");
   const [selectedRoad, setSelectedRoad] = useState<string | null>(null);
   const [hoveredRoad, setHoveredRoad] = useState<string | null>(null);
+
+  const changeLayer = (nextLayer: AtlasLayer) => {
+    setInternalLayer(nextLayer);
+    onLayerChange?.(nextLayer);
+  };
+
+  useEffect(() => {
+    setPanelTab(defaultPanelTab(layer));
+  }, [layer]);
 
   useEffect(() => {
     let active = true;
@@ -299,7 +313,7 @@ export function BrazilEditorialAtlas({
   return (
     <section
       id="brasil-em-foco"
-      className={`brazil-atlas-section ${variant === "portal" ? "is-portal" : ""}`}
+      className={`brazil-atlas-section ${variant === "portal" ? "is-portal" : ""} ${variant === "standalone" ? "is-standalone" : ""}`}
       aria-labelledby="brazil-atlas-title"
     >
       <div className="brazil-atlas-shell">
@@ -312,11 +326,18 @@ export function BrazilEditorialAtlas({
             Panorama nacional com informação territorial, jurídica e institucional. Explore os dados
             por região, estado e tema.
           </p>
+          {variant === "home" ? (
+            <Link to="/atlas-brasil" className="brazil-atlas-home-link">
+              Explorar Atlas Brasil <ArrowRight className="size-4" aria-hidden />
+            </Link>
+          ) : null}
         </header>
 
         <div className="brazil-atlas-grid">
           <aside className="brazil-atlas-layers" aria-label="Camadas editoriais">
-            <p className="brazil-atlas-side-label">Camadas</p>
+            <p id="atlas-camadas" className="brazil-atlas-side-label">
+              Camadas
+            </p>
             {LAYERS.map(({ id, label, icon: Icon, note }) => {
               return (
                 <button
@@ -326,7 +347,7 @@ export function BrazilEditorialAtlas({
                   aria-pressed={layer === id}
                   title={note}
                   onClick={() => {
-                    setLayer(id);
+                    changeLayer(id);
                     setPanelTab(defaultPanelTab(id));
                     setFocusedStoryId(null);
                   }}

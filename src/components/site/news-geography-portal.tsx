@@ -68,7 +68,16 @@ export function NewsGeographyPortal(props: NewsGeographyPortalProps) {
             <p>{props.description}</p>
             {props.capital ? <span className="news-geography-capital">Capital: {props.capital}</span> : null}
           </div>
-          <Link to="/noticias" className="news-geography-backlink">Capa de Notícias <ArrowRight aria-hidden /></Link>
+          <div className="news-geography-header-links">
+            {props.level === "Brasil" ? (
+              <Link to="/atlas-brasil" className="news-geography-atlas-link">
+                Explorar Atlas Brasil <MapPinned aria-hidden />
+              </Link>
+            ) : null}
+            <Link to="/noticias" className="news-geography-backlink">
+              Capa de Notícias <ArrowRight aria-hidden />
+            </Link>
+          </div>
         </header>
 
       </Container>

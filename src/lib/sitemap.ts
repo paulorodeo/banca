@@ -15,6 +15,7 @@ export const institutionalPaths = [
   "/delegacias",
   "/regioes",
   "/noticias",
+  "/atlas-brasil",
   "/artigos",
   "/radio",
 ] as const;
