@@ -19,18 +19,28 @@ HTML recebe `X-Robots-Tag: noindex, nofollow` e `Cache-Control: no-store`, inclu
 
 `/sitemap.xml` retorna 404 com noindex e no-store em homologação. O gerador de produção foi preservado. Canonical, Open Graph, imagens sociais e JSON-LD usam a origem temporária configurada, sem Lovable e sem inventar o domínio definitivo. Não submeter esta origem ao Search Console como produção.
 
-## Verificação e publicação
+## Build e publicação canônicos
+
+`bun run deploy:staging` é o único comando recomendado para publicar no Worker `banca`. Ele exige branch `codex/banca-redesign`, working tree limpo, commit válido e autenticação na conta Cloudflare autorizada. Depois adquire um lock exclusivo por host, cria um identificador de build e compila em um diretório temporário novo. Não reutiliza `.output` nem aceita um artefato de produção.
+
+O preflight examina o artefato produzido: Worker e conta, `DEPLOYMENT_ENV`, origem pública, `BUILD_COMMIT`, binding `ASSETS`, KV esperado, ausência do dataset histórico de Rodovias, fixtures presentes nos bundles de servidor e cliente e configuração global `noindex`. Em seguida, Wrangler executa o Worker localmente sem bindings remotos. O pipeline solicita `/noticias/brasil`, `/noticias/regioes/norte` e `/noticias/estados/ac`, confirma HTTP 200, cabeçalho global `noindex`, metadados de página e identificação fictícia; Acre deve conter `Pauta demonstrativa: justiça em Acre`. Também confirma que `/sitemap.xml` retorna 404. Uma falha em qualquer verificação anterior ao upload interrompe a execução.
+
+O lock usa `flock` em um arquivo persistente sob `/tmp`, e abrange build, verificações, upload e confirmação pública. Uma segunda execução canônica no mesmo host encerra antes de começar outro build. O lock é local: não impede Wrangler executado diretamente nem publicações iniciadas em outro computador, painel ou sistema externo. Para investigar uma possível substituição, compare `wrangler deployments list --name banca --json`, `wrangler versions view <VERSION_ID> --name banca --json`, horários, autor, `BUILD_COMMIT`, ETag do script e tráfego percentual; confira também a configuração de Workers Builds/deploy hooks e os logs da origem suspeita.
+
+Após o upload, o comando registra build ID, commit, digest SHA-256 do artefato, Version ID, Deployment ID e percentual de tráfego. Testa as rotas públicas e lê novamente os deployments; se outra versão assumir o tráfego durante a validação, sinaliza a divergência. Esse registro é uma fotografia do momento: não garante que uma ferramenta externa deixe de publicar depois.
+
+Build, upload, deployment e versão recebendo tráfego são etapas distintas. O build cria o artefato local; o upload envia script e assets e cria uma versão; o deployment associa uma ou mais versões a uma estratégia; o percentual indica qual versão atende tráfego. O sucesso do CLI sozinho não confirma que a versão enviada continua ativa nem que as respostas públicas correspondem ao commit esperado.
+
+Para verificações locais antes da próxima publicação:
 
 ```sh
 bunx tsc --noEmit
-bun test
+bun run test:staging-pipeline
+bun test src/lib/deployment-profile.test.ts
 bun run build:staging
-npx --yes wrangler@4.151.0 deploy --dry-run --config .output/server/wrangler.json
 ```
 
-Depois de revisar e commitar os ajustes locais, repetir o build. `bun scripts/check-staging-deploy.ts` exige branch correta, working tree limpo, artefato do HEAD atual, nome/origem/flag exatos, ausência de rotas de domínio e Cron, assets presentes e headers de homologação. É uma checagem local, não uma confirmação de conta autenticada.
-
-Autenticar o Wrangler localmente na conta correta, conferir a conta/subdomínio e o Worker existente antes de usar `bun run deploy:staging`. Não publicar pelas contas antigas nem com o nome automático do repositório. A execução final deve verificar respostas HTTPS reais e o header do commit; sucesso do CLI sozinho não conclui a entrega.
+O build manual serve para desenvolvimento e inspeção. Para publicar, use somente `bun run deploy:staging`, que sempre gera e verifica outro artefato isolado antes do upload. Não execute Wrangler deploy diretamente para homologação.
 
 ## Liberação futura de produção
 

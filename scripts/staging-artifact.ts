@@ -1,0 +1,142 @@
+import assert from "node:assert/strict";
+import { createHash } from "node:crypto";
+import { readdir, readFile, stat } from "node:fs/promises";
+import { join, relative, resolve } from "node:path";
+
+export const STAGING_WORKER = "banca";
+export const STAGING_ACCOUNT_ID = "7b2dfe1e7fa69edb06d7bf74d7ebc942";
+export const STAGING_ORIGIN = "https://banca.paulista.workers.dev";
+export const ACRE_FIXTURE = "Pauta demonstrativa: justiça em Acre";
+
+export interface StagingArtifactIdentity {
+  buildId: string;
+  commit: string;
+  outputDir: string;
+}
+
+export async function validateStagingArtifact(
+  identity: StagingArtifactIdentity,
+): Promise<{ configPath: string; serverEntry: string; publicDir: string }> {
+  const outputDir = resolve(identity.outputDir);
+  const configPath = join(outputDir, "server", "wrangler.json");
+  const config = JSON.parse(await readFile(configPath, "utf8")) as Record<string, unknown>;
+  const vars = config["vars"] as Record<string, string> | undefined;
+  const assets = config["assets"] as Record<string, string> | undefined;
+
+  assert.equal(config["name"], STAGING_WORKER, "Wrong staging Worker");
+  assert.equal(config["account_id"], STAGING_ACCOUNT_ID, "Wrong Cloudflare account");
+  assert.equal(vars?.["DEPLOYMENT_ENV"], "staging", "Artifact is not staging");
+  assert.equal(vars?.["PUBLIC_SITE_URL"], STAGING_ORIGIN, "Wrong staging origin");
+  assert.equal(vars?.["BUILD_COMMIT"], identity.commit, "Artifact commit does not match HEAD");
+  assert.equal(assets?.["binding"], "ASSETS", "Assets binding is missing");
+  assert.equal(assets?.["directory"], "../public", "Unexpected assets path");
+  assert.deepEqual(config["kv_namespaces"], [
+    { binding: "WEATHER_CACHE", id: "c6f5a6125aba45509501fb04a8c44d7d" },
+  ]);
+  assert(
+    !JSON.stringify(config).includes(".local/atlas-roads-dataset.json"),
+    "Historical road dataset must not be included",
+  );
+  assert(!vars?.["EXTERNAL_NEWS_ENABLED"] || vars["EXTERNAL_NEWS_ENABLED"] === "false");
+
+  const serverEntry = resolve(outputDir, "server", String(config["main"]));
+  const publicDir = resolve(outputDir, "public");
+  const serverFiles = await listFiles(join(outputDir, "server"));
+  const clientFiles = await listFiles(join(publicDir, "assets"));
+  const allArtifactFiles = await listFiles(outputDir);
+  const serverBundle = await readTextFiles(serverFiles);
+  const clientBundle = await readTextFiles(clientFiles);
+  const artifactText = await readTextFiles(allArtifactFiles);
+  const fixtureModules = serverFiles.filter((file) => /atlasNoticias[^/]*\.mjs$/.test(file));
+  const fixtureBundle = await readTextFiles(fixtureModules);
+
+  assert.match(serverBundle, /"VITE_ATLAS_DEMO":\s*"true"/);
+  assert.match(
+    clientBundle,
+    /VITE_ATLAS_DEMO.{0,12}(?:`true`|"true")/,
+    "Client Atlas demo flag does not match the staging profile",
+  );
+  assert(fixtureModules.length > 0, "Server fixture module is absent from the artifact");
+  assert(fixtureBundle.includes("Acre"), "Acre fixture record is absent from the artifact");
+  assert.match(
+    fixtureBundle,
+    /Pauta demonstrativa:\s*\$\{editoria\.nome\.toLowerCase\(\)\} em \$\{state\.nome\}/,
+  );
+  assert.match(fixtureBundle, /Texto fictício/);
+  assert.match(fixtureBundle, /isDemo:\s*!0|isDemo:\s*true/);
+  assert.match(clientBundle, /Conteúdo demonstrativo/);
+  assert.match(clientBundle, /manchetes exibidas são fictícias/);
+  for (const forbiddenRoadMarker of [
+    "atlas-roads-dataset.json",
+    "101AES2005",
+    "1129067",
+    "pamgia.ibama.gov.br",
+  ])
+    assert(
+      !artifactText.toLowerCase().includes(forbiddenRoadMarker.toLowerCase()),
+      `Historical roads artifact marker found: ${forbiddenRoadMarker}`,
+    );
+
+  const headersPolicy = await readFile(join(publicDir, "_headers"), "utf8");
+  assert.match(
+    headersPolicy,
+    /\/\*\s+X-Robots-Tag:\s*noindex, nofollow, noarchive, noimageindex/i,
+    "Global staging noindex is missing from the assets policy",
+  );
+  assert.match(
+    serverBundle,
+    /X-Robots-Tag.{0,120}noindex, nofollow, noarchive, noimageindex/s,
+    "Global staging noindex is missing from the server bundle",
+  );
+  const serverSource = await readFile(serverEntry, "utf8");
+  assert(serverSource.length > 0, "Cloudflare Worker entry is empty");
+
+  return { configPath, serverEntry, publicDir };
+}
+
+export async function assertDemoResponse(response: Response, path: string): Promise<string> {
+  assert.equal(response.status, 200, `${path} must respond HTTP 200`);
+  assert.match(
+    response.headers.get("x-robots-tag") ?? "",
+    /noindex,\s*nofollow,\s*noarchive,\s*noimageindex/i,
+    `${path} is missing global noindex`,
+  );
+  const html = await response.text();
+  assert.match(html, /<meta[^>]+name="robots"[^>]+noindex/i, `${path} has no robots meta`);
+  assert.match(
+    html,
+    /Conteúdo demonstrativo|conteúdo demonstrativo/i,
+    `${path} does not label demo content`,
+  );
+  assert.match(html, /Texto fictício|fictícias/i, `${path} does not identify fictional content`);
+  if (path.endsWith("/estados/ac")) assert(html.includes(ACRE_FIXTURE), "Acre fixture is absent");
+  return html;
+}
+
+export async function digestArtifact(root: string): Promise<string> {
+  const files = await listFiles(root);
+  const hash = createHash("sha256");
+  for (const file of files) {
+    hash.update(relative(root, file));
+    hash.update("\0");
+    hash.update(await readFile(file));
+    hash.update("\0");
+  }
+  return hash.digest("hex");
+}
+
+async function listFiles(path: string): Promise<string[]> {
+  const info = await stat(path);
+  if (info.isFile()) return [path];
+  const entries = await readdir(path, { withFileTypes: true });
+  const files = await Promise.all(entries.map((entry) => listFiles(join(path, entry.name))));
+  return files.flat().sort();
+}
+
+async function readTextFiles(files: string[]): Promise<string> {
+  const chunks: string[] = [];
+  for (const file of files) {
+    if (/\.(?:mjs|js|html|json)$/.test(file)) chunks.push(await readFile(file, "utf8"));
+  }
+  return chunks.join("\n");
+}
