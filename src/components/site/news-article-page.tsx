@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import {
   ArrowRight,
   Building2,
@@ -25,6 +25,8 @@ import {
   EditorialLightboxProvider,
 } from "@/components/site/editorial-lightbox";
 import { Container } from "@/components/site/primitives";
+import { DesktopDisplayAd, InArticleAd, MultiplexAd } from "@/components/ads/AdPlacement";
+import { inArticleAdPosition, isArticleAdEligible } from "@/lib/adsense";
 
 type TerritoryRelation = { nome: string; relacao?: string };
 type RelatedFilter = { key: string; label: string; names: string[]; items: NoticiaEditorial[] };
@@ -176,7 +178,15 @@ function inlineMarkdown(text: string) {
   return result;
 }
 
-function NoticiaBlocoView({ bloco }: { bloco: NoticiaBloco }) {
+function NoticiaBlocoView({
+  bloco,
+  articleSlug,
+  insertInArticleAfterPart,
+}: {
+  bloco: NoticiaBloco;
+  articleSlug: string;
+  insertInArticleAfterPart?: number;
+}) {
   if (bloco.tipo === "imagem")
     return (
       <figure className="my-7">
@@ -234,69 +244,71 @@ function NoticiaBlocoView({ bloco }: { bloco: NoticiaBloco }) {
         </table>
       </div>
     );
-  if (bloco.tipo === "markdown")
+  if (bloco.tipo === "markdown") {
+    const parts = bloco.texto.split("\n\n");
     return (
       <div className="space-y-5 text-[1.0625rem] leading-[1.8] text-[#263746] md:text-lg">
-        {bloco.texto.split("\n\n").map((part, index) => {
-          const lines = part.split("\n");
-          if (part.startsWith("### "))
-            return (
-              <h3
-                key={index}
-                className="pt-3 font-[Georgia,serif] text-xl font-bold leading-tight text-[#061e30] md:text-[1.35rem]"
-              >
-                {part.slice(4)}
-              </h3>
-            );
-          if (part.startsWith("## "))
-            return (
-              <h2
-                key={index}
-                className="pt-5 font-[Georgia,serif] text-[1.65rem] font-bold leading-tight text-[#061e30] md:text-[1.9rem]"
-              >
-                {part.slice(3)}
-              </h2>
-            );
-          if (lines.every((line) => line.startsWith("- ") || line.startsWith("* ")))
-            return (
-              <ul key={index} className="list-disc space-y-3 pl-6 marker:text-[#b28341]">
-                {lines.map((line) => (
-                  <li key={line}>{inlineMarkdown(line.slice(2))}</li>
-                ))}
-              </ul>
-            );
-          if (lines.every((line) => line.startsWith("> ")))
-            return (
-              <blockquote
-                key={index}
-                className="relative border-l-4 border-[#b28341] py-3 pl-6 pr-4 font-[Georgia,serif] text-lg italic leading-relaxed text-[#102c43] md:text-xl"
-              >
-                <span
-                  aria-hidden="true"
-                  className="absolute -left-1 -top-4 bg-white px-1 font-serif text-5xl font-bold not-italic text-[#b28341]"
-                >
-                  “
-                </span>
-                {lines.map((line) => (
-                  <span key={line} className="block">
-                    {inlineMarkdown(line.replace(/^&gt; |^> /, ""))}
-                  </span>
-                ))}
-              </blockquote>
-            );
-          return (
-            <p key={index} className="whitespace-pre-line">
-              {inlineMarkdown(part)}
-            </p>
-          );
-        })}
+        {parts.map((part, index) => (
+          <Fragment key={index}>
+            <MarkdownPart part={part} />
+            {insertInArticleAfterPart === index ? (
+              <InArticleAd
+                key={`${articleSlug}-in-article`}
+                placement="ARTICLE-01"
+                className="my-7"
+              />
+            ) : null}
+          </Fragment>
+        ))}
       </div>
     );
+  }
   return (
     <p className="text-[1.0625rem] leading-[1.8] text-[#263746] md:text-lg">
       {inlineMarkdown(bloco.texto)}
     </p>
   );
+}
+
+function MarkdownPart({ part }: { part: string }) {
+  const lines = part.split("\n");
+  if (part.startsWith("### "))
+    return (
+      <h3 className="pt-3 font-[Georgia,serif] text-xl font-bold leading-tight text-[#061e30] md:text-[1.35rem]">
+        {part.slice(4)}
+      </h3>
+    );
+  if (part.startsWith("## "))
+    return (
+      <h2 className="pt-5 font-[Georgia,serif] text-[1.65rem] font-bold leading-tight text-[#061e30] md:text-[1.9rem]">
+        {part.slice(3)}
+      </h2>
+    );
+  if (lines.every((line) => line.startsWith("- ") || line.startsWith("* ")))
+    return (
+      <ul className="list-disc space-y-3 pl-6 marker:text-[#b28341]">
+        {lines.map((line) => (
+          <li key={line}>{inlineMarkdown(line.slice(2))}</li>
+        ))}
+      </ul>
+    );
+  if (lines.every((line) => line.startsWith("> ")))
+    return (
+      <blockquote className="relative border-l-4 border-[#b28341] py-3 pl-6 pr-4 font-[Georgia,serif] text-lg italic leading-relaxed text-[#102c43] md:text-xl">
+        <span
+          aria-hidden="true"
+          className="absolute -left-1 -top-4 bg-white px-1 font-serif text-5xl font-bold not-italic text-[#b28341]"
+        >
+          “
+        </span>
+        {lines.map((line) => (
+          <span key={line} className="block">
+            {inlineMarkdown(line.replace(/^&gt; |^> /, ""))}
+          </span>
+        ))}
+      </blockquote>
+    );
+  return <p className="whitespace-pre-line">{inlineMarkdown(part)}</p>;
 }
 
 function ShareActions({ title }: { title: string }) {
@@ -530,7 +542,13 @@ function RelatedNews({ noticia }: { noticia: NoticiaEditorial }) {
   );
 }
 
-function ArticleSidebar({ noticia }: { noticia: NoticiaEditorial }) {
+function ArticleSidebar({
+  noticia,
+  adsEligible,
+}: {
+  noticia: NoticiaEditorial;
+  adsEligible: boolean;
+}) {
   const relations = territoriesOf(noticia).filter((relation) => relation.relacao !== "informativo");
   const available = relations
     .map((relation) => ({ relation, items: relatedItemsForNames(noticia, [relation.nome]) }))
@@ -540,16 +558,13 @@ function ArticleSidebar({ noticia }: { noticia: NoticiaEditorial }) {
   const articles = conteudos.filter((article) => article.status === "publicado").slice(0, 2);
   return (
     <aside className="space-y-8" aria-label="Conteúdo relacionado">
-      <section
-        className="border border-[#dfe4e8] bg-white p-2.5"
-        aria-label="Espaço reservado para publicidade"
-      >
-        <p className="mb-2 text-[0.65rem] uppercase tracking-wide text-[#63717c]">Publicidade</p>
-        <div className="flex aspect-[3/2] flex-col items-center justify-center border border-dashed border-[#c8d0d5] bg-[#f8f8f6] text-center text-sm text-[#52616d]">
-          <span className="font-semibold text-[#263746]">Espaço reservado</span>
-          <span className="mt-1 text-xs">Anúncios não exibidos</span>
-        </div>
-      </section>
+      {adsEligible ? (
+        <DesktopDisplayAd
+          key={noticia.slug}
+          placement="ARTICLE-03"
+          className="article-sidebar-ad"
+        />
+      ) : null}
 
       {focus ? (
         <section aria-labelledby="mais-sobre-title">
@@ -707,6 +722,8 @@ function ArticleSidebar({ noticia }: { noticia: NoticiaEditorial }) {
 
 export function NewsArticlePage({ noticia }: { noticia: NoticiaEditorial }) {
   const readTime = readingMinutes(noticia);
+  const adsEligible = isArticleAdEligible(noticia);
+  const inArticlePosition = inArticleAdPosition(noticia);
   const displayedRelations = territoriesOf(noticia);
   const galleryImages = [
     ...(noticia.imagem ? [noticia.imagem] : []),
@@ -777,7 +794,24 @@ export function NewsArticlePage({ noticia }: { noticia: NoticiaEditorial }) {
               </figure>
               <div className="mt-7 space-y-5">
                 {noticia.blocos.map((bloco, index) => (
-                  <NoticiaBlocoView key={`${bloco.tipo}-${index}`} bloco={bloco} />
+                  <Fragment key={`${bloco.tipo}-${index}`}>
+                    <NoticiaBlocoView
+                      bloco={bloco}
+                      articleSlug={noticia.slug}
+                      {...(inArticlePosition?.blockIndex === index &&
+                      inArticlePosition.markdownPartIndex !== undefined
+                        ? { insertInArticleAfterPart: inArticlePosition.markdownPartIndex }
+                        : {})}
+                    />
+                    {inArticlePosition?.blockIndex === index &&
+                    inArticlePosition.markdownPartIndex === undefined ? (
+                      <InArticleAd
+                        key={`${noticia.slug}-in-article`}
+                        placement="ARTICLE-01"
+                        className="my-7"
+                      />
+                    ) : null}
+                  </Fragment>
                 ))}
               </div>
               <footer className="mt-9 border-t border-[#d9e0e5] pt-5">
@@ -855,9 +889,16 @@ export function NewsArticlePage({ noticia }: { noticia: NoticiaEditorial }) {
               </footer>
             </article>
             <div className="min-w-0">
-              <ArticleSidebar noticia={noticia} />
+              <ArticleSidebar noticia={noticia} adsEligible={adsEligible} />
             </div>
           </div>
+          {adsEligible ? (
+            <MultiplexAd
+              key={`${noticia.slug}-multiplex`}
+              placement="ARTICLE-02"
+              className="mt-9"
+            />
+          ) : null}
         </Container>
         <RelatedNews noticia={noticia} />
         <Container className="pb-10">

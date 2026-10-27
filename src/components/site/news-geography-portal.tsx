@@ -7,6 +7,7 @@ import { NewsImage } from "@/components/site/news-image";
 import { BRASIL_UFS, BRASIL_VIEWBOX } from "@/content/local/brasil-ufs";
 import type { AtlasEditorialItem } from "@/content/atlas.functions";
 import { ExternalNewsSection } from "./external-news-section";
+import { DisplayAd } from "@/components/ads/AdPlacement";
 
 const REGION_CODE: Record<string, string> = {
   Norte: "N",
@@ -171,6 +172,12 @@ export function NewsGeographyPortal(props: NewsGeographyPortalProps) {
             ) : null}
           </div>
         </div> : null}
+
+        {props.level === "Região" && lead ? (
+          <div className="py-5 md:py-7">
+            <DisplayAd placement="REGION-01" />
+          </div>
+        ) : null}
 
         <section className="news-geography-latest" aria-labelledby="news-geography-latest-title">
           <div className="news-geography-section-heading">

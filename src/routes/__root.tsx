@@ -22,6 +22,7 @@ import type { PublicInstitution } from "@/content/types";
 import { organizationSchema } from "@/lib/seo";
 import { MiniRadioPlayer } from "@/features/radio/components/MiniRadioPlayer";
 import { RadioProvider } from "@/features/radio/components/RadioProvider";
+import { AdSenseProvider } from "@/components/ads/AdSenseProvider";
 
 function NotFoundComponent() {
   return (
@@ -162,33 +163,35 @@ function RootComponent() {
   });
 
   return (
-    <WeatherProvider>
-      <RadioProvider>
-        <a
-          href="#conteudo-principal"
-          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:rounded-xs focus:bg-gold focus:px-4 focus:py-2 focus:text-primary-foreground"
-        >
-          Ir para o conteúdo
-        </a>
-        <div className="flex min-h-screen flex-col">
-          {!isJournalismRoute ? (
-            <>
-              <div className="bg-brand-navy text-ivory">
-                <Container className="flex min-h-8 items-center justify-end">
-                  <WeatherTicker />
-                </Container>
-              </div>
-              <SiteHeader institutions={institutions} />
-            </>
-          ) : null}
-          <main id="conteudo-principal" className="flex-1">
-            {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-            <Outlet />
-          </main>
-          <SiteFooter />
-        </div>
-        <MiniRadioPlayer />
-      </RadioProvider>
-    </WeatherProvider>
+    <AdSenseProvider>
+      <WeatherProvider>
+        <RadioProvider>
+          <a
+            href="#conteudo-principal"
+            className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:rounded-xs focus:bg-gold focus:px-4 focus:py-2 focus:text-primary-foreground"
+          >
+            Ir para o conteúdo
+          </a>
+          <div className="flex min-h-screen flex-col">
+            {!isJournalismRoute ? (
+              <>
+                <div className="bg-brand-navy text-ivory">
+                  <Container className="flex min-h-8 items-center justify-end">
+                    <WeatherTicker />
+                  </Container>
+                </div>
+                <SiteHeader institutions={institutions} />
+              </>
+            ) : null}
+            <main id="conteudo-principal" className="flex-1">
+              {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+              <Outlet />
+            </main>
+            <SiteFooter />
+          </div>
+          <MiniRadioPlayer />
+        </RadioProvider>
+      </WeatherProvider>
+    </AdSenseProvider>
   );
 }

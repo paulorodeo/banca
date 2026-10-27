@@ -2,6 +2,7 @@ import { useState, type MouseEvent } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, ChevronRight, ExternalLink, MapPinned, Newspaper } from "lucide-react";
 import { BrazilEditorialAtlas } from "@/components/site/brazil-editorial-atlas";
+import { DisplayAd } from "@/components/ads/AdPlacement";
 import { Container } from "@/components/site/primitives";
 import { NewsImage } from "@/components/site/news-image";
 import {
@@ -176,17 +177,22 @@ function AtlasBrasilPage() {
   return (
     <div className="atlas-portal-page">
       <section className="atlas-portal-hero">
-        <Container>
-          <nav className="atlas-portal-breadcrumb" aria-label="Breadcrumb">
-            <Link to="/">Início</Link>
-            <ChevronRight aria-hidden />
-            <span aria-current="page">Atlas Brasil</span>
-          </nav>
-          <p className="atlas-portal-eyebrow">Banca Paulista · Informação territorial</p>
-          <h1>Atlas Brasil</h1>
-          <p className="atlas-portal-lede">
-            Mapas, indicadores e notícias para explorar o Brasil por região, estado e tema.
-          </p>
+        <Container className="atlas-portal-hero-grid">
+          <div className="atlas-portal-hero-copy">
+            <nav className="atlas-portal-breadcrumb" aria-label="Breadcrumb">
+              <Link to="/">Início</Link>
+              <ChevronRight aria-hidden />
+              <span aria-current="page">Atlas Brasil</span>
+            </nav>
+            <p className="atlas-portal-eyebrow">Banca Paulista · Informação territorial</p>
+            <h1>Atlas Brasil</h1>
+            <p className="atlas-portal-lede">
+              Mapas, indicadores e notícias para explorar o Brasil por região, estado e tema.
+            </p>
+          </div>
+          <aside className="atlas-portal-hero-ad" aria-label="Publicidade">
+            <DisplayAd placement="ATLAS-01" className="atlas-hero-ad-display" />
+          </aside>
         </Container>
       </section>
 
@@ -278,6 +284,10 @@ function AtlasBrasilPage() {
         selectedLayer={activeLayer}
         onLayerChange={setActiveLayer}
       />
+
+      <Container className="py-4 md:py-6">
+        <DisplayAd placement="ATLAS-02" />
+      </Container>
 
       <Container className="atlas-portal-content">
         <section className="atlas-editorial-intro" aria-labelledby="atlas-editorial-title">

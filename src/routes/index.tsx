@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import { content } from "@/content/repository";
 import { Container } from "@/components/site/primitives";
+import { DisplayAd } from "@/components/ads/AdPlacement";
 
 import { websiteSchema, canonicalLink, pageMeta } from "@/lib/seo";
 import type { ConteudoJuridico, Regiao, Zona, Delegacia, Bairro } from "@/content/types";
@@ -392,6 +393,11 @@ function Index() {
           )}
         </Container>
       </section>
+      {atlasNews.filter((item) => !item.isDemo && item.slug).length >= 3 ? (
+        <Container className="py-5 md:py-7">
+          <DisplayAd placement="HOME-01" />
+        </Container>
+      ) : null}
       <section className="border-t border-border bg-card py-12">
         <Container>
           <HomeHeading

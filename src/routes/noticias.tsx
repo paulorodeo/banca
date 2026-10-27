@@ -1,5 +1,5 @@
 import { createFileRoute, Link, Outlet } from "@tanstack/react-router";
-import { useRef } from "react";
+import { Fragment, useRef } from "react";
 import { ArrowRight, BookOpenText, ChevronLeft, ChevronRight, TrendingUp } from "lucide-react";
 import { NewsImage } from "@/components/site/news-image";
 import { BancaEditorialBanner } from "@/components/site/banca-editorial-banner";
@@ -13,6 +13,7 @@ import {
   type NoticiaCategoria,
 } from "@/content/local/noticia-categorias";
 import { noticias } from "@/content/local/noticias";
+import { InFeedAd } from "@/components/ads/AdPlacement";
 
 const orderedNoticias = [...noticias].sort((a, b) => b.publicadoEm.localeCompare(a.publicadoEm));
 export const Route = createFileRoute("/noticias")({
@@ -131,8 +132,15 @@ export function NoticiasPage({ categoriaSlug }: { categoriaSlug?: string }) {
               <div>
                 <SectionTitle title="Últimas notícias" />
                 <div className="mt-7 grid gap-x-6 gap-y-9 md:grid-cols-2 lg:grid-cols-3">
-                  {latest.map((item) => (
-                    <NewsCard key={item.id} item={item} />
+                  {latest.map((item, index) => (
+                    <Fragment key={item.id}>
+                      <NewsCard item={item} />
+                      {index === 4 && latest.length >= 6 ? (
+                        <div className="col-span-full min-w-0">
+                          <InFeedAd placement="NEWS-01" />
+                        </div>
+                      ) : null}
+                    </Fragment>
                   ))}
                 </div>
                 {archive.length ? (

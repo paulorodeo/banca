@@ -13,7 +13,6 @@
     U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215,
     U+FEFF, U+FFFD;
 }
-
 @font-face {
   font-family: "Manrope";
   font-style: normal;
@@ -3499,5 +3498,110 @@ nav[aria-label="Trilha de navegação"] a {
 @media (prefers-reduced-motion: reduce) {
   .atlas-portal-menu > summary::after {
     transition: none;
+  }
+}
+.adsense-preview {
+  display: flex;
+  min-height: 2.5rem;
+  min-width: 0;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.45rem 0.75rem;
+  border: 1px dashed rgba(166, 129, 47, 0.38);
+  background: rgba(248, 246, 240, 0.62);
+  color: #5b6670;
+  font-size: 0.68rem;
+  line-height: 1.3;
+  text-align: center;
+}
+.adsense-preview > span {
+  color: #765b22;
+  font-size: 0.63rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.adsense-preview small {
+  font-size: inherit;
+}
+.adsense-live {
+  display: grid;
+  width: 100%;
+  min-width: 0;
+  justify-items: stretch;
+  gap: 0.4rem;
+}
+.adsense-live-label {
+  color: #63717c;
+  font-size: 0.61rem;
+  font-weight: 750;
+  letter-spacing: 0.12em;
+  text-align: center;
+  text-transform: uppercase;
+}
+.adsbygoogle {
+  max-width: 100%;
+  min-width: 0;
+}
+.advertising-direct {
+  display: grid;
+  min-width: 0;
+  gap: 0.4rem;
+}
+.advertising-direct img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+}
+.article-sidebar-ad {
+  width: 100%;
+}
+
+.atlas-portal-hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  align-items: center;
+  gap: clamp(1.5rem, 4vw, 3.25rem);
+}
+.atlas-portal-hero-copy {
+  min-width: 0;
+}
+.atlas-portal-hero-ad {
+  display: grid;
+  min-width: 0;
+  justify-items: stretch;
+  gap: 0.4rem;
+  width: 100%;
+  max-width: 970px;
+  margin-inline: auto;
+}
+.atlas-portal-hero-ad .atlas-hero-ad-display {
+  width: 100%;
+  max-width: 970px;
+}
+.atlas-portal-hero-ad .adsense-preview {
+  min-height: 5.625rem;
+  border-color: rgba(225, 196, 120, 0.35);
+  background: rgba(255, 255, 255, 0.045);
+  color: rgba(247, 244, 237, 0.78);
+}
+.atlas-portal-hero-ad .adsense-preview > span {
+  color: #e1c478;
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  text-transform: none;
+}
+.atlas-portal-hero-ad .adsense-live-label {
+  color: rgba(243, 246, 249, 0.62);
+}
+@media (max-width: 760px) {
+  .atlas-portal-hero-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.25rem;
+  }
+  .atlas-portal-hero-ad .adsense-preview {
+    min-height: 2.75rem;
   }
 }
