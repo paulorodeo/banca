@@ -39,9 +39,131 @@ function stableId(value: string) {
 function dateValue(value: string): string | null {
   const trimmed = value.trim();
   if (!trimmed || trimmed.length > 80) return null;
-  const time = Date.parse(trimmed);
+  let time = Date.parse(trimmed);
+  if (!Number.isFinite(time)) {
+    const portuguese =
+      /^(?:[a-zç]{3},\s*)?([a-zç]{3})\s+(\d{1,2})\s+(\d{4})\s+(\d{2}:\d{2}:\d{2})$/i.exec(
+        fold(trimmed),
+      );
+    const month = portuguese
+      ? [
+          "jan",
+          "fev",
+          "mar",
+          "abr",
+          "mai",
+          "jun",
+          "jul",
+          "ago",
+          "set",
+          "out",
+          "nov",
+          "dez",
+        ].indexOf(portuguese[1]!) + 1
+      : 0;
+    if (portuguese && month > 0)
+      time = Date.parse(
+        `${portuguese[3]}-${String(month).padStart(2, "0")}-${String(portuguese[2]).padStart(2, "0")}T${portuguese[4]}-03:00`,
+      );
+  }
   if (!Number.isFinite(time) || time > Date.now() + 86_400_000) return null;
   return new Date(time).toISOString();
+}
+
+const STATE_NAMES: Record<string, string> = {
+  acre: "AC",
+  alagoas: "AL",
+  amapa: "AP",
+  amazonas: "AM",
+  bahia: "BA",
+  ceara: "CE",
+  "distrito federal": "DF",
+  "espirito santo": "ES",
+  goias: "GO",
+  maranhao: "MA",
+  "mato grosso": "MT",
+  "mato grosso do sul": "MS",
+  "minas gerais": "MG",
+  para: "PA",
+  paraiba: "PB",
+  parana: "PR",
+  pernambuco: "PE",
+  piaui: "PI",
+  "rio de janeiro": "RJ",
+  "rio grande do norte": "RN",
+  "rio grande do sul": "RS",
+  rondonia: "RO",
+  roraima: "RR",
+  "santa catarina": "SC",
+  "sao paulo": "SP",
+  sergipe: "SE",
+  tocantins: "TO",
+};
+const STATE_REGIONS: Record<string, string> = {
+  AC: "N",
+  AP: "N",
+  AM: "N",
+  PA: "N",
+  RO: "N",
+  RR: "N",
+  TO: "N",
+  AL: "NE",
+  BA: "NE",
+  CE: "NE",
+  MA: "NE",
+  PB: "NE",
+  PE: "NE",
+  PI: "NE",
+  RN: "NE",
+  SE: "NE",
+  DF: "CO",
+  GO: "CO",
+  MT: "CO",
+  MS: "CO",
+  ES: "SE",
+  MG: "SE",
+  RJ: "SE",
+  SP: "SE",
+  PR: "S",
+  RS: "S",
+  SC: "S",
+};
+
+const fold = (value: string) =>
+  value
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLowerCase();
+
+function classifyTerritory(title: string) {
+  const folded = ` ${fold(title)} `;
+  const states = Object.entries(STATE_NAMES)
+    .filter(([name]) =>
+      new RegExp(`(?:^|[^a-z])${name.replaceAll(" ", "\\s+")}(?:[^a-z]|$)`).test(folded),
+    )
+    .map(([, code]) => code);
+  const stateCodes = [...new Set(states)];
+  const regionCodes = [...new Set(stateCodes.map((code) => STATE_REGIONS[code]!).filter(Boolean))];
+  return {
+    geographicScope: stateCodes.length === 1 ? ("state" as const) : ("unknown" as const),
+    stateCodes,
+    regionCodes,
+  };
+}
+
+function classifySubjects(title: string, initial: string[], source: FeedSource) {
+  const value = fold(title);
+  const tags = new Set(initial);
+  const add = (tag: string, pattern: RegExp) => {
+    if (source.allowedCategories.includes(tag) && pattern.test(value)) tags.add(tag);
+  };
+  add("agronegocio", /\b(agropecuaria|agricultura|pecuaria|safra|produtor rural)\b/);
+  add("rodovias", /\b(rodovia|br-\d{3}|estrada federal)\b/);
+  add("infraestrutura", /\b(infraestrutura|transporte|transito|ferrovia|porto|aeroporto)\b/);
+  add("justica", /\b(justica|tribunal|stf|stj|tse|decisao judicial|julgamento)\b/);
+  add("politica", /\b(eleicao|eleitoral|congresso|camara|senado|governo|presidente)\b/);
+  add("economia", /\b(economia|inflacao|juros|emprego|mercado|pib)\b/);
+  return [...tags].slice(0, 8);
 }
 
 function elementValue(node: ReturnType<typeof xmlFirst>, name?: string) {
@@ -110,19 +232,23 @@ export function normalizeFeed(
     const categories = entry.tags.map((tag) => cleanText(tag, 80).toLocaleLowerCase("pt-BR"));
     const mappedCategories = categories.map((tag) => source.categoryMap[tag]);
     if (source.defaultCategory) mappedCategories.push(source.defaultCategory);
-    const subjectTags = [
+    const feedSubjectTags = [
       ...new Set(
         mappedCategories.filter(
           (tag): tag is string => !!tag && source.allowedCategories.includes(tag),
         ),
       ),
     ].slice(0, 8);
+    const subjectTags = classifySubjects(title, feedSubjectTags, source);
     const publishedAt = dateValue(entry.published);
     const updatedAt = dateValue(entry.updated);
-    if ((entry.published && !publishedAt) || (entry.updated && !updatedAt)) {
+    if (!publishedAt || (entry.updated && !updatedAt)) {
       rejected++;
       continue;
     }
+    const territory = classifyTerritory(title);
+    const automaticallyApproved =
+      source.technicalStatus === "operational" && source.editorialAuthorization === "approved";
     items.push({
       id: `${source.id}:${stableId(`${originalUrl}\n${originalGuid}`)}`,
       sourceId: source.id,
@@ -134,17 +260,18 @@ export function normalizeFeed(
       collectedAt,
       language: cleanText(entry.language, 20) || null,
       subjectTags,
-      geographicScope: "unknown",
-      regionCodes: [],
-      stateCodes: [],
+      geographicScope: territory.geographicScope,
+      regionCodes: territory.regionCodes,
+      stateCodes: territory.stateCodes,
       cityIds: [],
       neighborhoodIds: [],
       institutionIds: [],
       agencyIds: [],
       highwayIds: [],
       originalEditorialNote: source.publicationNote,
-      publicationStatus: "pending",
-      rightsStatus: source.rightsStatus,
+      publicationStatus: automaticallyApproved ? "approved" : "pending",
+      rightsStatus: automaticallyApproved ? "approved" : "pending",
+      approvalMethod: automaticallyApproved ? "authorization-policy" : null,
     });
   }
   return { items, received: entries.length, rejected };

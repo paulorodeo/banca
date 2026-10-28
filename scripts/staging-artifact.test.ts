@@ -17,9 +17,12 @@ afterEach(async () => {
 describe("staging artifact preflight", () => {
   test("approves staging with fixtures in server and client bundles", async () => {
     const artifact = await createArtifact();
-    await expect(
-      validateStagingArtifact({ buildId: "test-build", commit: commit, outputDir: artifact }),
-    ).resolves.toMatchObject({
+    const validated = await validateStagingArtifact({
+      buildId: "test-build",
+      commit,
+      outputDir: artifact,
+    });
+    expect(validated).toMatchObject({
       configPath: join(artifact, "server", "wrangler.json"),
     });
   });
@@ -283,7 +286,7 @@ async function createArtifact(
       : `const state = { nome: "Acre" }; const editoria = { nome: "Justiça" }; const title = \`Pauta demonstrativa: \${editoria.nome.toLowerCase()} em \${state.nome}\`; const summary = "Texto fictício"; isDemo: true;`;
   await writeFile(
     join(server, "index.mjs"),
-    "X-Robots-Tag noindex, nofollow, noarchive, noimageindex; export default {};",
+    "X-Robots-Tag noindex, nofollow, noarchive, noimageindex; external_news_sync_completed; export default { scheduled() {} };",
   );
   await writeFile(
     join(ssr, "atlas.functions-test.mjs"),
@@ -310,13 +313,18 @@ async function createArtifact(
         BUILD_COMMIT: artifactCommit,
         DEPLOYMENT_ENV: options.environment ?? "staging",
         PUBLIC_SITE_URL: "https://banca.paulista.workers.dev",
+        EXTERNAL_NEWS_ENABLED: "true",
       },
       assets: {
         binding: "ASSETS",
         directory: "../public",
         headers: { "/*": { "X-Robots-Tag": "noindex, nofollow, noarchive, noimageindex" } },
       },
-      kv_namespaces: [{ binding: "WEATHER_CACHE", id: "c6f5a6125aba45509501fb04a8c44d7d" }],
+      kv_namespaces: [
+        { binding: "WEATHER_CACHE", id: "c6f5a6125aba45509501fb04a8c44d7d" },
+        { binding: "EXTERNAL_NEWS_KV", id: "76a7d6ebb5d145d3903e5ae4f221264c" },
+      ],
+      triggers: { crons: ["0 */2 * * *"] },
     }),
   );
   return root;

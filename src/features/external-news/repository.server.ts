@@ -37,23 +37,43 @@ export class KvExternalNewsRepository implements ExternalNewsRepository {
   }
   async writeItems(sourceId: string, items: ExternalNewsItem[]) {
     const current = await this.listItems([sourceId]);
-    const urls = new Set(current.map((item) => item.originalUrl));
-    const guids = new Set(current.map((item) => item.originalGuid));
+    const byUrl = new Map(current.map((item) => [item.originalUrl, item]));
+    const byGuid = new Map(current.map((item) => [item.originalGuid, item]));
     let inserted = 0;
     let duplicates = 0;
+    let changed = false;
     for (const item of items) {
-      if (
-        item.sourceId !== sourceId ||
-        urls.has(item.originalUrl) ||
-        guids.has(item.originalGuid)
-      ) {
+      if (item.sourceId !== sourceId) {
         duplicates++;
         continue;
       }
+      const existing = byUrl.get(item.originalUrl) ?? byGuid.get(item.originalGuid);
+      if (existing) {
+        duplicates++;
+        const manualDecision = existing.approvalMethod === "manual";
+        const merged: ExternalNewsItem = {
+          ...item,
+          id: existing.id,
+          collectedAt: existing.collectedAt,
+          ...(manualDecision
+            ? {
+                publicationStatus: existing.publicationStatus,
+                rightsStatus: existing.rightsStatus,
+                approvalMethod: existing.approvalMethod,
+              }
+            : {}),
+        };
+        if (JSON.stringify(existing) !== JSON.stringify(merged)) {
+          current[current.indexOf(existing)] = merged;
+          changed = true;
+        }
+        continue;
+      }
       current.push(item);
-      urls.add(item.originalUrl);
-      guids.add(item.originalGuid);
+      byUrl.set(item.originalUrl, item);
+      byGuid.set(item.originalGuid, item);
       inserted++;
+      changed = true;
     }
     const cutoff = Date.now() - 14 * 86_400_000;
     const recent = current.filter(
@@ -69,7 +89,9 @@ export class KvExternalNewsRepository implements ExternalNewsRepository {
     });
     const serialized = JSON.stringify(recent.slice(0, 500));
     if (serialized.length > 2_000_000) throw new Error("external_news_source_snapshot_too_large");
-    await this.kv.put(`${SOURCE_PREFIX}${sourceId}`, serialized);
+    const existingSerialized = JSON.stringify(current);
+    if (changed || existingSerialized !== serialized)
+      await this.kv.put(`${SOURCE_PREFIX}${sourceId}`, serialized);
     return { inserted, duplicates };
   }
   async updateItem(item: ExternalNewsItem) {
@@ -87,6 +109,20 @@ export class KvExternalNewsRepository implements ExternalNewsRepository {
     );
   }
   async writeReport(report: FeedSyncReport) {
+    const previous = await this.getReport(report.sourceId);
+    const sameOutcome =
+      previous &&
+      previous.error === report.error &&
+      previous.received === report.received &&
+      previous.rejected === report.rejected &&
+      previous.duplicates === report.duplicates &&
+      previous.approved === report.approved;
+    if (
+      sameOutcome &&
+      report.error &&
+      Date.parse(report.completedAt) - Date.parse(previous.completedAt) < 6 * 60 * 60_000
+    )
+      return;
     await this.kv.put(`${REPORT_PREFIX}${report.sourceId}`, JSON.stringify(report));
   }
   async getReport(sourceId: string) {
@@ -108,13 +144,27 @@ export class MemoryExternalNewsRepository implements ExternalNewsRepository {
     let duplicates = 0;
     const current = await this.listItems([sourceId]);
     for (const item of items) {
-      if (
-        item.sourceId !== sourceId ||
-        current.some(
-          (old) => old.originalUrl === item.originalUrl || old.originalGuid === item.originalGuid,
-        )
-      ) {
+      const existing = current.find(
+        (old) => old.originalUrl === item.originalUrl || old.originalGuid === item.originalGuid,
+      );
+      if (item.sourceId !== sourceId) {
         duplicates++;
+        continue;
+      }
+      if (existing) {
+        duplicates++;
+        this.items.set(existing.id, {
+          ...item,
+          id: existing.id,
+          collectedAt: existing.collectedAt,
+          ...(existing.approvalMethod === "manual"
+            ? {
+                publicationStatus: existing.publicationStatus,
+                rightsStatus: existing.rightsStatus,
+                approvalMethod: existing.approvalMethod,
+              }
+            : {}),
+        });
         continue;
       }
       this.items.set(item.id, item);

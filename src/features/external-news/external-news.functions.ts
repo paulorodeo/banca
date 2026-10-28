@@ -6,12 +6,15 @@ import { queryExternalNews } from "./query.server";
 import type { ExternalNewsQuery } from "./query.server";
 
 async function configuredRepository() {
-  if (process.env["EXTERNAL_NEWS_ENABLED"] !== "true") return null;
   try {
     const runtime = await import("cloudflare:workers");
-    const namespace = (runtime.env as unknown as { EXTERNAL_NEWS_KV?: ExternalNewsKv })
-      .EXTERNAL_NEWS_KV;
-    return namespace ? new KvExternalNewsRepository(namespace) : null;
+    const bindings = runtime.env as unknown as {
+      EXTERNAL_NEWS_ENABLED?: string;
+      EXTERNAL_NEWS_KV?: ExternalNewsKv;
+    };
+    return bindings.EXTERNAL_NEWS_ENABLED === "true" && bindings.EXTERNAL_NEWS_KV
+      ? new KvExternalNewsRepository(bindings.EXTERNAL_NEWS_KV)
+      : null;
   } catch {
     return null;
   }
@@ -57,9 +60,12 @@ export const readExternalNews = createServerFn({ method: "GET" })
       };
       return await queryExternalNews(await configuredRepository(), query);
     } catch (error) {
-      console.error("external_news_query_failed", {
-        name: error instanceof Error ? error.name : "UnknownError",
-      });
+      console.error(
+        JSON.stringify({
+          event: "external_news_query_failed",
+          name: error instanceof Error ? error.name : "UnknownError",
+        }),
+      );
       return [];
     }
   });

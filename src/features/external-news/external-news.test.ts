@@ -35,12 +35,13 @@ function approvedItem(overrides: Partial<ExternalNewsItem> = {}): ExternalNewsIt
     originalEditorialNote: "Atribuir fonte.",
     publicationStatus: "approved",
     rightsStatus: "approved",
+    approvalMethod: "authorization-policy",
     ...overrides,
   };
 }
 
 describe("external news feed adapter", () => {
-  it("normalizes RSS metadata only, strips tracking parameters, and leaves curation pending", () => {
+  it("normalizes RSS metadata only and auto-approves metadata from an authorized source", () => {
     const result = normalizeFeed(sampleRss, agency);
     expect(result.received).toBe(1);
     expect(result.items[0]?.title).toBe("Notícia & atualização");
@@ -48,7 +49,8 @@ describe("external news feed adapter", () => {
       "https://agenciabrasil.ebc.com.br/noticia/2026/10/teste",
     );
     expect(result.items[0]?.subjectTags).toEqual(["politica"]);
-    expect(result.items[0]?.publicationStatus).toBe("pending");
+    expect(result.items[0]?.publicationStatus).toBe("approved");
+    expect(result.items[0]?.approvalMethod).toBe("authorization-policy");
     expect(JSON.stringify(result.items[0])).not.toContain("Texto que não deve ser armazenado");
     expect(result.items[0]?.stateCodes).toEqual([]);
   });
@@ -99,7 +101,7 @@ describe("external news feed adapter", () => {
 
   it("rejects unsafe redirects and records an auditable sync report without approving items", async () => {
     const repository = new MemoryExternalNewsRepository();
-    const source = { ...agency, status: "enabled" as const };
+    const source = { ...agency, technicalStatus: "operational" as const };
     const fetcher: Fetcher = async () =>
       new Response(null, { status: 302, headers: { location: "http://127.0.0.1/private" } });
     const report = await syncExternalFeed(source, repository, fetcher);
@@ -113,9 +115,24 @@ describe("external news feed adapter", () => {
     const eligible = approvedItem();
     await repository.writeItems(agency.id, [
       eligible,
-      approvedItem({ id: "pending", publicationStatus: "pending" }),
-      approvedItem({ id: "rights-pending", rightsStatus: "pending" }),
-      approvedItem({ id: "old", publishedAt: "2020-01-01T00:00:00.000Z" }),
+      approvedItem({
+        id: "pending",
+        originalGuid: "pending",
+        originalUrl: "https://agenciabrasil.ebc.com.br/noticia/2026/10/pending",
+        publicationStatus: "pending",
+      }),
+      approvedItem({
+        id: "rights-pending",
+        originalGuid: "rights-pending",
+        originalUrl: "https://agenciabrasil.ebc.com.br/noticia/2026/10/rights",
+        rightsStatus: "pending",
+      }),
+      approvedItem({
+        id: "old",
+        originalGuid: "old",
+        originalUrl: "https://agenciabrasil.ebc.com.br/noticia/2020/01/old",
+        publishedAt: "2020-01-01T00:00:00.000Z",
+      }),
       approvedItem({
         id: "state",
         originalUrl: "https://agenciabrasil.ebc.com.br/noticia/2026/10/sp",
@@ -125,9 +142,33 @@ describe("external news feed adapter", () => {
       }),
     ]);
     const sources = new Map(feedSourceById);
-    sources.set(agency.id, { ...agency, rightsStatus: "approved" });
+    sources.set(agency.id, { ...agency, editorialAuthorization: "approved" });
     expect(await queryExternalNews(repository, {}, sources)).toHaveLength(1);
     expect(await queryExternalNews(repository, { stateCode: "SP" }, sources)).toHaveLength(1);
     expect(await queryExternalNews(null, {})).toEqual([]);
+  });
+
+  it("preserves a manual rejection when the same item is synchronized again", async () => {
+    const repository = new MemoryExternalNewsRepository();
+    const rejected = approvedItem({ publicationStatus: "rejected", approvalMethod: "manual" });
+    await repository.writeItems(agency.id, [rejected]);
+    await repository.writeItems(agency.id, [approvedItem({ title: "Título atualizado" })]);
+    const [stored] = await repository.listItems([agency.id]);
+    expect(stored?.publicationStatus).toBe("rejected");
+    expect(stored?.approvalMethod).toBe("manual");
+    expect(stored?.title).toBe("Título atualizado");
+  });
+
+  it("classifies only explicit state mentions and keeps unknown geography eligible generally", async () => {
+    const result = normalizeFeed(
+      sampleRss.replace("Notícia &amp; atualização", "Notícia sobre São Paulo"),
+      agency,
+    );
+    expect(result.items[0]?.stateCodes).toEqual(["SP"]);
+    expect(result.items[0]?.regionCodes).toEqual(["SE"]);
+    const repository = new MemoryExternalNewsRepository();
+    await repository.writeItems(agency.id, [approvedItem({ geographicScope: "unknown" })]);
+    expect(await queryExternalNews(repository, {})).toHaveLength(1);
+    expect(await queryExternalNews(repository, { stateCode: "AC" })).toHaveLength(0);
   });
 });

@@ -32,12 +32,14 @@ export async function validateStagingArtifact(
   assert.equal(assets?.["directory"], "../public", "Unexpected assets path");
   assert.deepEqual(config["kv_namespaces"], [
     { binding: "WEATHER_CACHE", id: "c6f5a6125aba45509501fb04a8c44d7d" },
+    { binding: "EXTERNAL_NEWS_KV", id: "76a7d6ebb5d145d3903e5ae4f221264c" },
   ]);
   assert(
     !JSON.stringify(config).includes(".local/atlas-roads-dataset.json"),
     "Historical road dataset must not be included",
   );
-  assert(!vars?.["EXTERNAL_NEWS_ENABLED"] || vars["EXTERNAL_NEWS_ENABLED"] === "false");
+  assert.equal(vars?.["EXTERNAL_NEWS_ENABLED"], "true");
+  assert.deepEqual(config["triggers"], { crons: ["0 */2 * * *"] });
 
   const serverEntry = resolve(outputDir, "server", String(config["main"]));
   const publicDir = resolve(outputDir, "public");
@@ -124,6 +126,8 @@ export async function validateStagingArtifact(
   );
   const serverSource = await readFile(serverEntry, "utf8");
   assert(serverSource.length > 0, "Cloudflare Worker entry is empty");
+  assert.match(serverSource, /scheduled/, "Cloudflare scheduled handler is absent");
+  assert.match(serverBundle, /external_news_sync_completed/, "External news cron plugin is absent");
 
   return { configPath, serverEntry, publicDir };
 }

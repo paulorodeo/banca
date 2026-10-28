@@ -11,6 +11,7 @@ import { buildProfile } from "./src/lib/deployment-profile";
 const CLOUDFLARE_ACCOUNT_ID = "7b2dfe1e7fa69edb06d7bf74d7ebc942";
 const STAGING_WEATHER_CACHE_ID = "c6f5a6125aba45509501fb04a8c44d7d";
 const PRODUCTION_WEATHER_CACHE_ID = "c1b76e306aa340f6ab3c25517985395d";
+const STAGING_EXTERNAL_NEWS_KV_ID = "76a7d6ebb5d145d3903e5ae4f221264c";
 
 const localAtlasRoadData: Plugin = {
   name: "local-atlas-road-data",
@@ -62,10 +63,9 @@ export default defineConfig(({ command, mode }) => {
 
   return {
     define: Object.fromEntries(
-      [
-        ...Object.entries(modeEnv),
-        ["VITE_ATLAS_DEMO", atlasDemoEnabled ? "true" : "false"],
-      ].map(([key, value]) => [`import.meta.env.${key}`, JSON.stringify(value)]),
+      [...Object.entries(modeEnv), ["VITE_ATLAS_DEMO", atlasDemoEnabled ? "true" : "false"]].map(
+        ([key, value]) => [`import.meta.env.${key}`, JSON.stringify(value)],
+      ),
     ),
     resolve: {
       tsconfigPaths: true,
@@ -93,6 +93,7 @@ export default defineConfig(({ command, mode }) => {
         ? [
             nitro({
               defaultPreset: "cloudflare-module",
+              plugins: [resolve(process.cwd(), "server/plugins/external-news-scheduled.ts")],
               output: {
                 dir: resolve(
                   process.cwd(),
@@ -115,12 +116,24 @@ export default defineConfig(({ command, mode }) => {
                           ? PRODUCTION_WEATHER_CACHE_ID
                           : STAGING_WEATHER_CACHE_ID,
                     },
+                    ...(deploymentEnv === "production"
+                      ? []
+                      : [
+                          {
+                            binding: "EXTERNAL_NEWS_KV",
+                            id: STAGING_EXTERNAL_NEWS_KV_ID,
+                          },
+                        ]),
                   ],
+                  ...(deploymentEnv === "production"
+                    ? {}
+                    : { triggers: { crons: ["0 */2 * * *"] } }),
                   services: [{ binding: "PODCAST_FEED", service: "feed-banca" }],
                   vars: {
                     BUILD_COMMIT: execFileSync("git", ["rev-parse", "HEAD"], {
                       encoding: "utf8",
                     }).trim(),
+                    ...(deploymentEnv === "production" ? {} : { EXTERNAL_NEWS_ENABLED: "true" }),
                     ...(profile?.runtimeVars ?? {}),
                   },
                 },

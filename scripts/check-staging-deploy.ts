@@ -54,7 +54,8 @@ export async function checkStagingDeploy(options?: {
   );
   assert(!config["route"], "Custom routes are outside scope");
   const triggers = config["triggers"] as { crons?: string[] } | undefined;
-  assert(!triggers?.crons?.length, "Cron is outside scope");
+  assert.deepEqual(triggers?.crons, ["0 */2 * * *"]);
+  assert.equal(vars["EXTERNAL_NEWS_ENABLED"], "true");
 
   for (const asset of [
     "images/sp/masp.webp",

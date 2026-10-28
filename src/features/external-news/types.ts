@@ -1,6 +1,8 @@
 export type ExternalNewsStatus = "pending" | "approved" | "rejected" | "expired" | "disabled";
-export type FeedSourceStatus = "enabled" | "validation" | "disabled";
+export type FeedTechnicalStatus = "operational" | "validation" | "unavailable";
+export type EditorialAuthorization = "approved" | "pending" | "rejected";
 export type FeedRightsStatus = "approved" | "pending" | "restricted";
+export type ApprovalMethod = "authorization-policy" | "manual" | null;
 export type GeographicScope = "national" | "regional" | "state" | "municipal" | "unknown";
 
 export type ExternalNewsItem = {
@@ -25,6 +27,7 @@ export type ExternalNewsItem = {
   originalEditorialNote: string;
   publicationStatus: ExternalNewsStatus;
   rightsStatus: FeedRightsStatus;
+  approvalMethod: ApprovalMethod;
 };
 
 export type FeedSource = {
@@ -33,12 +36,12 @@ export type FeedSource = {
   feedUrl: string;
   siteUrl: string;
   allowedHosts: string[];
-  status: FeedSourceStatus;
+  technicalStatus: FeedTechnicalStatus;
+  editorialAuthorization: EditorialAuthorization;
   frequencyMinutes: number;
   allowedCategories: string[];
   categoryMap: Record<string, string>;
   defaultCategory?: string;
-  rightsStatus: FeedRightsStatus;
   rightsPolicy: string;
   publicationNote: string;
   lastSync: string | null;

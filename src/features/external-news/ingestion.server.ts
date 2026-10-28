@@ -106,7 +106,7 @@ export async function syncExternalFeed(
     approved: 0,
     error: null,
   };
-  if (source.status !== "enabled") {
+  if (source.technicalStatus !== "operational") {
     const report = {
       ...base,
       completedAt: new Date().toISOString(),
@@ -132,7 +132,7 @@ export async function syncExternalFeed(
       received: normalized.received,
       rejected: normalized.rejected,
       duplicates: stored.duplicates,
-      approved: 0,
+      approved: normalized.items.filter((item) => item.publicationStatus === "approved").length,
     };
     await repository.writeReport(report);
     return report;
@@ -153,7 +153,10 @@ export async function syncEnabledExternalFeeds(
   repository: ExternalNewsRepository,
   fetcher: Fetcher = fetch,
 ) {
-  const enabled = sources.filter((source) => source.status === "enabled");
+  const enabled = sources.filter(
+    (source) =>
+      source.technicalStatus === "operational" && source.editorialAuthorization === "approved",
+  );
   const reports: FeedSyncReport[] = [];
   for (let i = 0; i < enabled.length; i += 3) {
     reports.push(

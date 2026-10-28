@@ -21,14 +21,19 @@ export async function queryExternalNews(
   const region = query.regionCode?.toUpperCase();
   const now = Date.now();
   const eligibleSources = [...sources.values()].filter(
-    (source) => source.status === "enabled" && source.rightsStatus === "approved",
+    (source) =>
+      source.technicalStatus === "operational" && source.editorialAuthorization === "approved",
   );
   if (!eligibleSources.length) return [];
   const items = await repository.listItems(eligibleSources.map((source) => source.id));
   const eligible = items
     .filter((item) => {
       const source = sources.get(item.sourceId);
-      if (!source || source.status !== "enabled" || source.rightsStatus !== "approved")
+      if (
+        !source ||
+        source.technicalStatus !== "operational" ||
+        source.editorialAuthorization !== "approved"
+      )
         return false;
       if (item.publicationStatus !== "approved" || item.rightsStatus !== "approved") return false;
       if (
@@ -47,7 +52,9 @@ export async function queryExternalNews(
         return false;
       if (state && !item.stateCodes.includes(state)) return false;
       if (region && !item.regionCodes.includes(region)) return false;
-      if (!state && !region && item.geographicScope !== "national") return false;
+      // The general Brazil panel accepts unknown geography without attributing it to a territory.
+      if (!state && !region && !["national", "unknown"].includes(item.geographicScope))
+        return false;
       return true;
     })
     .sort((a, b) => (b.publishedAt ?? "").localeCompare(a.publishedAt ?? ""));
