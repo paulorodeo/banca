@@ -14,7 +14,7 @@ export function ExternalNewsCard({
 }) {
   return (
     <article className={`external-news-card${compact ? " is-compact" : ""}`}>
-      <p>Conteúdo externo · Fonte: {item.sourceName}</p>
+      <p>Fonte externa · {item.sourceName}</p>
       <h3>{item.title}</h3>
       <time dateTime={item.publishedAt ?? undefined}>{formatDate(item.publishedAt)}</time>
       {/* noreferrer is intentional: the publisher link does not need the reader's origin URL. */}
