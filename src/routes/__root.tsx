@@ -20,10 +20,9 @@ import { editorialIdentity } from "@/content/local/settings";
 import { content } from "@/content/repository";
 import type { PublicInstitution } from "@/content/types";
 import { organizationSchema } from "@/lib/seo";
-import { MiniRadioPlayer } from "@/features/radio/components/MiniRadioPlayer";
-import { RadioProvider } from "@/features/radio/components/RadioProvider";
 import { AdSenseProvider } from "@/components/ads/AdSenseProvider";
 import { PwaManager } from "@/components/pwa/PwaManager";
+import { RadioRuntimeGate } from "@/features/radio/components/RadioRuntimeGate";
 
 function NotFoundComponent() {
   return (
@@ -170,7 +169,7 @@ function RootComponent() {
   return (
     <AdSenseProvider>
       <WeatherProvider>
-        <RadioProvider>
+        <>
           <a
             href="#conteudo-principal"
             className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[60] focus:rounded-xs focus:bg-gold focus:px-4 focus:py-2 focus:text-primary-foreground"
@@ -190,13 +189,14 @@ function RootComponent() {
             ) : null}
             <main id="conteudo-principal" className="flex-1">
               {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-              <Outlet />
+              <RadioRuntimeGate>
+                <Outlet />
+              </RadioRuntimeGate>
             </main>
             <SiteFooter />
           </div>
-          <MiniRadioPlayer />
           <PwaManager />
-        </RadioProvider>
+        </>
       </WeatherProvider>
     </AdSenseProvider>
   );

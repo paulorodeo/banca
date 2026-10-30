@@ -78,11 +78,22 @@ export const Route = createFileRoute("/")({
       {
         rel: "preload",
         as: "image",
+        href: "/images/sp/ponte-mobile-480.avif",
+        imageSrcSet: "/images/sp/ponte-mobile-480.avif 480w, /images/sp/ponte-mobile-640.avif 640w",
+        imageSizes: "100vw",
+        type: "image/avif",
+        media: "(max-width: 639px)",
+        fetchPriority: "high",
+      },
+      {
+        rel: "preload",
+        as: "image",
         href: "/images/sp/ponte-1024.avif",
         imageSrcSet:
           "/images/sp/ponte-640.avif 640w, /images/sp/ponte-1024.avif 1024w, /images/sp/ponte-1440.avif 1440w, /images/sp/ponte.avif 2048w",
         imageSizes: "100vw",
         type: "image/avif",
+        media: "(min-width: 640px)",
         fetchPriority: "high",
       },
     ],
@@ -163,6 +174,19 @@ function Index() {
       <section className="home-hero relative isolate overflow-hidden bg-brand-navy text-ivory">
         <picture className="absolute inset-0 -z-20 size-full">
           <source
+            media="(max-width: 639px)"
+            srcSet="/images/sp/ponte-mobile-480.avif 480w, /images/sp/ponte-mobile-640.avif 640w"
+            sizes="100vw"
+            type="image/avif"
+          />
+          <source
+            media="(max-width: 639px)"
+            srcSet="/images/sp/ponte-mobile-480.webp 480w, /images/sp/ponte-mobile-640.webp 640w"
+            sizes="100vw"
+            type="image/webp"
+          />
+          <source
+            media="(min-width: 640px)"
             srcSet="/images/sp/ponte-640.avif 640w, /images/sp/ponte-1024.avif 1024w, /images/sp/ponte-1440.avif 1440w, /images/sp/ponte.avif 2048w"
             sizes="100vw"
             type="image/avif"
@@ -184,6 +208,19 @@ function Index() {
           style={{ animationPlayState: heroPaused ? "paused" : "running" }}
         >
           <source
+            media="(max-width: 639px)"
+            srcSet="/images/sp/masp-mobile-480.avif 480w, /images/sp/masp-mobile-640.avif 640w"
+            sizes="100vw"
+            type="image/avif"
+          />
+          <source
+            media="(max-width: 639px)"
+            srcSet="/images/sp/masp-mobile-480.webp 480w, /images/sp/masp-mobile-640.webp 640w"
+            sizes="100vw"
+            type="image/webp"
+          />
+          <source
+            media="(min-width: 640px)"
             srcSet="/images/sp/masp-640.avif 640w, /images/sp/masp-1024.avif 1024w, /images/sp/masp-1440.avif 1440w, /images/sp/masp.avif 2048w"
             sizes="100vw"
             type="image/avif"
@@ -361,24 +398,27 @@ function Index() {
           />
           {atlasNews.some((item) => !item.isDemo && item.slug) ? (
             <div className="home-news-grid">
-              {atlasNews.filter((item) => !item.isDemo && item.slug).slice(0, 3).map((item) => (
-                <Link
-                  key={item.id}
-                  to="/noticias/$slug"
-                  params={{ slug: item.slug! }}
-                  className="home-news-card"
-                >
-                  <div className="home-news-card-image">
-                    <NewsImage {...(item.imagem ? { image: item.imagem } : {})} />
-                  </div>
-                  <div className="home-news-card-copy">
-                    <span>{item.categoria}</span>
-                    <h3>{item.titulo}</h3>
-                    <p>{item.resumo}</p>
-                  </div>
-                  <ArrowRight className="home-news-card-arrow size-4" aria-hidden />
-                </Link>
-              ))}
+              {atlasNews
+                .filter((item) => !item.isDemo && item.slug)
+                .slice(0, 3)
+                .map((item) => (
+                  <Link
+                    key={item.id}
+                    to="/noticias/$slug"
+                    params={{ slug: item.slug! }}
+                    className="home-news-card"
+                  >
+                    <div className="home-news-card-image">
+                      <NewsImage {...(item.imagem ? { image: item.imagem } : {})} />
+                    </div>
+                    <div className="home-news-card-copy">
+                      <span>{item.categoria}</span>
+                      <h3>{item.titulo}</h3>
+                      <p>{item.resumo}</p>
+                    </div>
+                    <ArrowRight className="home-news-card-arrow size-4" aria-hidden />
+                  </Link>
+                ))}
             </div>
           ) : (
             <div className="mt-7 flex items-start gap-4 rounded-lg border border-dashed border-brand-navy/25 bg-background p-6 md:p-8">
