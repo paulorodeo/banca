@@ -1,6 +1,6 @@
 import { createFileRoute, notFound } from "@tanstack/react-router";
 import { NewsArticlePage } from "@/components/site/news-article-page";
-import type { NoticiaEditorial } from "@/content/types";
+import { noticiaDhenisParaRota } from "@/content/local/noticia-dhenis-route";
 import { breadcrumbSchema, canonicalLink, newsArticleSchema, pageMeta } from "@/lib/seo";
 
 const path = "/noticias/dhenis-martins-dos-santos-discussao-dfir-divulgacao-cpf-endereco";
@@ -19,17 +19,7 @@ export const Route = createFileRoute(
     )
       throw notFound();
 
-    const { rascunhoExposicaoDadosLinkedin } =
-      await import("@/content/local/rascunho-exposicao-dados-linkedin");
-    const { noindex: previousNoindex, ...publishedSeo } = rascunhoExposicaoDadosLinkedin.seo;
-    void previousNoindex;
-    const noticia: NoticiaEditorial = {
-      ...rascunhoExposicaoDadosLinkedin,
-      resumo: rascunhoExposicaoDadosLinkedin.linhaFina,
-      notas: [],
-      seo: { ...publishedSeo, canonicalPath: path },
-    };
-    return noticia;
+    return noticiaDhenisParaRota(path);
   },
   head: ({ loaderData }) => ({
     meta: [
@@ -39,7 +29,7 @@ export const Route = createFileRoute(
         path,
         type: "article",
       }),
-      { name: "robots", content: "noarchive" },
+      { name: "robots", content: "noindex,noarchive" },
     ],
     links: canonicalLink(path),
     scripts: loaderData

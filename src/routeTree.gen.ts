@@ -43,6 +43,7 @@ import { Route as InstituicoesSlugRouteImport } from './routes/instituicoes.$slu
 import { Route as NoticiasIndexRouteImport } from './routes/noticias.index'
 import { Route as NoticiasSlugRouteImport } from './routes/noticias.$slug'
 import { Route as NoticiasBrasilRouteImport } from './routes/noticias.brasil'
+import { Route as NoticiasDfirDhenisMartinsDosSantosDiscussaoDivulgacaoRouteImport } from './routes/noticias.dfir-dhenis-martins-dos-santos-discussao-divulgacao'
 import { Route as NoticiasDhenisMartinsDosSantosDiscussaoDfirDivulgacaoCpfEnderecoRouteImport } from './routes/noticias.dhenis-martins-dos-santos-discussao-dfir-divulgacao-cpf-endereco'
 import { Route as OrgaosIndexRouteImport } from './routes/orgaos.index'
 import { Route as RegioesIndexRouteImport } from './routes/regioes.index'
@@ -222,6 +223,12 @@ const NoticiasBrasilRoute = NoticiasBrasilRouteImport.update({
   path: '/brasil',
   getParentRoute: () => NoticiasRoute,
 } as any)
+const NoticiasDfirDhenisMartinsDosSantosDiscussaoDivulgacaoRoute =
+  NoticiasDfirDhenisMartinsDosSantosDiscussaoDivulgacaoRouteImport.update({
+    id: '/dfir-dhenis-martins-dos-santos-discussao-divulgacao',
+    path: '/dfir-dhenis-martins-dos-santos-discussao-divulgacao',
+    getParentRoute: () => NoticiasRoute,
+  } as any)
 const NoticiasDhenisMartinsDosSantosDiscussaoDfirDivulgacaoCpfEnderecoRoute =
   NoticiasDhenisMartinsDosSantosDiscussaoDfirDivulgacaoCpfEnderecoRouteImport.update(
     {
@@ -297,6 +304,7 @@ export interface FileRoutesByFullPath {
   '/instituicoes/$slug': typeof InstituicoesSlugRoute
   '/noticias/$slug': typeof NoticiasSlugRoute
   '/noticias/brasil': typeof NoticiasBrasilRoute
+  '/noticias/dfir-dhenis-martins-dos-santos-discussao-divulgacao': typeof NoticiasDfirDhenisMartinsDosSantosDiscussaoDivulgacaoRoute
   '/noticias/dhenis-martins-dos-santos-discussao-dfir-divulgacao-cpf-endereco': typeof NoticiasDhenisMartinsDosSantosDiscussaoDfirDivulgacaoCpfEnderecoRoute
   '/regioes/$slug': typeof RegioesSlugRoute
   '/artigos/': typeof ArtigosIndexRoute
@@ -340,6 +348,7 @@ export interface FileRoutesByTo {
   '/instituicoes/$slug': typeof InstituicoesSlugRoute
   '/noticias/$slug': typeof NoticiasSlugRoute
   '/noticias/brasil': typeof NoticiasBrasilRoute
+  '/noticias/dfir-dhenis-martins-dos-santos-discussao-divulgacao': typeof NoticiasDfirDhenisMartinsDosSantosDiscussaoDivulgacaoRoute
   '/noticias/dhenis-martins-dos-santos-discussao-dfir-divulgacao-cpf-endereco': typeof NoticiasDhenisMartinsDosSantosDiscussaoDfirDivulgacaoCpfEnderecoRoute
   '/regioes/$slug': typeof RegioesSlugRoute
   '/artigos': typeof ArtigosIndexRoute
@@ -385,6 +394,7 @@ export interface FileRoutesById {
   '/instituicoes/$slug': typeof InstituicoesSlugRoute
   '/noticias/$slug': typeof NoticiasSlugRoute
   '/noticias/brasil': typeof NoticiasBrasilRoute
+  '/noticias/dfir-dhenis-martins-dos-santos-discussao-divulgacao': typeof NoticiasDfirDhenisMartinsDosSantosDiscussaoDivulgacaoRoute
   '/noticias/dhenis-martins-dos-santos-discussao-dfir-divulgacao-cpf-endereco': typeof NoticiasDhenisMartinsDosSantosDiscussaoDfirDivulgacaoCpfEnderecoRoute
   '/regioes/$slug': typeof RegioesSlugRoute
   '/artigos/': typeof ArtigosIndexRoute
@@ -431,6 +441,7 @@ export interface FileRouteTypes {
     | '/instituicoes/$slug'
     | '/noticias/$slug'
     | '/noticias/brasil'
+    | '/noticias/dfir-dhenis-martins-dos-santos-discussao-divulgacao'
     | '/noticias/dhenis-martins-dos-santos-discussao-dfir-divulgacao-cpf-endereco'
     | '/regioes/$slug'
     | '/artigos/'
@@ -474,6 +485,7 @@ export interface FileRouteTypes {
     | '/instituicoes/$slug'
     | '/noticias/$slug'
     | '/noticias/brasil'
+    | '/noticias/dfir-dhenis-martins-dos-santos-discussao-divulgacao'
     | '/noticias/dhenis-martins-dos-santos-discussao-dfir-divulgacao-cpf-endereco'
     | '/regioes/$slug'
     | '/artigos'
@@ -518,6 +530,7 @@ export interface FileRouteTypes {
     | '/instituicoes/$slug'
     | '/noticias/$slug'
     | '/noticias/brasil'
+    | '/noticias/dfir-dhenis-martins-dos-santos-discussao-divulgacao'
     | '/noticias/dhenis-martins-dos-santos-discussao-dfir-divulgacao-cpf-endereco'
     | '/regioes/$slug'
     | '/artigos/'
@@ -811,6 +824,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof NoticiasBrasilRouteImport
       parentRoute: typeof NoticiasRoute
     }
+    '/noticias/dfir-dhenis-martins-dos-santos-discussao-divulgacao': {
+      id: '/noticias/dfir-dhenis-martins-dos-santos-discussao-divulgacao'
+      path: '/dfir-dhenis-martins-dos-santos-discussao-divulgacao'
+      fullPath: '/noticias/dfir-dhenis-martins-dos-santos-discussao-divulgacao'
+      preLoaderRoute: typeof NoticiasDfirDhenisMartinsDosSantosDiscussaoDivulgacaoRouteImport
+      parentRoute: typeof NoticiasRoute
+    }
     '/noticias/dhenis-martins-dos-santos-discussao-dfir-divulgacao-cpf-endereco': {
       id: '/noticias/dhenis-martins-dos-santos-discussao-dfir-divulgacao-cpf-endereco'
       path: '/dhenis-martins-dos-santos-discussao-dfir-divulgacao-cpf-endereco'
@@ -873,6 +893,7 @@ declare module '@tanstack/react-router' {
 interface NoticiasRouteChildren {
   NoticiasSlugRoute: typeof NoticiasSlugRoute
   NoticiasBrasilRoute: typeof NoticiasBrasilRoute
+  NoticiasDfirDhenisMartinsDosSantosDiscussaoDivulgacaoRoute: typeof NoticiasDfirDhenisMartinsDosSantosDiscussaoDivulgacaoRoute
   NoticiasDhenisMartinsDosSantosDiscussaoDfirDivulgacaoCpfEnderecoRoute: typeof NoticiasDhenisMartinsDosSantosDiscussaoDfirDivulgacaoCpfEnderecoRoute
   NoticiasIndexRoute: typeof NoticiasIndexRoute
   NoticiasEstadosUfRoute: typeof NoticiasEstadosUfRoute
@@ -882,6 +903,8 @@ interface NoticiasRouteChildren {
 const NoticiasRouteChildren: NoticiasRouteChildren = {
   NoticiasSlugRoute: NoticiasSlugRoute,
   NoticiasBrasilRoute: NoticiasBrasilRoute,
+  NoticiasDfirDhenisMartinsDosSantosDiscussaoDivulgacaoRoute:
+    NoticiasDfirDhenisMartinsDosSantosDiscussaoDivulgacaoRoute,
   NoticiasDhenisMartinsDosSantosDiscussaoDfirDivulgacaoCpfEnderecoRoute:
     NoticiasDhenisMartinsDosSantosDiscussaoDfirDivulgacaoCpfEnderecoRoute,
   NoticiasIndexRoute: NoticiasIndexRoute,

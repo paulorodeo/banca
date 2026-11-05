@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { environmentResponse, isStaging, LIMITED_ARCHIVE_NEWS_PATH } from "./indexing";
+import { environmentResponse, isStaging, LIMITED_ARCHIVE_NEWS_PATH, NOINDEX_NEWS_PATH } from "./indexing";
 import { PRODUCTION_SITE_ORIGIN, STAGING_SITE_ORIGIN, runtimePublicOrigin } from "./public-url";
 test("homologation is explicit and workers.dev cannot accidentally be indexed", () => {
   assert(isStaging({ DEPLOYMENT_ENV: "staging" }));
@@ -63,6 +63,13 @@ test("staging retains noindex while production does not inherit it and receives 
     new Request(`${PRODUCTION_SITE_ORIGIN}${LIMITED_ARCHIVE_NEWS_PATH}`),
   );
   assert.equal(limitedArchive.headers.get("X-Robots-Tag"), "noarchive, noimageindex");
+
+  const oldReport = environmentResponse(
+    new Response("HTML", { headers: { "Content-Type": "text/html" } }),
+    productionEnv,
+    new Request(`${PRODUCTION_SITE_ORIGIN}${NOINDEX_NEWS_PATH}`),
+  );
+  assert.equal(oldReport.headers.get("X-Robots-Tag"), "noindex, noarchive, noimageindex");
 
   const otherNews = environmentResponse(
     new Response("HTML", { headers: { "Content-Type": "text/html" } }),

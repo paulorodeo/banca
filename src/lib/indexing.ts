@@ -1,7 +1,9 @@
 import { PRODUCTION_SITE_ORIGIN } from "./public-url";
 
-export const LIMITED_ARCHIVE_NEWS_PATH =
+export const NOINDEX_NEWS_PATH =
   "/noticias/dhenis-martins-dos-santos-discussao-dfir-divulgacao-cpf-endereco";
+export const LIMITED_ARCHIVE_NEWS_PATH =
+  "/noticias/dfir-dhenis-martins-dos-santos-discussao-divulgacao";
 
 /** workers.dev is always a review environment, even if the explicit flag is omitted. */
 export function isStaging(env: Record<string, string | undefined>): boolean {
@@ -39,9 +41,17 @@ export function environmentResponse(
     if (
       isHtml &&
       request &&
-      new URL(request.url).pathname.replace(/\/+$/, "") === LIMITED_ARCHIVE_NEWS_PATH
-    )
-      headers.set("X-Robots-Tag", "noarchive, noimageindex");
+      [NOINDEX_NEWS_PATH, LIMITED_ARCHIVE_NEWS_PATH].includes(
+        new URL(request.url).pathname.replace(/\/+$/, ""),
+      )
+    ) {
+      headers.set(
+        "X-Robots-Tag",
+        new URL(request.url).pathname.replace(/\/+$/, "") === NOINDEX_NEWS_PATH
+          ? "noindex, noarchive, noimageindex"
+          : "noarchive, noimageindex",
+      );
+    }
   }
 
   if (staging && isHtml && /^[a-f0-9]{40}$/.test(env["BUILD_COMMIT"] ?? ""))
