@@ -63,6 +63,22 @@ export const rascunhoExposicaoDadosLinkedin = {
   blocos: [
     {
       tipo: "markdown",
+      texto: `## Nota de transparência editorial
+
+Esta reportagem é publicada sob responsabilidade editorial da **Banca Paulista**, com base em registros de manifestações públicas no LinkedIn, documentos apresentados à redação e informações sujeitas a verificação.
+
+**O bacharel em Direito e Desenvolvedor de Software Dr Paulo Helfstein, é parte diretamente envolvida nos acontecimentos relatados e forneceu materiais utilizados como fontes da reportagem.** Suas declarações e interpretações não devem ser confundidas com conclusões independentes da redação.
+
+O interesse jornalístico da publicação está na discussão sobre a exposição de informações pessoais em redes profissionais, os limites da privacidade digital e a responsabilidade na divulgação de documentos de terceiros.
+
+As manifestações atribuídas ao perfil citado são apresentadas com seu contexto e não constituem, por si, comprovação de crimes ou de infrações à Lei Geral de Proteção de Dados. A existência de reclamações ou comunicações às autoridades também não representa reconhecimento oficial de irregularidade.
+
+A Banca Paulista mantém seu compromisso com a verificação dos fatos, a proteção de dados pessoais desnecessários à reportagem, o direito de resposta e a correção de eventuais inexatidões.
+
+**A identificação das pessoas envolvidas está sujeita à avaliação de sua relevância jornalística e proporcionalidade, considerando também seus direitos à privacidade, honra e imagem.**`,
+    },
+    {
+      tipo: "markdown",
       texto: `Uma discussão pública sobre perícia digital e recuperação de dados de computadores terminou com a divulgação de uma nota fiscal eletrônica contendo informações pessoais de um dos participantes no LinkedIn.
 
 O episódio ocorreu em uma publicação do portal jurídico Migalhas sobre operações do Grupo de Atuação Especial de Combate ao Crime Organizado (Gaeco), do Ministério Público de São Paulo, realizadas em 20 de outubro de 2026.
