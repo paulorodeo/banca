@@ -1,7 +1,10 @@
 import { lazy, Suspense, useEffect, useState, type ReactNode } from "react";
 import { useRouterState } from "@tanstack/react-router";
+import { RadioProvider } from "./RadioProvider";
 
-const RadioRuntime = lazy(() => import("./RadioRuntime"));
+const MiniRadioPlayer = lazy(() =>
+  import("./MiniRadioPlayer").then((module) => ({ default: module.MiniRadioPlayer })),
+);
 
 export function RadioRuntimeGate({ children }: { children: ReactNode }) {
   const isRadioRoute = useRouterState({
@@ -24,11 +27,14 @@ export function RadioRuntimeGate({ children }: { children: ReactNode }) {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  if (!isRadioRoute && !activated) return children;
-
   return (
-    <Suspense fallback={null}>
-      <RadioRuntime>{children}</RadioRuntime>
-    </Suspense>
+    <RadioProvider>
+      {children}
+      {!isRadioRoute && activated ? (
+        <Suspense fallback={null}>
+          <MiniRadioPlayer />
+        </Suspense>
+      ) : null}
+    </RadioProvider>
   );
 }
