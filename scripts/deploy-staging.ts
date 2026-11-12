@@ -43,7 +43,7 @@ async function main() {
 
   validateSourceTarget();
   const identity = await validateGit();
-  await validateCloudflareIdentity();
+  const profile = await validateCloudflareIdentity();
   const environment = {
     ...process.env,
     DEPLOYMENT_ENV: "staging",
@@ -67,11 +67,15 @@ async function main() {
       await checkStagingDeploy({ root, outputDir, expectedCommit: identity.commit });
     },
     verifySsr: async () => {
-      await verifyLocalWorker(artifactPath, identity.commit);
+      await verifyLocalWorker(artifactPath, identity.commit, profile);
     },
     preflight: async () => {
       await validateGit(identity.commit);
-      await validateCloudflareIdentity();
+      assert.equal(
+        await validateCloudflareIdentity(),
+        profile,
+        "Cloudflare profile changed during publication",
+      );
       await checkStagingDeploy({ root, outputDir, expectedCommit: identity.commit });
     },
     digest: async () => {
@@ -81,14 +85,14 @@ async function main() {
     upload: async () =>
       run(
         "bun",
-        [...wrangler, "deploy", "--config", artifactPath, "--name", STAGING_WORKER],
+        withProfile(profile, "deploy", "--config", artifactPath, "--name", STAGING_WORKER),
         environment,
       ),
   });
   const versionId = deployOutput.match(/Current Version ID:\s*([0-9a-f-]{36})/i)?.[1];
   assert(versionId, "Wrangler did not report the uploaded Version ID");
 
-  const deployments = await getDeployments();
+  const deployments = await getDeployments(profile);
   const deployed = deployments.deployments.find((item) =>
     item.versions.some((version) => version.version_id === versionId),
   );
@@ -111,7 +115,7 @@ async function main() {
   assert.equal(sitemap.status, 404, "Staging sitemap must remain disabled");
   assert.match(sitemap.headers.get("x-robots-tag") ?? "", /noindex/i);
 
-  const afterRoutes = await getDeployments();
+  const afterRoutes = await getDeployments(profile);
   const latest = [...afterRoutes.deployments].sort((a, b) =>
     b.created_on.localeCompare(a.created_on),
   )[0];
@@ -175,6 +179,12 @@ async function validateCloudflareIdentity() {
     "Wrangler is not authenticated to the authorized Cloudflare account",
   );
   assert(!output.toLowerCase().includes("not authenticated"), "Wrangler is not authenticated");
+  return output.match(/^Active profile:\s*(\S+)/m)?.[1];
+}
+
+function withProfile(profile: string | undefined, ...args: string[]) {
+  // The generated --config lives in /tmp, outside the project's profile binding.
+  return [...wrangler, ...args, ...(profile ? ["--profile", profile] : [])];
 }
 
 function exec(command: string, args: string[]) {
@@ -197,13 +207,12 @@ function run(command: string, args: string[], env: NodeJS.ProcessEnv) {
   return result.stdout;
 }
 
-export async function verifyLocalWorker(configPath: string, commit: string) {
+export async function verifyLocalWorker(configPath: string, commit: string, profile?: string) {
   const port = await getFreePort();
   const child = spawn(
     "bun",
     [
-      ...wrangler,
-      "dev",
+      ...withProfile(profile, "dev"),
       "--local",
       "--config",
       configPath,
@@ -304,15 +313,11 @@ interface DeploymentRecord {
   created_on: string;
   versions: DeploymentVersion[];
 }
-async function getDeployments() {
-  const result = exec("bun", [
-    ...wrangler,
-    "deployments",
-    "list",
-    "--name",
-    STAGING_WORKER,
-    "--json",
-  ]);
+async function getDeployments(profile?: string) {
+  const result = exec(
+    "bun",
+    withProfile(profile, "deployments", "list", "--name", STAGING_WORKER, "--json"),
+  );
   return { deployments: JSON.parse(result) as DeploymentRecord[] };
 }
 
